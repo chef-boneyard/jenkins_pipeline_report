@@ -12,15 +12,18 @@ class JenkinsData
   end
 
   def refresh
-    builds = jenkins.builds
-    builds.each do |stages|
+    # Process most recent first, always (usually the most useful)
+    result = []
+    jenkins.builds.reverse_each do |build|
+      filename = File.join(path, build["job"], "#{build["number"]}.yaml")
+
+      # Get the build stages
+      stages = jenkins.build_stages(build)
+
       # Transform to a hash for easy reading
-      stages = stages.each_with_object({}) { |b, hash| hash[b["job"]] = b }
+      stages = stages.each_with_object({}) { |b, hash| hash[b["job"]] = b.dup }
       first_stage = stages.values.first
       last_stage = stages.values.last
-
-      filename = File.join(path, first_stage["job"], "#{stages.values.first["number"]}.yaml")
-      FileUtils.mkdir_p(File.dirname(filename))
 
       build = {
         "version" => last_stage["parameters"]["OMNIBUS_BUILD_VERSION"],
@@ -33,8 +36,7 @@ class JenkinsData
 
       stages.each_with_index do |(job, stage), index|
         stage.delete("parameters") if index > 0
-        stage.delete("job")
-        stage.delete("number")
+        %w{job number upstreams downstreams}.each { |key| stage.delete(key) }
 
         # Put these keys at the front of the hash for easier reading
         reordered_stage = {}
@@ -58,7 +60,7 @@ class JenkinsData
         end
       end
 
-      if true || build != existing_build || last_stage["result"].nil?
+      if build != existing_build || last_stage["result"].nil?
         # Grab all run data
         build["stages"].each do |job, stage|
           runs = jenkins.runs(stage)
@@ -73,11 +75,8 @@ class JenkinsData
             run = stage["runs"][configuration].merge(run) if stage["runs"] && stage["runs"][configuration]
 
             # Remove these unnecessary keys
-            run.delete("configuration")
-            run.delete("job")
-            run.delete("number")
-            run.delete("artifacts")
             run.delete("delay") if run["delay"] == 0.0
+            %w{configuration job number artifacts}.each { |key| run.delete(key) }
 
             # Put these keys at the front of the hash for easier reading
             reordered_run = {}
@@ -100,11 +99,15 @@ class JenkinsData
         end
       end
 
+      result << build
+
       # Write it out!
       puts "Writing #{filename} ..."
+      FileUtils.mkdir_p(File.dirname(filename))
       IO.write(filename, YAML.dump(build))
     end
-    builds
+
+    result
   end
 
   def load

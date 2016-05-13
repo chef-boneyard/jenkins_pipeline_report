@@ -7,16 +7,22 @@ class JenkinsPipeline
   attr_reader :server_url
   attr_reader :job
 
-  def initialize(server_url: "http://manhattan.ci.chef.co",
-                 job: "chef-trigger-release",
+  def initialize(job_url: "http://manhattan.ci.chef.co/job/chef-trigger-release",
                  identity_file: "~/.ssh/id_rsa",
                  **client_options)
-    @server_url = server_url
+    uri = URI(job_url)
+    @job = File.basename(uri.path)
+    # Remove the path and query from the URL to get the server URL
+    uri.path = ""
+    uri.query = nil
+    @server_url = uri.to_s
+
     @job = job
     @client = JenkinsApi::Client.new(server_url: server_url, identity_file: identity_file, **client_options)
 
     puts "Jenkins at #{server_url} #{client.exec_cli("version")}"
     load_job(job)
+    set_retries_and_downstreams
   end
 
   #
@@ -38,18 +44,39 @@ class JenkinsPipeline
   # ]
   #
   def builds
-    # Get the highest upstream of each build
-    triggered_builds = jobs[job]["allBuilds"].map { |build| highest_upstream(build) }
-    triggered_builds = triggered_builds.sort_by { |build| [ build["job"], build["number"] ] }.reverse.uniq
+    jobs[job]["allBuilds"].sort_by { |build| build["number"] }
+  end
 
-    # Bring in the downstreams for each build
-    triggered_builds.map do |build|
-      pipeline_build = [ build ]
-      while build = most_recent_downstream(build)
-        pipeline_build << build
+  def build_stages(build)
+    build_stages = []
+    # Take upstreams of this build and build the first bit of pipeline
+    while build
+      build_stages.unshift(build)
+      if build["upstreams"]
+        if build["upstreams"].size > 1
+          raise MultipleUpstreamsError, "Multiple upstreams for build #{build["url"]}: #{build["upstreams"].map { |b| "#{b["job"]} ##{b["number"]}" }.join(", ")}"
+        end
+        build = build["upstreams"].first
+      else
+        build = nil
       end
-      pipeline_build
     end
+
+    # Take downstreams of this build, and take the latest retry thereof
+    build = build_stages.last
+    while build
+      if build["downstreams"]
+        if build["downstreams"].size > 1
+          raise MultipleDownstreamsError, "Multiple downstreams for build #{build["url"]}: #{build["downstreams"].map { |b| "#{b["job"]} ##{b["number"]}" }.join(", ")}"
+        end
+        build = build["downstreams"].first
+      else
+        build = nil
+      end
+      build_stages << build if build
+    end
+
+    build_stages
   end
 
   #
@@ -66,70 +93,112 @@ class JenkinsPipeline
     runs.sort_by { |run| run["configuration"] }
   end
 
+  class JenkinsPipelineError < StandardError; end
+  class MultipleUpstreamsError < JenkinsPipelineError; end
+  class MultipleDownstreamsError < JenkinsPipelineError; end
+  class ParseError < JenkinsPipelineError; end
+
   private
 
-  def add_upstream(build, job, number)
-    # Add upstream links
-    upstream_builds[build] ||= []
-    upstream_builds[build] << [ job, number ]
-    # Add downstream links
-    downstream_builds[ [ job, number ] ] ||= []
-    downstream_builds[ [ job, number ] ] << build
-  end
-
-  def downstream_builds(build=nil)
-    @downstream_builds ||= {}
-    if build
-      @downstream_builds[[ build["job"], build["number"] ]]
-    else
-      @downstream_builds
-    end
-  end
-
-  def upstream_builds(build = nil)
-    @upstream_builds ||= {}
-    if build
-      # When we map upstreams the job may or may not actually exist.
-      if @upstream_builds.has_key?(build)
-        @upstream_builds[build].map { |job, number| get_cached_build(job, number) }
-      else
-        nil
+  def retry_ancestors(build)
+    if build && build["retryOf"]
+      ancestors = build["retryOf"]
+      build["retryOf"].each do |number|
+        ancestors |= retry_ancestors(get_cached_build(build["job"], number))
       end
+      ancestors
     else
-      @upstream_builds
+      []
     end
   end
 
-  def highest_upstream(build)
-    # Find the first upstream
-    while upstreams = upstream_builds(build)
-      if upstreams.size > 1
-        raise "Multiple upstreams for build #{build["url"]}: #{upstreams.inspect}"
+  def set_retries_and_downstreams
+    #
+    # If jobs B and C are both downstream of job A, one is a retry of the other.
+    #
+    jobs.each do |job_name, job|
+      job["allBuilds"].each do |build|
+        #
+        # If an earlier build in our job has the same upstream we are a retry
+        # of it.
+        #
+        job["allBuilds"].each do |other|
+          if other["number"] < build["number"] && build["upstreams"] && other["upstreams"]
+            shared_upstreams = build["upstreams"] & other["upstreams"]
+            if shared_upstreams.any?
+              build["retryOf"] ||= []
+              build["retryOf"] |= [ other["number"] ]
+              build["upstreams"] -= shared_upstreams
+              build.delete("upstreams") if build["upstreams"].empty?
+            end
+          end
+        end
       end
-      build = upstreams.first
     end
-    build
-  end
 
-  def most_recent_downstream(build)
-    downstreams = downstream_builds(build)
-    return nil unless downstreams
+    #
+    # Add retries and combine retryOf and upstreams with our ancestors
+    #
+    jobs.each do |job_name, job|
+      job["allBuilds"].each do |build|
+        #
+        # Follow the retryOf chain: if this build is a retryOf B, and B is a
+        # retryOf C, then this build is a retryOf C.
+        #
+        build["retryOf"] = retry_ancestors(build)
 
-    # There may have been retries. Pick the most recent downstream as the
-    # canonical one (the last retry).
-    if downstreams.map { |b| b["job"] }.uniq.size > 1
-      raise "Build #{build["url"]} has multiple downstreams from different jobs (#{downstreams.map { |b| b["url"] }.join(", ")})! We don't handle pipelines like that ..."
+        #
+        # Set upstreams on the build to include upstreams from all builds we
+        # are a retry of
+        #
+        ancestry = build["retryOf"].map { |number| get_cached_build(build["job"], number) }.compact
+        build["upstreams"] ||= []
+        build["upstreams"] |= ancestry.flat_map { |ancestor| ancestor["upstreams"] || [] }
+
+        #
+        # Set retries on all builds we are a retryOf to include this build
+        #
+        build["retryOf"].each do |number|
+          upstream = get_cached_build(build["job"], number)
+          if upstream
+            upstream["retries"] ||= []
+            upstream["retries"] |= [ build ]
+          end
+        end
+
+        # Remove empty stuff for less clutter
+        build.delete("retryOf") if build["retryOf"].empty?
+        build.delete("upstreams") if build["upstreams"].empty?
+      end
     end
-    downstreams = downstreams.sort_by { |b| b["timestamp"] }
-    latest_build = downstreams.first
-    latest_build["retries"] = downstreams.map { |b| b["number"] } if downstreams.size > 1
-    latest_build
+
+    #
+    # Set downstreams
+    #
+    jobs.each do |job_name, job|
+      job["allBuilds"].each do |build|
+        # If there are retries of this build, we'll set the downstreams from the final
+        # retry.
+        if build["upstreams"] && !build["retries"]
+          #
+          # Set downstreams on all upstream builds to include this build
+          #
+          build["upstreams"].each do |upstream|
+            upstream = get_cached_build(upstream["job"], upstream["number"])
+            if upstream
+              upstream["downstreams"] ||= []
+              upstream["downstreams"] |= [ build ]
+            end
+          end
+        end
+      end
+    end
   end
 
   def get_job_and_builds(job_name)
     client.api_get_request(
       "/job/#{job_name}",
-      "tree=name,url,upstreamProjects[name],downstreamProjects[name],allBuilds[number,url,result,timestamp,duration,actions[causes[shortDescription,userId,userName,upstreamBuild,upstreamProject],parameters[name,value]]]"
+      "tree=name,url,upstreamProjects[name],downstreamProjects[name],culprits[absoluteUrl],allBuilds[number,url,result,timestamp,duration,actions[causes[shortDescription,userId,userName,upstreamBuild,upstreamProject],parameters[name,value]]]"
     )
   end
 
@@ -144,7 +213,7 @@ class JenkinsPipeline
     if jobs[job]
       jobs[job]["allBuilds"].find { |b| b["number"] == number }
     else
-      { "job" => job, "number" => number, "url" => "#{server_url}/job/#{job}/#{number}", "jobDeleted" => true, "timestamp" => build["timestamp"] }
+      { "job" => job, "number" => number, "url" => "#{server_url}/job/#{job}/#{number}", "jobDeleted" => true }
     end
   end
 
@@ -181,18 +250,36 @@ class JenkinsPipeline
     # format parameters for easier use
     build["parameters"] = parameters_to_hash(build["parameters"])
 
+    if build["culprits"]
+      build["culprits"] = build["culprits"].map { |c| c["absoluteUrl"] && File.basename(c["absoluteUrl"]) }.compact
+      build.delete("culprits") if build["culprits"].empty?
+    end
+
     # Make the most important information appear at the top
     build = { "url" => nil, "result" => nil, "timestamp" => nil, "duration" => nil }.merge(build)
 
-    return build unless build["causes"]
-
+    # Interpret causes (retries vs. upstreams)
     if build["causes"]
-      # Strip upstream causes out of the build and add them to pipeline linkage.
-      # The information will be implicitly contained in the ordering of the
-      # pipeline_build array when we're all done.
       build["causes"].reject! do |cause|
+        # Strip upstream causes out of the build and add them to pipeline linkage.
+        # The information will be implicitly contained in the ordering of the
+        # build_stages array when we're all done.
         if cause["upstreamBuild"]
-          add_upstream(build, cause["upstreamProject"], cause["upstreamBuild"].to_i)
+          # If the upstream is the same job, we are a retry of the upstream
+          if cause["upstreamProject"] == build["job"]
+            build["retryOf"] ||= []
+            build["retryOf"] |= [ cause["upstreamBuild"].to_i ]
+          else
+            build["upstreams"] ||= []
+            build["upstreams"] |= [{
+              "job" => cause["upstreamProject"],
+              "number" => cause["upstreamBuild"].to_i
+            }]
+          end
+          true
+
+        # Remove empty causes (can happen due to tree weirdness)
+        elsif cause.empty?
           true
         end
       end
@@ -270,7 +357,7 @@ class JenkinsPipeline
         elsif result[key].is_a?(Array) && value.is_a?(Array)
           result[key] += value
         else
-          raise "Multiple #{key} actions found with non-array types: #{result.inspect}, #{action.inspect}"
+          raise ParseError, "Multiple #{key} actions found with non-array types: #{result.inspect}, #{action.inspect}"
         end
       end
     end

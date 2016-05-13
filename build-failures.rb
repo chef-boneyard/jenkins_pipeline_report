@@ -3,7 +3,7 @@ require "jenkins_api_client"
 require_relative "jenkins_pipeline"
 
 options = {}
-options[:job] = ARGV[0] if ARGV[0]
+options[:job_url] = ARGV[0] if ARGV[0]
 
 
 last_message = nil
