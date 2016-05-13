@@ -31,14 +31,19 @@ class JenkinsData
         "stages" => stages,
       }
 
-      stages.each_with_index do |(id, stage), index|
-        # Put these keys at the front of the hash for easier reading
-        stage = %w{result timestamp duration url}.each_with_object({}) { |k,hash| hash[k] = nil }.
-                merge(stage)
+      stages.each_with_index do |(job, stage), index|
         stage.delete("parameters") if index > 0
         stage.delete("job")
         stage.delete("number")
-        stages[id] = stage
+
+        # Put these keys at the front of the hash for easier reading
+        reordered_stage = {}
+        %w{result timestamp duration url}.each do |k,hash|
+          reordered_stage[k] = stage[k] if stage.has_key?(k)
+        end
+        reordered_stage.merge!(stage)
+
+        stages[job] = reordered_stage
       end
       first_stage = stages.values.first
       last_stage = stages.values.last
@@ -48,33 +53,51 @@ class JenkinsData
         existing_build = YAML.load(IO.read(filename))
         build = existing_build.merge(build)
         build["stages"] = existing_build["stages"].merge(build["stages"])
-        build["stages"].each do |id, b|
-          build["stages"][id] = existing_build["stages"][id].merge(b) if existing_build["stages"].has_key?(id)
-        end
-        if build == existing_build && !last_stage["result"].nil?
-          puts "Skipping #{filename} (unchanged) ..."
-          next
+        build["stages"].each do |job, b|
+          build["stages"][job] = existing_build["stages"][job].merge(b) if existing_build["stages"].has_key?(job)
         end
       end
 
-      # Grab all run data
-      build["stages"].each do |id, stage|
-        runs = jenkins.runs(stage)
-        runs = runs.each_with_object({}) do |run,hash|
-          # Put these keys at the front of the hash for easier reading
-          run = %w{result timestamp duration builtOn url}.each_with_object({}) { |k,hash| hash[k] = nil }.
-                merge(run)
+      if true || build != existing_build || last_stage["result"].nil?
+        # Grab all run data
+        build["stages"].each do |job, stage|
+          runs = jenkins.runs(stage)
+          runs = runs.each_with_object({}) do |run,hash|
+            # Calculate delay
+            delay = Time.parse(run["timestamp"]) - Time.parse(stage["timestamp"])
+            run["delay"] = delay
 
-          # Remove these unnecessary keys
-          configuration = run.delete("configuration")
-          run.delete("job")
-          run.delete("number")
-          run.delete("artifacts")
+            configuration = run["configuration"]
 
-          raise "Run #{run["configuration"]} showed up twice in #{b["url"]}!" if hash.has_key?(run["configuration"])
-          hash[configuration] = run
+            raise "Run #{configuration} showed up twice in #{b["url"]}!" if hash.has_key?(configuration)
+            run = stage["runs"][configuration].merge(run) if stage["runs"] && stage["runs"][configuration]
+
+            # Remove these unnecessary keys
+            run.delete("configuration")
+            run.delete("job")
+            run.delete("number")
+            run.delete("artifacts")
+            run.delete("delay") if run["delay"] == 0.0
+
+            # Put these keys at the front of the hash for easier reading
+            reordered_run = {}
+            %w{result timestamp duration delay builtOn url}.each do |k,hash|
+              reordered_run[k] = run[k] if run.has_key?(k)
+            end
+            reordered_run.merge!(run)
+
+            hash[configuration] = reordered_run
+          end
+          stage["runs"] = runs
         end
-        stage["runs"] = runs
+      end
+
+      build["stages"].each do |job, stage|
+        stage["runs"].each do |configuration, run|
+          if run["result"] == "SUCCESS"
+            run["omnibus_builders"] ||= process_omnibus_times(run)
+          end
+        end
       end
 
       # Write it out!
@@ -94,5 +117,34 @@ class JenkinsData
       YAML.load(IO.read(filename))
     end
     builds.sort_by { |build| build["timestamp"] }.reverse
+  end
+
+  private
+
+  def process_omnibus_times(run)
+    path = URI(File.join(run["url"], "consoleText")).path
+    puts "Processing #{path} ..."
+
+    # Get the console log
+    console_text = jenkins.client.api_get_request(path, nil, nil, true).body
+
+    # Look for timing information
+    result = {}
+    console_text.lines.each do |line|
+      component, timestamp, log = line.split("|", 3).map { |s| s.strip }
+      if component =~ /^\[Builder:\s+(.+)\]\s+\S+$/i
+        component = $1
+        # [Builder: chef] I | 2016-05-11T20:29:35+00:00 | Build chef: 76.4841s
+        if log =~ /^\s*Build #{component}:\s+(\d+(\.\d+)?)s$/
+          result[component] = $1.to_f
+        end
+      else
+        # [Packager::BFF] I | 2016-05-12T22:28:49+00:00 | Packaging time: 376.521s
+        if log =~ /^\s*(Health check|Packaging) time:\s+(\d+(\.\d+)?)s$/
+          result[$1] = $2.to_f
+        end
+      end
+    end
+    result
   end
 end
