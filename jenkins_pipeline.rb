@@ -85,10 +85,10 @@ class JenkinsPipeline
   def runs(build)
     path = URI(build["url"]).path
     job_name = File.basename(File.dirname(path))
-    build_number = File.basename(path)
+    build_number = File.basename(path).to_i
     runs = get_runs(job_name, build_number)
     # Ridiculously, things get added into our matrix that aren't ours
-    runs.reject! { |run| run["number"].to_i == build_number }
+    runs.select! { |run| run["number"].to_i == build_number }
     runs.map! { |run| normalize_run(run) }
     runs.sort_by { |run| run["configuration"] }
   end

@@ -11,7 +11,7 @@ class JenkinsData
     @jenkins = JenkinsPipeline.new(options)
   end
 
-  def refresh
+  def refresh(force_refresh_all: false, force_refresh_runs: force_refresh_all, force_refresh_omnibus_timing: force_refresh_all)
     # Process most recent first, always (usually the most useful)
     result = []
     jenkins.builds.reverse_each do |build|
@@ -51,16 +51,18 @@ class JenkinsData
       last_stage = stages.values.last
 
       # Skip the expensive run retrieval if our data changes nothing
-      if File.exist?(filename)
+      if File.exist?(filename) && !force_refresh_all
         existing_build = YAML.load(IO.read(filename))
+        puts "Reading existing #{filename} ..."
         build = existing_build.merge(build)
-        build["stages"] = existing_build["stages"].merge(build["stages"])
         build["stages"].each do |job, b|
-          build["stages"][job] = existing_build["stages"][job].merge(b) if existing_build["stages"].has_key?(job)
+          if existing_build["stages"].has_key?(job) && existing_build["stages"][job]["number"] == b["number"]
+            build["stages"][job] = existing_build["stages"][job].merge(b)
+          end
         end
       end
 
-      if build != existing_build || last_stage["result"].nil?
+      if build != existing_build || last_stage["result"].nil? || force_refresh_runs
         # Grab all run data
         build["stages"].each do |job, stage|
           runs = jenkins.runs(stage)
@@ -94,7 +96,9 @@ class JenkinsData
       build["stages"].each do |job, stage|
         stage["runs"].each do |configuration, run|
           if run["result"] == "SUCCESS"
-            run["omnibus_builders"] ||= process_omnibus_times(run)
+            if !run.has_key?("omnibus_timing") || force_refresh_omnibus_timing
+              run["omnibus_timing"] = process_omnibus_timing(run)
+            end
           end
         end
       end
@@ -124,7 +128,7 @@ class JenkinsData
 
   private
 
-  def process_omnibus_times(run)
+  def process_omnibus_timing(run)
     path = URI(File.join(run["url"], "consoleText")).path
     puts "Processing #{path} ..."
 
