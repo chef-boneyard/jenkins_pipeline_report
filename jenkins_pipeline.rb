@@ -20,7 +20,6 @@ class JenkinsPipeline
     @job = job
     @client = JenkinsApi::Client.new(server_url: server_url, identity_file: identity_file, **client_options)
 
-    puts "Jenkins at #{server_url} #{client.exec_cli("version")}"
     load_job(job)
     set_retries_and_downstreams
   end
@@ -86,11 +85,55 @@ class JenkinsPipeline
     path = URI(build["url"]).path
     job_name = File.basename(File.dirname(path))
     build_number = File.basename(path).to_i
-    runs = get_runs(job_name, build_number)
+    runs = fetch_runs(job_name, build_number)
     # Ridiculously, things get added into our matrix that aren't ours
-    runs.select! { |run| run["number"].to_i == build_number }
+    runs.select! { |run| parse_run_url(run["url"])[1] == build_number }
     runs.map! { |run| normalize_run(run) }
     runs.sort_by { |run| run["configuration"] }
+  end
+
+  #
+  # Parse a run URL into job name, build number and configuration string.
+  #
+  # e.g. parse_run_url("http://manhatten.ci.chef.co/job/chef-test/342/architecture=x86_64,platform=acceptance,project=chef,role=tester")
+  # -> chef-test, 243, acceptance
+  #
+  def parse_run_url(url)
+    # Extract pertinent data from URL
+    # /job/chef-test/342/architecture=x86_64,platform=acceptance,project=chef,role=tester
+    path = URI(url).path
+    job = File.basename(File.dirname(File.dirname(path)))
+    build_number = File.basename(File.dirname(path))
+    configuration_str = File.basename(path)
+
+    # Check for alternate URL type:
+    # /job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/342
+    unless build_number =~ /^\d+$/
+      build_number, configuration_str = configuration_str, build_number
+    end
+
+    build_number = build_number.to_i
+
+    #
+    # Summarize the configuration for easy consumption
+    #
+    # configuration is a hash
+    configuration = {}
+    configuration_str.split(",").sort_by { |name, value| name }.each do |name_value|
+      name, value = name_value.split("=", 2)
+      configuration[name] = value
+    end
+
+    case configuration["role"]
+    when "builder", "tester"
+      configuration_summary = configuration["platform"]
+      configuration_summary << "-#{configuration["architecture"]}" unless configuration["architecture"] == "x86_64"
+      configuration_summary
+    else
+      configuration_summary = configuration_str
+    end
+
+    [ job, build_number, configuration_summary ]
   end
 
   class JenkinsPipelineError < StandardError; end
@@ -195,14 +238,14 @@ class JenkinsPipeline
     end
   end
 
-  def get_job_and_builds(job_name)
+  def fetch_job_and_builds(job_name)
     client.api_get_request(
       "/job/#{job_name}",
       "tree=name,url,upstreamProjects[name],downstreamProjects[name],culprits[absoluteUrl],allBuilds[number,url,result,timestamp,duration,actions[causes[shortDescription,userId,userName,upstreamBuild,upstreamProject],parameters[name,value]]]"
     )
   end
 
-  def get_runs(job_name, build_number)
+  def fetch_runs(job_name, build_number)
     client.api_get_request(
       "/job/#{job_name}/#{build_number}",
       "tree=runs[number,url,result,builtOn,timestamp,duration,artifacts[relativePath],failCount,skipCount,totalCount,urlName]"
@@ -223,7 +266,7 @@ class JenkinsPipeline
     #
     # Load the job, its upstream and downstreams, and all its builds
     #
-    jobs[name] = get_job_and_builds(name)
+    jobs[name] = fetch_job_and_builds(name)
     jobs[name]["allBuilds"] = jobs[name]["allBuilds"].sort_by { |b| b["number"].to_i }.reverse
     jobs[name]["allBuilds"].map! { |build| normalize_build(build) }
 
@@ -290,19 +333,6 @@ class JenkinsPipeline
   end
 
   def normalize_run(run)
-    # Extract pertinent data from URL
-    # /job/chef-test/342/architecture=x86_64,platform=acceptance,project=chef,role=tester
-    path = URI(run["url"]).path
-    run["job"] = File.basename(File.dirname(File.dirname(path)))
-    build_number = File.basename(File.dirname(path))
-    configuration_str = File.basename(path)
-    # Check for alternate URL type:
-    # /job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/342
-    unless build_number =~ /^\d+$/
-      build_number, configuration_str = configuration_str, build_number
-    end
-    run["number"] = build_number.to_i
-
     # Normalize timestamps
     run["timestamp"] = timestamp_to_datetime(run["timestamp"])
     run["duration"] = duration_to_time(run["duration"])
@@ -310,28 +340,6 @@ class JenkinsPipeline
     # Pull stuff out of actions into the top level
     run.merge!(actions_to_hash(run.delete("actions")))
 
-    #
-    # Summarize the configuration for easy consumption
-    #
-    # configuration is a hash
-    configuration = {}
-    configuration_str.split(",").sort_by { |name, value| name }.each do |name_value|
-      name, value = name_value.split("=", 2)
-      configuration[name] = value
-    end
-
-    case configuration["role"]
-    when "builder", "tester"
-      configuration_summary = configuration["platform"]
-      configuration_summary << "-#{configuration["architecture"]}" unless configuration["architecture"] == "x86_64"
-      configuration_summary
-    else
-      configuration_summary = run["configuration"]
-    end
-    run["configuration"] = configuration_summary
-
-    # Make the most important information appear at the top
-    run = { "url" => nil, "result" => nil, "configuration" => nil }.merge(run)
     run
   end
 
