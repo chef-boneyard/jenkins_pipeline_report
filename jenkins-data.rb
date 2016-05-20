@@ -2,7 +2,7 @@ require "optparse"
 require_relative "jenkins_data"
 require "pp"
 
-options = {}
+refresh_options = {}
 OptionParser.new do |opts|
   opts.banner = <<-EOM
     USAGE: ruby jenkins-data.rb JOB_URL ...
@@ -15,16 +15,16 @@ OptionParser.new do |opts|
   EOM
 
   opts.on("--[no-]force-refresh-runs", "Whether to refresh run data for all runs regardless of whether they've been fetched before (default: false)") do |v|
-    options[:force_refresh_runs] = v
+    refresh_options[:force_refresh_runs] = v
   end
   opts.on("--[no-]force-refresh-omnibus-timing", "Whether to refresh omnibus timing for all runs regardless of whether they've been fetched before (default: false)") do |v|
-    options[:force_refresh_omnibus_timing] = v
+    refresh_options[:force_refresh_omnibus_timing] = v
   end
   opts.on("--[no-]force", "Whether to refresh all data regardless of whether they've been fetched before (default: false)") do |v|
-    options[:force_refresh_all] = v
+    refresh_options[:force_refresh_all] = v
   end
 end.parse!
 
 ARGV.each do |job_url|
-  JenkinsData.new(job_url: job_url).refresh(options)
+  JenkinsData.new(job_url: job_url).refresh(refresh_options)
 end
