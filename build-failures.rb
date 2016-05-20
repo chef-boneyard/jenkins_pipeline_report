@@ -47,7 +47,7 @@ ARGV.each do |job_url|
     build["stages"].each do |job,stage|
       stage["runs"].values.each do |run|
         unless run["result"].nil? || run["result"] == "SUCCESS"
-          puts "- #{run["url"]}"
+#          puts "- #{run["url"]}"
         end
       end
     end

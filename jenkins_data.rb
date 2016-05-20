@@ -236,6 +236,7 @@ class JenkinsData
     run_categories["bsd"] = os_categories.select { |c,t| c =~ /bsd/ }.values.flatten
     run_categories.merge!(os_categories)
     run_categories.each do |category, types|
+      next if types.empty?
       # If every type in the category is in run_types, replace those types with the category
       if (types - run_types).empty?
         run_types = run_types - types + [ category ]
