@@ -11,9 +11,15 @@ class JenkinsData
     @jenkins = JenkinsPipeline.new(jenkins_options)
   end
 
+  # Uncomment the puts message here to start showing progress info
+  def self.debug(message)
+#    puts message
+  end
+
   def refresh(force_refresh_runs: false, force_refresh_logs: false, force_reprocess_logs: false)
     builds = refresh_builds
     builds.each do |build|
+      JenkinsData.debug "Processing #{build["stages"].values.first["url"]} ..."
       refresh_runs(build, force: force_refresh_runs)
       cache_console_texts(build, force: force_refresh_logs)
       process_console_texts(build, force: force_reprocess_logs)
@@ -31,6 +37,7 @@ class JenkinsData
   end
 
   def refresh_runs(build, force: false)
+    return if build["missingFromJenkins"]
     build["stages"].each do |job,stage|
       if !stage.has_key?("runs") || in_progress?(stage) || force
         # Fetch run data for each build and merge into the stages
@@ -45,6 +52,7 @@ class JenkinsData
   end
 
   def cache_console_texts(build, force: false)
+    return if build["missingFromJenkins"]
     build["stages"].each do |job,stage|
       stage["runs"].each do |configuration,run|
         cache_console_text(build, run, force: force)
@@ -90,6 +98,8 @@ class JenkinsData
         stage["runs"] = rewritten_runs
       end
 
+      build = process_build(build)
+
       build
     end.compact
     builds.sort_by { |build| build["timestamp"] }.reverse
@@ -99,7 +109,7 @@ class JenkinsData
     filename = console_text_filename(build, run)
     if File.exist?(filename)
       IO.binread(filename)
-    elsif build["missingInJenkins"]
+    elsif build["missingFromJenkins"]
       # TODO when we have a warning system, warn
       # warn "Console logs for #{build["data"]} are no longer in Jenkins! Cannot fetch."
     end
@@ -156,13 +166,14 @@ class JenkinsData
   end
 
   def merge_build(local_build, remote_build)
-    local_build ||= {}
-    remote_build ||= {}
+    local_build ||= { "stages" => {} }
+    remote_build ||= { "stages" => {} }
     build = local_build.merge(remote_build)
     if remote_build["stages"]
       build["stages"] = {}
-      local_build["stages"].each do |job,local_stage|
-        build["stages"][job] = merge_stage(local_stage, remote_build["stages"][job])
+      remote_build["stages"].each do |job,remote_stage|
+        local_stage = local_build["stages"][job]
+        build["stages"][job] = merge_stage(local_stage, remote_stage)
       end
     end
     build["changedThisTime"] = true if build != local_build
@@ -170,13 +181,14 @@ class JenkinsData
   end
 
   def merge_stage(local_stage, remote_stage)
-    local_stage ||= {}
-    remote_stage ||= {}
+    local_stage ||= { "runs" => {} }
+    remote_stage ||= { "runs" => {} }
     stage = local_stage.merge(remote_stage)
     if remote_stage["runs"]
       stage["runs"] = {}
       remote_stage["runs"].each do |configuration,remote_run|
-        stage["runs"][configuration] = merge_run(local_stage["runs"][configuration], remote_run)
+        local_run = local_stage["runs"][configuration]
+        stage["runs"][configuration] = merge_run(local_run, remote_run)
       end
     end
     stage["changedThisTime"] = true if stage != local_stage
@@ -187,7 +199,6 @@ class JenkinsData
     local_run ||= {}
     remote_run ||= {}
     run = local_run.merge(remote_run)
-    puts YAML.dump("local" => local_run, "remote" => remote_run) if run != local_run
     run["changedThisTime"] = true if run != local_run
     run
   end
@@ -268,13 +279,13 @@ class JenkinsData
     delay = Time.parse(run["timestamp"]) - Time.parse(stage["timestamp"])
     run["delay"] = delay
 
-    run.delete("delay") if run["delay"] == 0.0
-    %w{configuration job number artifacts}.each { |key| run.delete(key) }
-
     # convert omnibus_timing -> omnibusTiming
     if timing = run.delete("omnibus_timing")
       run["omnibusTiming"] = timing
     end
+
+    run.delete("delay") if run["delay"] == 0.0
+    %w{configuration job number artifacts}.each { |key| run.delete(key) }
 
     # Reorder run data for nicer printing
     run = reorder_fields(run, %w{result timestamp duration delay builtOn url})
@@ -308,7 +319,7 @@ class JenkinsData
 
   def cache_console_text(build, run, force: false)
     filename = console_text_filename(build, run)
-    if !File.exist?(filename) || force
+    if !File.exist?(filename) || force || in_progress?(run) || run["changedThisTime"]
       console_text = fetch_console_text(run)
       unless File.exist?(filename) && console_text == IO.binread(filename)
         puts "Writing console text #{filename} ..."
@@ -321,6 +332,7 @@ class JenkinsData
 
   def fetch_console_text(run)
     path = URI(File.join(run["url"], "consoleText")).path
+    JenkinsData.debug "GET #{path}"
     jenkins.client.api_get_request(path, nil, nil, true).body
   end
 
@@ -334,6 +346,7 @@ class JenkinsData
     if run["changedThisTime"] || force || !run.has_key?("omnibusTiming")
       console_text = console_text(build, run)
       if console_text
+        JenkinsData.debug("Process Console #{File.basename(console_text_filename(build, run))}...")
         extract_omnibus_timing(run, console_text)
       end
     end
