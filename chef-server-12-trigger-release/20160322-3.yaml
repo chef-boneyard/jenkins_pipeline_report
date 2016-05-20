@@ -23,6 +23,20 @@ stages:
     timestamp: '2016-03-22T16:27:15-07:00'
     duration: 4087.186
     url: http://wilson.ci.chef.co/job/chef-server-12-build/197/
+    parameters:
+      GIT_REF: 12.5.0
+      APPEND_TIMESTAMP: false
+      DELIVERY_CHANGE: ''
+      DELIVERY_SHA: ''
+      EXPIRE_CACHE: false
+      RELEASE_BUILD: 'true'
+      PIPELINE_NAME: chef-server-12
+      GIT_COMMIT: bb28b489960c8fae6ac061bf2dab5800142b22a3
+      PROJECT: chef-server
+      PROMOTE: 'true'
+      PIPELINE_TRIGGER_BUILD_NUMBER: '3'
+      GIT_BRANCH: 12.5.0
+      PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-release
     runs:
       el-5:
         result: SUCCESS
@@ -30,33 +44,39 @@ stages:
         duration: 3992.379
         builtOn: chef-server-rhel-5-builder-dd11b6
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/197/
-        omnibus_timing: {}
+        omnibusTiming: {}
       el-6:
         result: SUCCESS
         timestamp: '2016-03-22T16:27:15-07:00'
         duration: 4075.229
         builtOn: chef-server-rhel-6-builder-f4b641
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/197/
-        omnibus_timing: {}
+        omnibusTiming: {}
       el-7:
         result: SUCCESS
         timestamp: '2016-03-22T16:27:15-07:00'
         duration: 3277.792
         builtOn: chef-server-rhel-7-builder-1d11c3
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-7,project=chef-server,role=builder/197/
-        omnibus_timing: {}
+        omnibusTiming: {}
       ubuntu-10.04:
         result: SUCCESS
         timestamp: '2016-03-22T16:27:15-07:00'
         duration: 2971.699
         builtOn: chef-server-ubuntu-10.04-builder-6f743f
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=builder/197/
-        omnibus_timing: {}
+        omnibusTiming: {}
+  chef-server-12-test:
+    result: SUCCESS
+    timestamp: '2016-03-22T17:35:29-07:00'
+    duration: 2726.823
+    url: http://wilson.ci.chef.co/job/chef-server-12-test/161/
     parameters:
-      GIT_REF: 12.5.0
-      APPEND_TIMESTAMP: false
+      OMNIBUS_BUILD_VERSION: 12.5.0
       DELIVERY_CHANGE: ''
       DELIVERY_SHA: ''
+      GIT_REF: 12.5.0
+      APPEND_TIMESTAMP: false
       EXPIRE_CACHE: false
       RELEASE_BUILD: 'true'
       PIPELINE_NAME: chef-server-12
@@ -66,11 +86,36 @@ stages:
       PIPELINE_TRIGGER_BUILD_NUMBER: '3'
       GIT_BRANCH: 12.5.0
       PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-release
-  chef-server-12-test:
-    result: SUCCESS
-    timestamp: '2016-03-22T17:35:29-07:00'
-    duration: 2726.823
-    url: http://wilson.ci.chef.co/job/chef-server-12-test/161/
+      PLATFORM_MAPPINGS_JSON: |-
+        {
+          "build_to_test": {
+            "ubuntu-10.04": [
+              "ubuntu-10.04",
+              "ubuntu-12.04",
+              "ubuntu-14.04"
+            ],
+            "el-5": [
+              "el-5"
+            ],
+            "el-6": [
+              "el-6"
+            ],
+            "el-7": [
+              "el-7"
+            ]
+          },
+          "test_to_build": {
+            "ubuntu-10.04": "ubuntu-10.04",
+            "ubuntu-12.04": "ubuntu-10.04",
+            "ubuntu-14.04": "ubuntu-10.04",
+            "el-5": "el-5",
+            "el-6": "el-6",
+            "el-7": "el-7"
+          }
+        }
+      PIPELINE_BUILD_JOB_NUMBER: '197'
+      PIPELINE_BUILD_JOB_NAME: chef-server-12-build
+      PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-release-3/3/2016-03-22_23-26-56
     runs:
       el-5:
         result: SUCCESS
@@ -78,93 +123,47 @@ stages:
         duration: 2726.683
         builtOn: chef-server-rhel-5-tester-4e6602
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-5,project=chef-server,role=tester/161/
-        omnibus_timing: {}
+        omnibusTiming: {}
       el-6:
         result: SUCCESS
         timestamp: '2016-03-22T17:35:29-07:00'
         duration: 2699.824
         builtOn: chef-server-rhel-6-tester-8151c8
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-6,project=chef-server,role=tester/161/
-        omnibus_timing: {}
+        omnibusTiming: {}
       el-7:
         result: SUCCESS
         timestamp: '2016-03-22T17:35:29-07:00'
         duration: 2233.085
         builtOn: chef-server-rhel-7-tester-d586ce
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-7,project=chef-server,role=tester/161/
-        omnibus_timing: {}
+        omnibusTiming: {}
       ubuntu-10.04:
         result: SUCCESS
         timestamp: '2016-03-22T17:35:29-07:00'
         duration: 2434.336
         builtOn: chef-server-ubuntu-10.04-tester-f80d1f
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=tester/161/
-        omnibus_timing: {}
+        omnibusTiming: {}
       ubuntu-12.04:
         result: SUCCESS
         timestamp: '2016-03-22T17:35:29-07:00'
         duration: 2398.366
         builtOn: chef-server-ubuntu-12.04-tester-28c735
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-server,role=tester/161/
-        omnibus_timing: {}
+        omnibusTiming: {}
       ubuntu-14.04:
         result: SUCCESS
         timestamp: '2016-03-22T17:35:29-07:00'
         duration: 2391.233
         builtOn: chef-server-ubuntu-14.04-tester-69fc04
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-server,role=tester/161/
-        omnibus_timing: {}
-    parameters:
-      OMNIBUS_BUILD_VERSION: 12.5.0
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      GIT_REF: 12.5.0
-      APPEND_TIMESTAMP: false
-      EXPIRE_CACHE: false
-      RELEASE_BUILD: 'true'
-      PIPELINE_NAME: chef-server-12
-      GIT_COMMIT: bb28b489960c8fae6ac061bf2dab5800142b22a3
-      PROJECT: chef-server
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '3'
-      GIT_BRANCH: 12.5.0
-      PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-release
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "ubuntu-10.04": [
-              "ubuntu-10.04",
-              "ubuntu-12.04",
-              "ubuntu-14.04"
-            ],
-            "el-5": [
-              "el-5"
-            ],
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ]
-          },
-          "test_to_build": {
-            "ubuntu-10.04": "ubuntu-10.04",
-            "ubuntu-12.04": "ubuntu-10.04",
-            "ubuntu-14.04": "ubuntu-10.04",
-            "el-5": "el-5",
-            "el-6": "el-6",
-            "el-7": "el-7"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '197'
-      PIPELINE_BUILD_JOB_NAME: chef-server-12-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-release-3/3/2016-03-22_23-26-56
+        omnibusTiming: {}
   chef-server-12-promote:
     result: SUCCESS
     timestamp: '2016-03-22T18:21:02-07:00'
     duration: 7.631
     url: http://wilson.ci.chef.co/job/chef-server-12-promote/107/
-    runs: {}
     parameters:
       OMNIBUS_BUILD_VERSION: 12.5.0
       DELIVERY_CHANGE: ''
@@ -210,3 +209,4 @@ stages:
       PIPELINE_BUILD_JOB_NUMBER: '197'
       PIPELINE_BUILD_JOB_NAME: chef-server-12-build
       PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-release-3/3/2016-03-22_23-26-56
+    runs: {}
