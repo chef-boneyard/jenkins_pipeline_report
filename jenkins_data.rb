@@ -462,14 +462,11 @@ class JenkinsData
            /Permission denied/i
         reason["suspiciousLines"] ||= []
         reason["suspiciousLines"] << line.strip
-      end
 
-      unless reason.has_key?("omnibusStep")
-        component, timestamp, log = line.split("|", 3).map { |s| s.strip }
-        if log && component =~ /^\[\s+(.+)\]\s+\S+$/i
-          component = $1
-          reason["omnibusStep"] ||= component
-        end
+      #                         [Licensing] W | License file '/var/cache/omnibus/src/pry/LICENSE' does not exist for software 'pry'.
+      when /^\s*\[([^\]]+)\] . \| /
+        reason["lastOmnibusStep"] ||= $1
+        reason["lastOmnibusLine"] ||= line
       end
 
       index -= 1
@@ -510,6 +507,30 @@ class JenkinsData
     end
 
     if reason
+      if reason["lastOmnibusStep"]
+        reason["cause"] = "omnibus"
+        reason["detailedCause"] = "omnibus #{reason["lastOmnibusStep"]}"
+      end
+
+      if reason["suspiciousLines"]
+        reason["suspiciousLines"].each do |suspiciousLine|
+          case suspiciousLine
+          when /The --deployment flag requires a .*\/([^\/]+\/Gemfile.lock)/
+            reason["cause"] = "missing Gemfile.lock"
+            reason["detailedCause"] = "missing #{$1}"
+
+          when /(EACCES)/,
+               /java.io.FileNotFoundException.*(Permission denied)/
+            reason["cause"] = "disk space"
+            reason["detailedCause"] = "disk space (#{$1})"
+
+          when /Cannot delete workspace:.*The process cannot access the file because it is being used by another process./i
+            reason["cause"] = "zombie jenkins"
+            reason["detailedCause"] = "zombie jenkins"
+          end
+        end
+      end
+
       if reason["tests"]
         reason["cause"] = "#{reason["tests"].keys.join(",")}"
         reason["detailedCause"] = reason["tests"].map do |test_type, t|
@@ -536,6 +557,10 @@ class JenkinsData
         when /Dumping stack trace to\s+(\S+).stackdump/mi
           reason["cause"] = "segfault"
           reason["detailedCause"] = "segfault #{$1}"
+
+        when /Finder got an error: Application isn.*t running/i
+          reason["cause"] = "mac not logged in"
+          reason["detailedCause"] = "mac not logged in"
         end
 
         case reason["shellCommand"]["stdout"]
@@ -557,24 +582,6 @@ class JenkinsData
         end
       end
 
-      if reason["suspiciousLines"]
-        reason["suspiciousLines"].each do |suspiciousLine|
-          case suspiciousLine
-          when /The --deployment flag requires a .*\/([^\/]+\/Gemfile.lock)/
-            reason["cause"] = "missing Gemfile.lock"
-            reason["detailedCause"] = "missing #{$1}"
-
-          when /(EACCES)/,
-               /java.io.FileNotFoundException.*(Permission denied)/
-            reason["cause"] = "disk space"
-            reason["detailedCause"] = "disk space (#{$1})"
-
-          when /Cannot delete workspace:.*The process cannot access the file because it is being used by another process./i
-            reason["cause"] = "zombie jenkins"
-            reason["detailedCause"] = "zombie jenkins"
-          end
-        end
-      end
     end
   end
 
