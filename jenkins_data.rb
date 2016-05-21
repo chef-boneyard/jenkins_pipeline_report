@@ -458,7 +458,7 @@ class JenkinsData
           reason["suspiciousLines"] << joined
         end
 
-      when /EACCES|\bERROR\b|Errno::ECONNRESET/,
+      when /EACCES|\bERROR\b|\bFATAL\b|Errno::ECONNRESET/,
            /Permission denied/i,
            /Connection timed out/i
         reason["suspiciousLines"] ||= []
@@ -540,6 +540,10 @@ class JenkinsData
           when /jenkinsci.*Connection timed out/i
             reason["cause"] = "network timeout"
             reason["detailedCause"] = "network timeout jenkins"
+
+          when /IOException.*: Failed to extract/i
+            reason["cause"] = "jenkins copy"
+            reason["detailedCause"] = "jenkins copy"
 
           end
         end
