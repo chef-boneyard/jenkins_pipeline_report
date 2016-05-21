@@ -99,8 +99,6 @@ class JenkinsData
         stage["runs"] = rewritten_runs
       end
 
-      build["stages"] = Hash[build["stages"].to_a.reverse] if build["stages"].keys.first == jenkins.job
-
       build = process_build(build)
 
       build
@@ -250,6 +248,8 @@ class JenkinsData
 
     # Delete unnecessary data
     %w{job number upstreams downstreams}.each { |key| stage.delete(key) }
+
+    stage["retryOf"] = stage["retryOf"].sort.reverse if stage["retryOf"]
 
     if stage["runs"]
       failures = stage["runs"].select { |c,run| failed?(run) }
