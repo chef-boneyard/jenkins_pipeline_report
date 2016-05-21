@@ -416,6 +416,12 @@ class JenkinsData
         reason["tests"] ||= {}
         reason["tests"]["chef_verify"] ||= []
         reason["tests"]["chef_verify"] << $1
+      when /The --deployment flag requires a/
+        joined = "#{line.strip} #{lines[index+1].strip}"
+        if joined =~ /The --deployment flag requires a .*Gemfile.lock/
+          reason["suspiciousLines"] ||= []
+          reason["suspiciousLines"] << joined
+        end
       when /EACCES/
         reason["suspiciousLines"] ||= []
         reason["suspiciousLines"] << line.strip
@@ -475,6 +481,9 @@ class JenkinsData
       if reason["suspiciousLines"]
         reason["suspiciousLines"].each do |suspiciousLine|
           case suspiciousLine
+          when /The --deployment flag requires a .*\/([^\/]+\/Gemfile.lock)/
+            reason["cause"] = "missing Gemfile.lock"
+            reason["detailedCause"] = "missing #{$1}"
           when /EACCES/
             reason["cause"] = "disk space"
             reason["detailedCause"] = "disk space (EACCES)"
