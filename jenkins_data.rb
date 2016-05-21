@@ -459,7 +459,8 @@ class JenkinsData
         end
 
       when /EACCES|\bERROR\b|Errno::ECONNRESET/,
-           /Permission denied/i
+           /Permission denied/i,
+           /Connection timed out/i
         reason["suspiciousLines"] ||= []
         reason["suspiciousLines"] << line.strip
 
@@ -535,6 +536,11 @@ class JenkinsData
             end
             reason["cause"] = "network reset"
             reason["detailedCause"] = "network reset#{hostname ? " #{hostname}" : ""}"
+
+          when /jenkinsci.*Connection timed out/i
+            reason["cause"] = "network timeout"
+            reason["detailedCause"] = "network timeout jenkins"
+
           end
         end
       end
@@ -555,7 +561,7 @@ class JenkinsData
         when /Failed to connect to (.+) port (\d+): Timed out/i,
              /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
           reason["cause"] = "network timeout"
-          reason["detailedCause"] = "network timeout reaching #{$1}:#{$2}"
+          reason["detailedCause"] = "network timeout #{$1}:#{$2}"
           return
 
         when /Unable to create .*index.lock.*File exists/mi
