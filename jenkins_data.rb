@@ -19,7 +19,7 @@ class JenkinsData
   def refresh(force_refresh_runs: false, force_refresh_logs: false, force_reprocess_logs: false)
     builds = refresh_builds
     builds.each do |build|
-      JenkinsData.debug "Processing #{build["stages"].values.first["url"]} ..."
+      JenkinsData.debug "Processing #{build["stages"].values.last["url"]} ..."
       refresh_runs(build, force: force_refresh_runs)
       cache_console_texts(build, force: force_refresh_logs)
       process_console_texts(build, force: force_reprocess_logs)
@@ -98,6 +98,8 @@ class JenkinsData
         end
         stage["runs"] = rewritten_runs
       end
+
+      build["stages"] = Hash[build["stages"].to_a.reverse] if build["stages"].keys.first == jenkins.job
 
       build = process_build(build)
 
@@ -207,7 +209,8 @@ class JenkinsData
   def normalize_build(remote_build)
     # Get the build stages
     build = { "stages" => {} }
-    jenkins.build_stages(remote_build).each do |stage|
+    # Reverse the stage order so last is first, to make it easier to see errors
+    jenkins.build_stages(remote_build).reverse_each do |stage|
       build["stages"][stage["job"]] = stage.dup
     end
     build = process_build(build)
@@ -221,8 +224,8 @@ class JenkinsData
     end
 
     # Calculate build info
-    first_stage = build["stages"].values.first
-    last_stage = build["stages"].values.last
+    first_stage = build["stages"].values.last
+    last_stage = build["stages"].values.first
 
     # Add in calculated data
     build["version"] = last_stage["parameters"]["OMNIBUS_BUILD_VERSION"] if last_stage["parameters"]
@@ -262,7 +265,6 @@ class JenkinsData
       # Reorder runs by failure first, then by configuration name
       stage["runs"] = Hash[stage["runs"].sort_by { |configuration,run| "#{failed?(run) ? 0 : 1}-#{configuration}" }]
     end
-
 
     # Reorder fields for easier reading of YAML
     stage = reorder_fields(stage, %w{result failures timestamp duration url}, "runs")

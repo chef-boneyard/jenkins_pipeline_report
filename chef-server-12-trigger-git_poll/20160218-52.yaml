@@ -5,25 +5,17 @@ duration: 5075.8730000000005
 version: 12.4.2+20160218083031
 git_commit: db52300275e64eeb8532a86f6d3d19eef05ca392
 stages:
-  chef-server-12-trigger-git_poll:
-    result: SUCCESS
-    timestamp: '2016-02-18T00:30:11-08:00'
-    duration: 12.242
-    url: http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll/52/
-    causes:
-    - shortDescription: Started by an SCM change
-    parameters: {}
-    runs: {}
-  chef-server-12-build:
-    result: SUCCESS
-    timestamp: '2016-02-18T00:30:31-08:00'
-    duration: 1977.584
-    url: http://wilson.ci.chef.co/job/chef-server-12-build/106/
+  chef-server-12-promote:
+    result: FAILURE
+    timestamp: '2016-02-18T01:53:08-08:00'
+    duration: 121.8
+    url: http://wilson.ci.chef.co/job/chef-server-12-promote/59/
     parameters:
-      GIT_REF: origin/master
-      APPEND_TIMESTAMP: true
+      OMNIBUS_BUILD_VERSION: 12.4.2+20160218083031
       DELIVERY_CHANGE: ''
       DELIVERY_SHA: ''
+      GIT_REF: origin/master
+      APPEND_TIMESTAMP: true
       EXPIRE_CACHE: 'false'
       RELEASE_BUILD: 'false'
       PIPELINE_NAME: chef-server-12
@@ -34,35 +26,37 @@ stages:
       GIT_BRANCH: origin/master
       PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
       BUILD_USER: SCMTrigger
-    runs:
-      el-5:
-        result: SUCCESS
-        timestamp: '2016-02-18T00:30:31-08:00'
-        duration: 1966.509
-        builtOn: chef-server-rhel-5-builder-dd11b6
-        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/106/
-        omnibusTiming: {}
-      el-6:
-        result: SUCCESS
-        timestamp: '2016-02-18T00:30:31-08:00'
-        duration: 1243.806
-        builtOn: chef-server-rhel-6-builder-f4b641
-        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/106/
-        omnibusTiming: {}
-      el-7:
-        result: SUCCESS
-        timestamp: '2016-02-18T00:30:31-08:00'
-        duration: 1519.973
-        builtOn: chef-server-rhel-7-builder-1d11c3
-        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-7,project=chef-server,role=builder/106/
-        omnibusTiming: {}
-      ubuntu-10.04:
-        result: SUCCESS
-        timestamp: '2016-02-18T00:30:31-08:00'
-        duration: 1082.816
-        builtOn: chef-server-ubuntu-10.04-builder-6f743f
-        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=builder/106/
-        omnibusTiming: {}
+      PLATFORM_MAPPINGS_JSON: |-
+        {
+          "build_to_test": {
+            "ubuntu-10.04": [
+              "ubuntu-10.04",
+              "ubuntu-12.04",
+              "ubuntu-14.04"
+            ],
+            "el-5": [
+              "el-5"
+            ],
+            "el-6": [
+              "el-6"
+            ],
+            "el-7": [
+              "el-7"
+            ]
+          },
+          "test_to_build": {
+            "ubuntu-10.04": "ubuntu-10.04",
+            "ubuntu-12.04": "ubuntu-10.04",
+            "ubuntu-14.04": "ubuntu-10.04",
+            "el-5": "el-5",
+            "el-6": "el-6",
+            "el-7": "el-7"
+          }
+        }
+      PIPELINE_BUILD_JOB_NUMBER: '106'
+      PIPELINE_BUILD_JOB_NAME: chef-server-12-build
+      PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-git_poll-52/52/2016-02-18_08-30-11
+    runs: {}
   chef-server-12-test:
     result: SUCCESS
     timestamp: '2016-02-18T01:03:37-08:00'
@@ -157,17 +151,16 @@ stages:
         builtOn: chef-server-ubuntu-14.04-tester-69fc04
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-server,role=tester/98/
         omnibusTiming: {}
-  chef-server-12-promote:
-    result: FAILURE
-    timestamp: '2016-02-18T01:53:08-08:00'
-    duration: 121.8
-    url: http://wilson.ci.chef.co/job/chef-server-12-promote/59/
+  chef-server-12-build:
+    result: SUCCESS
+    timestamp: '2016-02-18T00:30:31-08:00'
+    duration: 1977.584
+    url: http://wilson.ci.chef.co/job/chef-server-12-build/106/
     parameters:
-      OMNIBUS_BUILD_VERSION: 12.4.2+20160218083031
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
       GIT_REF: origin/master
       APPEND_TIMESTAMP: true
+      DELIVERY_CHANGE: ''
+      DELIVERY_SHA: ''
       EXPIRE_CACHE: 'false'
       RELEASE_BUILD: 'false'
       PIPELINE_NAME: chef-server-12
@@ -178,34 +171,41 @@ stages:
       GIT_BRANCH: origin/master
       PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
       BUILD_USER: SCMTrigger
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "ubuntu-10.04": [
-              "ubuntu-10.04",
-              "ubuntu-12.04",
-              "ubuntu-14.04"
-            ],
-            "el-5": [
-              "el-5"
-            ],
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ]
-          },
-          "test_to_build": {
-            "ubuntu-10.04": "ubuntu-10.04",
-            "ubuntu-12.04": "ubuntu-10.04",
-            "ubuntu-14.04": "ubuntu-10.04",
-            "el-5": "el-5",
-            "el-6": "el-6",
-            "el-7": "el-7"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '106'
-      PIPELINE_BUILD_JOB_NAME: chef-server-12-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-git_poll-52/52/2016-02-18_08-30-11
+    runs:
+      el-5:
+        result: SUCCESS
+        timestamp: '2016-02-18T00:30:31-08:00'
+        duration: 1966.509
+        builtOn: chef-server-rhel-5-builder-dd11b6
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/106/
+        omnibusTiming: {}
+      el-6:
+        result: SUCCESS
+        timestamp: '2016-02-18T00:30:31-08:00'
+        duration: 1243.806
+        builtOn: chef-server-rhel-6-builder-f4b641
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/106/
+        omnibusTiming: {}
+      el-7:
+        result: SUCCESS
+        timestamp: '2016-02-18T00:30:31-08:00'
+        duration: 1519.973
+        builtOn: chef-server-rhel-7-builder-1d11c3
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-7,project=chef-server,role=builder/106/
+        omnibusTiming: {}
+      ubuntu-10.04:
+        result: SUCCESS
+        timestamp: '2016-02-18T00:30:31-08:00'
+        duration: 1082.816
+        builtOn: chef-server-ubuntu-10.04-builder-6f743f
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=builder/106/
+        omnibusTiming: {}
+  chef-server-12-trigger-git_poll:
+    result: SUCCESS
+    timestamp: '2016-02-18T00:30:11-08:00'
+    duration: 12.242
+    url: http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll/52/
+    causes:
+    - shortDescription: Started by an SCM change
+    parameters: {}
     runs: {}

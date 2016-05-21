@@ -5,29 +5,17 @@ duration: 5783.575
 version: 0.13.14
 git_commit: 29abb5d49c00912d8d69cb0acd308945f7c516a6
 stages:
-  chefdk-trigger-release:
+  chefdk-promote:
     result: SUCCESS
-    timestamp: '2016-04-08T13:05:34-07:00'
-    duration: 5.181
-    url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/32/
-    causes:
-    - shortDescription: Started by user Chef Jenkins User
-      userId: chef-jenkins
-      userName: Chef Jenkins User
+    timestamp: '2016-04-08T14:42:12-07:00'
+    duration: 12.297
+    url: http://manhattan.ci.chef.co/job/chefdk-promote/32/
     parameters:
-      GIT_REF: v0.13.14
-      EXPIRE_CACHE: false
-    runs: {}
-  chefdk-build:
-    result: SUCCESS
-    timestamp: '2016-04-08T13:05:49-07:00'
-    duration: 2031.369
-    url: http://manhattan.ci.chef.co/job/chefdk-build/231/
-    parameters:
-      GIT_REF: v0.13.14
-      APPEND_TIMESTAMP: false
+      OMNIBUS_BUILD_VERSION: 0.13.14
       DELIVERY_CHANGE: ''
       DELIVERY_SHA: ''
+      GIT_REF: v0.13.14
+      APPEND_TIMESTAMP: false
       EXPIRE_CACHE: false
       RELEASE_BUILD: 'true'
       PIPELINE_NAME: chefdk
@@ -37,49 +25,57 @@ stages:
       PIPELINE_TRIGGER_BUILD_NUMBER: '32'
       GIT_BRANCH: v0.13.14
       PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
-    runs:
-      debian-6:
-        result: SUCCESS
-        timestamp: '2016-04-08T13:05:49-07:00'
-        duration: 1448.91
-        builtOn: chefdk-debian-6-builder-2ccc58
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/231/
-        omnibusTiming: {}
-      el-6:
-        result: SUCCESS
-        timestamp: '2016-04-08T13:05:49-07:00'
-        duration: 1663.807
-        builtOn: chefdk-rhel-6-builder-02167c
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/231/
-        omnibusTiming: {}
-      el-7:
-        result: SUCCESS
-        timestamp: '2016-04-08T13:05:49-07:00'
-        duration: 1154.762
-        builtOn: chefdk-rhel-7-builder-b67c93
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/231/
-        omnibusTiming: {}
-      mac_os_x-10.9:
-        result: SUCCESS
-        timestamp: '2016-04-08T13:05:49-07:00'
-        duration: 699.699
-        builtOn: chefdk-mac_os_x-10.9-builder-d736d1
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/231/
-        omnibusTiming: {}
-      ubuntu-12.04:
-        result: SUCCESS
-        timestamp: '2016-04-08T13:05:49-07:00'
-        duration: 1387.683
-        builtOn: chefdk-ubuntu-12.04-builder-efc2e0
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/231/
-        omnibusTiming: {}
-      windows-2008r2-i386:
-        result: SUCCESS
-        timestamp: '2016-04-08T13:05:49-07:00'
-        duration: 2024.727
-        builtOn: chefdk-windows-2008r2-i386-builder-dcb6f4
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/231/
-        omnibusTiming: {}
+      PLATFORM_MAPPINGS_JSON: |-
+        {
+          "build_to_test": {
+            "debian-6": [
+              "debian-6",
+              "debian-7",
+              "debian-8"
+            ],
+            "ubuntu-12.04": [
+              "ubuntu-12.04",
+              "ubuntu-14.04",
+              "acceptance"
+            ],
+            "el-6": [
+              "el-6"
+            ],
+            "el-7": [
+              "el-7"
+            ],
+            "mac_os_x-10.9": [
+              "mac_os_x-10.9",
+              "mac_os_x-10.10",
+              "mac_os_x-10.11"
+            ],
+            "windows-2008r2": [
+              "windows-2008r2",
+              "windows-2012",
+              "windows-2012r2"
+            ]
+          },
+          "test_to_build": {
+            "debian-6": "debian-6",
+            "debian-7": "debian-6",
+            "debian-8": "debian-6",
+            "ubuntu-12.04": "ubuntu-12.04",
+            "ubuntu-14.04": "ubuntu-12.04",
+            "acceptance": "ubuntu-12.04",
+            "el-6": "el-6",
+            "el-7": "el-7",
+            "mac_os_x-10.9": "mac_os_x-10.9",
+            "mac_os_x-10.10": "mac_os_x-10.9",
+            "mac_os_x-10.11": "mac_os_x-10.9",
+            "windows-2008r2": "windows-2008r2",
+            "windows-2012": "windows-2008r2",
+            "windows-2012r2": "windows-2008r2"
+          }
+        }
+      PIPELINE_BUILD_JOB_NUMBER: '231'
+      PIPELINE_BUILD_JOB_NAME: chefdk-build
+      PIPELINE_RUN_FINGERPRINT: jenkins-chefdk-trigger-release-32/32/2016-04-08_20-05-34
+    runs: {}
   chefdk-test:
     result: SUCCESS
     timestamp: '2016-04-08T13:39:49-07:00'
@@ -250,17 +246,16 @@ stages:
         builtOn: chefdk-windows-2008r2-i386-tester-e50cbf
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/90/
         omnibusTiming: {}
-  chefdk-promote:
+  chefdk-build:
     result: SUCCESS
-    timestamp: '2016-04-08T14:42:12-07:00'
-    duration: 12.297
-    url: http://manhattan.ci.chef.co/job/chefdk-promote/32/
+    timestamp: '2016-04-08T13:05:49-07:00'
+    duration: 2031.369
+    url: http://manhattan.ci.chef.co/job/chefdk-build/231/
     parameters:
-      OMNIBUS_BUILD_VERSION: 0.13.14
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
       GIT_REF: v0.13.14
       APPEND_TIMESTAMP: false
+      DELIVERY_CHANGE: ''
+      DELIVERY_SHA: ''
       EXPIRE_CACHE: false
       RELEASE_BUILD: 'true'
       PIPELINE_NAME: chefdk
@@ -270,54 +265,59 @@ stages:
       PIPELINE_TRIGGER_BUILD_NUMBER: '32'
       GIT_BRANCH: v0.13.14
       PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "debian-6": [
-              "debian-6",
-              "debian-7",
-              "debian-8"
-            ],
-            "ubuntu-12.04": [
-              "ubuntu-12.04",
-              "ubuntu-14.04",
-              "acceptance"
-            ],
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ],
-            "mac_os_x-10.9": [
-              "mac_os_x-10.9",
-              "mac_os_x-10.10",
-              "mac_os_x-10.11"
-            ],
-            "windows-2008r2": [
-              "windows-2008r2",
-              "windows-2012",
-              "windows-2012r2"
-            ]
-          },
-          "test_to_build": {
-            "debian-6": "debian-6",
-            "debian-7": "debian-6",
-            "debian-8": "debian-6",
-            "ubuntu-12.04": "ubuntu-12.04",
-            "ubuntu-14.04": "ubuntu-12.04",
-            "acceptance": "ubuntu-12.04",
-            "el-6": "el-6",
-            "el-7": "el-7",
-            "mac_os_x-10.9": "mac_os_x-10.9",
-            "mac_os_x-10.10": "mac_os_x-10.9",
-            "mac_os_x-10.11": "mac_os_x-10.9",
-            "windows-2008r2": "windows-2008r2",
-            "windows-2012": "windows-2008r2",
-            "windows-2012r2": "windows-2008r2"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '231'
-      PIPELINE_BUILD_JOB_NAME: chefdk-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chefdk-trigger-release-32/32/2016-04-08_20-05-34
+    runs:
+      debian-6:
+        result: SUCCESS
+        timestamp: '2016-04-08T13:05:49-07:00'
+        duration: 1448.91
+        builtOn: chefdk-debian-6-builder-2ccc58
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/231/
+        omnibusTiming: {}
+      el-6:
+        result: SUCCESS
+        timestamp: '2016-04-08T13:05:49-07:00'
+        duration: 1663.807
+        builtOn: chefdk-rhel-6-builder-02167c
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/231/
+        omnibusTiming: {}
+      el-7:
+        result: SUCCESS
+        timestamp: '2016-04-08T13:05:49-07:00'
+        duration: 1154.762
+        builtOn: chefdk-rhel-7-builder-b67c93
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/231/
+        omnibusTiming: {}
+      mac_os_x-10.9:
+        result: SUCCESS
+        timestamp: '2016-04-08T13:05:49-07:00'
+        duration: 699.699
+        builtOn: chefdk-mac_os_x-10.9-builder-d736d1
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/231/
+        omnibusTiming: {}
+      ubuntu-12.04:
+        result: SUCCESS
+        timestamp: '2016-04-08T13:05:49-07:00'
+        duration: 1387.683
+        builtOn: chefdk-ubuntu-12.04-builder-efc2e0
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/231/
+        omnibusTiming: {}
+      windows-2008r2-i386:
+        result: SUCCESS
+        timestamp: '2016-04-08T13:05:49-07:00'
+        duration: 2024.727
+        builtOn: chefdk-windows-2008r2-i386-builder-dcb6f4
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/231/
+        omnibusTiming: {}
+  chefdk-trigger-release:
+    result: SUCCESS
+    timestamp: '2016-04-08T13:05:34-07:00'
+    duration: 5.181
+    url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/32/
+    causes:
+    - shortDescription: Started by user Chef Jenkins User
+      userId: chef-jenkins
+      userName: Chef Jenkins User
+    parameters:
+      GIT_REF: v0.13.14
+      EXPIRE_CACHE: false
     runs: {}

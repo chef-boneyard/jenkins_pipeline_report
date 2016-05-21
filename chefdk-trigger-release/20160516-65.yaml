@@ -5,19 +5,203 @@ duration: 9020.231
 version: 0.14.23
 git_commit: 7213b487fc64a65292e923efff06623c579e7b5e
 stages:
-  chefdk-trigger-release:
-    result: SUCCESS
-    timestamp: '2016-05-16T13:29:19-07:00'
-    duration: 2.662
-    url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/65/
-    causes:
-    - shortDescription: Started by user Chef Jenkins User
-      userId: chef-jenkins
-      userName: Chef Jenkins User
+  chefdk-test:
+    result: FAILURE
+    failures:
+      missing acceptance/Gemfile.lock: acceptance
+      chef verify[berkshelf]: ubuntu-12.04
+    timestamp: '2016-05-16T15:32:08-07:00'
+    duration: 1666.204
+    url: http://manhattan.ci.chef.co/job/chefdk-test/172/
     parameters:
+      OMNIBUS_BUILD_VERSION: 0.14.23
+      DELIVERY_CHANGE: ''
+      DELIVERY_SHA: ''
       GIT_REF: v0.14.23
+      APPEND_TIMESTAMP: false
       EXPIRE_CACHE: false
-    runs: {}
+      RELEASE_BUILD: 'true'
+      PIPELINE_NAME: chefdk
+      GIT_COMMIT: 7213b487fc64a65292e923efff06623c579e7b5e
+      PROJECT: chefdk
+      PROMOTE: 'true'
+      PIPELINE_TRIGGER_BUILD_NUMBER: '65'
+      GIT_BRANCH: v0.14.23
+      PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
+      PLATFORM_MAPPINGS_JSON: |-
+        {
+          "build_to_test": {
+            "debian-6": [
+              "debian-6",
+              "debian-7",
+              "debian-8"
+            ],
+            "ubuntu-12.04": [
+              "ubuntu-12.04",
+              "ubuntu-14.04",
+              "acceptance"
+            ],
+            "el-6": [
+              "el-6"
+            ],
+            "el-7": [
+              "el-7"
+            ],
+            "mac_os_x-10.9": [
+              "mac_os_x-10.9",
+              "mac_os_x-10.10",
+              "mac_os_x-10.11"
+            ],
+            "windows-2008r2": [
+              "windows-2008r2",
+              "windows-2012",
+              "windows-2012r2"
+            ]
+          },
+          "test_to_build": {
+            "debian-6": "debian-6",
+            "debian-7": "debian-6",
+            "debian-8": "debian-6",
+            "ubuntu-12.04": "ubuntu-12.04",
+            "ubuntu-14.04": "ubuntu-12.04",
+            "acceptance": "ubuntu-12.04",
+            "el-6": "el-6",
+            "el-7": "el-7",
+            "mac_os_x-10.9": "mac_os_x-10.9",
+            "mac_os_x-10.10": "mac_os_x-10.9",
+            "mac_os_x-10.11": "mac_os_x-10.9",
+            "windows-2008r2": "windows-2008r2",
+            "windows-2012": "windows-2008r2",
+            "windows-2012r2": "windows-2008r2"
+          }
+        }
+      PIPELINE_BUILD_JOB_NUMBER: '411'
+      PIPELINE_BUILD_JOB_NAME: chefdk-build
+      PIPELINE_RUN_FINGERPRINT: jenkins-chefdk-trigger-release-65/65/2016-05-16_20-29-19
+    runs:
+      acceptance:
+        result: FAILURE
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 46.564
+        builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/172/
+        acceptanceTiming: []
+        failureCause:
+          cause: missing Gemfile.lock
+          detailedCause: missing acceptance/Gemfile.lock
+          jenkinsBuildStep: Invoke XShell command
+          suspiciousLines:
+          - The --deployment flag requires a ../../../../../../../../../../../../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.41/acceptance/Gemfile.lock.
+        omnibusTiming: {}
+      ubuntu-12.04:
+        result: FAILURE
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 701.757
+        builtOn: chefdk-ubuntu-12.04-tester-d64e0a
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=tester/172/
+        failureCause:
+          cause: chef verify
+          detailedCause: chef verify[berkshelf]
+          stacktrace:
+          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:95:in
+            `block in materialize'"
+          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:88:in
+            `map!'"
+          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:88:in
+            `materialize'"
+          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:140:in
+            `specs'"
+          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:185:in
+            `specs_for'"
+          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:174:in
+            `requested_specs'"
+          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/environment.rb:19:in
+            `requested_specs'"
+          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/runtime.rb:14:in
+            `setup'"
+          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler.rb:95:in
+            `setup'"
+          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/setup.rb:19:in
+            `<top (required)>'"
+          - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in
+            `require'"
+          - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in
+            `require'"
+          jenkinsBuildStep: Invoke XShell command
+          tests:
+            chef verify:
+            - berkshelf
+        omnibusTiming: {}
+      debian-6:
+        result: SUCCESS
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 984.882
+        builtOn: chefdk-debian-6-tester-31349b
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/172/
+        omnibusTiming: {}
+      debian-7:
+        result: SUCCESS
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 758.089
+        builtOn: chefdk-debian-7-tester-6585d4
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-7,project=chefdk,role=tester/172/
+        omnibusTiming: {}
+      debian-8:
+        result: SUCCESS
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 828.041
+        builtOn: chefdk-debian-8-tester-b7ac3b
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-8,project=chefdk,role=tester/172/
+        omnibusTiming: {}
+      el-6:
+        result: SUCCESS
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 1664.194
+        builtOn: chefdk-rhel-6-tester-42bd5e
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-6,project=chefdk,role=tester/172/
+        omnibusTiming: {}
+      el-7:
+        result: SUCCESS
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 654.805
+        builtOn: chefdk-rhel-7-tester-ce15ff
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-7,project=chefdk,role=tester/172/
+        omnibusTiming: {}
+      mac_os_x-10.10:
+        result: SUCCESS
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 570.351
+        builtOn: chefdk-mac_os_x-10.10-tester-f8e0cd
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.10,project=chefdk,role=tester/172/
+        omnibusTiming: {}
+      mac_os_x-10.11:
+        result: SUCCESS
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 446.702
+        builtOn: chefdk-mac_os_x-10.11-tester-fb35b7
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.11,project=chefdk,role=tester/172/
+        omnibusTiming: {}
+      mac_os_x-10.9:
+        result: SUCCESS
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 562.742
+        builtOn: chefdk-mac_os_x-10.9-tester-8a14ce
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=tester/172/
+        omnibusTiming: {}
+      ubuntu-14.04:
+        result: SUCCESS
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 870.191
+        builtOn: chefdk-ubuntu-14.04-tester-48c4bf
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/172/
+        omnibusTiming: {}
+      windows-2008r2-i386:
+        result: SUCCESS
+        timestamp: '2016-05-16T15:32:08-07:00'
+        duration: 552.466
+        builtOn: chefdk-windows-2008r2-i386-tester-008788
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/172/
+        omnibusTiming: {}
   chefdk-build:
     result: SUCCESS
     timestamp: '2016-05-16T13:29:29-07:00'
@@ -407,200 +591,16 @@ stages:
           liblzma: 172.1367
           libiconv: 251.5817
           config_guess: 0.0936
-  chefdk-test:
-    result: FAILURE
-    failures:
-      missing acceptance/Gemfile.lock: acceptance
-      chef verify[berkshelf]: ubuntu-12.04
-    timestamp: '2016-05-16T15:32:08-07:00'
-    duration: 1666.204
-    url: http://manhattan.ci.chef.co/job/chefdk-test/172/
+  chefdk-trigger-release:
+    result: SUCCESS
+    timestamp: '2016-05-16T13:29:19-07:00'
+    duration: 2.662
+    url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/65/
+    causes:
+    - shortDescription: Started by user Chef Jenkins User
+      userId: chef-jenkins
+      userName: Chef Jenkins User
     parameters:
-      OMNIBUS_BUILD_VERSION: 0.14.23
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
       GIT_REF: v0.14.23
-      APPEND_TIMESTAMP: false
       EXPIRE_CACHE: false
-      RELEASE_BUILD: 'true'
-      PIPELINE_NAME: chefdk
-      GIT_COMMIT: 7213b487fc64a65292e923efff06623c579e7b5e
-      PROJECT: chefdk
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '65'
-      GIT_BRANCH: v0.14.23
-      PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "debian-6": [
-              "debian-6",
-              "debian-7",
-              "debian-8"
-            ],
-            "ubuntu-12.04": [
-              "ubuntu-12.04",
-              "ubuntu-14.04",
-              "acceptance"
-            ],
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ],
-            "mac_os_x-10.9": [
-              "mac_os_x-10.9",
-              "mac_os_x-10.10",
-              "mac_os_x-10.11"
-            ],
-            "windows-2008r2": [
-              "windows-2008r2",
-              "windows-2012",
-              "windows-2012r2"
-            ]
-          },
-          "test_to_build": {
-            "debian-6": "debian-6",
-            "debian-7": "debian-6",
-            "debian-8": "debian-6",
-            "ubuntu-12.04": "ubuntu-12.04",
-            "ubuntu-14.04": "ubuntu-12.04",
-            "acceptance": "ubuntu-12.04",
-            "el-6": "el-6",
-            "el-7": "el-7",
-            "mac_os_x-10.9": "mac_os_x-10.9",
-            "mac_os_x-10.10": "mac_os_x-10.9",
-            "mac_os_x-10.11": "mac_os_x-10.9",
-            "windows-2008r2": "windows-2008r2",
-            "windows-2012": "windows-2008r2",
-            "windows-2012r2": "windows-2008r2"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '411'
-      PIPELINE_BUILD_JOB_NAME: chefdk-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chefdk-trigger-release-65/65/2016-05-16_20-29-19
-    runs:
-      acceptance:
-        result: FAILURE
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 46.564
-        builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/172/
-        acceptanceTiming: []
-        failureCause:
-          cause: missing Gemfile.lock
-          detailedCause: missing acceptance/Gemfile.lock
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousLines:
-          - The --deployment flag requires a ../../../../../../../../../../../../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.41/acceptance/Gemfile.lock.
-        omnibusTiming: {}
-      ubuntu-12.04:
-        result: FAILURE
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 701.757
-        builtOn: chefdk-ubuntu-12.04-tester-d64e0a
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=tester/172/
-        failureCause:
-          cause: chef verify
-          detailedCause: chef verify[berkshelf]
-          stacktrace:
-          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:95:in
-            `block in materialize'"
-          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:88:in
-            `map!'"
-          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:88:in
-            `materialize'"
-          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:140:in
-            `specs'"
-          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:185:in
-            `specs_for'"
-          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:174:in
-            `requested_specs'"
-          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/environment.rb:19:in
-            `requested_specs'"
-          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/runtime.rb:14:in
-            `setup'"
-          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler.rb:95:in
-            `setup'"
-          - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/setup.rb:19:in
-            `<top (required)>'"
-          - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in
-            `require'"
-          - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in
-            `require'"
-          jenkinsBuildStep: Invoke XShell command
-          tests:
-            chef verify:
-            - berkshelf
-        omnibusTiming: {}
-      debian-6:
-        result: SUCCESS
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 984.882
-        builtOn: chefdk-debian-6-tester-31349b
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/172/
-        omnibusTiming: {}
-      debian-7:
-        result: SUCCESS
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 758.089
-        builtOn: chefdk-debian-7-tester-6585d4
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-7,project=chefdk,role=tester/172/
-        omnibusTiming: {}
-      debian-8:
-        result: SUCCESS
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 828.041
-        builtOn: chefdk-debian-8-tester-b7ac3b
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-8,project=chefdk,role=tester/172/
-        omnibusTiming: {}
-      el-6:
-        result: SUCCESS
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 1664.194
-        builtOn: chefdk-rhel-6-tester-42bd5e
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-6,project=chefdk,role=tester/172/
-        omnibusTiming: {}
-      el-7:
-        result: SUCCESS
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 654.805
-        builtOn: chefdk-rhel-7-tester-ce15ff
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-7,project=chefdk,role=tester/172/
-        omnibusTiming: {}
-      mac_os_x-10.10:
-        result: SUCCESS
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 570.351
-        builtOn: chefdk-mac_os_x-10.10-tester-f8e0cd
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.10,project=chefdk,role=tester/172/
-        omnibusTiming: {}
-      mac_os_x-10.11:
-        result: SUCCESS
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 446.702
-        builtOn: chefdk-mac_os_x-10.11-tester-fb35b7
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.11,project=chefdk,role=tester/172/
-        omnibusTiming: {}
-      mac_os_x-10.9:
-        result: SUCCESS
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 562.742
-        builtOn: chefdk-mac_os_x-10.9-tester-8a14ce
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=tester/172/
-        omnibusTiming: {}
-      ubuntu-14.04:
-        result: SUCCESS
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 870.191
-        builtOn: chefdk-ubuntu-14.04-tester-48c4bf
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/172/
-        omnibusTiming: {}
-      windows-2008r2-i386:
-        result: SUCCESS
-        timestamp: '2016-05-16T15:32:08-07:00'
-        duration: 552.466
-        builtOn: chefdk-windows-2008r2-i386-tester-008788
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/172/
-        omnibusTiming: {}
+    runs: {}
