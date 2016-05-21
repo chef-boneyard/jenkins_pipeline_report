@@ -158,7 +158,7 @@ stages:
   chefdk-test:
     result: FAILURE
     failures:
-      unknown: acceptance
+      disk space (EACCES): acceptance
     timestamp: '2016-05-16T18:54:00-07:00'
     duration: 1849.967
     url: http://manhattan.ci.chef.co/job/chefdk-test/174/
@@ -243,6 +243,8 @@ stages:
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/174/
         omnibusTiming: {}
         failureCause:
+          cause: disk space
+          detailedCause: disk space (EACCES)
           stacktrace:
           - "/opt/chefdk/embedded/lib/ruby/2.1.0/tmpdir.rb:85:in `mkdir'"
           - "/opt/chefdk/embedded/lib/ruby/2.1.0/tmpdir.rb:85:in `block in mktmpdir'"
@@ -317,6 +319,8 @@ stages:
           - "/opt/chefdk/embedded/bin/bundle:22:in `load'"
           - "/opt/chefdk/embedded/bin/bundle:22:in `<main>'"
           jenkinsBuildStep: Invoke XShell command
+          suspiciousLines:
+          - 'Errno::EACCES: Permission denied @ dir_s_mkdir - /home/jenkins/.bundle/cache/compact_index/rubygems.org.443.29b0360b937aa4d161703e6160654e47/versions20160517-1712-rgdhm4'
       debian-6:
         result: SUCCESS
         timestamp: '2016-05-16T18:54:00-07:00'

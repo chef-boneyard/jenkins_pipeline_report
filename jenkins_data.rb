@@ -403,18 +403,21 @@ class JenkinsData
     while index > 0
       line = lines[index]
       # Build step 'Invoke XShell command' marked build as failure
-      if line =~ /^\s*Build step '(.+)' marked build as failure\s*$/
+      case line
+      when /^\s*Build step '(.+)' marked build as failure\s*$/
         reason["jenkinsBuildStep"] ||= $1
-
-      elsif line =~ /^\s*(\S+)(:\d+:in `.+')\s*$/
+      when /^\s*(\S+)(:\d+:in `.+')\s*$/
         index, stacktrace = extract_stacktrace(lines, index)
         reason["stacktrace"] ||= stacktrace if stacktrace.any?
-
-      elsif line =~ /^The following shell command exited with status (\d+):\s/
+      when /^The following shell command exited with status (\d+):\s/
         command = extract_shell_command(lines, index, $1)
         reason["shellCommand"] ||= command if command
+      when /EACCES/
+        reason["suspiciousLines"] ||= []
+        reason["suspiciousLines"] << line.strip
+      end
 
-      elsif !reason.has_key?("omnibusStep")
+      unless reason.has_key?("omnibusStep")
         component, timestamp, log = line.split("|", 3).map { |s| s.strip }
         if log && component =~ /^\[\s+(.+)\]\s+\S+$/i
           component = $1
@@ -429,29 +432,39 @@ class JenkinsData
   end
 
   def deduce_cause(run)
-    reasons = run["failureCause"]
+    reason = run["failureCause"]
     if failed?(run) && run["result"].downcase != "failure"
-      reasons ||= run["failureCause"] = {}
-      reasons["cause"] = run["result"].downcase
-      reasons["detailedCause"] = reasons["cause"]
+      reason ||= run["failureCause"] = {}
+      reason["cause"] = run["result"].downcase
+      reason["detailedCause"] = reason["cause"]
       return
     end
 
-    if reasons
-      if reasons["shellCommand"]
-        stderr = reasons["shellCommand"]["stderr"]
-        stdout = reasons["shellCommand"]["stdout"]
+    if reason
+      if reason["shellCommand"]
+        stderr = reason["shellCommand"]["stderr"]
+        stdout = reason["shellCommand"]["stdout"]
         case stderr
         when /Failed to connect to (.+) port (\d+): Timed out/i,
              /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
-          reasons["cause"] = "network timeout"
-          reasons["detailedCause"] = "network timeout reaching #{$1}:#{$2}"
+          reason["cause"] = "network timeout"
+          reason["detailedCause"] = "network timeout reaching #{$1}:#{$2}"
           return
         end
-        case reasons["shellCommand"]["stdout"]
+        case reason["shellCommand"]["stdout"]
         when /Gemfile\.lock is corrupt/
-          reasons["cause"] = "corrupt Gemfile.lock"
-          reasons["detailedCause"] = reasons["cause"]
+          reason["cause"] = "corrupt Gemfile.lock"
+          reason["detailedCause"] = reason["cause"]
+        end
+      end
+
+      if reason["suspiciousLines"]
+        reason["suspiciousLines"].each do |suspiciousLine|
+          case suspiciousLine
+          when /EACCES/
+            reason["cause"] = "disk space"
+            reason["detailedCause"] = "disk space (EACCES)"
+          end
         end
       end
     end
@@ -478,7 +491,6 @@ class JenkinsData
 
     while index >= 0
       line = lines[index]
-      index -= 1
       if line =~ /^\s*(\S+)(:\d+:in `.+')\s*$/
         filename, rest_of_line = $1, $2
         if filename =~ /\/architecture\/[^\/]+\/platform\/[^\/]+\/project\/[^\/]+\/role\/[^\/]+\/(.+)/
@@ -491,6 +503,7 @@ class JenkinsData
       else
         break
       end
+      index -= 1
     end
 
     [ index+1, stacktrace.reverse ]
