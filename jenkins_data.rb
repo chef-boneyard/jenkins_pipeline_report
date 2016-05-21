@@ -352,17 +352,17 @@ class JenkinsData
     if run["changedThisTime"] || force ||
        !run.has_key?("omnibusTiming") ||
        (configuration == "acceptance" && !run.has_key?("acceptanceTiming"))
-      JenkinsData.debug("Extracting timing from #{File.basename(console_text_filename(build, run))}...")
       console_text ||= console_text(build, run)
       return unless console_text
+      JenkinsData.debug("Extracting timing from #{File.basename(console_text_filename(build, run))}...")
       extract_timing(configuration, run, console_text)
     end
 
     if run["changedThisTime"] || force || !run.has_key?("failureCause")
       if failed?(run)
-        JenkinsData.debug("Extracting failure reason from #{File.basename(console_text_filename(build, run))}...")
         console_text ||= console_text(build, run)
         return unless console_text
+        JenkinsData.debug("Extracting failure reason from #{File.basename(console_text_filename(build, run))}...")
         extract_failure_information(run, console_text)
       end
     end
@@ -528,6 +528,10 @@ class JenkinsData
           reason["cause"] = "network timeout"
           reason["detailedCause"] = "network timeout reaching #{$1}:#{$2}"
           return
+
+        when /Unable to create .*index.lock.*File exists/mi
+          reason["cause"] = "git index.lock"
+          reason["detailedCause"] = "git index.lock"
         end
 
         case reason["shellCommand"]["stdout"]
