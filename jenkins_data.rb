@@ -65,6 +65,7 @@ class JenkinsData
       stage["runs"].each do |configuration,run|
         process_console_text(build, run, force: force)
       end
+      process_stage(stage)
     end
   end
 
@@ -248,9 +249,14 @@ class JenkinsData
     %w{job number upstreams downstreams}.each { |key| stage.delete(key) }
 
     if stage["runs"]
-      failures = stage["runs"].select { |c,r| failed?(r) }
+      failures = stage["runs"].select { |c,run| failed?(run) }
       if failures.any?
-        stage["failures"] = categorize_run_types(failures.keys, stage["runs"].keys).join(",")
+        failures = failures.group_by { |c,run| (run["failureCause"] && run["failureCause"]["detailedCause"]) || "unknown" }
+        failures.each do |cause, causedFailures|
+          configurations = causedFailures.map { |configuration,run| configuration }
+          failures[cause] = categorize_run_types(configurations, stage["runs"].keys).join(",")
+        end
+        stage["failures"] = failures
       end
     end
 
@@ -350,14 +356,21 @@ class JenkinsData
       extract_omnibus_timing(run, console_text)
     end
 
-    run.delete("failureReason")
-    if run["changedThisTime"] || force || !run.has_key?("failureReason")
+    if run["changedThisTime"] || force || !run.has_key?("failureCause")
       if failed?(run)
         JenkinsData.debug("Extracting failure reason from #{File.basename(console_text_filename(build, run))}...")
         console_text ||= console_text(build, run)
         return unless console_text
         extract_failure_information(run, console_text)
       end
+    end
+
+    #
+    # Decide on a cause using heuristics
+    #
+    deduce_cause(run)
+    if run["failureCause"]
+      run["failureCause"] = reorder_fields(run["failureCause"], %w{cause detailedCause shellCommand stacktrace jenkinsBuildStep})
     end
   end
 
@@ -384,31 +397,55 @@ class JenkinsData
   end
 
   def extract_failure_information(run, console_text)
-    run["failureReason"] = {}
+    reason = {}
     lines = console_text.lines
     index = lines.size - 1
     while index > 0
       line = lines[index]
       # Build step 'Invoke XShell command' marked build as failure
       if line =~ /^\s*Build step '(.+)' marked build as failure\s*$/
-        run["failureReason"]["jenkinsBuildStep"] ||= $1
+        reason["jenkinsBuildStep"] ||= $1
 
       elsif line =~ /^\s*(\S+)(:\d+:in `.+')\s*$/
         index, stacktrace = extract_stacktrace(lines, index)
-        run["failureReason"]["stacktrace"] ||= stacktrace
+        reason["stacktrace"] ||= stacktrace if stacktrace.any?
 
       elsif line =~ /^The following shell command exited with status (\d+):\s/
-        run["failureReason"]["shellCommand"] ||= extract_shell_command(lines, index, $1)
+        command = extract_shell_command(lines, index, $1)
+        reason["shellCommand"] ||= command if command
 
-      elsif !run["failureReason"].has_key?("omnibusStep")
+      elsif !reason.has_key?("omnibusStep")
         component, timestamp, log = line.split("|", 3).map { |s| s.strip }
         if log && component =~ /^\[\s+(.+)\]\s+\S+$/i
           component = $1
-          run["failureReason"]["omnibusStep"] = component
+          reason["omnibusStep"] ||= component
         end
       end
 
       index -= 1
+    end
+
+    run["failureCause"] = reason
+  end
+
+  def deduce_cause(run)
+    reasons = run["failureCause"]
+    if failed?(run) && run["result"].downcase != "failure"
+      reasons ||= run["failureCause"] = {}
+      reasons["cause"] = run["result"].downcase
+      reasons["detailedCause"] = reasons["cause"]
+      return
+    end
+
+    if reasons
+      if reasons["shellCommand"] && stderr = reasons["shellCommand"]["stderr"]
+        if stderr =~ /Failed to connect to (.+) port (\d+): Timed out/i ||
+           stderr =~ /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
+          reasons["cause"] = "network timeout"
+          reasons["detailedCause"] = "network timeout reaching #{$1}:#{$2}"
+          return
+        end
+      end
     end
   end
 

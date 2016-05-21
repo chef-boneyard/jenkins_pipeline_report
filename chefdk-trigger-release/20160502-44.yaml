@@ -20,7 +20,8 @@ stages:
     runs: {}
   chefdk-build:
     result: FAILURE
-    failures: windows
+    failures:
+      unknown: windows
     timestamp: '2016-05-02T16:29:00-07:00'
     duration: 5897.544
     url: http://manhattan.ci.chef.co/job/chefdk-build/353/
@@ -47,8 +48,24 @@ stages:
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/353/
         omnibusTiming:
           chef-dk: 4.8407
-        failureReason:
-          jenkinsBuildStep: Invoke XShell command
+        failureCause:
+          shellCommand:
+            exitStatus: '17'
+            command: ARFLAGS=rv --target=pe-i386 BUNDLE_GEMFILE=C:/omnibus-ruby/src/chef-dk/Gemfile
+              CFLAGS=-IC:/opscode/chefdk/embedded/include -m32 -O3 -march=i686 CPPFLAGS=-IC:/opscode/chefdk/embedded/include
+              -m32 -O3 -march=i686 CXXFLAGS=-IC:/opscode/chefdk/embedded/include -m32
+              -O3 -march=i686 LDFLAGS=-LC:/opscode/chefdk/embedded/lib -m32 LD_RUN_PATH=C:/opscode/chefdk/embedded/lib
+              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PKG_CONFIG_PATH=C:/opscode/chefdk/embedded/lib/pkgconfig
+              PROG_TAR=bsdtar Path=C:/opscode/chefdk/bin;C:/opscode/chefdk/embedded/bin;C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin;C:\msys\bin;C:\msys\mingw\bin;C:\Program
+              Files (x86)\Git\Cmd;C:\Program Files (x86)\Git\libexec\git-core;C:\languages\ruby\2.1.5\bin;C:\wix;C:\Program
+              Files\7-zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64;C:\Program
+              Files\Java\jre1.8.0_45\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\opscode\chef\bin\
+              RCFLAGS=--target=pe-i386 C:\opscode\chefdk\embedded\bin\bundle install
+              --verbose
+            stdout: "HTTP GET https://index.rubygems.org/versions\r\r\nHTTP 200 OK\r\r\nHTTP
+              GET https://index.rubygems.org/versions\r\r\nHTTP 200 OK\r\r\nChecksum
+              of /versions does not match the checksum provided by server! Something\r\r\nis
+              wrong."
           stacktrace:
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/util.rb:101:in
             `rescue in shellout!'
@@ -122,23 +139,7 @@ stages:
             `<top (required)>'
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `load'
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `<main>'
-          shellCommand:
-            exitStatus: '17'
-            command: ARFLAGS=rv --target=pe-i386 BUNDLE_GEMFILE=C:/omnibus-ruby/src/chef-dk/Gemfile
-              CFLAGS=-IC:/opscode/chefdk/embedded/include -m32 -O3 -march=i686 CPPFLAGS=-IC:/opscode/chefdk/embedded/include
-              -m32 -O3 -march=i686 CXXFLAGS=-IC:/opscode/chefdk/embedded/include -m32
-              -O3 -march=i686 LDFLAGS=-LC:/opscode/chefdk/embedded/lib -m32 LD_RUN_PATH=C:/opscode/chefdk/embedded/lib
-              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PKG_CONFIG_PATH=C:/opscode/chefdk/embedded/lib/pkgconfig
-              PROG_TAR=bsdtar Path=C:/opscode/chefdk/bin;C:/opscode/chefdk/embedded/bin;C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin;C:\msys\bin;C:\msys\mingw\bin;C:\Program
-              Files (x86)\Git\Cmd;C:\Program Files (x86)\Git\libexec\git-core;C:\languages\ruby\2.1.5\bin;C:\wix;C:\Program
-              Files\7-zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64;C:\Program
-              Files\Java\jre1.8.0_45\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\opscode\chef\bin\
-              RCFLAGS=--target=pe-i386 C:\opscode\chefdk\embedded\bin\bundle install
-              --verbose
-            stdout: "HTTP GET https://index.rubygems.org/versions\r\r\nHTTP 200 OK\r\r\nHTTP
-              GET https://index.rubygems.org/versions\r\r\nHTTP 200 OK\r\r\nChecksum
-              of /versions does not match the checksum provided by server! Something\r\r\nis
-              wrong."
+          jenkinsBuildStep: Invoke XShell command
       debian-6:
         result: SUCCESS
         timestamp: '2016-05-02T16:29:00-07:00'

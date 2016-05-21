@@ -12,7 +12,7 @@ JenkinsCli.parse_options do |opts|
     You must upload your public SSH key to your Jenkins server from ~/.ssh/id_rsa.
   EOM
 
-  opts.on("--[no-]urls", "Whether to show the URLs for all failing jobs (default: true).") do
+  opts.on("--[no-]urls", "Whether to show the URLs for all failing jobs (default: true).") do |v|
     options[:urls] = v
   end
 end
@@ -25,11 +25,20 @@ ARGV.each do |job_url|
       build_number = File.basename(build["stages"][job]["url"])
       failure_summary = build["stages"].map do |name,stage|
         if JenkinsData.failed?(stage)
-          "#{name} (#{stage["failures"]})"
+          name
         end
       end.compact.join(", ")
 
       puts "#{build_number}: #{build["result"].downcase.capitalize} in #{failure_summary} at #{build["timestamp"]}"
+      build["stages"].each do |job,stage|
+        if stage["failures"]
+          failures = stage["failures"].sort_by { |cause,failures| cause }
+          failures.each do |cause, failingRuns|
+            puts "  * #{cause}: #{failingRuns}"
+          end
+        end
+      end
+
       if options[:urls]
         printed_anything = false
         build["stages"].each do |job,stage|

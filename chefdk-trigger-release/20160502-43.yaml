@@ -20,7 +20,8 @@ stages:
     runs: {}
   chefdk-build:
     result: FAILURE
-    failures: mac_os_x,windows
+    failures:
+      unknown: mac_os_x,windows
     timestamp: '2016-05-02T09:59:55-07:00'
     duration: 6601.279
     url: http://manhattan.ci.chef.co/job/chefdk-build/344/
@@ -80,8 +81,24 @@ stages:
           chef-dk-gem-binding_of_caller: 78.2989
           chef-dk-gem-ruby-shadow: 0.0313
           chef-dk: 5.2189
-        failureReason:
-          jenkinsBuildStep: Invoke XShell command
+        failureCause:
+          shellCommand:
+            exitStatus: '17'
+            command: ARFLAGS=rv --target=pe-i386 BUNDLE_GEMFILE=C:/omnibus-ruby/src/chef-dk/Gemfile
+              CFLAGS=-IC:/opscode/chefdk/embedded/include -m32 -O3 -march=i686 CPPFLAGS=-IC:/opscode/chefdk/embedded/include
+              -m32 -O3 -march=i686 CXXFLAGS=-IC:/opscode/chefdk/embedded/include -m32
+              -O3 -march=i686 LDFLAGS=-LC:/opscode/chefdk/embedded/lib -m32 LD_RUN_PATH=C:/opscode/chefdk/embedded/lib
+              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PKG_CONFIG_PATH=C:/opscode/chefdk/embedded/lib/pkgconfig
+              PROG_TAR=bsdtar Path=C:/opscode/chefdk/bin;C:/opscode/chefdk/embedded/bin;C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin;C:\msys\bin;C:\msys\mingw\bin;C:\Program
+              Files (x86)\Git\Cmd;C:\Program Files (x86)\Git\libexec\git-core;C:\languages\ruby\2.1.5\bin;C:\wix;C:\Program
+              Files\7-zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64;C:\Program
+              Files\Java\jre1.8.0_45\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\opscode\chef\bin\
+              RCFLAGS=--target=pe-i386 C:\opscode\chefdk\embedded\bin\bundle install
+              --verbose
+            stdout: "HTTP GET https://index.rubygems.org/versions\r\r\nHTTP 200 OK\r\r\nHTTP
+              GET https://index.rubygems.org/versions\r\r\nHTTP 200 OK\r\r\nChecksum
+              of /versions does not match the checksum provided by server! Something\r\r\nis
+              wrong."
           stacktrace:
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/util.rb:101:in
             `rescue in shellout!'
@@ -155,23 +172,7 @@ stages:
             `<top (required)>'
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `load'
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `<main>'
-          shellCommand:
-            exitStatus: '17'
-            command: ARFLAGS=rv --target=pe-i386 BUNDLE_GEMFILE=C:/omnibus-ruby/src/chef-dk/Gemfile
-              CFLAGS=-IC:/opscode/chefdk/embedded/include -m32 -O3 -march=i686 CPPFLAGS=-IC:/opscode/chefdk/embedded/include
-              -m32 -O3 -march=i686 CXXFLAGS=-IC:/opscode/chefdk/embedded/include -m32
-              -O3 -march=i686 LDFLAGS=-LC:/opscode/chefdk/embedded/lib -m32 LD_RUN_PATH=C:/opscode/chefdk/embedded/lib
-              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PKG_CONFIG_PATH=C:/opscode/chefdk/embedded/lib/pkgconfig
-              PROG_TAR=bsdtar Path=C:/opscode/chefdk/bin;C:/opscode/chefdk/embedded/bin;C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin;C:\msys\bin;C:\msys\mingw\bin;C:\Program
-              Files (x86)\Git\Cmd;C:\Program Files (x86)\Git\libexec\git-core;C:\languages\ruby\2.1.5\bin;C:\wix;C:\Program
-              Files\7-zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64;C:\Program
-              Files\Java\jre1.8.0_45\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\opscode\chef\bin\
-              RCFLAGS=--target=pe-i386 C:\opscode\chefdk\embedded\bin\bundle install
-              --verbose
-            stdout: "HTTP GET https://index.rubygems.org/versions\r\r\nHTTP 200 OK\r\r\nHTTP
-              GET https://index.rubygems.org/versions\r\r\nHTTP 200 OK\r\r\nChecksum
-              of /versions does not match the checksum provided by server! Something\r\r\nis
-              wrong."
+          jenkinsBuildStep: Invoke XShell command
       debian-6:
         result: SUCCESS
         timestamp: '2016-05-02T09:59:55-07:00'
@@ -387,8 +388,13 @@ stages:
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/344/
         omnibusTiming:
           preparation: 0.0059
-        failureReason:
-          jenkinsBuildStep: Invoke XShell command
+        failureCause:
+          shellCommand:
+            exitStatus: '128'
+            command: git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
+              --work-tree=/opt/chefdk add -A -f
+            stderr: 'fatal: Unable to create ''/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock'':
+              File exists.'
           stacktrace:
           - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/util.rb:101:in
             `rescue in shellout!'
@@ -425,12 +431,7 @@ stages:
             `<top (required)>'
           - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:22:in `load'
           - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:22:in `<main>'
-          shellCommand:
-            exitStatus: '128'
-            command: git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
-              --work-tree=/opt/chefdk add -A -f
-            stderr: 'fatal: Unable to create ''/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock'':
-              File exists.'
+          jenkinsBuildStep: Invoke XShell command
       ubuntu-12.04:
         result: SUCCESS
         timestamp: '2016-05-02T09:59:55-07:00'

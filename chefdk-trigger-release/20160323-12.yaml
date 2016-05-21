@@ -20,7 +20,8 @@ stages:
     runs: {}
   chefdk-build:
     result: FAILURE
-    failures: debian,el,ubuntu,windows
+    failures:
+      unknown: debian,el,ubuntu,windows
     timestamp: '2016-03-23T14:19:30-07:00'
     duration: 13617.653
     url: http://manhattan.ci.chef.co/job/chefdk-build/126/
@@ -46,8 +47,12 @@ stages:
         builtOn: chefdk-windows-2008r2-i386-builder-a728bb
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/126/
         omnibusTiming: {}
-        failureReason:
-          jenkinsBuildStep: Invoke XShell command
+        failureCause:
+          shellCommand:
+            exitStatus: '128'
+            command: git -c core.autocrlf=false fetch https://github.com/opscode/ohai.git
+              f8522ea9ca3b1252af6a03a4c58057d320e8343c
+            stderr: 'error: no such remote ref f8522ea9ca3b1252af6a03a4c58057d320e8343c'
           stacktrace:
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-798b2db8e34a/lib/omnibus/util.rb:101:in
             `rescue in shellout!'
@@ -63,11 +68,7 @@ stages:
             `fetch'
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-798b2db8e34a/lib/omnibus/project.rb:1060:in
             `block (3 levels) in download'
-          shellCommand:
-            exitStatus: '128'
-            command: git -c core.autocrlf=false fetch https://github.com/opscode/ohai.git
-              f8522ea9ca3b1252af6a03a4c58057d320e8343c
-            stderr: 'error: no such remote ref f8522ea9ca3b1252af6a03a4c58057d320e8343c'
+          jenkinsBuildStep: Invoke XShell command
       debian-6:
         result: FAILURE
         timestamp: '2016-03-23T14:19:30-07:00'
@@ -75,7 +76,7 @@ stages:
         builtOn: chefdk-debian-6-builder-2ccc58
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/126/
         omnibusTiming: {}
-        failureReason:
+        failureCause:
           jenkinsBuildStep: Invoke XShell command
       el-6:
         result: FAILURE
@@ -84,7 +85,7 @@ stages:
         builtOn: chefdk-rhel-6-builder-02167c
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/126/
         omnibusTiming: {}
-        failureReason:
+        failureCause:
           jenkinsBuildStep: Invoke XShell command
       el-7:
         result: FAILURE
@@ -93,7 +94,7 @@ stages:
         builtOn: chefdk-rhel-7-builder-b67c93
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/126/
         omnibusTiming: {}
-        failureReason:
+        failureCause:
           jenkinsBuildStep: Invoke XShell command
       mac_os_x-10.9:
         result: SUCCESS
@@ -109,5 +110,5 @@ stages:
         builtOn: chefdk-ubuntu-12.04-builder-efc2e0
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/126/
         omnibusTiming: {}
-        failureReason:
+        failureCause:
           jenkinsBuildStep: Invoke XShell command

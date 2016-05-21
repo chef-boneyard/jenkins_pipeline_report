@@ -20,7 +20,8 @@ stages:
     runs: {}
   chefdk-build:
     result: FAILURE
-    failures: mac_os_x
+    failures:
+      unknown: mac_os_x
     timestamp: '2016-04-05T09:35:29-07:00'
     duration: 9171.68
     url: http://manhattan.ci.chef.co/job/chefdk-build/189/
@@ -74,8 +75,13 @@ stages:
         builtOn: chefdk-mac_os_x-10.9-builder-d736d1
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/189/
         omnibusTiming: {}
-        failureReason:
-          jenkinsBuildStep: Invoke XShell command
+        failureCause:
+          shellCommand:
+            exitStatus: '128'
+            command: git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
+              --work-tree=/opt/chefdk add -A -f
+            stderr: 'fatal: Unable to create ''/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock'':
+              File exists.'
           stacktrace:
           - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/util.rb:101:in
             `rescue in shellout!'
@@ -112,12 +118,7 @@ stages:
             `<top (required)>'
           - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
           - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
-          shellCommand:
-            exitStatus: '128'
-            command: git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
-              --work-tree=/opt/chefdk add -A -f
-            stderr: 'fatal: Unable to create ''/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock'':
-              File exists.'
+          jenkinsBuildStep: Invoke XShell command
       ubuntu-12.04:
         result: SUCCESS
         timestamp: '2016-04-05T09:35:29-07:00'

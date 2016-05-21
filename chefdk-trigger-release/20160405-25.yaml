@@ -20,7 +20,8 @@ stages:
     runs: {}
   chefdk-build:
     result: FAILURE
-    failures: mac_os_x,windows
+    failures:
+      unknown: mac_os_x,windows
     timestamp: '2016-04-05T12:04:43-07:00'
     duration: 7119.426
     url: http://manhattan.ci.chef.co/job/chefdk-build/191/
@@ -46,8 +47,42 @@ stages:
         builtOn: chefdk-windows-2008r2-i386-builder-031a04
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/191/
         omnibusTiming: {}
-        failureReason:
-          jenkinsBuildStep: Invoke XShell command
+        failureCause:
+          shellCommand:
+            exitStatus: '11'
+            command: CFLAGS=-IC:/opscode/chefdk/embedded/include -m32 -O3 -march=i686
+              CPPFLAGS=-IC:/opscode/chefdk/embedded/include -m32 -O3 -march=i686 CXXFLAGS=-IC:/opscode/chefdk/embedded/include
+              -m32 -O3 -march=i686 LDFLAGS=-LC:/opscode/chefdk/embedded/lib -m32 LD_RUN_PATH=C:/opscode/chefdk/embedded/lib
+              PKG_CONFIG_PATH=C:/opscode/chefdk/embedded/lib/pkgconfig Path=C:/opscode/chefdk/bin;C:/opscode/chefdk/embedded/bin;C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin;C:\msys\bin;C:\msys\mingw\bin;C:\Program
+              Files (x86)\Git\Cmd;C:\Program Files (x86)\Git\libexec\git-core;C:\languages\ruby\2.1.5\bin;C:\wix;C:\Program
+              Files\7-zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64;C:\Program
+              Files\Java\jre1.8.0_45\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\opscode\chef\bin\
+              C:\opscode\chefdk\embedded\bin\bundle install --without development
+            stdout: "Fetching git://github.com/chef/chef.git\r\r\nRetrying git clone
+              \"git://github.com/chef/chef.git\" \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
+              --bare --no-hardlinks --quiet due to error (2/4): Bundler::Source::Git::GitCommandError
+              Git error: command `git clone \"git://github.com/chef/chef.git\" \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
+              --bare --no-hardlinks --quiet` in directory C:/omnibus-ruby/src/chef-provisioning
+              has failed.\r\r\nRetrying git clone \"git://github.com/chef/chef.git\"
+              \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
+              --bare --no-hardlinks --quiet due to error (3/4): Bundler::Source::Git::GitCommandError
+              Git error: command `git clone \"git://github.com/chef/chef.git\" \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
+              --bare --no-hardlinks --quiet` in directory C:/omnibus-ruby/src/chef-provisioning
+              has failed.\r\r\nRetrying git clone \"git://github.com/chef/chef.git\"
+              \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
+              --bare --no-hardlinks --quiet due to error (4/4): Bundler::Source::Git::GitCommandError
+              Git error: command `git clone \"git://github.com/chef/chef.git\" \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
+              --bare --no-hardlinks --quiet` in directory C:/omnibus-ruby/src/chef-provisioning
+              has failed.\r\r\nGit error: command `git clone \"git://github.com/chef/chef.git\"\r\r\n\"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"\r\r\n--bare
+              --no-hardlinks --quiet` in directory\r\r\nC:/omnibus-ruby/src/chef-provisioning
+              has failed."
+            stderr: "fatal: remote error: \r\n  GitHub is offline for maintenance.
+              See http://status.github.com for more info.\r\nfatal: remote error:
+              \r\n  GitHub is offline for maintenance. See http://status.github.com
+              for more info.\r\nfatal: remote error: \r\n  GitHub is offline for maintenance.
+              See http://status.github.com for more info.\r\nfatal: remote error:
+              \r\n  GitHub is offline for maintenance. See http://status.github.com
+              for more info."
           stacktrace:
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/util.rb:101:in
             `rescue in shellout!'
@@ -121,41 +156,7 @@ stages:
             `<top (required)>'
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `load'
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `<main>'
-          shellCommand:
-            exitStatus: '11'
-            command: CFLAGS=-IC:/opscode/chefdk/embedded/include -m32 -O3 -march=i686
-              CPPFLAGS=-IC:/opscode/chefdk/embedded/include -m32 -O3 -march=i686 CXXFLAGS=-IC:/opscode/chefdk/embedded/include
-              -m32 -O3 -march=i686 LDFLAGS=-LC:/opscode/chefdk/embedded/lib -m32 LD_RUN_PATH=C:/opscode/chefdk/embedded/lib
-              PKG_CONFIG_PATH=C:/opscode/chefdk/embedded/lib/pkgconfig Path=C:/opscode/chefdk/bin;C:/opscode/chefdk/embedded/bin;C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin;C:\msys\bin;C:\msys\mingw\bin;C:\Program
-              Files (x86)\Git\Cmd;C:\Program Files (x86)\Git\libexec\git-core;C:\languages\ruby\2.1.5\bin;C:\wix;C:\Program
-              Files\7-zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64;C:\Program
-              Files\Java\jre1.8.0_45\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\opscode\chef\bin\
-              C:\opscode\chefdk\embedded\bin\bundle install --without development
-            stdout: "Fetching git://github.com/chef/chef.git\r\r\nRetrying git clone
-              \"git://github.com/chef/chef.git\" \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
-              --bare --no-hardlinks --quiet due to error (2/4): Bundler::Source::Git::GitCommandError
-              Git error: command `git clone \"git://github.com/chef/chef.git\" \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
-              --bare --no-hardlinks --quiet` in directory C:/omnibus-ruby/src/chef-provisioning
-              has failed.\r\r\nRetrying git clone \"git://github.com/chef/chef.git\"
-              \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
-              --bare --no-hardlinks --quiet due to error (3/4): Bundler::Source::Git::GitCommandError
-              Git error: command `git clone \"git://github.com/chef/chef.git\" \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
-              --bare --no-hardlinks --quiet` in directory C:/omnibus-ruby/src/chef-provisioning
-              has failed.\r\r\nRetrying git clone \"git://github.com/chef/chef.git\"
-              \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
-              --bare --no-hardlinks --quiet due to error (4/4): Bundler::Source::Git::GitCommandError
-              Git error: command `git clone \"git://github.com/chef/chef.git\" \"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"
-              --bare --no-hardlinks --quiet` in directory C:/omnibus-ruby/src/chef-provisioning
-              has failed.\r\r\nGit error: command `git clone \"git://github.com/chef/chef.git\"\r\r\n\"C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/cache/bundler/git/chef-c4d75d21575d31601e4bf75e3edca0ea7a90bd0b\"\r\r\n--bare
-              --no-hardlinks --quiet` in directory\r\r\nC:/omnibus-ruby/src/chef-provisioning
-              has failed."
-            stderr: "fatal: remote error: \r\n  GitHub is offline for maintenance.
-              See http://status.github.com for more info.\r\nfatal: remote error:
-              \r\n  GitHub is offline for maintenance. See http://status.github.com
-              for more info.\r\nfatal: remote error: \r\n  GitHub is offline for maintenance.
-              See http://status.github.com for more info.\r\nfatal: remote error:
-              \r\n  GitHub is offline for maintenance. See http://status.github.com
-              for more info."
+          jenkinsBuildStep: Invoke XShell command
       debian-6:
         result: SUCCESS
         timestamp: '2016-04-05T12:04:43-07:00'
@@ -184,8 +185,13 @@ stages:
         builtOn: chefdk-mac_os_x-10.9-builder-d736d1
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/191/
         omnibusTiming: {}
-        failureReason:
-          jenkinsBuildStep: Invoke XShell command
+        failureCause:
+          shellCommand:
+            exitStatus: '128'
+            command: git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
+              --work-tree=/opt/chefdk add -A -f
+            stderr: 'fatal: Unable to create ''/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock'':
+              File exists.'
           stacktrace:
           - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/util.rb:101:in
             `rescue in shellout!'
@@ -222,12 +228,7 @@ stages:
             `<top (required)>'
           - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
           - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
-          shellCommand:
-            exitStatus: '128'
-            command: git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
-              --work-tree=/opt/chefdk add -A -f
-            stderr: 'fatal: Unable to create ''/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock'':
-              File exists.'
+          jenkinsBuildStep: Invoke XShell command
       ubuntu-12.04:
         result: SUCCESS
         timestamp: '2016-04-05T12:04:43-07:00'
