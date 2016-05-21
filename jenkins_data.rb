@@ -532,6 +532,10 @@ class JenkinsData
         when /Unable to create .*index.lock.*File exists/mi
           reason["cause"] = "git index.lock"
           reason["detailedCause"] = "git index.lock"
+
+        when /Dumping stack trace to\s+(\S+).stackdump/mi
+          reason["cause"] = "segfault"
+          reason["detailedCause"] = "segfault #{$1}"
         end
 
         case reason["shellCommand"]["stdout"]
