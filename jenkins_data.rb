@@ -358,7 +358,7 @@ class JenkinsData
       extract_timing(configuration, run, console_text)
     end
 
-    if run["changedThisTime"] || force || !run.has_key?("failureCause") || true
+    if run["changedThisTime"] || force || !run.has_key?("failureCause")
       if failed?(run)
         JenkinsData.debug("Extracting failure reason from #{File.basename(console_text_filename(build, run))}...")
         console_text ||= console_text(build, run)
@@ -538,6 +538,10 @@ class JenkinsData
         when /An error occurred while installing (\S+) \(([^\)]+)\)/i
           reason["cause"] = "gem install"
           reason["detailedCause"] = "gem install #{$1} -v #{$2}"
+
+        when /rubygems\.org.*Checksum of (\S+) does not match the checksum provided by server/mi
+          reason["cause"] = "rubygems checksum"
+          reason["detailedCause"] = "rubygems #{$1} checksum"
         end
       end
 
