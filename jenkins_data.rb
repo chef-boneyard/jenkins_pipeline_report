@@ -358,7 +358,7 @@ class JenkinsData
       extract_timing(configuration, run, console_text)
     end
 
-    if run["changedThisTime"] || force || !run.has_key?("failureCause")
+    if run["changedThisTime"] || force || !run.has_key?("failureCause") || true
       if failed?(run)
         console_text ||= console_text(build, run)
         return unless console_text
@@ -458,7 +458,7 @@ class JenkinsData
           reason["suspiciousLines"] << joined
         end
 
-      when /EACCES|\bERROR\b/,
+      when /EACCES|\bERROR\b|Errno::ECONNRESET/,
            /Permission denied/i
         reason["suspiciousLines"] ||= []
         reason["suspiciousLines"] << line.strip
@@ -527,6 +527,14 @@ class JenkinsData
           when /Cannot delete workspace:.*The process cannot access the file because it is being used by another process./i
             reason["cause"] = "zombie jenkins"
             reason["detailedCause"] = "zombie jenkins"
+
+          when /ECONNRESET/
+            if suspiciousLine =~ /(https?:\/\/\S+)/
+              url = $1
+              hostname = URI(url).hostname
+            end
+            reason["cause"] = "network reset"
+            reason["detailedCause"] = "network reset#{hostname ? " #{hostname}" : ""}"
           end
         end
       end
