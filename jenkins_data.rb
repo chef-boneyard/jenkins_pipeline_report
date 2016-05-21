@@ -13,7 +13,7 @@ class JenkinsData
 
   # Uncomment the puts message here to start showing progress info
   def self.debug(message)
-#    puts message
+    puts message
   end
 
   def refresh(force_refresh_runs: false, force_refresh_logs: false, force_reprocess_logs: false)
@@ -344,10 +344,19 @@ class JenkinsData
 
   def process_console_text(build, run, force: false)
     if run["changedThisTime"] || force || !run.has_key?("omnibusTiming")
-      console_text = console_text(build, run)
-      if console_text
-        JenkinsData.debug("Process Console #{File.basename(console_text_filename(build, run))}...")
-        extract_omnibus_timing(run, console_text)
+      JenkinsData.debug("Extracting omnibus timing from #{File.basename(console_text_filename(build, run))}...")
+      console_text ||= console_text(build, run)
+      return unless console_text
+      extract_omnibus_timing(run, console_text)
+    end
+
+    run.delete("failureReason")
+    if run["changedThisTime"] || force || !run.has_key?("failureReason")
+      if failed?(run)
+        JenkinsData.debug("Extracting failure reason from #{File.basename(console_text_filename(build, run))}...")
+        console_text ||= console_text(build, run)
+        return unless console_text
+        extract_failure_information(run, console_text)
       end
     end
   end
@@ -372,6 +381,130 @@ class JenkinsData
     end
 
     run["omnibusTiming"] = timing
+  end
+
+  def extract_failure_information(run, console_text)
+    run["failureReason"] = {}
+    lines = console_text.lines
+    index = lines.size - 1
+    while index > 0
+      line = lines[index]
+      # Build step 'Invoke XShell command' marked build as failure
+      if line =~ /^\s*Build step '(.+)' marked build as failure\s*$/
+        run["failureReason"]["jenkinsBuildStep"] ||= $1
+
+      elsif line =~ /^\s*(\S+)(:\d+:in `.+')\s*$/
+        index, stacktrace = extract_stacktrace(lines, index)
+        run["failureReason"]["stacktrace"] ||= stacktrace
+
+      elsif line =~ /^The following shell command exited with status (\d+):\s/
+        run["failureReason"]["shellCommand"] ||= extract_shell_command(lines, index, $1)
+
+      elsif !run["failureReason"].has_key?("omnibusStep")
+        component, timestamp, log = line.split("|", 3).map { |s| s.strip }
+        if log && component =~ /^\[\s+(.+)\]\s+\S+$/i
+          component = $1
+          run["failureReason"]["omnibusStep"] = component
+        end
+      end
+
+      index -= 1
+    end
+  end
+
+  # /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in `rescue in shellout!'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in `shellout!'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/fetchers/git_fetcher.rb:263:in `revision_from_remote_reference'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/fetchers/git_fetcher.rb:237:in `resolve_version'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/fetcher.rb:186:in `resolve_version'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:827:in `to_manifest_entry'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:115:in `manifest_entry'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:986:in `fetcher'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:842:in `fetch'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1067:in `block (3 levels) in download'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:64:in `call'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:64:in `block (4 levels) in initialize'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:62:in `loop'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:62:in `block (3 levels) in initialize'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:61:in `catch'
+  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:61:in `block (2 levels) in initialize'
+  def extract_stacktrace(lines, index)
+    stacktrace = []
+
+    while index >= 0
+      line = lines[index]
+      index -= 1
+      if line =~ /^\s*(\S+)(:\d+:in `.+')\s*$/
+        filename, rest_of_line = $1, $2
+        if filename =~ /\/architecture\/[^\/]+\/platform\/[^\/]+\/project\/[^\/]+\/role\/[^\/]+\/(.+)/
+          line = "#{$1}#{rest_of_line}"
+        end
+        # skip the top if it's thread pool stuff
+        unless filename.end_with?("thread_pool.rb") && stacktrace.empty?
+          stacktrace << line.strip
+        end
+      else
+        break
+      end
+    end
+
+    [ index+1, stacktrace.reverse ]
+  end
+
+  def extract_shell_command(lines, index, exit_status)
+    start_index = index
+    command = { "exitStatus" => exit_status }
+
+    # The following shell command exited with status 128:
+    index += 1
+
+    #
+    #     $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
+    index += 1 while lines[index].chomp == ""
+    command["command"] = lines[index].strip
+    index += 1
+    # Get rid of the $
+    command["command"] = $1 if command["command"] =~ /^\s*\$\s*(.+)/
+    command["command"] = command["command"].strip
+
+    #
+    # Output:
+    #
+    #     (nothing)
+    #
+    # Error:
+    index += 1 while lines[index].strip == ""
+    unless lines[index].chomp == "Output:"
+      return nil
+    end
+    index += 1
+    index += 1 while lines[index].chomp == ""
+    return nil unless lines[index].start_with?("    ")
+    command["stdout"] = lines[index][4..-1]
+    index += 1
+    while lines[index].chomp != "Error:"
+      command["stdout"] << lines[index]
+      index += 1
+    end
+    command["stdout"] = command["stdout"].strip
+    command.delete("stdout") if command["stdout"] == "(nothing)"
+
+    # Error:
+    #
+    #     fatal: unable to access 'http://git.savannah.gnu.org/r/config.git/': Failed connect to git.savannah.gnu.org:80; Operation now in progress
+    index += 1
+    index += 1 while lines[index].chomp == ""
+    return nil unless lines[index].start_with?("    ")
+    command["stderr"] = lines[index][4..-1]
+    index += 1
+    while lines[index].chomp != ""
+      command["stderr"] << lines[index]
+      index += 1
+    end
+    command["stderr"] = command["stderr"].strip
+    command.delete("stderr") if command["stderr"] == "(nothing)"
+
+    command
   end
 
   #
