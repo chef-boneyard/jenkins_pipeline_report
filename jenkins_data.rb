@@ -438,12 +438,20 @@ class JenkinsData
     end
 
     if reasons
-      if reasons["shellCommand"] && stderr = reasons["shellCommand"]["stderr"]
-        if stderr =~ /Failed to connect to (.+) port (\d+): Timed out/i ||
-           stderr =~ /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
+      if reasons["shellCommand"]
+        stderr = reasons["shellCommand"]["stderr"]
+        stdout = reasons["shellCommand"]["stdout"]
+        case stderr
+        when /Failed to connect to (.+) port (\d+): Timed out/i,
+             /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
           reasons["cause"] = "network timeout"
           reasons["detailedCause"] = "network timeout reaching #{$1}:#{$2}"
           return
+        end
+        case reasons["shellCommand"]["stdout"]
+        when /Gemfile\.lock is corrupt/
+          reasons["cause"] = "corrupt Gemfile.lock"
+          reasons["detailedCause"] = reasons["cause"]
         end
       end
     end
