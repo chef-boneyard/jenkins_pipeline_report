@@ -16,12 +16,10 @@ class JenkinsData
     puts message
   end
 
-  def builds(refresh: false, **options)
+  def builds(local: false, **options)
     builds = load
-    if refresh
-      # Merge remote build information with local
-      builds = merge_builds(load, fetch_builds)
-    end
+    # Merge remote build information with local
+    builds = merge_builds(load, fetch_builds) unless local
     builds.sort_by! { |build| Time.parse(build["timestamp"]) }
     builds.reverse!
 
@@ -368,7 +366,7 @@ class JenkinsData
       extract_timing(configuration, run, console_text)
     end
 
-    if run["changedThisTime"] || force || !run.has_key?("failureCause")
+    if run["changedThisTime"] || force || !run.has_key?("failureCause") || true
       if failed?(run)
         console_text ||= console_text(build, run)
         return unless console_text
@@ -439,7 +437,19 @@ class JenkinsData
 
       when /^\s*(\S+)(:\d+:in `.+')\s*$/
         index, stacktrace = extract_stacktrace(lines, index)
-        reason["stacktrace"] ||= stacktrace if stacktrace.any?
+        if stacktrace.any?
+          reason["stacktraces"] ||= []
+          reason["stacktraces"] << stacktrace
+        end
+
+      # Kitchen stack trace
+      #     D      ------Backtrace-------
+      when /^\s*\S\s+-+Backtrace-+\s*$/
+        stacktrace = extract_kitchen_stacktrace(lines, index+1)
+        if stacktrace.any?
+          reason["stacktraces"] ||= []
+          reason["stacktraces"] << stacktrace
+        end
 
       when /^The following shell command exited with status (-?\d+):\s/
         command = extract_shell_command(lines, index, $1)
@@ -470,7 +480,9 @@ class JenkinsData
 
       when /EACCES|\bERROR\b|\bFATAL\b|Errno::ECONNRESET/,
            /Permission denied/i,
-           /Connection timed out/i
+           /Connection timed out/i,
+           /Failed to complete (.*) action:/i
+
         reason["suspiciousLines"] ||= []
         reason["suspiciousLines"] << line.strip
 
@@ -632,24 +644,72 @@ class JenkinsData
   def extract_stacktrace(lines, index)
     stacktrace = []
 
+    # Go backwards up the file until we stop seeing stacktrace lines
     while index >= 0
-      line = lines[index]
-      if line =~ /^\s*(\S+)(:\d+:in `.+')\s*$/
-        filename, rest_of_line = $1, $2
-        if filename =~ /\/architecture\/[^\/]+\/platform\/[^\/]+\/project\/[^\/]+\/role\/[^\/]+\/(.+)/
-          line = "#{$1}#{rest_of_line}"
-        end
-        # skip the top if it's thread pool stuff
-        unless filename.end_with?("thread_pool.rb") && stacktrace.empty?
-          stacktrace << line.strip
-        end
-      else
-        break
-      end
+      trace_line = massage_ruby_stacktrace_line(lines[index])
+      break unless trace_line
+      # We are traveling backwards through the file, so we push new things at the top
+      stacktrace.unshift(trace_line)
       index -= 1
     end
 
-    [ index+1, stacktrace.reverse ]
+    [ index+1, skip_useless_stacktrace_lines(stacktrace) ]
+  end
+
+  # D      ------Backtrace-------
+  # D      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:394:in `parse_response'
+  # D      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:203:in `check_files'
+  # D      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:80:in `block in upload'
+  # D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+  # D      ----------------------
+  def extract_kitchen_stacktrace(lines, index)
+    stacktrace = []
+    while true
+      # ---------------
+      break if lines[index] =~ /^\s*-+\s*/
+
+      trace_line = massage_ruby_stacktrace_line(lines[index])
+      # If something went wrong and we aren't seeing stack traces, stop.
+      break unless trace_line
+      stacktrace << trace_line
+      index += 1
+    end
+    skip_useless_stacktrace_lines(stacktrace)
+  end
+
+  # Get rid of the annoying project/workspace stuff at the beginning of most lines
+  def massage_ruby_stacktrace_line(trace_line)
+    trace_line = trace_line.strip
+    if trace_line =~ /(\S+)(:\d+:in `.+'.*)/
+      filename = $1
+      rest_of_line = $2
+      # /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:394:in `parse_response'
+      # -> acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:394:in `parse_response'
+      if filename =~ /[\/\\]architecture[\/\\][^\/\\]+[\/\\]platform[\/\\][^\/\\]+[\/\\]project[\/\\][^\/\\]+[\/\\]role[\/\\][^\/\\]+[\/\\](.+)/
+        filename = $1
+      end
+      "#{filename}#{rest_of_line}"
+    else
+      nil
+    end
+  end
+
+  def skip_useless_stacktrace_lines(stacktrace)
+    # Skim useless things from the top
+    index = stacktrace.size - 1
+    # Always leave the top one on even if it seems useless. Never make it empty
+    while index > 0
+      case stacktrace[index]
+      when /\bthread_pool\.rb:/
+        stacktrace.pop
+      else
+        # It's not a skippable, stop skipping things
+        break
+      end
+
+      index -= 1
+    end
+    stacktrace
   end
 
   def extract_shell_command(lines, index, exit_status)

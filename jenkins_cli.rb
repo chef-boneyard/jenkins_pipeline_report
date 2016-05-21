@@ -4,13 +4,13 @@ require "pp"
 
 module JenkinsCli
   def self.options
-    @options ||= { refresh: true }
+    @options ||= {}
   end
 
   def self.builds(job_url)
     jenkins = JenkinsData.new(job_url: job_url)
     jenkins.builds(
-      refresh: options[:refresh],
+      local: options[:local],
       force_refresh_runs: options[:force_refresh_runs],
       force_refresh_logs: options[:force_refresh_logs],
       force_reprocess_logs: options[:force_reprocess_logs]
@@ -21,8 +21,8 @@ module JenkinsCli
     OptionParser.new do |opts|
       yield opts
 
-      opts.on("--[no-]refresh", "Whether to refresh the list of builds (default: true).") do |v|
-        options[:refresh] = v
+      opts.on("--[no-]local", "Whether to get the list of builds locally (default: false).") do |v|
+        options[:local] = v
       end
       opts.on("--[no-]force", "Whether to refresh all data regardless of whether they've been fetched before (default: false).") do |v|
         options[:force] = v
