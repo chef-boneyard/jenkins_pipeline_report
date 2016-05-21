@@ -431,7 +431,7 @@ class JenkinsData
         index, stacktrace = extract_stacktrace(lines, index)
         reason["stacktrace"] ||= stacktrace if stacktrace.any?
 
-      when /^The following shell command exited with status (\d+):\s/
+      when /^The following shell command exited with status (-?\d+):\s/
         command = extract_shell_command(lines, index, $1)
         reason["shellCommand"] ||= command if command
 
