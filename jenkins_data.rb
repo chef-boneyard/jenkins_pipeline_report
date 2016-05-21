@@ -63,7 +63,7 @@ class JenkinsData
   def process_console_texts(build, force: false)
     build["stages"].each do |job,stage|
       stage["runs"].each do |configuration,run|
-        process_console_text(build, run, force: force)
+        process_console_text(build, configuration, run, force: force)
       end
       process_stage(stage)
     end
@@ -348,12 +348,14 @@ class JenkinsData
     File.join(build_directory(build), "#{job}-#{configuration}-#{build_number}.log")
   end
 
-  def process_console_text(build, run, force: false)
-    if run["changedThisTime"] || force || !run.has_key?("omnibusTiming")
-      JenkinsData.debug("Extracting omnibus timing from #{File.basename(console_text_filename(build, run))}...")
+  def process_console_text(build, configuration, run, force: false)
+    if run["changedThisTime"] || force ||
+       !run.has_key?("omnibusTiming") ||
+       (configuration == "acceptance" && !run.has_key?("acceptanceTiming"))
+      JenkinsData.debug("Extracting timing from #{File.basename(console_text_filename(build, run))}...")
       console_text ||= console_text(build, run)
       return unless console_text
-      extract_omnibus_timing(run, console_text)
+      extract_timing(configuration, run, console_text)
     end
 
     if run["changedThisTime"] || force || !run.has_key?("failureCause")
@@ -374,26 +376,44 @@ class JenkinsData
     end
   end
 
-  def extract_omnibus_timing(run, console_text)
+  def extract_timing(configuration, run, console_text)
     # Look for timing information
-    timing = {}
-    console_text.lines.each do |line|
-      component, timestamp, log = line.split("|", 3).map { |s| s.strip }
-      if component =~ /^\[Builder:\s+(.+)\]\s+\S+$/i
-        component = $1
-        # [Builder: chef] I | 2016-05-11T20:29:35+00:00 | Build chef: 76.4841s
-        if log =~ /^\s*Build #{component}:\s+(\d+(\.\d+)?)s$/
-          timing[component] = $1.to_f
+    omnibus_timing = {}
+    acceptance_timing = []
+    lines = console_text.lines
+    index = lines.size-1
+    while index >= 0
+      line = lines[index]
+      if line =~ /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
+        index, results = extract_chef_acceptance_result(lines, index)
+        acceptance_run = {}
+        results.each do |result|
+          acceptance_run[result["suite"]] ||= {}
+          acceptance_run[result["suite"]][result["command"]] = result["duration"]
         end
+        acceptance_timing << acceptance_run
+
       else
-        # [Packager::BFF] I | 2016-05-12T22:28:49+00:00 | Packaging time: 376.521s
-        if log =~ /^\s*(Health check|Packaging) time:\s+(\d+(\.\d+)?)s$/
-          timing[$1] = $2.to_f
+        component, timestamp, log = line.split("|", 3).map { |s| s.strip }
+        if component =~ /^\[Builder:\s+(.+)\]\s+\S+$/i
+          component = $1
+          # [Builder: chef] I | 2016-05-11T20:29:35+00:00 | Build chef: 76.4841s
+          if log =~ /^\s*Build #{component}:\s+(\d+(\.\d+)?)s$/
+            omnibus_timing[component] = $1.to_f
+          end
+        else
+          # [Packager::BFF] I | 2016-05-12T22:28:49+00:00 | Packaging time: 376.521s
+          if log =~ /^\s*(Health check|Packaging) time:\s+(\d+(\.\d+)?)s$/
+            omnibus_timing[$1] = $2.to_f
+          end
         end
       end
+
+      index -= 1
     end
 
-    run["omnibusTiming"] = timing
+    run["omnibusTiming"] = omnibus_timing
+    run["acceptanceTiming"] = acceptance_timing if configuration == "acceptance" || acceptance_timing.any?
   end
 
   def extract_failure_information(run, console_text)
@@ -406,22 +426,38 @@ class JenkinsData
       case line
       when /^\s*Build step '(.+)' marked build as failure\s*$/
         reason["jenkinsBuildStep"] ||= $1
+
       when /^\s*(\S+)(:\d+:in `.+')\s*$/
         index, stacktrace = extract_stacktrace(lines, index)
         reason["stacktrace"] ||= stacktrace if stacktrace.any?
+
       when /^The following shell command exited with status (\d+):\s/
         command = extract_shell_command(lines, index, $1)
         reason["shellCommand"] ||= command if command
+
       when /^\s*Verification of component '(.+)' failed.\s*$/
         reason["tests"] ||= {}
         reason["tests"]["chef_verify"] ||= []
         reason["tests"]["chef_verify"] << $1
+
+      when /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
+        index, results = extract_chef_acceptance_result(lines, index)
+        failures = results.select { |result| result["error"] == "Y" && result["command"] != "Total" }
+        if failures.any?
+          reason["tests"] ||=  {}
+          reason["tests"]["chef-acceptance"] ||= []
+          failures.each do |failure|
+            reason["tests"]["chef-acceptance"] << "#{failure["suite"]} (#{failure["command"]})"
+          end
+        end
+
       when /The --deployment flag requires a/
         joined = "#{line.strip} #{lines[index+1].strip}"
         if joined =~ /The --deployment flag requires a .*Gemfile.lock/
           reason["suspiciousLines"] ||= []
           reason["suspiciousLines"] << joined
         end
+
       when /EACCES/
         reason["suspiciousLines"] ||= []
         reason["suspiciousLines"] << line.strip
@@ -439,6 +475,28 @@ class JenkinsData
     end
 
     run["failureCause"] = reason
+  end
+
+  def extract_chef_acceptance_result(lines, index)
+    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] chef-acceptance run succeeded
+    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | Suite   | Command   | Duration | Error |
+    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | provision | 00:01:21 | N     |
+    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | verify    | 00:00:15 | N     |
+    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | destroy   | 00:00:07 | N     |
+    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | Total     | 00:01:58 | N     |
+    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | Run     | Total     | 00:01:58 | N     |
+    rows = []
+    while lines[index] =~ /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
+      rows.unshift($1.split("|").map { |f| f.strip })
+      index -= 1
+      line = lines[index]
+    end
+    field_names = rows.shift.map { |name| name.downcase }
+    results = []
+    rows.each do |row|
+      results << Hash[field_names.zip(row)]
+    end
+    [ index + 1, results ]
   end
 
   def deduce_cause(run)

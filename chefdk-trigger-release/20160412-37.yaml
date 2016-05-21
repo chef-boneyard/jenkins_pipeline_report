@@ -83,7 +83,7 @@ stages:
   chefdk-test:
     result: FAILURE
     failures:
-      unknown: acceptance
+      chef-acceptance[top-cookbooks (provision)]: acceptance
     timestamp: '2016-04-12T12:28:59-07:00'
     duration: 1733.58
     url: http://manhattan.ci.chef.co/job/chefdk-test/98/
@@ -137,6 +137,8 @@ stages:
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/98/
         omnibusTiming: {}
         failureCause:
+          cause: chef-acceptance
+          detailedCause: chef-acceptance[top-cookbooks (provision)]
           stacktrace:
           - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:289:in
             `invalid!'"
@@ -167,6 +169,16 @@ stages:
           - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/application.rb:73:in
             `block in start_worker'"
           jenkinsBuildStep: Invoke XShell command
+          tests:
+            chef-acceptance:
+            - top-cookbooks (provision)
+        acceptanceTiming:
+        - top-cookbooks:
+            provision: '00:01:35'
+            force-destroy: '00:00:37'
+            Total: '00:02:35'
+          Run:
+            Total: '00:02:35'
       debian-6:
         result: SUCCESS
         timestamp: '2016-04-12T12:28:59-07:00'
