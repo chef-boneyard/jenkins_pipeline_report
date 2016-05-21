@@ -453,7 +453,7 @@ stages:
   chefdk-test:
     result: FAILURE
     failures:
-      unknown: acceptance
+      disk space (Permission denied): acceptance
     timestamp: '2016-05-13T12:21:34-07:00'
     duration: 3454.251
     url: http://manhattan.ci.chef.co/job/chefdk-test/170/
@@ -537,7 +537,19 @@ stages:
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/170/
         omnibusTiming: {}
-        failureCause: {}
+        failureCause:
+          cause: disk space
+          detailedCause: disk space (Permission denied)
+          jenkinsBuildStep: Archive the artifacts
+          suspiciousLines:
+          - 'Caused by: java.io.FileNotFoundException: /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/verify/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+            (Permission denied)'
+          - 'Caused by: java.util.concurrent.ExecutionException: java.io.FileNotFoundException:
+            /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/verify/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+            (Permission denied)'
+          - 'java.io.IOException: java.util.concurrent.ExecutionException: java.io.FileNotFoundException:
+            /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/verify/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+            (Permission denied)'
         acceptanceTiming:
         - trivial:
             provision: '00:01:21'

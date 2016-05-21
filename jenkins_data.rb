@@ -424,7 +424,7 @@ class JenkinsData
       line = lines[index]
       # Build step 'Invoke XShell command' marked build as failure
       case line
-      when /^\s*Build step '(.+)' marked build as failure\s*$/
+      when /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i
         reason["jenkinsBuildStep"] ||= $1
 
       when /^\s*(\S+)(:\d+:in `.+')\s*$/
@@ -458,7 +458,8 @@ class JenkinsData
           reason["suspiciousLines"] << joined
         end
 
-      when /EACCES/
+      when /EACCES/,
+           /Permission denied/i
         reason["suspiciousLines"] ||= []
         reason["suspiciousLines"] << line.strip
       end
@@ -519,16 +520,16 @@ class JenkinsData
           end
         end.join(",")
       end
+
       if reason["shellCommand"]
-        stderr = reason["shellCommand"]["stderr"]
-        stdout = reason["shellCommand"]["stdout"]
-        case stderr
+        case reason["shellCommand"]["stderr"]
         when /Failed to connect to (.+) port (\d+): Timed out/i,
              /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
           reason["cause"] = "network timeout"
           reason["detailedCause"] = "network timeout reaching #{$1}:#{$2}"
           return
         end
+
         case reason["shellCommand"]["stdout"]
         when /Gemfile\.lock is corrupt/
           reason["cause"] = "corrupt Gemfile.lock"
@@ -542,9 +543,11 @@ class JenkinsData
           when /The --deployment flag requires a .*\/([^\/]+\/Gemfile.lock)/
             reason["cause"] = "missing Gemfile.lock"
             reason["detailedCause"] = "missing #{$1}"
-          when /EACCES/
+
+          when /(EACCES)/,
+               /java.io.FileNotFoundException.*(Permission denied)/
             reason["cause"] = "disk space"
-            reason["detailedCause"] = "disk space (EACCES)"
+            reason["detailedCause"] = "disk space (#{$1})"
           end
         end
       end
