@@ -466,7 +466,7 @@ class JenkinsData
       #                         [Licensing] W | License file '/var/cache/omnibus/src/pry/LICENSE' does not exist for software 'pry'.
       when /^\s*\[([^\]]+)\] . \| /
         reason["lastOmnibusStep"] ||= $1
-        reason["lastOmnibusLine"] ||= line
+        reason["lastOmnibusLine"] ||= line.strip
       end
 
       index -= 1
