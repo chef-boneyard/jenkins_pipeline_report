@@ -10,13 +10,13 @@ stages:
     timestamp: '2016-04-18T15:31:54-07:00'
     duration: 2.285
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/40/
-    parameters:
-      GIT_REF: v0.13.22
-      EXPIRE_CACHE: false
     causes:
     - shortDescription: Started by user Chef Jenkins User
       userId: chef-jenkins
       userName: Chef Jenkins User
+    parameters:
+      GIT_REF: v0.13.22
+      EXPIRE_CACHE: false
     runs: {}
   chefdk-build:
     result: SUCCESS
@@ -38,13 +38,6 @@ stages:
       GIT_BRANCH: v0.13.22
       PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
     runs:
-      windows-2008r2-i386:
-        result: SUCCESS
-        timestamp: '2016-04-18T15:32:04-07:00'
-        duration: 8487.632
-        builtOn: chefdk-windows-2008r2-i386-builder-dcb6f4
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/271/
-        omnibusTiming: {}
       debian-6:
         result: SUCCESS
         timestamp: '2016-04-18T15:32:04-07:00'
@@ -79,6 +72,13 @@ stages:
         duration: 1904.766
         builtOn: chefdk-ubuntu-12.04-builder-efc2e0
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/271/
+        omnibusTiming: {}
+      windows-2008r2-i386:
+        result: SUCCESS
+        timestamp: '2016-04-18T15:32:04-07:00'
+        duration: 8487.632
+        builtOn: chefdk-windows-2008r2-i386-builder-dcb6f4
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/271/
         omnibusTiming: {}
   chefdk-test:
     result: FAILURE
@@ -153,68 +153,18 @@ stages:
       PIPELINE_BUILD_JOB_NAME: chefdk-build
       PIPELINE_RUN_FINGERPRINT: jenkins-chefdk-trigger-release-40/40/2016-04-18_22-31-54
     runs:
-      windows-2008r2-i386:
-        result: SUCCESS
-        timestamp: '2016-04-18T17:53:42-07:00'
-        duration: 507.297
-        builtOn: chefdk-windows-2008r2-i386-tester-e50cbf
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/117/
-        omnibusTiming: {}
-      acceptance:
-        result: SUCCESS
-        timestamp: '2016-04-18T17:53:42-07:00'
-        duration: 3593.874
-        builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/117/
-        omnibusTiming: {}
-        acceptanceTiming:
-        - trivial:
-            provision: '00:01:42'
-            verify: '00:00:19'
-            destroy: '00:00:07'
-            Total: '00:02:24'
-          Run:
-            Total: '00:02:24'
-        - top-cookbooks:
-            provision: '00:51:31'
-            verify: '00:00:32'
-            destroy: '00:00:33'
-            Total: '00:56:12'
-          Run:
-            Total: '00:56:12'
-      debian-6:
-        result: SUCCESS
-        timestamp: '2016-04-18T17:53:42-07:00'
-        duration: 1075.086
-        builtOn: chefdk-debian-6-tester-31349b
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/117/
-        omnibusTiming: {}
-      debian-7:
-        result: SUCCESS
-        timestamp: '2016-04-18T17:53:42-07:00'
-        duration: 822.795
-        builtOn: chefdk-debian-7-tester-6585d4
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-7,project=chefdk,role=tester/117/
-        omnibusTiming: {}
       debian-8:
         result: FAILURE
         timestamp: '2016-04-18T17:53:42-07:00'
         duration: 779.319
         builtOn: chefdk-debian-8-tester-b7ac3b
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-8,project=chefdk,role=tester/117/
-        omnibusTiming: {}
         failureCause:
           cause: chef verify
           detailedCause: chef verify
           stacktrace:
           - "#{CHEF_SPEC_DATA}/cookbooks/openldap/recipes/default.rb:2:in `from_file'"
           jenkinsBuildStep: Invoke XShell command
-          tests:
-            chef verify:
-            - chef-client
-            - chef-dk
-            - chef-provisioning
-            - chefspec
           suspiciousLines:
           - 'ERROR: You must supply a regular expression to match the results against'
           - 'ERROR: You must set your EDITOR environment variable or configure your
@@ -230,6 +180,49 @@ stages:
             (code_generator::cookbook line 98) had an error: Chef::Exceptions::FileContentStagingError:
             Staging tempfile can not be created during file deployment.'
           - "--- ERROR REPORT TEMPLATE -------------------------------------------------------"
+          tests:
+            chef verify:
+            - chef-client
+            - chef-dk
+            - chef-provisioning
+            - chefspec
+        omnibusTiming: {}
+      acceptance:
+        result: SUCCESS
+        timestamp: '2016-04-18T17:53:42-07:00'
+        duration: 3593.874
+        builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/117/
+        acceptanceTiming:
+        - trivial:
+            provision: '00:01:42'
+            verify: '00:00:19'
+            destroy: '00:00:07'
+            Total: '00:02:24'
+          Run:
+            Total: '00:02:24'
+        - top-cookbooks:
+            provision: '00:51:31'
+            verify: '00:00:32'
+            destroy: '00:00:33'
+            Total: '00:56:12'
+          Run:
+            Total: '00:56:12'
+        omnibusTiming: {}
+      debian-6:
+        result: SUCCESS
+        timestamp: '2016-04-18T17:53:42-07:00'
+        duration: 1075.086
+        builtOn: chefdk-debian-6-tester-31349b
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/117/
+        omnibusTiming: {}
+      debian-7:
+        result: SUCCESS
+        timestamp: '2016-04-18T17:53:42-07:00'
+        duration: 822.795
+        builtOn: chefdk-debian-7-tester-6585d4
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-7,project=chefdk,role=tester/117/
+        omnibusTiming: {}
       el-6:
         result: SUCCESS
         timestamp: '2016-04-18T17:53:42-07:00'
@@ -278,4 +271,11 @@ stages:
         duration: 979.5
         builtOn: chefdk-ubuntu-14.04-tester-48c4bf
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/117/
+        omnibusTiming: {}
+      windows-2008r2-i386:
+        result: SUCCESS
+        timestamp: '2016-04-18T17:53:42-07:00'
+        duration: 507.297
+        builtOn: chefdk-windows-2008r2-i386-tester-e50cbf
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/117/
         omnibusTiming: {}

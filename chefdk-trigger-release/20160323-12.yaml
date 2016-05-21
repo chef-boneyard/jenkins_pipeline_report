@@ -10,19 +10,19 @@ stages:
     timestamp: '2016-03-23T14:19:20-07:00'
     duration: 3.509
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/12/
-    parameters:
-      GIT_REF: v0.12.3
-      EXPIRE_CACHE: false
     causes:
     - shortDescription: Started by user Chef Jenkins User
       userId: chef-jenkins
       userName: Chef Jenkins User
+    parameters:
+      GIT_REF: v0.12.3
+      EXPIRE_CACHE: false
     runs: {}
   chefdk-build:
     result: FAILURE
     failures:
-      'omnibus Software: knife-spork': windows
       network reset rubygems.org: debian,el,ubuntu
+      'omnibus Software: knife-spork': windows
     timestamp: '2016-03-23T14:19:30-07:00'
     duration: 13617.653
     url: http://manhattan.ci.chef.co/job/chefdk-build/126/
@@ -41,13 +41,68 @@ stages:
       GIT_BRANCH: v0.12.3
       PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
     runs:
+      debian-6:
+        result: FAILURE
+        timestamp: '2016-03-23T14:19:30-07:00'
+        duration: 94.253
+        builtOn: chefdk-debian-6-builder-2ccc58
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/126/
+        failureCause:
+          cause: network reset
+          detailedCause: network reset rubygems.org
+          jenkinsBuildStep: Invoke XShell command
+          suspiciousLines:
+          - 'Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by
+            peer - SSL_connect (https://rubygems.org/gems/aws-sdk-2.2.29.gem)'
+        omnibusTiming: {}
+      el-6:
+        result: FAILURE
+        timestamp: '2016-03-23T14:19:30-07:00'
+        duration: 97.608
+        builtOn: chefdk-rhel-6-builder-02167c
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/126/
+        failureCause:
+          cause: network reset
+          detailedCause: network reset rubygems.org
+          jenkinsBuildStep: Invoke XShell command
+          suspiciousLines:
+          - 'Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by
+            peer - SSL_connect (https://rubygems.org/gems/mixlib-config-2.2.1.gem)'
+        omnibusTiming: {}
+      el-7:
+        result: FAILURE
+        timestamp: '2016-03-23T14:19:30-07:00'
+        duration: 104.233
+        builtOn: chefdk-rhel-7-builder-b67c93
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/126/
+        failureCause:
+          cause: network reset
+          detailedCause: network reset rubygems.org
+          jenkinsBuildStep: Invoke XShell command
+          suspiciousLines:
+          - 'Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by
+            peer - SSL_connect (https://rubygems.org/gems/chef-config-12.8.1.gem)'
+        omnibusTiming: {}
+      ubuntu-12.04:
+        result: FAILURE
+        timestamp: '2016-03-23T14:19:30-07:00'
+        duration: 46.978
+        builtOn: chefdk-ubuntu-12.04-builder-efc2e0
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/126/
+        failureCause:
+          cause: network reset
+          detailedCause: network reset rubygems.org
+          jenkinsBuildStep: Invoke XShell command
+          suspiciousLines:
+          - 'Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by
+            peer - SSL_connect (https://rubygems.org/gems/awesome_print-1.6.1.gem)'
+        omnibusTiming: {}
       windows-2008r2-i386:
         result: FAILURE
         timestamp: '2016-03-23T14:19:30-07:00'
         duration: 3788.758
         builtOn: chefdk-windows-2008r2-i386-builder-a728bb
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/126/
-        omnibusTiming: {}
         failureCause:
           cause: omnibus
           detailedCause: 'omnibus Software: knife-spork'
@@ -72,51 +127,10 @@ stages:
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-798b2db8e34a/lib/omnibus/project.rb:1060:in
             `block (3 levels) in download'
           jenkinsBuildStep: Invoke XShell command
-          lastOmnibusStep: 'Software: knife-spork'
           lastOmnibusLine: "[Software: knife-spork] I | Resolving manifest entry for
             knife-spork"
-      debian-6:
-        result: FAILURE
-        timestamp: '2016-03-23T14:19:30-07:00'
-        duration: 94.253
-        builtOn: chefdk-debian-6-builder-2ccc58
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/126/
+          lastOmnibusStep: 'Software: knife-spork'
         omnibusTiming: {}
-        failureCause:
-          cause: network reset
-          detailedCause: network reset rubygems.org
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousLines:
-          - 'Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by
-            peer - SSL_connect (https://rubygems.org/gems/aws-sdk-2.2.29.gem)'
-      el-6:
-        result: FAILURE
-        timestamp: '2016-03-23T14:19:30-07:00'
-        duration: 97.608
-        builtOn: chefdk-rhel-6-builder-02167c
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/126/
-        omnibusTiming: {}
-        failureCause:
-          cause: network reset
-          detailedCause: network reset rubygems.org
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousLines:
-          - 'Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by
-            peer - SSL_connect (https://rubygems.org/gems/mixlib-config-2.2.1.gem)'
-      el-7:
-        result: FAILURE
-        timestamp: '2016-03-23T14:19:30-07:00'
-        duration: 104.233
-        builtOn: chefdk-rhel-7-builder-b67c93
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/126/
-        omnibusTiming: {}
-        failureCause:
-          cause: network reset
-          detailedCause: network reset rubygems.org
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousLines:
-          - 'Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by
-            peer - SSL_connect (https://rubygems.org/gems/chef-config-12.8.1.gem)'
       mac_os_x-10.9:
         result: SUCCESS
         timestamp: '2016-03-23T14:19:30-07:00'
@@ -124,17 +138,3 @@ stages:
         builtOn: chefdk-mac_os_x-10.9-builder-d736d1
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/126/
         omnibusTiming: {}
-      ubuntu-12.04:
-        result: FAILURE
-        timestamp: '2016-03-23T14:19:30-07:00'
-        duration: 46.978
-        builtOn: chefdk-ubuntu-12.04-builder-efc2e0
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/126/
-        omnibusTiming: {}
-        failureCause:
-          cause: network reset
-          detailedCause: network reset rubygems.org
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousLines:
-          - 'Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by
-            peer - SSL_connect (https://rubygems.org/gems/awesome_print-1.6.1.gem)'

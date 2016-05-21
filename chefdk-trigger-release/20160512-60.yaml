@@ -10,13 +10,13 @@ stages:
     timestamp: '2016-05-12T15:17:24-07:00'
     duration: 5.108
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/60/
-    parameters:
-      GIT_REF: v0.14.19
-      EXPIRE_CACHE: false
     causes:
     - shortDescription: Started by user Chef Jenkins User
       userId: chef-jenkins
       userName: Chef Jenkins User
+    parameters:
+      GIT_REF: v0.14.19
+      EXPIRE_CACHE: false
     retries:
     - url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/61/
       result: SUCCESS
@@ -78,28 +78,6 @@ stages:
       GIT_BRANCH: v0.14.19
       PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
     runs:
-      windows-2008r2-i386:
-        result: SUCCESS
-        timestamp: '2016-05-12T15:17:39-07:00'
-        duration: 1512.55
-        builtOn: chefdk-windows-2008r2-i386-builder-53e13c
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/394/
-        omnibusTiming:
-          Packaging: 312.9368
-          Health check: 0.0312
-          chef-dk-complete: 0.0
-          clean-static-libs: 0.4524
-          openssl-customization: 0.2184
-          version-manifest: 0.0624
-          shebang-cleanup: 3.2604
-          rubygems-customization: 0.0936
-          chef-dk-remove-docs: 0.3276
-          ruby-windows-devkit: 9.4692
-          chef-dk-powershell-scripts: 0.8112
-          chef-dk-env-customization: 0.0936
-          gem-permissions: 0.0
-          chef-dk-appbundle: 222.784
-          chef-dk: 313.3578
       debian-6:
         result: SUCCESS
         timestamp: '2016-05-12T15:17:39-07:00'
@@ -195,6 +173,28 @@ stages:
           gem-permissions: 5.7131
           chef-dk-appbundle: 435.4684
           chef-dk: 195.5321
+      windows-2008r2-i386:
+        result: SUCCESS
+        timestamp: '2016-05-12T15:17:39-07:00'
+        duration: 1512.55
+        builtOn: chefdk-windows-2008r2-i386-builder-53e13c
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/394/
+        omnibusTiming:
+          Packaging: 312.9368
+          Health check: 0.0312
+          chef-dk-complete: 0.0
+          clean-static-libs: 0.4524
+          openssl-customization: 0.2184
+          version-manifest: 0.0624
+          shebang-cleanup: 3.2604
+          rubygems-customization: 0.0936
+          chef-dk-remove-docs: 0.3276
+          ruby-windows-devkit: 9.4692
+          chef-dk-powershell-scripts: 0.8112
+          chef-dk-env-customization: 0.0936
+          gem-permissions: 0.0
+          chef-dk-appbundle: 222.784
+          chef-dk: 313.3578
   chefdk-test:
     result: FAILURE
     failures:
@@ -268,20 +268,19 @@ stages:
       PIPELINE_BUILD_JOB_NAME: chefdk-build
       PIPELINE_RUN_FINGERPRINT: jenkins-chefdk-trigger-release-60/60/2016-05-12_22-17-24
     runs:
-      windows-2008r2-i386:
-        result: SUCCESS
-        timestamp: '2016-05-12T15:43:15-07:00'
-        duration: 594.638
-        builtOn: chefdk-windows-2008r2-i386-tester-008788
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/168/
-        omnibusTiming: {}
       acceptance:
         result: FAILURE
         timestamp: '2016-05-12T15:43:15-07:00'
         duration: 863.396
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/168/
-        omnibusTiming: {}
+        acceptanceTiming:
+        - top-cookbooks:
+            provision: '00:12:00'
+            force-destroy: '00:00:32'
+            Total: '00:13:24'
+          Run:
+            Total: '00:13:24'
         failureCause:
           cause: chef-acceptance
           detailedCause: chef-acceptance[top-cookbooks (provision)]
@@ -315,9 +314,6 @@ stages:
           - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-4abda84e2fad/lib/chef-acceptance/application.rb:74:in
             `block in start_worker'"
           jenkinsBuildStep: Invoke XShell command
-          tests:
-            chef-acceptance:
-            - top-cookbooks (provision)
           suspiciousLines:
           - 'TOP-COOKBOOKS::DESTROY::[2016-05-12 23:02:50 +0000] [2016-05-12T23:02:50+00:00]
             ERROR: Failed to post audit report to server. Saving report to /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/destroy/cache/failed-audit-data.json'
@@ -437,13 +433,10 @@ stages:
             Saving report to /tmp/kitchen/cache/failed-audit-data.json"
           - "[2016-05-12T23:02:06+00:00] ERROR: Exception handlers complete"
           - "[2016-05-12T23:02:06+00:00] ERROR: Running exception handlers"
-        acceptanceTiming:
-        - top-cookbooks:
-            provision: '00:12:00'
-            force-destroy: '00:00:32'
-            Total: '00:13:24'
-          Run:
-            Total: '00:13:24'
+          tests:
+            chef-acceptance:
+            - top-cookbooks (provision)
+        omnibusTiming: {}
       debian-6:
         result: SUCCESS
         timestamp: '2016-05-12T15:43:15-07:00'
@@ -513,4 +506,11 @@ stages:
         duration: 865.951
         builtOn: chefdk-ubuntu-14.04-tester-48c4bf
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/168/
+        omnibusTiming: {}
+      windows-2008r2-i386:
+        result: SUCCESS
+        timestamp: '2016-05-12T15:43:15-07:00'
+        duration: 594.638
+        builtOn: chefdk-windows-2008r2-i386-tester-008788
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/168/
         omnibusTiming: {}

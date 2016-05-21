@@ -10,19 +10,19 @@ stages:
     timestamp: '2016-05-02T09:59:40-07:00'
     duration: 8.591
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/43/
-    parameters:
-      GIT_REF: v0.14.2
-      EXPIRE_CACHE: false
     causes:
     - shortDescription: Started by user Chef Jenkins User
       userId: chef-jenkins
       userName: Chef Jenkins User
+    parameters:
+      GIT_REF: v0.14.2
+      EXPIRE_CACHE: false
     runs: {}
   chefdk-build:
     result: FAILURE
     failures:
-      rubygems /versions checksum: windows
       git index.lock: mac_os_x
+      rubygems /versions checksum: windows
     timestamp: '2016-05-02T09:59:55-07:00'
     duration: 6601.279
     url: http://manhattan.ci.chef.co/job/chefdk-build/344/
@@ -41,47 +41,70 @@ stages:
       GIT_BRANCH: v0.14.2
       PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
     runs:
+      mac_os_x-10.9:
+        result: FAILURE
+        timestamp: '2016-05-02T09:59:55-07:00'
+        duration: 105.999
+        builtOn: chefdk-mac_os_x-10.9-builder-d736d1
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/344/
+        failureCause:
+          cause: git index.lock
+          detailedCause: git index.lock
+          shellCommand:
+            exitStatus: '128'
+            command: git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
+              --work-tree=/opt/chefdk add -A -f
+            stderr: 'fatal: Unable to create ''/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock'':
+              File exists.'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/git_cache.rb:182:in
+            `git_cmd'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/git_cache.rb:116:in
+            `incremental'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/software.rb:1164:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:22:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:22:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
+          lastOmnibusLine: "[GitCache: preparation] I | 2016-05-02T10:01:53-07:00
+            | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
+            --work-tree=/opt/chefdk add -A -f"
+          lastOmnibusStep: 'GitCache: preparation'
+        omnibusTiming:
+          preparation: 0.0059
       windows-2008r2-i386:
         result: FAILURE
         timestamp: '2016-05-02T09:59:55-07:00'
         duration: 6587.686
         builtOn: chefdk-windows-2008r2-i386-builder-dcb6f4
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/344/
-        omnibusTiming:
-          chef-dk: 5.2189
-          chef-dk-gem-ruby-shadow: 0.0313
-          chef-dk-gem-binding_of_caller: 78.2989
-          chef-dk-gem-debug_inspector: 80.7521
-          chef-dk-gem-hitimes: 82.799
-          chef-dk-gem-yajl-ruby: 84.2679
-          chef-dk-gem-byebug: 85.0023
-          chef-dk-gem-nio4r: 91.112
-          chef-dk-gem-dep_selector: 100.2372
-          chef-dk-gem-ruby-prof: 106.7219
-          chef-dk-gem-ffi: 115.4412
-          chef-dk-gem-nokogiri: 131.6605
-          chef-dk-gem-mini_portile2: 5.7814
-          chef-dk-gem-json: 228.5698
-          chef-dk-gem-ffi-yajl: 232.2887
-          chef-dk-gem-libyajl2: 130.5668
-          chef-dk-gem-ffi-rzmq: 6.8752
-          chef-dk-gem-dep-selector-libgecode: 843.1414
-          bundler: 3.9375
-          rubygems: 26.8906
-          ruby: 1162.4531
-          libyaml: 164.6251
-          libffi: 160.6875
-          openssl: 678.2501
-          cacerts: 0.125
-          libzmq4x-windows: 0.3438
-          libarchive: 436.4063
-          libxslt: 299.7656
-          libxml2: 467.75
-          liblzma: 225.9531
-          libiconv: 276.8125
-          config_guess: 0.1406
-          zlib: 79.3125
-          preparation: 0.1719
         failureCause:
           cause: rubygems checksum
           detailedCause: rubygems /versions checksum
@@ -176,9 +199,44 @@ stages:
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `load'
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `<main>'
           jenkinsBuildStep: Invoke XShell command
-          lastOmnibusStep: 'Builder: chef-dk'
           lastOmnibusLine: "[Builder: chef-dk] I | 2016-05-02T18:49:53+00:00 | Build
             chef-dk: 5.2189s"
+          lastOmnibusStep: 'Builder: chef-dk'
+        omnibusTiming:
+          chef-dk: 5.2189
+          chef-dk-gem-ruby-shadow: 0.0313
+          chef-dk-gem-binding_of_caller: 78.2989
+          chef-dk-gem-debug_inspector: 80.7521
+          chef-dk-gem-hitimes: 82.799
+          chef-dk-gem-yajl-ruby: 84.2679
+          chef-dk-gem-byebug: 85.0023
+          chef-dk-gem-nio4r: 91.112
+          chef-dk-gem-dep_selector: 100.2372
+          chef-dk-gem-ruby-prof: 106.7219
+          chef-dk-gem-ffi: 115.4412
+          chef-dk-gem-nokogiri: 131.6605
+          chef-dk-gem-mini_portile2: 5.7814
+          chef-dk-gem-json: 228.5698
+          chef-dk-gem-ffi-yajl: 232.2887
+          chef-dk-gem-libyajl2: 130.5668
+          chef-dk-gem-ffi-rzmq: 6.8752
+          chef-dk-gem-dep-selector-libgecode: 843.1414
+          bundler: 3.9375
+          rubygems: 26.8906
+          ruby: 1162.4531
+          libyaml: 164.6251
+          libffi: 160.6875
+          openssl: 678.2501
+          cacerts: 0.125
+          libzmq4x-windows: 0.3438
+          libarchive: 436.4063
+          libxslt: 299.7656
+          libxml2: 467.75
+          liblzma: 225.9531
+          libiconv: 276.8125
+          config_guess: 0.1406
+          zlib: 79.3125
+          preparation: 0.1719
       debian-6:
         result: SUCCESS
         timestamp: '2016-05-02T09:59:55-07:00'
@@ -386,64 +444,6 @@ stages:
           config_guess: 0.0028
           zlib: 3.9386
           preparation: 0.0037
-      mac_os_x-10.9:
-        result: FAILURE
-        timestamp: '2016-05-02T09:59:55-07:00'
-        duration: 105.999
-        builtOn: chefdk-mac_os_x-10.9-builder-d736d1
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/344/
-        omnibusTiming:
-          preparation: 0.0059
-        failureCause:
-          cause: git index.lock
-          detailedCause: git index.lock
-          shellCommand:
-            exitStatus: '128'
-            command: git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
-              --work-tree=/opt/chefdk add -A -f
-            stderr: 'fatal: Unable to create ''/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock'':
-              File exists.'
-          stacktrace:
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/util.rb:101:in
-            `rescue in shellout!'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/util.rb:97:in
-            `shellout!'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/git_cache.rb:182:in
-            `git_cmd'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/git_cache.rb:116:in
-            `incremental'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/software.rb:1164:in
-            `execute_build'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/software.rb:1029:in
-            `build_me'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/project.rb:1077:in
-            `block in build'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/project.rb:1076:in
-            `each'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/project.rb:1076:in
-            `build'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/cli.rb:84:in
-            `build'
-          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
-            `run'
-          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
-            `invoke_command'
-          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/cli/base.rb:33:in
-            `dispatch'
-          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
-            `start'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/lib/omnibus/cli.rb:42:in
-            `execute!'
-          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-e2b6cfa81327/bin/omnibus:16:in
-            `<top (required)>'
-          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:22:in `load'
-          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:22:in `<main>'
-          jenkinsBuildStep: Invoke XShell command
-          lastOmnibusStep: 'GitCache: preparation'
-          lastOmnibusLine: "[GitCache: preparation] I | 2016-05-02T10:01:53-07:00
-            | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
-            --work-tree=/opt/chefdk add -A -f"
       ubuntu-12.04:
         result: SUCCESS
         timestamp: '2016-05-02T09:59:55-07:00'

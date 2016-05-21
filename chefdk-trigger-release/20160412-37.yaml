@@ -10,13 +10,13 @@ stages:
     timestamp: '2016-04-12T10:12:08-07:00'
     duration: 10.526
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/37/
-    parameters:
-      GIT_REF: v0.13.19
-      EXPIRE_CACHE: false
     causes:
     - shortDescription: Started by user Chef Jenkins User
       userId: chef-jenkins
       userName: Chef Jenkins User
+    parameters:
+      GIT_REF: v0.13.19
+      EXPIRE_CACHE: false
     runs: {}
   chefdk-build:
     result: SUCCESS
@@ -38,13 +38,6 @@ stages:
       GIT_BRANCH: v0.13.19
       PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
     runs:
-      windows-2008r2-i386:
-        result: SUCCESS
-        timestamp: '2016-04-12T10:12:28-07:00'
-        duration: 1705.297
-        builtOn: chefdk-windows-2008r2-i386-builder-dcb6f4
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/238/
-        omnibusTiming: {}
       debian-6:
         result: SUCCESS
         timestamp: '2016-04-12T10:12:28-07:00'
@@ -79,6 +72,13 @@ stages:
         duration: 1397.417
         builtOn: chefdk-ubuntu-12.04-builder-efc2e0
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/238/
+        omnibusTiming: {}
+      windows-2008r2-i386:
+        result: SUCCESS
+        timestamp: '2016-04-12T10:12:28-07:00'
+        duration: 1705.297
+        builtOn: chefdk-windows-2008r2-i386-builder-dcb6f4
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/238/
         omnibusTiming: {}
   chefdk-test:
     result: FAILURE
@@ -122,20 +122,19 @@ stages:
     retryOf:
     - 97
     runs:
-      windows-2008r2-i386:
-        result: SUCCESS
-        timestamp: '2016-04-12T12:28:59-07:00'
-        duration: 516.748
-        builtOn: chefdk-windows-2008r2-i386-tester-e50cbf
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/98/
-        omnibusTiming: {}
       acceptance:
         result: FAILURE
         timestamp: '2016-04-12T12:28:59-07:00'
         duration: 211.546
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/98/
-        omnibusTiming: {}
+        acceptanceTiming:
+        - top-cookbooks:
+            provision: '00:01:35'
+            force-destroy: '00:00:37'
+            Total: '00:02:35'
+          Run:
+            Total: '00:02:35'
         failureCause:
           cause: chef-acceptance
           detailedCause: chef-acceptance[top-cookbooks (provision)]
@@ -169,9 +168,6 @@ stages:
           - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/application.rb:73:in
             `block in start_worker'"
           jenkinsBuildStep: Invoke XShell command
-          tests:
-            chef-acceptance:
-            - top-cookbooks (provision)
           suspiciousLines:
           - "[2016-04-12T19:32:30+00:00] ERROR: Failed to post audit report to server.
             Saving report to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/failed-audit-data.json"
@@ -242,13 +238,10 @@ stages:
           - echo "ERROR 404"
           - echo "ERROR 404"
           - grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-        acceptanceTiming:
-        - top-cookbooks:
-            provision: '00:01:35'
-            force-destroy: '00:00:37'
-            Total: '00:02:35'
-          Run:
-            Total: '00:02:35'
+          tests:
+            chef-acceptance:
+            - top-cookbooks (provision)
+        omnibusTiming: {}
       debian-6:
         result: SUCCESS
         timestamp: '2016-04-12T12:28:59-07:00'
@@ -318,4 +311,11 @@ stages:
         duration: 974.104
         builtOn: chefdk-ubuntu-14.04-tester-48c4bf
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/98/
+        omnibusTiming: {}
+      windows-2008r2-i386:
+        result: SUCCESS
+        timestamp: '2016-04-12T12:28:59-07:00'
+        duration: 516.748
+        builtOn: chefdk-windows-2008r2-i386-tester-e50cbf
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/98/
         omnibusTiming: {}

@@ -10,13 +10,13 @@ stages:
     timestamp: '2016-03-15T18:03:56-07:00'
     duration: 4.482
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/6/
-    parameters:
-      GIT_REF: master
-      EXPIRE_CACHE: false
     causes:
     - shortDescription: Started by user Matt Wrock
       userId: mwrock
       userName: Matt Wrock
+    parameters:
+      GIT_REF: master
+      EXPIRE_CACHE: false
     runs: {}
   chefdk-build:
     result: SUCCESS
@@ -38,13 +38,6 @@ stages:
       GIT_BRANCH: origin/master
       PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
     runs:
-      windows-2008r2-i386:
-        result: SUCCESS
-        timestamp: '2016-03-15T18:04:08-07:00'
-        duration: 2350.727
-        builtOn: chefdk-windows-2008r2-i386-builder-4b316d
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/96/
-        omnibusTiming: {}
       debian-6:
         result: SUCCESS
         timestamp: '2016-03-15T18:04:08-07:00'
@@ -79,6 +72,13 @@ stages:
         duration: 1080.338
         builtOn: chefdk-ubuntu-12.04-builder-efc2e0
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/96/
+        omnibusTiming: {}
+      windows-2008r2-i386:
+        result: SUCCESS
+        timestamp: '2016-03-15T18:04:08-07:00'
+        duration: 2350.727
+        builtOn: chefdk-windows-2008r2-i386-builder-4b316d
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/96/
         omnibusTiming: {}
   chefdk-test:
     result: FAILURE
@@ -153,12 +153,101 @@ stages:
       PIPELINE_BUILD_JOB_NAME: chefdk-build
       PIPELINE_RUN_FINGERPRINT: jenkins-chefdk-trigger-release-6/6/2016-03-16_01-03-56
     runs:
-      windows-2008r2-i386:
-        result: SUCCESS
+      debian-6:
+        result: FAILURE
         timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 1300.823
-        builtOn: chefdk-windows-2008r2-i386-tester-e50cbf
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/38/
+        duration: 241.178
+        builtOn: chefdk-debian-6-tester-31349b
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/38/
+        failureCause:
+          jenkinsBuildStep: Invoke XShell command
+        omnibusTiming: {}
+      debian-7:
+        result: FAILURE
+        timestamp: '2016-03-15T18:43:29-07:00'
+        duration: 208.215
+        builtOn: chefdk-debian-7-tester-6585d4
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-7,project=chefdk,role=tester/38/
+        failureCause:
+          jenkinsBuildStep: Invoke XShell command
+        omnibusTiming: {}
+      debian-8:
+        result: FAILURE
+        timestamp: '2016-03-15T18:43:29-07:00'
+        duration: 311.695
+        builtOn: chefdk-debian-8-tester-b7ac3b
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-8,project=chefdk,role=tester/38/
+        failureCause:
+          jenkinsBuildStep: Invoke XShell command
+        omnibusTiming: {}
+      el-6:
+        result: FAILURE
+        timestamp: '2016-03-15T18:43:29-07:00'
+        duration: 311.984
+        builtOn: chefdk-rhel-6-tester-42bd5e
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-6,project=chefdk,role=tester/38/
+        failureCause:
+          jenkinsBuildStep: Invoke XShell command
+        omnibusTiming: {}
+      el-7:
+        result: FAILURE
+        timestamp: '2016-03-15T18:43:29-07:00'
+        duration: 207.929
+        builtOn: chefdk-rhel-7-tester-ce15ff
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-7,project=chefdk,role=tester/38/
+        failureCause:
+          jenkinsBuildStep: Invoke XShell command
+        omnibusTiming: {}
+      mac_os_x-10.10:
+        result: FAILURE
+        timestamp: '2016-03-15T18:43:29-07:00'
+        duration: 271.383
+        builtOn: chefdk-mac_os_x-10.10-tester-f8e0cd
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.10,project=chefdk,role=tester/38/
+        failureCause:
+          jenkinsBuildStep: Invoke XShell command
+          suspiciousLines:
+          - 'find: /Volumes/chefdk/.Trashes: Permission denied'
+        omnibusTiming: {}
+      mac_os_x-10.11:
+        result: FAILURE
+        timestamp: '2016-03-15T18:43:29-07:00'
+        duration: 243.289
+        builtOn: chefdk-mac_os_x-10.11-tester-fb35b7
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.11,project=chefdk,role=tester/38/
+        failureCause:
+          jenkinsBuildStep: Invoke XShell command
+          suspiciousLines:
+          - 'find: /Volumes/chefdk/.Trashes: Permission denied'
+        omnibusTiming: {}
+      mac_os_x-10.9:
+        result: FAILURE
+        timestamp: '2016-03-15T18:43:29-07:00'
+        duration: 253.681
+        builtOn: chefdk-mac_os_x-10.9-tester-8a14ce
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=tester/38/
+        failureCause:
+          jenkinsBuildStep: Invoke XShell command
+          suspiciousLines:
+          - 'find: /Volumes/chefdk/.Trashes: Permission denied'
+        omnibusTiming: {}
+      ubuntu-12.04:
+        result: FAILURE
+        timestamp: '2016-03-15T18:43:29-07:00'
+        duration: 63.222
+        builtOn: chefdk-ubuntu-12.04-tester-d64e0a
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=tester/38/
+        failureCause:
+          jenkinsBuildStep: Invoke XShell command
+        omnibusTiming: {}
+      ubuntu-14.04:
+        result: FAILURE
+        timestamp: '2016-03-15T18:43:29-07:00'
+        duration: 222.04
+        builtOn: chefdk-ubuntu-14.04-tester-48c4bf
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/38/
+        failureCause:
+          jenkinsBuildStep: Invoke XShell command
         omnibusTiming: {}
       acceptance:
         result: SUCCESS
@@ -166,7 +255,6 @@ stages:
         duration: 1701.784
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/38/
-        omnibusTiming: {}
         acceptanceTiming:
         - trivial:
             provision: '00:01:49'
@@ -182,99 +270,11 @@ stages:
             Total: '00:24:04'
           Run:
             Total: '00:24:04'
-      debian-6:
-        result: FAILURE
-        timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 241.178
-        builtOn: chefdk-debian-6-tester-31349b
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/38/
         omnibusTiming: {}
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-      debian-7:
-        result: FAILURE
+      windows-2008r2-i386:
+        result: SUCCESS
         timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 208.215
-        builtOn: chefdk-debian-7-tester-6585d4
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-7,project=chefdk,role=tester/38/
+        duration: 1300.823
+        builtOn: chefdk-windows-2008r2-i386-tester-e50cbf
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/38/
         omnibusTiming: {}
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-      debian-8:
-        result: FAILURE
-        timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 311.695
-        builtOn: chefdk-debian-8-tester-b7ac3b
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-8,project=chefdk,role=tester/38/
-        omnibusTiming: {}
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-      el-6:
-        result: FAILURE
-        timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 311.984
-        builtOn: chefdk-rhel-6-tester-42bd5e
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-6,project=chefdk,role=tester/38/
-        omnibusTiming: {}
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-      el-7:
-        result: FAILURE
-        timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 207.929
-        builtOn: chefdk-rhel-7-tester-ce15ff
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-7,project=chefdk,role=tester/38/
-        omnibusTiming: {}
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-      mac_os_x-10.10:
-        result: FAILURE
-        timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 271.383
-        builtOn: chefdk-mac_os_x-10.10-tester-f8e0cd
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.10,project=chefdk,role=tester/38/
-        omnibusTiming: {}
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousLines:
-          - 'find: /Volumes/chefdk/.Trashes: Permission denied'
-      mac_os_x-10.11:
-        result: FAILURE
-        timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 243.289
-        builtOn: chefdk-mac_os_x-10.11-tester-fb35b7
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.11,project=chefdk,role=tester/38/
-        omnibusTiming: {}
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousLines:
-          - 'find: /Volumes/chefdk/.Trashes: Permission denied'
-      mac_os_x-10.9:
-        result: FAILURE
-        timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 253.681
-        builtOn: chefdk-mac_os_x-10.9-tester-8a14ce
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=tester/38/
-        omnibusTiming: {}
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousLines:
-          - 'find: /Volumes/chefdk/.Trashes: Permission denied'
-      ubuntu-12.04:
-        result: FAILURE
-        timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 63.222
-        builtOn: chefdk-ubuntu-12.04-tester-d64e0a
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=tester/38/
-        omnibusTiming: {}
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-      ubuntu-14.04:
-        result: FAILURE
-        timestamp: '2016-03-15T18:43:29-07:00'
-        duration: 222.04
-        builtOn: chefdk-ubuntu-14.04-tester-48c4bf
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/38/
-        omnibusTiming: {}
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command

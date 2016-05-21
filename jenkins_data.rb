@@ -258,7 +258,11 @@ class JenkinsData
         end
         stage["failures"] = failures
       end
+
+      # Reorder runs by failure first, then by configuration name
+      stage["runs"] = Hash[stage["runs"].sort_by { |configuration,run| "#{failed?(run) ? 0 : 1}-#{configuration}" }]
     end
+
 
     # Reorder fields for easier reading of YAML
     stage = reorder_fields(stage, %w{result failures timestamp duration url}, "runs")
@@ -743,7 +747,7 @@ class JenkinsData
   # Helpers
   #
 
-  def reorder_fields(hash, start_fields, end_fields=[])
+  def reorder_fields(hash, start_fields=[], end_fields=[])
     # Allow user to pass single field name, upconvert to array
     start_fields = Array(start_fields)
     end_fields = Array(end_fields)
@@ -754,8 +758,8 @@ class JenkinsData
       reordered_hash[field] = hash[field] if hash.has_key?(field)
     end
     # Everything else next
-    hash.each do |field, value|
-      reordered_hash[field] = value unless start_fields.include?(field) || end_fields.include?(field)
+    hash.keys.sort.each do |field|
+      reordered_hash[field] = hash[field] unless start_fields.include?(field) || end_fields.include?(field)
     end
     # End fields last
     end_fields.each do |field|

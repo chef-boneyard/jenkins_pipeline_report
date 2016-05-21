@@ -10,13 +10,13 @@ stages:
     timestamp: '2016-03-16T10:22:12-07:00'
     duration: 2.268
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/8/
-    parameters:
-      GIT_REF: master
-      EXPIRE_CACHE: true
     causes:
     - shortDescription: Started by user Matt Wrock
       userId: mwrock
       userName: Matt Wrock
+    parameters:
+      GIT_REF: master
+      EXPIRE_CACHE: true
     runs: {}
   chefdk-build:
     result: SUCCESS
@@ -38,13 +38,6 @@ stages:
       GIT_BRANCH: origin/master
       PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
     runs:
-      windows-2008r2-i386:
-        result: SUCCESS
-        timestamp: '2016-03-16T10:22:22-07:00'
-        duration: 10390.174
-        builtOn: chefdk-windows-2008r2-i386-builder-4b316d
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/99/
-        omnibusTiming: {}
       debian-6:
         result: SUCCESS
         timestamp: '2016-03-16T10:22:22-07:00'
@@ -80,14 +73,23 @@ stages:
         builtOn: chefdk-ubuntu-12.04-builder-efc2e0
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/99/
         omnibusTiming: {}
+      windows-2008r2-i386:
+        result: SUCCESS
+        timestamp: '2016-03-16T10:22:22-07:00'
+        duration: 10390.174
+        builtOn: chefdk-windows-2008r2-i386-builder-4b316d
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/99/
+        omnibusTiming: {}
   chefdk-test:
     result: FAILURE
     failures:
-      network timeout jenkins: windows
       chef-acceptance[top-cookbooks (provision)]: acceptance
+      network timeout jenkins: windows
     timestamp: '2016-03-16T19:11:38-07:00'
     duration: 1255.99
     url: http://manhattan.ci.chef.co/job/chefdk-test/43/
+    causes:
+    - shortDescription: 'Started by Naginator after build #42 failure'
     parameters:
       OMNIBUS_BUILD_VERSION: 0.12.0
       DELIVERY_CHANGE: ''
@@ -153,37 +155,23 @@ stages:
       PIPELINE_BUILD_JOB_NUMBER: '99'
       PIPELINE_BUILD_JOB_NAME: chefdk-build
       PIPELINE_RUN_FINGERPRINT: jenkins-chefdk-trigger-release-8/8/2016-03-16_17-22-12
-    causes:
-    - shortDescription: 'Started by Naginator after build #42 failure'
     retryOf:
     - 42
     - 41
     - 40
     runs:
-      windows-2008r2-i386:
-        result: FAILURE
-        timestamp: '2016-03-16T19:11:38-07:00'
-        duration: 406.1
-        builtOn: chefdk-windows-2008r2-i386-tester-e50cbf
-        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/43/
-        omnibusTiming: {}
-        failureCause:
-          cause: network timeout
-          detailedCause: network timeout jenkins
-          suspiciousLines:
-          - 'ERROR: Publisher hudson.tasks.Fingerprinter aborted due to exception'
-          - 'ERROR: Publisher hudson.tasks.ArtifactArchiver aborted due to exception'
-          - 'Caused by: java.io.IOException: Connection timed out'
-          - 'org.jenkinsci.lib.envinject.EnvInjectException: java.io.IOException:
-            Connection timed out'
-          - 'ERROR: SEVERE ERROR occurs'
       acceptance:
         result: FAILURE
         timestamp: '2016-03-16T19:11:38-07:00'
         duration: 554.248
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/43/
-        omnibusTiming: {}
+        acceptanceTiming:
+        - top-cookbooks:
+            provision: '00:07:23'
+            Total: '00:07:56'
+          Run:
+            Total: '00:07:56'
         failureCause:
           cause: chef-acceptance
           detailedCause: chef-acceptance[top-cookbooks (provision)]
@@ -231,9 +219,6 @@ stages:
           - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bin/chef-acceptance:22:in `load'"
           - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bin/chef-acceptance:22:in `<main>'"
           jenkinsBuildStep: Invoke XShell command
-          tests:
-            chef-acceptance:
-            - top-cookbooks (provision)
           suspiciousLines:
           - "[2016-03-17T02:25:58+00:00] FATAL: Chef::Exceptions::ChildConvergeError:
             Chef run process exited unsuccessfully (exit code 1)"
@@ -360,12 +345,27 @@ stages:
             ERROR: Failed to post audit report to server. Saving report to /tmp/kitchen/cache/failed-audit-data.json'
           - 'TOP-COOKBOOKS::PROVISION::[2016-03-17 02:20:39 +0000]                          [2016-03-17T02:20:39+00:00]
             ERROR: Failed to post audit report to server. Saving report to /tmp/kitchen/cache/failed-audit-data.json'
-        acceptanceTiming:
-        - top-cookbooks:
-            provision: '00:07:23'
-            Total: '00:07:56'
-          Run:
-            Total: '00:07:56'
+          tests:
+            chef-acceptance:
+            - top-cookbooks (provision)
+        omnibusTiming: {}
+      windows-2008r2-i386:
+        result: FAILURE
+        timestamp: '2016-03-16T19:11:38-07:00'
+        duration: 406.1
+        builtOn: chefdk-windows-2008r2-i386-tester-e50cbf
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/43/
+        failureCause:
+          cause: network timeout
+          detailedCause: network timeout jenkins
+          suspiciousLines:
+          - 'ERROR: Publisher hudson.tasks.Fingerprinter aborted due to exception'
+          - 'ERROR: Publisher hudson.tasks.ArtifactArchiver aborted due to exception'
+          - 'Caused by: java.io.IOException: Connection timed out'
+          - 'org.jenkinsci.lib.envinject.EnvInjectException: java.io.IOException:
+            Connection timed out'
+          - 'ERROR: SEVERE ERROR occurs'
+        omnibusTiming: {}
       debian-6:
         result: SUCCESS
         timestamp: '2016-03-16T19:11:38-07:00'

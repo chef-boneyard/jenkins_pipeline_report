@@ -10,19 +10,19 @@ stages:
     timestamp: '2016-03-15T12:07:43-07:00'
     duration: 2.402
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/4/
-    parameters:
-      GIT_REF: master
-      EXPIRE_CACHE: true
     causes:
     - shortDescription: Started by user Matt Wrock
       userId: mwrock
       userName: Matt Wrock
+    parameters:
+      GIT_REF: master
+      EXPIRE_CACHE: true
     runs: {}
   chefdk-build:
     result: ABORTED
     failures:
-      gem install dep-selector-libgecode -v 1.1.0: windows
       aborted: debian
+      gem install dep-selector-libgecode -v 1.1.0: windows
     timestamp: '2016-03-15T12:07:54-07:00'
     duration: 17001.64
     url: http://manhattan.ci.chef.co/job/chefdk-build/94/
@@ -41,13 +41,22 @@ stages:
       GIT_BRANCH: origin/master
       PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-release
     runs:
+      debian-6:
+        result: ABORTED
+        timestamp: '2016-03-15T12:07:54-07:00'
+        duration: 14189.975
+        builtOn: chefdk-debian-6-builder-2ccc58
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/94/
+        failureCause:
+          cause: aborted
+          detailedCause: aborted
+        omnibusTiming: {}
       windows-2008r2-i386:
         result: FAILURE
         timestamp: '2016-03-15T12:07:54-07:00'
         duration: 3662.357
         builtOn: chefdk-windows-2008r2-i386-builder-4b316d
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/94/
-        omnibusTiming: {}
         failureCause:
           cause: gem install
           detailedCause: gem install dep-selector-libgecode -v 1.1.0
@@ -184,18 +193,9 @@ stages:
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `load'
           - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `<main>'
           jenkinsBuildStep: Invoke XShell command
-          lastOmnibusStep: 'Builder: berkshelf'
           lastOmnibusLine: "[Builder: berkshelf] I | Build berkshelf: 320.1742s"
-      debian-6:
-        result: ABORTED
-        timestamp: '2016-03-15T12:07:54-07:00'
-        duration: 14189.975
-        builtOn: chefdk-debian-6-builder-2ccc58
-        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/94/
+          lastOmnibusStep: 'Builder: berkshelf'
         omnibusTiming: {}
-        failureCause:
-          cause: aborted
-          detailedCause: aborted
       el-6:
         result: SUCCESS
         timestamp: '2016-03-15T12:07:54-07:00'
