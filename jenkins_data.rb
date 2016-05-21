@@ -358,7 +358,7 @@ class JenkinsData
       extract_timing(configuration, run, console_text)
     end
 
-    if run["changedThisTime"] || force || !run.has_key?("failureCause") || true
+    if run["changedThisTime"] || force || !run.has_key?("failureCause")
       if failed?(run)
         console_text ||= console_text(build, run)
         return unless console_text
