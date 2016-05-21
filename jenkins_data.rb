@@ -568,6 +568,10 @@ class JenkinsData
                /java.io.FileNotFoundException.*(Permission denied)/
             reason["cause"] = "disk space"
             reason["detailedCause"] = "disk space (#{$1})"
+
+          when /Cannot delete workspace:.*The process cannot access the file because it is being used by another process./i
+            reason["cause"] = "zombie jenkins"
+            reason["detailedCause"] = "zombie jenkins"
           end
         end
       end
