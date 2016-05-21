@@ -12,8 +12,6 @@ JenkinsCli.parse_options do |opts|
   EOM
 end
 
-raise "--no-refresh invalid for #{File.basename(__FILE__)}" unless JenkinsCli.options[:refresh]
-
 ARGV.each do |job_url|
   # Handles the refresh
   JenkinsCli.builds(job_url)

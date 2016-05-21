@@ -9,22 +9,19 @@ module JenkinsCli
 
   def self.builds(job_url)
     jenkins = JenkinsData.new(job_url: job_url)
-    if options[:refresh]
-      builds = jenkins.refresh(
-        force_refresh_runs: options[:force_refresh_runs],
-        force_refresh_logs: options[:force_refresh_logs],
-        force_reprocess_logs: options[:force_reprocess_logs]
-      )
-    else
-      jenkins.load
-    end
+    jenkins.builds(
+      refresh: options[:refresh],
+      force_refresh_runs: options[:force_refresh_runs],
+      force_refresh_logs: options[:force_refresh_logs],
+      force_reprocess_logs: options[:force_reprocess_logs]
+    )
   end
 
   def self.parse_options
     OptionParser.new do |opts|
       yield opts
 
-      opts.on("--[no-]refresh", "Whether to refresh data to latest (default: true).") do |v|
+      opts.on("--[no-]refresh", "Whether to refresh the list of builds (default: true).") do |v|
         options[:refresh] = v
       end
       opts.on("--[no-]force", "Whether to refresh all data regardless of whether they've been fetched before (default: false).") do |v|

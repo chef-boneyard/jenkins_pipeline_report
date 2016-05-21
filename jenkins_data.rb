@@ -16,24 +16,28 @@ class JenkinsData
     puts message
   end
 
-  def refresh(force_refresh_runs: false, force_refresh_logs: false, force_reprocess_logs: false)
-    builds = refresh_builds
-    builds.each do |build|
-      JenkinsData.debug "Processing #{build["stages"].values.last["url"]} ..."
-      refresh_runs(build, force: force_refresh_runs)
-      cache_console_texts(build, force: force_refresh_logs)
-      process_console_texts(build, force: force_reprocess_logs)
-      cache_build(build)
+  def builds(refresh: false, **options)
+    builds = load
+    if refresh
+      # Merge remote build information with local
+      builds = merge_builds(load, fetch_builds)
     end
+    builds.sort_by! { |build| Time.parse(build["timestamp"]) }
+    builds.reverse!
+
+    builds.each do |build|
+      refresh_build(build, **options)
+    end
+
     builds
   end
 
-  def refresh_builds
-    # Merge remote build information with local
-    builds = merge_builds(load, fetch_builds)
-    builds.sort_by! { |build| Time.parse(build["timestamp"]) }
-    builds.reverse!
-    builds
+  def refresh_build(build, force_refresh_runs: false, force_refresh_logs: false, force_reprocess_logs: false)
+    JenkinsData.debug "Processing #{build["stages"].values.last["url"]} ..."
+    refresh_runs(build, force: force_refresh_runs)
+    cache_console_texts(build, force: force_refresh_logs)
+    process_console_texts(build, force: force_reprocess_logs)
+    cache_build(build)
   end
 
   def refresh_runs(build, force: false)

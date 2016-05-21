@@ -19,16 +19,17 @@ class JenkinsPipeline
 
     @job = job
     @client = JenkinsApi::Client.new(server_url: server_url, identity_file: identity_file, **client_options)
-
-    load_job(job)
-    set_retries_and_downstreams
   end
+
 
   #
   # The jobs involved in this pipeline.
   #
   def jobs
-    @jobs ||= {}
+    @jobs ||= begin
+      ensure_loaded
+      {}
+    end
   end
 
   #
@@ -142,6 +143,11 @@ class JenkinsPipeline
   class ParseError < JenkinsPipelineError; end
 
   private
+
+  def ensure_loaded
+    load_job(job)
+    set_retries_and_downstreams
+  end
 
   def retry_ancestors(build)
     if build && build["retryOf"]
