@@ -546,6 +546,10 @@ class JenkinsData
         when /rubygems\.org.*Checksum of (\S+) does not match the checksum provided by server/mi
           reason["cause"] = "rubygems checksum"
           reason["detailedCause"] = "rubygems #{$1} checksum"
+
+        when /Could not find (\S+) in any of the sources/i
+          reason["cause"] = "yanked gem"
+          reason["detailedCause"] = "yanked gem #{$1}"
         end
       end
 
