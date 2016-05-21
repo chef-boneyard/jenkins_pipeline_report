@@ -410,7 +410,8 @@ stages:
   chefdk-test:
     result: FAILURE
     failures:
-      unknown: acceptance,ubuntu-12.04
+      unknown: acceptance
+      chef_verify[berkshelf]: ubuntu-12.04
     timestamp: '2016-05-16T15:32:08-07:00'
     duration: 1666.204
     url: http://manhattan.ci.chef.co/job/chefdk-test/172/
@@ -560,6 +561,8 @@ stages:
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=tester/172/
         omnibusTiming: {}
         failureCause:
+          cause: chef_verify
+          detailedCause: chef_verify[berkshelf]
           stacktrace:
           - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:95:in
             `block in materialize'"
@@ -586,6 +589,9 @@ stages:
           - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in
             `require'"
           jenkinsBuildStep: Invoke XShell command
+          tests:
+            chef_verify:
+            - berkshelf
       ubuntu-14.04:
         result: SUCCESS
         timestamp: '2016-05-16T15:32:08-07:00'

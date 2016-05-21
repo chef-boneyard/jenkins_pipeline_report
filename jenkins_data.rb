@@ -412,6 +412,10 @@ class JenkinsData
       when /^The following shell command exited with status (\d+):\s/
         command = extract_shell_command(lines, index, $1)
         reason["shellCommand"] ||= command if command
+      when /^\s*Verification of component '(.+)' failed.\s*$/
+        reason["tests"] ||= {}
+        reason["tests"]["chef_verify"] ||= []
+        reason["tests"]["chef_verify"] << $1
       when /EACCES/
         reason["suspiciousLines"] ||= []
         reason["suspiciousLines"] << line.strip
@@ -441,6 +445,16 @@ class JenkinsData
     end
 
     if reason
+      if reason["tests"]
+        reason["cause"] = "#{reason["tests"].keys.join(",")}"
+        reason["detailedCause"] = reason["tests"].map do |test_type, t|
+          if t.size <= 3
+            "#{test_type}[#{t.join(",")}]"
+          else
+            test_type
+          end
+        end.join(",")
+      end
       if reason["shellCommand"]
         stderr = reason["shellCommand"]["stderr"]
         stdout = reason["shellCommand"]["stdout"]
