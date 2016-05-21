@@ -20,7 +20,8 @@ stages:
     runs: {}
   chef-build:
     result: FAILURE
-    failures: all
+    failures:
+      unknown: all
     timestamp: '2016-05-18T10:08:51-07:00'
     duration: 1224.966
     url: http://manhattan.ci.chef.co/job/chef-build/10/
@@ -136,6 +137,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/i386/platform/debian-6/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       el-5-i386:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -229,6 +315,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CC=gcc44 CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXX=g++44 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/i386/platform/el-5/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       el-6-i386:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -322,6 +493,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/i386/platform/el-6/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       freebsd-10-i386:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -414,6 +670,90 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CC=clang CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXX=clang++ CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-L/opt/chef/embedded/lib LD_RUN_PATH=/opt/chef/embedded/lib
+              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PATH=/opt/chef/bin:/opt/chef/embedded/bin:/usr/home/jenkins/workspace/chef-build/architecture/i386/platform/freebsd-10/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       freebsd-9-i386:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -506,6 +846,90 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CC=gcc49 CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXX=g++49 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-L/opt/chef/embedded/lib LD_RUN_PATH=/opt/chef/embedded/lib
+              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PATH=/opt/chef/bin:/opt/chef/embedded/bin:/usr/home/jenkins/workspace/chef-build/architecture/i386/platform/freebsd-9/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       ubuntu-10.04-i386:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -599,6 +1023,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/i386/platform/ubuntu-10.04/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       windows-2008r2-i386:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -696,6 +1205,95 @@ stages:
               Files\Java\jre1.8.0_45\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\opscode\angrychef\bin\
               RCFLAGS=--target=pe-i386 C:\opscode\chef\embedded\bin\gem which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: ARFLAGS=rv --target=pe-i386 BUNDLE_GEMFILE=C:/omnibus-ruby/src/chef/Gemfile
+              CFLAGS=-IC:/opscode/chef/embedded/include -m32 -O3 -march=i686 CPPFLAGS=-IC:/opscode/chef/embedded/include
+              -m32 -O3 -march=i686 CXXFLAGS=-IC:/opscode/chef/embedded/include -m32
+              -O3 -march=i686 LDFLAGS=-LC:/opscode/chef/embedded/lib -m32 LD_RUN_PATH=C:/opscode/chef/embedded/lib
+              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PKG_CONFIG_PATH=C:/opscode/chef/embedded/lib/pkgconfig
+              PROG_TAR=bsdtar Path=C:/opscode/chef/bin;C:/opscode/chef/embedded/bin;C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin;C:\msys\bin;C:\msys\mingw\bin;C:\Program
+              Files (x86)\Git\Cmd;C:\Program Files (x86)\Git\libexec\git-core;C:\languages\ruby\2.1.5\bin;C:\wix;C:\Program
+              Files\7-zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64;C:\Program
+              Files\Java\jre1.8.0_45\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\opscode\angrychef\bin\
+              RCFLAGS=--target=pe-i386 C:\opscode\chef\embedded\bin\gem which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in
+            `dispatch'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `load'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       solaris-10-i86pc:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -791,6 +1389,93 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CC=gcc -static-libgcc
+              CFLAGS=-I/opt/chef/embedded/include CPPFLAGS=-I/opt/chef/embedded/include
+              CXXFLAGS=-I/opt/chef/embedded/include LDFLAGS=-R/opt/chef/embedded/lib
+              -L/opt/chef/embedded/lib -static-libgcc LD_OPTIONS=-R/opt/chef/embedded/lib
+              -M /export/home/jenkins/workspace/chef-build/architecture/i86pc/platform/solaris-10/project/chef/role/builder/omnibus/files/mapfiles/solaris
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/export/home/jenkins/workspace/chef-build/architecture/i86pc/platform/solaris-10/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/angry-omnibus-toolchain/embedded/bin:/usr/local/bin:/usr/sfw/bin:/usr/ccs/bin:/usr/jdk/latest/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       aix-6.1-powerpc:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -886,6 +1571,93 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: ARFLAGS=rv -X64 cru BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile
+              CC=xlc_r -q64 CFLAGS=-q64 -I/opt/chef/embedded/include -D_LARGE_FILES
+              -O CPPFLAGS=-q64 -I/opt/chef/embedded/include -D_LARGE_FILES -O CXX=xlC_r
+              -q64 CXXFLAGS=-q64 -I/opt/chef/embedded/include -D_LARGE_FILES -O LD=ld
+              -b64 LDFLAGS=-q64 -L/opt/chef/embedded/lib -Wl,-blibpath:/opt/chef/embedded/lib:/usr/lib:/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              OBJECT_MODE=64 PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/powerpc/platform/aix-6.1/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/IBM/xlC/13.1.0/bin:/opt/angry-omnibus-toolchain/embedded/bin:/usr/local/bin:/usr/ibm-java-ppc64-71/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:22:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:22:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       solaris-10-sun4v:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -981,6 +1753,93 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CC=gcc -static-libgcc
+              CFLAGS=-I/opt/chef/embedded/include CPPFLAGS=-I/opt/chef/embedded/include
+              CXXFLAGS=-I/opt/chef/embedded/include LDFLAGS=-R/opt/chef/embedded/lib
+              -L/opt/chef/embedded/lib -static-libgcc LD_OPTIONS=-R/opt/chef/embedded/lib
+              -M /export/home/jenkins/workspace/chef-build/architecture/sun4v/platform/solaris-10/project/chef/role/builder/omnibus/files/mapfiles/solaris
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/export/home/jenkins/workspace/chef-build/architecture/sun4v/platform/solaris-10/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/omnibus-toolchain/embedded/bin:/usr/local/bin:/usr/sfw/bin:/usr/ccs/bin:/usr/jdk/latest/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       debian-6:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -1074,6 +1933,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/x86_64/platform/debian-6/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       el-5:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -1167,6 +2111,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CC=gcc44 CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXX=g++44 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/x86_64/platform/el-5/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       el-6:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -1260,6 +2289,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/x86_64/platform/el-6/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       el-7:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -1353,6 +2467,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/x86_64/platform/el-7/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       freebsd-10:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -1445,6 +2644,90 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CC=clang CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXX=clang++ CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-L/opt/chef/embedded/lib LD_RUN_PATH=/opt/chef/embedded/lib
+              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PATH=/opt/chef/bin:/opt/chef/embedded/bin:/usr/home/jenkins/workspace/chef-build/architecture/x86_64/platform/freebsd-10/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       freebsd-9:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -1537,6 +2820,90 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CC=gcc49 CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXX=g++49 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-L/opt/chef/embedded/lib LD_RUN_PATH=/opt/chef/embedded/lib
+              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PATH=/opt/chef/bin:/opt/chef/embedded/bin:/usr/home/jenkins/workspace/chef-build/architecture/x86_64/platform/freebsd-9/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       ios_xr-6:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -1630,6 +2997,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/x86_64/platform/ios_xr-6/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/angry-omnibus-toolchain/embedded/bin:/usr/local/bin:/usr/jdk1.7.0_79/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       mac_os_x-10.9:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -1722,6 +3174,90 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-L/opt/chef/embedded/lib LD_RUN_PATH=/opt/chef/embedded/lib
+              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PATH=/opt/chef/bin:/opt/chef/embedded/bin:/Users/jenkins/workspace/chef-build/architecture/x86_64/platform/mac_os_x-10.9/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       nexus-7:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -1815,6 +3351,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/x86_64/platform/nexus-7/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/angry-omnibus-toolchain/embedded/bin:/usr/local/bin:/usr/jdk1.7.0_79/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       ubuntu-10.04:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -1908,6 +3529,91 @@ stages:
               PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
               which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef/Gemfile CFLAGS=-I/opt/chef/embedded/include
+              -O2 CPPFLAGS=-I/opt/chef/embedded/include -O2 CXXFLAGS=-I/opt/chef/embedded/include
+              -O2 LDFLAGS=-Wl,-rpath,/opt/chef/embedded/lib -L/opt/chef/embedded/lib
+              LD_RUN_PATH=/opt/chef/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+              PATH=/opt/chef/bin:/opt/chef/embedded/bin:/home/jenkins/workspace/chef-build/architecture/x86_64/platform/ubuntu-10.04/project/chef/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+              PKG_CONFIG_PATH=/opt/chef/embedded/lib/pkgconfig /opt/chef/embedded/bin/gem
+              which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+          - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
       windows-2008r2:
         result: FAILURE
         timestamp: '2016-05-18T10:08:51-07:00'
@@ -2005,3 +3711,92 @@ stages:
               Files\Java\jre1.8.0_45\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\opscode\angrychef\bin\
               RCFLAGS=--target=pe-x86-64 C:\opscode\chef\embedded\bin\gem which chef
             stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+        failureCause:
+          shellCommand:
+            exitStatus: '1'
+            command: ARFLAGS=rv --target=pe-x86-64 BUNDLE_GEMFILE=C:/omnibus-ruby/src/chef/Gemfile
+              CFLAGS=-IC:/opscode/chef/embedded/include -m64 -O3 -march=x86-64 CPPFLAGS=-IC:/opscode/chef/embedded/include
+              -m64 -O3 -march=x86-64 CXXFLAGS=-IC:/opscode/chef/embedded/include -m64
+              -O3 -march=x86-64 LDFLAGS=-LC:/opscode/chef/embedded/lib -m64 LD_RUN_PATH=C:/opscode/chef/embedded/lib
+              NOKOGIRI_USE_SYSTEM_LIBRARIES=true PKG_CONFIG_PATH=C:/opscode/chef/embedded/lib/pkgconfig
+              PROG_TAR=bsdtar Path=C:/opscode/chef/bin;C:/opscode/chef/embedded/bin;C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin;C:\msys\bin;C:\msys\mingw\bin;C:\Program
+              Files (x86)\Git\Cmd;C:\Program Files (x86)\Git\libexec\git-core;C:\languages\ruby\2.1.5\bin;C:\wix;C:\Program
+              Files\7-zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64;C:\Program
+              Files\Java\jre1.8.0_45\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\opscode\angrychef\bin\
+              RCFLAGS=--target=pe-x86-64 C:\opscode\chef\embedded\bin\gem which chef
+            stderr: 'ERROR:  Can''t find ruby library file or shared library chef'
+          stacktrace:
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in
+            `rescue in shellout!'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in
+            `shellout!'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:825:in
+            `shellout!'
+          - omnibus/files/chef/build-chef.rb:102:in `block in install_shared_gemfile'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `instance_eval'
+          - omnibus/files/chef-gem/build-chef-gem.rb:112:in `block in block'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `instance_eval'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:1012:in
+            `run'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:843:in
+            `block (3 levels) in execute'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `call'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:865:in
+            `with_retries'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:842:in
+            `block (2 levels) in execute'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:841:in
+            `block in execute'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `call'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:915:in
+            `with_clean_env'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:840:in
+            `execute'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:704:in
+            `block (2 levels) in build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `each'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:703:in
+            `block in build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `call'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/instrumentation.rb:23:in
+            `measure'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/builder.rb:702:in
+            `build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1161:in
+            `execute_build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:1029:in
+            `build_me'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1077:in
+            `block in build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `each'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1076:in
+            `build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:84:in
+            `build'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+            `run'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+            `invoke_command'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in
+            `dispatch'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli/base.rb:33:in
+            `dispatch'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+            `start'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/cli.rb:42:in
+            `execute!'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/bin/omnibus:16:in
+            `<top (required)>'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `load'
+          - C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bin/omnibus:23:in `<main>'
+          jenkinsBuildStep: Invoke XShell command
