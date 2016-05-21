@@ -458,7 +458,7 @@ class JenkinsData
           reason["suspiciousLines"] << joined
         end
 
-      when /EACCES/,
+      when /EACCES|\bERROR\b/,
            /Permission denied/i
         reason["suspiciousLines"] ||= []
         reason["suspiciousLines"] << line.strip
