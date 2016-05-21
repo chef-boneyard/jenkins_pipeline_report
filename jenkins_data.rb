@@ -358,7 +358,7 @@ class JenkinsData
       extract_timing(configuration, run, console_text)
     end
 
-    if run["changedThisTime"] || force || !run.has_key?("failureCause")
+    if run["changedThisTime"] || force || !run.has_key?("failureCause") || true
       if failed?(run)
         JenkinsData.debug("Extracting failure reason from #{File.basename(console_text_filename(build, run))}...")
         console_text ||= console_text(build, run)
@@ -437,8 +437,8 @@ class JenkinsData
 
       when /^\s*Verification of component '(.+)' failed.\s*$/
         reason["tests"] ||= {}
-        reason["tests"]["chef_verify"] ||= []
-        reason["tests"]["chef_verify"] << $1
+        reason["tests"]["chef verify"] ||= []
+        reason["tests"]["chef verify"] << $1
 
       when /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
         index, results = extract_chef_acceptance_result(lines, index)
@@ -534,6 +534,10 @@ class JenkinsData
         when /Gemfile\.lock is corrupt/
           reason["cause"] = "corrupt Gemfile.lock"
           reason["detailedCause"] = reason["cause"]
+
+        when /An error occurred while installing (\S+) \(([^\)]+)\)/i
+          reason["cause"] = "gem install"
+          reason["detailedCause"] = "gem install #{$1} -v #{$2}"
         end
       end
 
