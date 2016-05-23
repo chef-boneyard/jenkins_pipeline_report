@@ -128,21 +128,55 @@ stages:
               `<top (required)>'"
             - "/opt/chefdk/embedded/bin/bundle:22:in `load'"
             - "/opt/chefdk/embedded/bin/bundle:22:in `<main>'"
-          suspiciousLines:
-          - 'ERROR: You must supply a regular expression to match the results against'
-          - 'ERROR: You must set your EDITOR environment variable or configure your
-            editor via knife.rb'
-          - 'ERROR: You specified the --disable_editing option, nothing to edit'
-          - 'FATAL: You must supply a regular expression to match the results against'
-          - 'FATAL: You must specify an environment name'
-          - 'FATAL: Chef::Exceptions::InvalidDataBagName'
-          - ".ERROR: You need to pass a sub-command (e.g., knife SUB-COMMAND)"
-          - "..[2016-04-19T01:02:42+00:00] FATAL: SIGTERM received, stopping"
-          - "[2016-04-19T01:02:39+00:00] FATAL: SIGTERM received, stopping"
-          - 'ERROR: Chef failed to converge: template[/tmp/chef-dk20160419-7813-bp97tj/new_cookbook/recipes/default.rb]
-            (code_generator::cookbook line 98) had an error: Chef::Exceptions::FileContentStagingError:
-            Staging tempfile can not be created during file deployment.'
-          - "--- ERROR REPORT TEMPLATE -------------------------------------------------------"
+          suspiciousBlocks:
+            438: "\tfrom /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in
+              `require'\n\tfrom /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in
+              `require'\n\n--- ERROR REPORT TEMPLATE -------------------------------------------------------\n-
+              What did you do?\n\n  I ran the command `/opt/chefdk/embedded/bin/bundle
+              install --local --quiet`\n"
+            4070: |
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.14.0/lib/ohai/plugins/packages.rb:25: warning: previous definition of WINDOWS_ATTRIBUTE_ALIASES was here
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.14.0/lib/ohai/plugins/packages.rb:25: warning: already initialized constant WINDOWS_ATTRIBUTE_ALIASES
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.14.0/lib/ohai/plugins/packages.rb:25: warning: previous definition of WINDOWS_ATTRIBUTE_ALIASES was here
+              ERROR: Chef failed to converge: template[/tmp/chef-dk20160419-7813-bp97tj/new_cookbook/recipes/default.rb] (code_generator::cookbook line 98) had an error: Chef::Exceptions::FileContentStagingError: Staging tempfile can not be created during file deployment.
+               Errors: Creating temp file under '/tmp/chef-dk20160419-7813-bp97tj/new_cookbook/recipes' failed with: 'No space left on device @ rb_sysopen - /tmp/chef-dk20160419-7813-bp97tj/new_cookbook/recipes/.chef-default.rb20160419-7813-10g79ha'!
+              Caused by: (Chef::Exceptions::FileContentStagingError) template[/tmp/chef-dk20160419-7813-bp97tj/new_cookbook/recipes/default.rb] (code_generator::cookbook line 98) had an error: Chef::Exceptions::FileContentStagingError: Staging tempfile can not be created during file deployment.
+               Errors: Creating temp file under '/tmp/chef-dk20160419-7813-bp97tj/new_cookbook/recipes' failed with: 'No space left on device @ rb_sysopen - /tmp/chef-dk20160419-7813-bp97tj/new_cookbook/recipes/.chef-default.rb20160419-7813-10g79ha'!
+            4107: |
+              [2016-04-19T01:02:36+00:00] INFO: SIGUSR1 received, waking up
+              [2016-04-19T01:02:37+00:00] INFO: SIGUSR1 received, waking up
+              .............[2016-04-19T01:02:39+00:00] INFO: Forking chef instance to converge...
+              [2016-04-19T01:02:39+00:00] FATAL: SIGTERM received, stopping
+              ..[2016-04-19T01:02:42+00:00] FATAL: SIGTERM received, stopping
+              .[2016-04-19T01:02:43+00:00] INFO: SIGUSR1 received, waking up
+              [2016-04-19T01:02:44+00:00] INFO: SIGUSR1 received, waking up
+              [2016-04-19T01:02:45+00:00] INFO: SIGUSR1 received, waking up
+              .ERROR: You need to pass a sub-command (e.g., knife SUB-COMMAND)
+
+              ..............................................................F.................................................................................................................FFFF.......................................................................................................................F.................................................................................................................................................................................................................................................................................................................FFFFFFFFFFFFFF................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................F...........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................Client unchanged, not saving.
+              ..
+            38456: |
+              checking example
+              Running syntax check on example
+              WARNING: DEPRECATED: Please use ChefSpec or Rubocop to syntax-check cookbooks.
+              FATAL: Chef::Exceptions::InvalidDataBagName
+              Created data_bag[sudoing_admins]
+              Created data_bag[sudoing_admins]
+              Saving data bag unencrypted. To encrypt it, provide an appropriate secret.
+              Saving data bag unencrypted. To encrypt it, provide an appropriate secret.
+              Encrypting data bag using provided secret.
+              Encrypting data bag using provided secret.
+              FATAL: You must specify an environment name
+              Updated Environment spec
+              Updated Environment spec
+              Updated Environment spec
+            38471: "Updated Environment spec\nUpdated Environment spec\nUpdated Environment
+              spec\nFATAL: You must supply a regular expression to match the results
+              against\nERROR: You specified the --disable_editing option, nothing
+              to edit\nERROR: You must set your EDITOR environment variable or configure
+              your editor via knife.rb\nUpdated Node \nUpdated Node \nUpdated Node
+              \nERROR: You must supply a regular expression to match the results against\nUpdated
+              Role \nUpdated Role \nUpdated Role \n"
           tests:
             chef verify:
             - chef-client

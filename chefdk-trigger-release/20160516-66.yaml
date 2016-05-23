@@ -162,9 +162,23 @@ stages:
               `<top (required)>'"
             - "/opt/chefdk/embedded/bin/bundle:22:in `load'"
             - "/opt/chefdk/embedded/bin/bundle:22:in `<main>'"
-          suspiciousLines:
-          - 'Errno::EACCES: Permission denied @ dir_s_mkdir - /home/jenkins/.bundle/cache/compact_index/rubygems.org.443.29b0360b937aa4d161703e6160654e47/versions20160517-1712-rgdhm4'
-          - "--- ERROR REPORT TEMPLATE -------------------------------------------------------"
+          suspiciousBlocks:
+            404: |
+              ============================================================
+
+              You are replacing the current local value of gemfile, which is currently nil
+              --- ERROR REPORT TEMPLATE -------------------------------------------------------
+              - What did you do?
+
+                I ran the command `/opt/chefdk/embedded/bin/bundle install --deployment`
+            420: |2
+
+              Error details
+
+                  Errno::EACCES: Permission denied @ dir_s_mkdir - /home/jenkins/.bundle/cache/compact_index/rubygems.org.443.29b0360b937aa4d161703e6160654e47/versions20160517-1712-rgdhm4
+                    /opt/chefdk/embedded/lib/ruby/2.1.0/tmpdir.rb:85:in `mkdir'
+                    /opt/chefdk/embedded/lib/ruby/2.1.0/tmpdir.rb:85:in `block in mktmpdir'
+                    /opt/chefdk/embedded/lib/ruby/2.1.0/tmpdir.rb:142:in `create'
         omnibusTiming: {}
       debian-6:
         result: SUCCESS

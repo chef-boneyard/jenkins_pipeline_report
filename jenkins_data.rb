@@ -1,5 +1,8 @@
 require_relative "jenkins_pipeline"
-require "yaml"
+require_relative "failure_extractor"
+require_relative "timing_extractor"
+require_relative "jenkins_helpers"
+require "psych"
 require "fileutils"
 
 class JenkinsData
@@ -45,7 +48,8 @@ class JenkinsData
         # Fetch run data for each build and merge into the stages
         runs = {}
         fetch_runs(stage).each do |configuration,remote_run|
-          run = merge_run(stage["runs"][configuration], remote_run)
+          run = remote_run
+          run = merge_run(stage["runs"][configuration], remote_run) if stage["runs"]
           runs[configuration] = run
         end
         stage["runs"] = runs
@@ -77,7 +81,7 @@ class JenkinsData
     builds = Dir.entries(job_path).map do |entry|
       next unless File.extname(entry) == ".yaml"
       filename = File.join(job_path, entry)
-      build = YAML.load(IO.read(filename))
+      build = Psych.load(IO.read(filename))
       desired_filename = build_filename(build)
       if filename != desired_filename
         if File.exist?(desired_filename)
@@ -184,10 +188,10 @@ class JenkinsData
   end
 
   def merge_stage(local_stage, remote_stage)
-    local_stage ||= { "runs" => {} }
-    remote_stage ||= { "runs" => {} }
+    local_stage ||= {}
+    remote_stage ||= {}
     stage = local_stage.merge(remote_stage)
-    if remote_stage["runs"]
+    if remote_stage["runs"] && local_stage["runs"]
       stage["runs"] = {}
       remote_stage["runs"].each do |configuration,remote_run|
         local_run = local_stage["runs"][configuration]
@@ -213,7 +217,9 @@ class JenkinsData
     jenkins.build_stages(remote_build).reverse_each do |stage|
       build["stages"][stage["job"]] = stage.dup
     end
+
     build = process_build(build)
+
     build
   end
 
@@ -235,7 +241,7 @@ class JenkinsData
     build["duration"] = build["stages"].values.inject(0.0) { |sum,stage| sum += stage["duration"] }
 
     # Reorder build data for nicer printing
-    build = reorder_fields(build, %w{result timestamp duration version git_commit}, "stages")
+    build = JenkinsHelpers.reorder_fields(build, %w{result timestamp duration version git_commit}, "stages")
 
     build
   end
@@ -269,7 +275,7 @@ class JenkinsData
     end
 
     # Reorder fields for easier reading of YAML
-    stage = reorder_fields(stage, %w{result failures timestamp duration url}, "runs")
+    stage = JenkinsHelpers.reorder_fields(stage, %w{result failures timestamp duration url}, "runs")
 
     stage
   end
@@ -302,7 +308,7 @@ class JenkinsData
     %w{configuration job number artifacts}.each { |key| run.delete(key) }
 
     # Reorder run data for nicer printing
-    run = reorder_fields(run, %w{result timestamp duration delay builtOn url})
+    run = JenkinsHelpers.reorder_fields(run, %w{result timestamp duration delay builtOn url})
 
     run
   end
@@ -363,409 +369,22 @@ class JenkinsData
       console_text ||= console_text(build, run)
       return unless console_text
       JenkinsData.debug("Extracting timing from #{File.basename(console_text_filename(build, run))}...")
-      extract_timing(configuration, run, console_text)
+      TimingExtractor.extract(configuration, run, console_text)
     end
 
     if run["changedThisTime"] || force || !run.has_key?("failureCause") || true
       if failed?(run)
         console_text ||= console_text(build, run)
         return unless console_text
-        JenkinsData.debug("Extracting failure reason from #{File.basename(console_text_filename(build, run))}...")
-        extract_failure_information(run, console_text)
+        JenkinsData.debug("Extracting failure cause from #{File.basename(console_text_filename(build, run))}...")
+        FailureExtractor.extract(build, run, console_text)
       end
     end
 
     #
     # Decide on a cause using heuristics
     #
-    deduce_cause(run)
-    if run["failureCause"]
-      run["failureCause"] = reorder_fields(run["failureCause"], %w{cause detailedCause shellCommand stacktrace jenkinsBuildStep})
-    end
-  end
-
-  def extract_timing(configuration, run, console_text)
-    # Look for timing information
-    omnibus_timing = {}
-    acceptance_timing = []
-    lines = console_text.lines
-    index = lines.size-1
-    while index >= 0
-      line = lines[index]
-      if line =~ /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
-        index, results = extract_chef_acceptance_result(lines, index)
-        acceptance_run = {}
-        results.each do |result|
-          acceptance_run[result["suite"]] ||= {}
-          acceptance_run[result["suite"]][result["command"]] = result["duration"]
-        end
-        acceptance_timing << acceptance_run
-
-      else
-        component, timestamp, log = line.split("|", 3).map { |s| s.strip }
-        if component =~ /^\[Builder:\s+(.+)\]\s+\S+$/i
-          component = $1
-          # [Builder: chef] I | 2016-05-11T20:29:35+00:00 | Build chef: 76.4841s
-          if log =~ /^\s*Build #{component}:\s+(\d+(\.\d+)?)s$/
-            omnibus_timing[component] = $1.to_f
-          end
-        else
-          # [Packager::BFF] I | 2016-05-12T22:28:49+00:00 | Packaging time: 376.521s
-          if log =~ /^\s*(Health check|Packaging) time:\s+(\d+(\.\d+)?)s$/
-            omnibus_timing[$1] = $2.to_f
-          end
-        end
-      end
-
-      index -= 1
-    end
-
-    run["omnibusTiming"] = omnibus_timing
-    run["acceptanceTiming"] = acceptance_timing if configuration == "acceptance" || acceptance_timing.any?
-  end
-
-  def extract_failure_information(run, console_text)
-    reason = {}
-    lines = console_text.lines
-    index = lines.size - 1
-    while index > 0
-      line = lines[index]
-      # Build step 'Invoke XShell command' marked build as failure
-      case line
-      when /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i
-        reason["jenkinsBuildStep"] ||= $1
-
-      when /^\s*(\S+)(:\d+:in `.+')\s*$/
-        index, stacktrace = extract_stacktrace(lines, index)
-        if stacktrace.any?
-          reason["stacktraces"] ||= []
-          reason["stacktraces"] << stacktrace
-        end
-
-      # Kitchen stack trace
-      #     D      ------Backtrace-------
-      when /^\s*\S\s+-+Backtrace-+\s*$/
-        stacktrace = extract_kitchen_stacktrace(lines, index+1)
-        if stacktrace.any?
-          reason["stacktraces"] ||= []
-          reason["stacktraces"] << stacktrace
-        end
-
-      when /^The following shell command exited with status (-?\d+):\s/
-        command = extract_shell_command(lines, index, $1)
-        reason["shellCommand"] ||= command if command
-
-      when /^\s*Verification of component '(.+)' failed.\s*$/
-        reason["tests"] ||= {}
-        reason["tests"]["chef verify"] ||= []
-        reason["tests"]["chef verify"] << $1
-
-      when /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
-        index, results = extract_chef_acceptance_result(lines, index)
-        failures = results.select { |result| result["error"] == "Y" && result["command"] != "Total" }
-        if failures.any?
-          reason["tests"] ||=  {}
-          reason["tests"]["chef-acceptance"] ||= []
-          failures.each do |failure|
-            reason["tests"]["chef-acceptance"] << "#{failure["suite"]} (#{failure["command"]})"
-          end
-        end
-
-      when /The --deployment flag requires a/
-        joined = "#{line.strip} #{lines[index+1].strip}"
-        if joined =~ /The --deployment flag requires a .*Gemfile.lock/
-          reason["suspiciousLines"] ||= []
-          reason["suspiciousLines"] << joined
-        end
-
-      when /EACCES|\bERROR\b|\bFATAL\b|Errno::ECONNRESET/,
-           /Permission denied/i,
-           /Connection timed out/i,
-           /Failed to complete (.*) action:/i
-
-        reason["suspiciousLines"] ||= []
-        reason["suspiciousLines"] << line.strip
-
-      #                         [Licensing] W | License file '/var/cache/omnibus/src/pry/LICENSE' does not exist for software 'pry'.
-      when /^\s*\[([^\]]+)\] . \| /
-        reason["lastOmnibusStep"] ||= $1
-        reason["lastOmnibusLine"] ||= line.strip
-      end
-
-      index -= 1
-    end
-
-    run["failureCause"] = reason
-  end
-
-  def extract_chef_acceptance_result(lines, index)
-    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] chef-acceptance run succeeded
-    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | Suite   | Command   | Duration | Error |
-    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | provision | 00:01:21 | N     |
-    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | verify    | 00:00:15 | N     |
-    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | destroy   | 00:00:07 | N     |
-    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | Total     | 00:01:58 | N     |
-    # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | Run     | Total     | 00:01:58 | N     |
-    rows = []
-    while lines[index] =~ /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
-      rows.unshift($1.split("|").map { |f| f.strip })
-      index -= 1
-      line = lines[index]
-    end
-    field_names = rows.shift.map { |name| name.downcase }
-    results = []
-    rows.each do |row|
-      results << Hash[field_names.zip(row)]
-    end
-    [ index + 1, results ]
-  end
-
-  def deduce_cause(run)
-    reason = run["failureCause"]
-    if failed?(run) && run["result"].downcase != "failure"
-      reason ||= run["failureCause"] = {}
-      reason["cause"] = run["result"].downcase
-      reason["detailedCause"] = reason["cause"]
-      return
-    end
-
-    if reason
-      if reason["lastOmnibusStep"]
-        reason["cause"] = "omnibus"
-        reason["detailedCause"] = "omnibus #{reason["lastOmnibusStep"]}"
-      end
-
-      if reason["suspiciousLines"]
-        reason["suspiciousLines"].each do |suspiciousLine|
-          case suspiciousLine
-          when /The --deployment flag requires a .*\/([^\/]+\/Gemfile.lock)/
-            reason["cause"] = "missing Gemfile.lock"
-            reason["detailedCause"] = "missing #{$1}"
-
-          when /(EACCES)/,
-               /java.io.FileNotFoundException.*(Permission denied)/
-            reason["cause"] = "disk space"
-            reason["detailedCause"] = "disk space (#{$1})"
-
-          when /Cannot delete workspace:.*The process cannot access the file because it is being used by another process./i
-            reason["cause"] = "zombie jenkins"
-            reason["detailedCause"] = "zombie jenkins"
-
-          when /ECONNRESET/
-            if suspiciousLine =~ /(https?:\/\/\S+)/
-              url = $1
-              hostname = URI(url).hostname
-            end
-            reason["cause"] = "network reset"
-            reason["detailedCause"] = "network reset#{hostname ? " #{hostname}" : ""}"
-
-          when /jenkinsci.*Connection timed out/i
-            reason["cause"] = "network timeout"
-            reason["detailedCause"] = "network timeout jenkins"
-
-          when /IOException.*: Failed to extract/i
-            reason["cause"] = "jenkins copy"
-            reason["detailedCause"] = "jenkins copy"
-
-          end
-        end
-      end
-
-      if reason["tests"]
-        reason["cause"] = "#{reason["tests"].keys.join(",")}"
-        reason["detailedCause"] = reason["tests"].map do |test_type, t|
-          if t.size <= 3
-            "#{test_type}[#{t.join(",")}]"
-          else
-            test_type
-          end
-        end.join(",")
-      end
-
-      if reason["shellCommand"]
-        case reason["shellCommand"]["stderr"]
-        when /Failed to connect to (.+) port (\d+): Timed out/i,
-             /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
-          reason["cause"] = "network timeout"
-          reason["detailedCause"] = "network timeout #{$1}:#{$2}"
-          return
-
-        when /Unable to create .*index.lock.*File exists/mi
-          reason["cause"] = "git index.lock"
-          reason["detailedCause"] = "git index.lock"
-
-        when /Dumping stack trace to\s+(\S+).stackdump/mi
-          reason["cause"] = "segfault"
-          reason["detailedCause"] = "segfault #{$1}"
-
-        when /Finder got an error: Application isn.*t running/i
-          reason["cause"] = "mac not logged in"
-          reason["detailedCause"] = "mac not logged in"
-        end
-
-        case reason["shellCommand"]["stdout"]
-        when /Gemfile\.lock is corrupt/
-          reason["cause"] = "corrupt Gemfile.lock"
-          reason["detailedCause"] = reason["cause"]
-
-        when /An error occurred while installing (\S+) \(([^\)]+)\)/i
-          reason["cause"] = "gem install"
-          reason["detailedCause"] = "gem install #{$1} -v #{$2}"
-
-        when /rubygems\.org.*Checksum of (\S+) does not match the checksum provided by server/mi
-          reason["cause"] = "rubygems checksum"
-          reason["detailedCause"] = "rubygems #{$1} checksum"
-
-        when /Could not find (\S+) in any of the sources/i
-          reason["cause"] = "yanked gem"
-          reason["detailedCause"] = "yanked gem #{$1}"
-        end
-      end
-
-    end
-  end
-
-  # /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in `rescue in shellout!'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in `shellout!'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/fetchers/git_fetcher.rb:263:in `revision_from_remote_reference'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/fetchers/git_fetcher.rb:237:in `resolve_version'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/fetcher.rb:186:in `resolve_version'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:827:in `to_manifest_entry'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:115:in `manifest_entry'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:986:in `fetcher'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:842:in `fetch'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1067:in `block (3 levels) in download'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:64:in `call'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:64:in `block (4 levels) in initialize'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:62:in `loop'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:62:in `block (3 levels) in initialize'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:61:in `catch'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:61:in `block (2 levels) in initialize'
-  def extract_stacktrace(lines, index)
-    stacktrace = []
-
-    # Go backwards up the file until we stop seeing stacktrace lines
-    while index >= 0
-      trace_line = massage_ruby_stacktrace_line(lines[index])
-      break unless trace_line
-      # We are traveling backwards through the file, so we push new things at the top
-      stacktrace.unshift(trace_line)
-      index -= 1
-    end
-
-    [ index+1, skip_useless_stacktrace_lines(stacktrace) ]
-  end
-
-  # D      ------Backtrace-------
-  # D      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:394:in `parse_response'
-  # D      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:203:in `check_files'
-  # D      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:80:in `block in upload'
-  # D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
-  # D      ----------------------
-  def extract_kitchen_stacktrace(lines, index)
-    stacktrace = []
-    while true
-      # ---------------
-      break if lines[index] =~ /^\s*-+\s*/
-
-      trace_line = massage_ruby_stacktrace_line(lines[index])
-      # If something went wrong and we aren't seeing stack traces, stop.
-      break unless trace_line
-      stacktrace << trace_line
-      index += 1
-    end
-    skip_useless_stacktrace_lines(stacktrace)
-  end
-
-  # Get rid of the annoying project/workspace stuff at the beginning of most lines
-  def massage_ruby_stacktrace_line(trace_line)
-    trace_line = trace_line.strip
-    if trace_line =~ /(\S+)(:\d+:in `.+'.*)/
-      filename = $1
-      rest_of_line = $2
-      # /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:394:in `parse_response'
-      # -> acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:394:in `parse_response'
-      if filename =~ /[\/\\]architecture[\/\\][^\/\\]+[\/\\]platform[\/\\][^\/\\]+[\/\\]project[\/\\][^\/\\]+[\/\\]role[\/\\][^\/\\]+[\/\\](.+)/
-        filename = $1
-      end
-      "#{filename}#{rest_of_line}"
-    else
-      nil
-    end
-  end
-
-  def skip_useless_stacktrace_lines(stacktrace)
-    # Skim useless things from the top
-    index = stacktrace.size - 1
-    # Always leave the top one on even if it seems useless. Never make it empty
-    while index > 0
-      case stacktrace[index]
-      when /\bthread_pool\.rb:/
-        stacktrace.pop
-      else
-        # It's not a skippable, stop skipping things
-        break
-      end
-
-      index -= 1
-    end
-    stacktrace
-  end
-
-  def extract_shell_command(lines, index, exit_status)
-    start_index = index
-    command = { "exitStatus" => exit_status }
-
-    # The following shell command exited with status 128:
-    index += 1
-
-    #
-    #     $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
-    index += 1 while lines[index].chomp == ""
-    command["command"] = lines[index].strip
-    index += 1
-    # Get rid of the $
-    command["command"] = $1 if command["command"] =~ /^\s*\$\s*(.+)/
-    command["command"] = command["command"].strip
-
-    #
-    # Output:
-    #
-    #     (nothing)
-    #
-    # Error:
-    index += 1 while lines[index].strip == ""
-    unless lines[index].chomp == "Output:"
-      return nil
-    end
-    index += 1
-    index += 1 while lines[index].chomp == ""
-    return nil unless lines[index].start_with?("    ")
-    command["stdout"] = lines[index][4..-1]
-    index += 1
-    while lines[index].chomp != "Error:"
-      command["stdout"] << lines[index]
-      index += 1
-    end
-    command["stdout"] = command["stdout"].strip
-    command.delete("stdout") if command["stdout"] == "(nothing)"
-
-    # Error:
-    #
-    #     fatal: unable to access 'http://git.savannah.gnu.org/r/config.git/': Failed connect to git.savannah.gnu.org:80; Operation now in progress
-    index += 1
-    index += 1 while lines[index].chomp == ""
-    return nil unless lines[index].start_with?("    ")
-    command["stderr"] = lines[index][4..-1]
-    index += 1
-    while lines[index].chomp != ""
-      command["stderr"] << lines[index]
-      index += 1
-    end
-    command["stderr"] = command["stderr"].strip
-    command.delete("stderr") if command["stderr"] == "(nothing)"
-
-    command
+    FailureExtractor.deduce_cause(run)
   end
 
   #
@@ -801,7 +420,7 @@ class JenkinsData
 
     # Write it out!
     filename = build_filename(build)
-    desired_output = YAML.dump(build)
+    desired_output = Psych.dump(build)
     unless File.exist?(filename) && IO.read(filename) == desired_output
       puts "Writing #{filename} ..."
       FileUtils.mkdir_p(File.dirname(filename))
@@ -809,28 +428,9 @@ class JenkinsData
     end
   end
 
-  #
-  # Helpers
-  #
-
-  def reorder_fields(hash, start_fields=[], end_fields=[])
-    # Allow user to pass single field name, upconvert to array
-    start_fields = Array(start_fields)
-    end_fields = Array(end_fields)
-
-    reordered_hash = {}
-    # Put start_fields first
-    start_fields.each do |field|
-      reordered_hash[field] = hash[field] if hash.has_key?(field)
-    end
-    # Everything else next
-    hash.keys.sort.each do |field|
-      reordered_hash[field] = hash[field] unless start_fields.include?(field) || end_fields.include?(field)
-    end
-    # End fields last
-    end_fields.each do |field|
-      reordered_hash[field] = hash[field] if hash.has_key?(field)
-    end
-    reordered_hash
+  def yaml_dump(y)
+    visitor = Psych::Visitors::YAMLTree.create options
+    visitor << o
+    visitor.tree.yaml io, options
   end
 end

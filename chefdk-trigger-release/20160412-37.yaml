@@ -93,76 +93,166 @@ stages:
               `loop'"
             - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/application.rb:73:in
               `block in start_worker'"
-          suspiciousLines:
-          - "[2016-04-12T19:32:30+00:00] ERROR: Failed to post audit report to server.
-            Saving report to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/failed-audit-data.json"
-          - "[2016-04-12T19:31:39+00:00] FATAL: Chef::Exceptions::ChildConvergeError:
-            Chef run process exited unsuccessfully (exit code 1)"
-          - "[2016-04-12T19:31:38+00:00] ERROR: Found 1 errors, they are stored in
-            the backtrace"
-          - "[2016-04-12T19:31:38+00:00] FATAL: Please provide the contents of the
-            stacktrace.out file if you file a bug report"
-          - "[2016-04-12T19:31:38+00:00] FATAL: Stacktrace dumped to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/chef-stacktrace.out"
-          - "[2016-04-12T19:31:38+00:00] ERROR: Failed to post audit report to server.
-            Saving report to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/failed-audit-data.json"
-          - "[2016-04-12T19:31:38+00:00] ERROR: Exception handlers complete"
-          - "[2016-04-12T19:31:38+00:00] ERROR: Running exception handlers"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-          - 'TOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:39 +0000] [2016-04-12T19:31:39+00:00]
-            FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully
-            (exit code 1)'
-          - 'TOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000] [2016-04-12T19:31:38+00:00]
-            ERROR: Found 1 errors, they are stored in the backtrace'
-          - 'TOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000] [2016-04-12T19:31:38+00:00]
-            FATAL: Please provide the contents of the stacktrace.out file if you file
-            a bug report'
-          - 'TOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000] [2016-04-12T19:31:38+00:00]
-            FATAL: Stacktrace dumped to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/chef-stacktrace.out'
-          - 'TOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000] [2016-04-12T19:31:38+00:00]
-            ERROR: Failed to post audit report to server. Saving report to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/failed-audit-data.json'
-          - 'TOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000] [2016-04-12T19:31:38+00:00]
-            ERROR: Exception handlers complete'
-          - 'TOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000] [2016-04-12T19:31:38+00:00]
-            ERROR: Running exception handlers'
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - echo "ERROR 404"
-          - grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
+          suspiciousBlocks:
+            637: "                    wget -O \"$2\" \"$1\" 2>$tmp_dir/stderr\n                    rc=$?\n
+              \                   # check for 404\n                    grep \"ERROR
+              404\" $tmp_dir/stderr 2>&1 >/dev/null\n                    if test $?
+              -eq 0; then\n                      echo \"ERROR 404\"\n                      http_404_error\n
+              \                   fi\n                  \n"
+            660: "                    # check for 404\n                    grep \"404
+              Not Found\" $tmp_dir/stderr 2>&1 >/dev/null\n                    if
+              test $? -eq 0; then\n                      echo \"ERROR 404\"\n                      http_404_error\n
+              \                   fi\n                  \n"
+            691: "            \nTOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:37 +0000]
+              \        grep \"404 Not Found\" $tmp_dir/stderr 2>&1 >/dev/null\n                    if
+              test $? -eq 0; then\n                      echo \"ERROR 404\"\n                      http_404_error\n
+              \                   fi\n                  \n"
+            712: "                    # check for 404\n                    grep \"HTTP
+              Error 404\" $tmp_dir/stderr 2>&1 >/dev/null\n                    if
+              test $? -eq 0; then\n                      echo \"ERROR 404\"\n                      http_404_error\n
+              \                   fi\n                  \n"
+            1506: "          wget -O \"$2\" \"$1\" 2>$tmp_dir/stderr\n          rc=$?\n
+              \         # check for 404\n          grep \"ERROR 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n          if test $? -eq 0; then\n            echo
+              \"ERROR 404\"\n            http_404_error\n          fi\n        \n"
+            1529: "          # check for 404\n          grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n          if test $? -eq 0; then\n            echo
+              \"ERROR 404\"\n            http_404_error\n          fi\n        \n"
+            1559: "          # check for 404\n          grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n          if test $? -eq 0; then\n            echo
+              \"ERROR 404\"\n            http_404_error\n          fi\n        \n"
+            1581: "          # check for 404\n          grep \"HTTP Error 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n          if test $? -eq 0; then\n            echo
+              \"ERROR 404\"\n            http_404_error\n          fi\n        \n"
+            2425: "        wget -O \"$2\" \"$1\" 2>$tmp_dir/stderr\n        rc=$?\n
+              \       # check for 404\n        grep \"ERROR 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n        if test $? -eq 0; then\n          echo \"ERROR
+              404\"\n          http_404_error\n        fi\n      \n"
+            2448: "        # check for 404\n        grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n        if test $? -eq 0; then\n          echo \"ERROR
+              404\"\n          http_404_error\n        fi\n      \n"
+            2478: "        # check for 404\n        grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n        if test $? -eq 0; then\n          echo \"ERROR
+              404\"\n          http_404_error\n        fi\n      \n"
+            2499: "        # check for 404\n        grep \"HTTP Error 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n        if test $? -eq 0; then\n          echo \"ERROR
+              404\"\n          http_404_error\n        fi\n      \n"
+            3332: "      wget -O \"$2\" \"$1\" 2>$tmp_dir/stderr\n      rc=$?\n      #
+              check for 404\n      grep \"ERROR 404\" $tmp_dir/stderr 2>&1 >/dev/null\n
+              \     if test $? -eq 0; then\n        echo \"ERROR 404\"\n        http_404_error\n
+              \     fi\n    \n"
+            3355: "      # check for 404\n      grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n      if test $? -eq 0; then\n        echo \"ERROR
+              404\"\n        http_404_error\n      fi\n    \n"
+            3385: "      # check for 404\n      grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n      if test $? -eq 0; then\n        echo \"ERROR
+              404\"\n        http_404_error\n      fi\n    \n"
+            3406: "      # check for 404\n      grep \"HTTP Error 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n      if test $? -eq 0; then\n        echo \"ERROR
+              404\"\n        http_404_error\n      fi\n    \n"
+            4044: "TOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000] \nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:38 +0000] Running handlers:\nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:38 +0000] \nTOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000]
+              [2016-04-12T19:31:38+00:00] ERROR: Running exception handlers\nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:38 +0000] Running handlers complete\nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:38 +0000] [2016-04-12T19:31:38+00:00] ERROR: Exception handlers
+              complete\nTOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000] Chef
+              Client failed. 2 resources updated in 01 minutes 40 seconds\nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:38 +0000] \nTOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000]
+              [2016-04-12T19:31:38+00:00] ERROR: Failed to post audit report to server.
+              Saving report to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/failed-audit-data.json\nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:38 +0000] [2016-04-12T19:31:38+00:00] FATAL: Stacktrace dumped
+              to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/chef-stacktrace.out\nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:38 +0000] [2016-04-12T19:31:38+00:00] FATAL: Please provide the
+              contents of the stacktrace.out file if you file a bug report\nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:38 +0000] [2016-04-12T19:31:38+00:00] ERROR: Found 1 errors, they
+              are stored in the backtrace\nTOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:39
+              +0000] [2016-04-12T19:31:39+00:00] FATAL: Chef::Exceptions::ChildConvergeError:
+              Chef run process exited unsuccessfully (exit code 1)\nCHEF-ACCEPTANCE::[2016-04-12
+              19:31:39 +0000] Encountered an error running the recipe provision: Expected
+              process to exit with [0], but received '1'\n---- Begin output of chef-client
+              -z -c /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/config.rb
+              --force-formatter -j /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/dna.json
+              -o acceptance-cookbook::provision --no-color ----\nSTDOUT: Starting
+              Chef Client, version 12.9.38\n"
+            4263: "                    wget -O \"$2\" \"$1\" 2>$tmp_dir/stderr\n                    rc=$?\n
+              \                   # check for 404\n                    grep \"ERROR
+              404\" $tmp_dir/stderr 2>&1 >/dev/null\n                    if test $?
+              -eq 0; then\n                      echo \"ERROR 404\"\n                      http_404_error\n
+              \                   fi\n                  \n"
+            4286: "                    # check for 404\n                    grep \"404
+              Not Found\" $tmp_dir/stderr 2>&1 >/dev/null\n                    if
+              test $? -eq 0; then\n                      echo \"ERROR 404\"\n                      http_404_error\n
+              \                   fi\n                  \n"
+            4316: "                    # check for 404\n                    grep \"404
+              Not Found\" $tmp_dir/stderr 2>&1 >/dev/null\n                    if
+              test $? -eq 0; then\n                      echo \"ERROR 404\"\n                      http_404_error\n
+              \                   fi\n                  \n"
+            4337: "                    # check for 404\n                    grep \"HTTP
+              Error 404\" $tmp_dir/stderr 2>&1 >/dev/null\n                    if
+              test $? -eq 0; then\n                      echo \"ERROR 404\"\n                      http_404_error\n
+              \                   fi\n                  \n"
+            5120: "          wget -O \"$2\" \"$1\" 2>$tmp_dir/stderr\n          rc=$?\n
+              \         # check for 404\n          grep \"ERROR 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n          if test $? -eq 0; then\n            echo
+              \"ERROR 404\"\n            http_404_error\n          fi\n        \n"
+            5143: "          # check for 404\n          grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n          if test $? -eq 0; then\n            echo
+              \"ERROR 404\"\n            http_404_error\n          fi\n        \n"
+            5173: "          # check for 404\n          grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n          if test $? -eq 0; then\n            echo
+              \"ERROR 404\"\n            http_404_error\n          fi\n        \n"
+            5194: "          # check for 404\n          grep \"HTTP Error 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n          if test $? -eq 0; then\n            echo
+              \"ERROR 404\"\n            http_404_error\n          fi\n        \n"
+            6021: "        wget -O \"$2\" \"$1\" 2>$tmp_dir/stderr\n        rc=$?\n
+              \       # check for 404\n        grep \"ERROR 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n        if test $? -eq 0; then\n          echo \"ERROR
+              404\"\n          http_404_error\n        fi\n      \n"
+            6044: "        # check for 404\n        grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n        if test $? -eq 0; then\n          echo \"ERROR
+              404\"\n          http_404_error\n        fi\n      \n"
+            6074: "        # check for 404\n        grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n        if test $? -eq 0; then\n          echo \"ERROR
+              404\"\n          http_404_error\n        fi\n      \n"
+            6095: "        # check for 404\n        grep \"HTTP Error 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n        if test $? -eq 0; then\n          echo \"ERROR
+              404\"\n          http_404_error\n        fi\n      \n"
+            6918: "      wget -O \"$2\" \"$1\" 2>$tmp_dir/stderr\n      rc=$?\n      #
+              check for 404\n      grep \"ERROR 404\" $tmp_dir/stderr 2>&1 >/dev/null\n
+              \     if test $? -eq 0; then\n        echo \"ERROR 404\"\n        http_404_error\n
+              \     fi\n    \n"
+            6941: "      # check for 404\n      grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n      if test $? -eq 0; then\n        echo \"ERROR
+              404\"\n        http_404_error\n      fi\n    \n"
+            6971: "      # check for 404\n      grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n      if test $? -eq 0; then\n        echo \"ERROR
+              404\"\n        http_404_error\n      fi\n    \n"
+            6992: "      # check for 404\n      grep \"HTTP Error 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n      if test $? -eq 0; then\n        echo \"ERROR
+              404\"\n        http_404_error\n      fi\n    \n"
+            7616: "Auditing complete\n\nRunning handlers:\n[2016-04-12T19:31:38+00:00]
+              ERROR: Running exception handlers\nRunning handlers complete\n[2016-04-12T19:31:38+00:00]
+              ERROR: Exception handlers complete\nChef Client failed. 2 resources
+              updated in 01 minutes 40 seconds\n[2016-04-12T19:31:38+00:00] ERROR:
+              Failed to post audit report to server. Saving report to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/failed-audit-data.json\n[2016-04-12T19:31:38+00:00]
+              FATAL: Stacktrace dumped to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/chef-stacktrace.out\n[2016-04-12T19:31:38+00:00]
+              FATAL: Please provide the contents of the stacktrace.out file if you
+              file a bug report\n[2016-04-12T19:31:38+00:00] ERROR: Found 1 errors,
+              they are stored in the backtrace\n[2016-04-12T19:31:39+00:00] FATAL:
+              Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully
+              (exit code 1)\nSTDERR: \n---- End output of chef-client -z -c /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/config.rb
+              --force-formatter -j /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/dna.json
+              -o acceptance-cookbook::provision --no-color ----\nRan chef-client -z
+              -c /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/config.rb
+              --force-formatter -j /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/dna.json
+              -o acceptance-cookbook::provision --no-color returned 1\n"
+            7855: "Running handlers:\nRunning handlers complete\nChef Client finished,
+              24/33 resources updated in 47 seconds\n[2016-04-12T19:32:30+00:00] ERROR:
+              Failed to post audit report to server. Saving report to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/failed-audit-data.json\nCHEF-ACCEPTANCE::[2016-04-12
+              19:32:30 +0000] \nCHEF-ACCEPTANCE::[2016-04-12 19:32:30 +0000] chef-acceptance
+              run failed\nCHEF-ACCEPTANCE::[2016-04-12 19:32:30 +0000] | Suite         |
+              Command       | Duration | Error |\n"
           tests:
             chef-acceptance:
             - top-cookbooks (provision)
