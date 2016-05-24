@@ -1,7 +1,16 @@
 ---
+result: FAILURE
+timestamp: '2016-04-04T11:57:30-07:00'
+duration: 13237.55
+version: 0.13.6+20160404185815
+git_commit: 8c7cf282942185ac5d34eaed846bac58a954fd1a
 stages:
   chefdk-test:
     result: FAILURE
+    failures:
+      chef-acceptance[top-cookbooks (provision)]: acceptance
+      chef verify[test-kitchen]: debian,el,mac_os_x-10.10,mac_os_x-10.9,ubuntu
+      chef verify[test-kitchen,chefspec]: mac_os_x-10.11
     timestamp: '2016-04-04T14:32:29-07:00'
     duration: 3953.962
     url: http://manhattan.ci.chef.co/job/chefdk-test/76/
@@ -78,13 +87,6 @@ stages:
         duration: 3953.346
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/76/
-        acceptanceTiming:
-        - top-cookbooks:
-            provision: '00:00:00'
-            force-destroy: '00:00:36'
-            Total: '01:04:23'
-          Run:
-            Total: '01:04:23'
         failureCause:
           cause: chef-acceptance
           detailedCause: chef-acceptance[top-cookbooks (provision)]
@@ -240,6 +242,13 @@ stages:
           tests:
             chef-acceptance:
             - top-cookbooks (provision)
+        acceptanceTiming:
+        - top-cookbooks:
+            provision: '00:00:00'
+            force-destroy: '00:00:36'
+            Total: '01:04:23'
+          Run:
+            Total: '01:04:23'
         omnibusTiming: {}
       debian-6:
         result: FAILURE
@@ -698,10 +707,6 @@ stages:
         builtOn: chefdk-windows-2008r2-i386-tester-e50cbf
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/76/
         omnibusTiming: {}
-    failures:
-      chef-acceptance[top-cookbooks (provision)]: acceptance
-      chef verify[test-kitchen]: debian,el,mac_os_x-10.10,mac_os_x-10.9,ubuntu
-      chef verify[test-kitchen,chefspec]: mac_os_x-10.11
   chefdk-build:
     result: SUCCESS
     timestamp: '2016-04-04T11:58:15-07:00'
@@ -898,8 +903,3 @@ stages:
     retryOf:
     - 104
     runs: {}
-result: FAILURE
-timestamp: '2016-04-04T11:57:30-07:00'
-duration: 13237.55
-version: 0.13.6+20160404185815
-git_commit: 8c7cf282942185ac5d34eaed846bac58a954fd1a

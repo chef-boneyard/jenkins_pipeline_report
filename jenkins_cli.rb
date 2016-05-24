@@ -7,9 +7,20 @@ module JenkinsCli
     @options ||= {}
   end
 
+  def self.logger
+    @logger ||= begin
+      logger = Logger.new(STDOUT)
+      logger.level = Logger::ERROR
+      logger
+    end
+  end
+
+  def self.jenkins_data(job_url)
+    JenkinsData.new(logger: logger, job_url: job_url)
+  end
+
   def self.builds(job_url)
-    jenkins = JenkinsData.new(job_url: job_url)
-    jenkins.builds(
+    jenkins_data(job_url).builds(
       local: options[:local],
       force_refresh_runs: options[:force_refresh_runs],
       force_refresh_logs: options[:force_refresh_logs],
@@ -17,10 +28,13 @@ module JenkinsCli
     )
   end
 
-  def self.parse_options
+  def self.parse_options()
     OptionParser.new do |opts|
       yield opts
 
+      opts.on("-l", "--log-level", "Log level (debug,info,warn,error,fatal).") do |v|
+        logger.level = Logger.const_get(v.upcase)
+      end
       opts.on("--[no-]local", "Whether to get the list of builds locally (default: false).") do |v|
         options[:local] = v
       end

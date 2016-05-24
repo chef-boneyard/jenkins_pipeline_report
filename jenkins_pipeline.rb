@@ -1,6 +1,7 @@
 require "uri"
 require "pathname"
 require "jenkins_api_client"
+require_relative "jenkins_cli"
 
 class JenkinsPipeline
   attr_reader :client
@@ -241,7 +242,7 @@ class JenkinsPipeline
   end
 
   def fetch_job_and_builds(job_name)
-    JenkinsData.debug("GET /job/#{job_name}")
+    JenkinsCli.logger.debug("GET /job/#{job_name}")
     client.api_get_request(
       "/job/#{job_name}",
       "tree=name,url,upstreamProjects[name],downstreamProjects[name],culprits[absoluteUrl],allBuilds[number,url,result,timestamp,duration,actions[causes[shortDescription,userId,userName,upstreamBuild,upstreamProject],parameters[name,value]]]"
@@ -249,7 +250,7 @@ class JenkinsPipeline
   end
 
   def fetch_runs(job_name, build_number)
-    JenkinsData.debug("GET /job/#{job_name}")
+    JenkinsCli.logger.debug("GET /job/#{job_name}")
     client.api_get_request(
       "/job/#{job_name}/#{build_number}",
       "tree=runs[number,url,result,builtOn,timestamp,duration,artifacts[relativePath],failCount,skipCount,totalCount,urlName]"

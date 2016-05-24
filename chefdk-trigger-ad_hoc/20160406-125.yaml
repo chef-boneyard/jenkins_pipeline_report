@@ -1,7 +1,17 @@
 ---
+result: FAILURE
+timestamp: '2016-04-06T15:02:06-07:00'
+duration: 9357.617
+version: 0.13.9+20160406220218
+git_commit: 69516deaf9741f8403a8c14ed0cfd50f6ddbabd4
 stages:
   chefdk-test:
     result: FAILURE
+    failures:
+      chef-acceptance[top-cookbooks (provision)]: acceptance
+      chef verify[berkshelf]: debian,el,mac_os_x-10.10,mac_os_x-10.11,ubuntu
+      chef verify[berkshelf,chef-provisioning]: mac_os_x-10.9
+      chef verify[chef-provisioning]: windows
     timestamp: '2016-04-06T17:16:25-07:00'
     duration: 1313.531
     url: http://manhattan.ci.chef.co/job/chefdk-test/84/
@@ -78,13 +88,6 @@ stages:
         duration: 897.975
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/84/
-        acceptanceTiming:
-        - top-cookbooks:
-            provision: '00:11:56'
-            force-destroy: '00:00:38'
-            Total: '00:13:40'
-          Run:
-            Total: '00:13:40'
         failureCause:
           cause: chef-acceptance
           detailedCause: chef-acceptance[top-cookbooks (provision)]
@@ -280,6 +283,13 @@ stages:
           tests:
             chef-acceptance:
             - top-cookbooks (provision)
+        acceptanceTiming:
+        - top-cookbooks:
+            provision: '00:11:56'
+            force-destroy: '00:00:38'
+            Total: '00:13:40'
+          Run:
+            Total: '00:13:40'
         omnibusTiming: {}
       debian-6:
         result: FAILURE
@@ -1180,11 +1190,6 @@ stages:
             chef verify:
             - chef-provisioning
         omnibusTiming: {}
-    failures:
-      chef verify[chef-provisioning]: windows
-      chef-acceptance[top-cookbooks (provision)]: acceptance
-      chef verify[berkshelf]: debian,el,mac_os_x-10.10,mac_os_x-10.11,ubuntu
-      chef verify[berkshelf,chef-provisioning]: mac_os_x-10.9
   chefdk-build:
     result: SUCCESS
     timestamp: '2016-04-06T15:02:18-07:00'
@@ -1261,8 +1266,3 @@ stages:
       GIT_REF: salam/revert-stuff
       EXPIRE_CACHE: false
     runs: {}
-result: FAILURE
-timestamp: '2016-04-06T15:02:06-07:00'
-duration: 9357.617
-version: 0.13.9+20160406220218
-git_commit: 69516deaf9741f8403a8c14ed0cfd50f6ddbabd4

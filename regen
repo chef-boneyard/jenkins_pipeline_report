@@ -1,2 +1,9 @@
 #!/bin/sh
-ruby jenkins-data.rb http://manhattan.ci.chef.co/job/chef-trigger-release http://manhattan.ci.chef.co/job/chef-trigger-ad_hoc http://manhattan.ci.chef.co/job/chefdk-trigger-release http://manhattan.ci.chef.co/job/chefdk-trigger-ad_hoc http://wilson.ci.chef.co/job/chef-server-12-trigger-release http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll $*
+
+set -ex
+
+for job in http://manhattan.ci.chef.co/job/chef-trigger-release http://manhattan.ci.chef.co/job/chef-trigger-ad_hoc http://manhattan.ci.chef.co/job/chefdk-trigger-release http://manhattan.ci.chef.co/job/chefdk-trigger-ad_hoc http://wilson.ci.chef.co/job/chef-server-12-trigger-release http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll
+do
+  ruby jenkins-data.rb $* $job > ${job##*/}.failures
+  ruby build-failures.rb --local $job > ${job##*/}.failures
+done

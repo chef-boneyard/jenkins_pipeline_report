@@ -1,7 +1,17 @@
 ---
+result: FAILURE
+timestamp: '2016-03-31T09:29:03-07:00'
+duration: 4916.669
+version: 0.13.3+20160331162928
+git_commit: 0196e242a5037b7e3a5ee2a7fcf75849d9a100a3
 stages:
   chefdk-test:
     result: FAILURE
+    failures:
+      chef-acceptance[top-cookbooks (provision)]: acceptance
+      chef verify[generated-cookbooks-pass-chefspec]: debian,el-7,mac_os_x-10.10,mac_os_x-10.9,ubuntu
+      chef verify[chefspec]: el-6,mac_os_x-10.11
+      chef verify[chefspec,generated-cookbooks-pass-chefspec]: windows
     timestamp: '2016-03-31T09:58:10-07:00'
     duration: 3184.96
     url: http://manhattan.ci.chef.co/job/chefdk-test/70/
@@ -78,13 +88,6 @@ stages:
         duration: 3183.873
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/70/
-        acceptanceTiming:
-        - top-cookbooks:
-            provision: '00:47:57'
-            force-destroy: '00:00:43'
-            Total: '00:51:47'
-          Run:
-            Total: '00:51:47'
         failureCause:
           cause: chef-acceptance
           detailedCause: chef-acceptance[top-cookbooks (provision)]
@@ -294,6 +297,13 @@ stages:
           tests:
             chef-acceptance:
             - top-cookbooks (provision)
+        acceptanceTiming:
+        - top-cookbooks:
+            provision: '00:47:57'
+            force-destroy: '00:00:43'
+            Total: '00:51:47'
+          Run:
+            Total: '00:51:47'
         omnibusTiming: {}
       debian-6:
         result: FAILURE
@@ -812,11 +822,6 @@ stages:
             - chefspec
             - generated-cookbooks-pass-chefspec
         omnibusTiming: {}
-    failures:
-      chef verify[chefspec,generated-cookbooks-pass-chefspec]: windows
-      chef-acceptance[top-cookbooks (provision)]: acceptance
-      chef verify[generated-cookbooks-pass-chefspec]: debian,el-7,mac_os_x-10.10,mac_os_x-10.9,ubuntu
-      chef verify[chefspec]: el-6,mac_os_x-10.11
   chefdk-build:
     result: SUCCESS
     timestamp: '2016-03-31T09:29:28-07:00'
@@ -893,8 +898,3 @@ stages:
       GIT_REF: master
       EXPIRE_CACHE: false
     runs: {}
-result: FAILURE
-timestamp: '2016-03-31T09:29:03-07:00'
-duration: 4916.669
-version: 0.13.3+20160331162928
-git_commit: 0196e242a5037b7e3a5ee2a7fcf75849d9a100a3

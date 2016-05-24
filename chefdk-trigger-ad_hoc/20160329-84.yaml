@@ -1,7 +1,17 @@
 ---
+result: FAILURE
+timestamp: '2016-03-29T11:55:17-07:00'
+duration: 15991.969000000001
+version: 0.13.3+20160329205558
+git_commit: 0196e242a5037b7e3a5ee2a7fcf75849d9a100a3
 stages:
   chefdk-test:
     result: FAILURE
+    failures:
+      chef-acceptance[top-cookbooks (provision)]: acceptance
+      chef verify[generated-cookbooks-pass-chefspec]: debian,el-7,ubuntu
+      chef verify[chefspec]: el-6,mac_os_x
+      chef verify[chefspec,generated-cookbooks-pass-chefspec]: windows
     timestamp: '2016-03-29T17:16:38-07:00'
     duration: 3947.609
     url: http://manhattan.ci.chef.co/job/chefdk-test/67/
@@ -78,13 +88,6 @@ stages:
         duration: 3946.37
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/67/
-        acceptanceTiming:
-        - top-cookbooks:
-            provision: '00:00:00'
-            force-destroy: '00:00:36'
-            Total: '01:04:29'
-          Run:
-            Total: '01:04:29'
         failureCause:
           cause: chef-acceptance
           detailedCause: chef-acceptance[top-cookbooks (provision)]
@@ -228,6 +231,13 @@ stages:
           tests:
             chef-acceptance:
             - top-cookbooks (provision)
+        acceptanceTiming:
+        - top-cookbooks:
+            provision: '00:00:00'
+            force-destroy: '00:00:36'
+            Total: '01:04:29'
+          Run:
+            Total: '01:04:29'
         omnibusTiming: {}
       debian-6:
         result: FAILURE
@@ -745,11 +755,6 @@ stages:
             - chefspec
             - generated-cookbooks-pass-chefspec
         omnibusTiming: {}
-    failures:
-      chef verify[chefspec,generated-cookbooks-pass-chefspec]: windows
-      chef-acceptance[top-cookbooks (provision)]: acceptance
-      chef verify[generated-cookbooks-pass-chefspec]: debian,el-7,ubuntu
-      chef verify[chefspec]: el-6,mac_os_x
   chefdk-build:
     result: SUCCESS
     timestamp: '2016-03-29T13:55:58-07:00'
@@ -832,8 +837,3 @@ stages:
       GIT_REF: master
       EXPIRE_CACHE: true
     runs: {}
-result: FAILURE
-timestamp: '2016-03-29T11:55:17-07:00'
-duration: 15991.969000000001
-version: 0.13.3+20160329205558
-git_commit: 0196e242a5037b7e3a5ee2a7fcf75849d9a100a3

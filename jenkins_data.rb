@@ -2,21 +2,23 @@ require_relative "jenkins_pipeline"
 require_relative "failure_extractor"
 require_relative "timing_extractor"
 require_relative "jenkins_helpers"
+require_relative "jenkins_cli"
 require "psych"
 require "fileutils"
 
 class JenkinsData
   attr_reader :path
-  attr_reader :jenkins
-
-  def initialize(path=".", **jenkins_options)
-    @path = path
-    @jenkins = JenkinsPipeline.new(jenkins_options)
+  attr_reader :jenkins_pipeline
+  def logger
+    jenkins_pipeline.logger
+  end
+  def job
+    jenkins_pipeline.job
   end
 
-  # Uncomment the puts message here to start showing progress info
-  def self.debug(message)
-    puts message
+  def initialize(path=".", logger:, **jenkins_options)
+    @path = path
+    @jenkins_pipeline = JenkinsPipeline.new(jenkins_options)
   end
 
   def builds(local: false, **options)
@@ -34,7 +36,7 @@ class JenkinsData
   end
 
   def refresh_build(build, force_refresh_runs: false, force_refresh_logs: false, force_reprocess_logs: false)
-    JenkinsData.debug "Processing #{build["stages"].values.last["url"]} ..."
+    JenkinsCli.logger.info "Processing #{build["stages"].values.last["url"]} ..."
     refresh_runs(build, force: force_refresh_runs)
     cache_console_texts(build, force: force_refresh_logs)
     process_console_texts(build, force: force_reprocess_logs)
@@ -85,12 +87,12 @@ class JenkinsData
       desired_filename = build_filename(build)
       if filename != desired_filename
         if File.exist?(desired_filename)
-          puts "Deleting #{filename} (#{desired_filename} already exists)..."
+          JenkinsCli.logger.info "Deleting #{filename} (#{desired_filename} already exists)..."
           # We will (or have already) encountered the desired version of this. Delete and skip.
           File.delete(filename)
           next
         else
-          puts "Renaming #{filename} to #{desired_filename}"
+          JenkinsCli.logger.info "Renaming #{filename} to #{desired_filename}"
           File.rename(filename, desired_filename)
         end
       end
@@ -99,7 +101,7 @@ class JenkinsData
       build["stages"].each do |job, stage|
         rewritten_runs = {}
         stage["runs"].each_value do |run|
-          job, build_number, configuration = jenkins.parse_run_url(run["url"])
+          job, build_number, configuration = jenkins_pipeline.parse_run_url(run["url"])
           rewritten_runs[configuration] = run
         end
         stage["runs"] = rewritten_runs
@@ -151,7 +153,7 @@ class JenkinsData
   #
 
   def fetch_builds
-    jenkins.builds.map { |build| normalize_build(build) }
+    jenkins_pipeline.builds.map { |build| normalize_build(build) }
   end
 
   def merge_builds(local_builds, remote_builds)
@@ -214,7 +216,7 @@ class JenkinsData
     # Get the build stages
     build = { "stages" => {} }
     # Reverse the stage order so last is first, to make it easier to see errors
-    jenkins.build_stages(remote_build).reverse_each do |stage|
+    jenkins_pipeline.build_stages(remote_build).reverse_each do |stage|
       build["stages"][stage["job"]] = stage.dup
     end
 
@@ -286,8 +288,8 @@ class JenkinsData
 
   def fetch_runs(stage)
     runs = {}
-    jenkins.runs(stage).each do |run|
-      job, build_number, configuration = jenkins.parse_run_url(run["url"])
+    jenkins_pipeline.runs(stage).each do |run|
+      job, build_number, configuration = jenkins_pipeline.parse_run_url(run["url"])
       raise "Run #{configuration} showed up twice in #{stage["url"]}!" if runs.has_key?(configuration)
       runs[configuration] = process_run(stage, run)
     end
@@ -308,7 +310,7 @@ class JenkinsData
     %w{configuration job number artifacts}.each { |key| run.delete(key) }
 
     # Reorder run data for nicer printing
-    run = JenkinsHelpers.reorder_fields(run, %w{result timestamp duration delay builtOn url})
+    run = JenkinsHelpers.reorder_fields(run, %w{result timestamp duration delay builtOn url failureCause})
 
     run
   end
@@ -352,12 +354,12 @@ class JenkinsData
 
   def fetch_console_text(run)
     path = URI(File.join(run["url"], "consoleText")).path
-    JenkinsData.debug "GET #{path}"
-    jenkins.client.api_get_request(path, nil, nil, true).body
+    JenkinsCli.logger.debug "GET #{path}"
+    jenkins_pipeline.client.api_get_request(path, nil, nil, true).body
   end
 
   def console_text_filename(build, run)
-    job, build_number, configuration = jenkins.parse_run_url(run["url"])
+    job, build_number, configuration = jenkins_pipeline.parse_run_url(run["url"])
     configuration.gsub!(/[^A-Za-z0-9\-]/, "_")
     File.join(build_directory(build), "#{job}-#{configuration}-#{build_number}.log")
   end
@@ -368,7 +370,7 @@ class JenkinsData
        (configuration == "acceptance" && !run.has_key?("acceptanceTiming"))
       console_text ||= console_text(build, run)
       return unless console_text
-      JenkinsData.debug("Extracting timing from #{File.basename(console_text_filename(build, run))}...")
+      JenkinsCli.logger.info("Extracting timing from #{File.basename(console_text_filename(build, run))}...")
       TimingExtractor.extract(configuration, run, console_text)
     end
 
@@ -376,7 +378,7 @@ class JenkinsData
       if failed?(run)
         console_text ||= console_text(build, run)
         return unless console_text
-        JenkinsData.debug("Extracting failure cause from #{File.basename(console_text_filename(build, run))}...")
+        JenkinsCli.logger.info("Extracting failure cause from #{File.basename(console_text_filename(build, run))}...")
         FailureExtractor.extract(build, run, console_text)
       end
     end
@@ -391,12 +393,12 @@ class JenkinsData
   # Cache
   #
   def job_path
-    File.join(path, jenkins.job)
+    File.join(path, jenkins_pipeline.job)
   end
 
   def build_directory(build=nil)
     if build["stages"]
-      stage = build["stages"][jenkins.job]
+      stage = build["stages"][jenkins_pipeline.job]
     else
       # we can be passed a remote or local build. this is a remote build.
       stage = build
@@ -422,7 +424,7 @@ class JenkinsData
     filename = build_filename(build)
     desired_output = Psych.dump(build)
     unless File.exist?(filename) && IO.read(filename) == desired_output
-      puts "Writing #{filename} ..."
+      JenkinsCli.logger.info "Writing #{filename} ..."
       FileUtils.mkdir_p(File.dirname(filename))
       IO.write(filename, desired_output)
     end

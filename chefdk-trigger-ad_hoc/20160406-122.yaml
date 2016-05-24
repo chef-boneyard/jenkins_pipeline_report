@@ -1,7 +1,17 @@
 ---
+result: FAILURE
+timestamp: '2016-04-06T09:28:51-07:00'
+duration: 17976.177
+version: 0.13.9+20160406162908
+git_commit: 48b3300c6212de2a5024165112cc37385653fe2c
 stages:
   chefdk-test:
     result: FAILURE
+    failures:
+      chef-acceptance[trivial (provision)]: acceptance
+      chef verify[tk-policyfile-provisioner]: debian-6,debian-7,el,windows
+      chef verify[tk-policyfile-provisioner,berkshelf]: debian-8,ubuntu
+      chef verify[tk-policyfile-provisioner,test-kitchen]: mac_os_x
     timestamp: '2016-04-06T12:26:37-07:00'
     duration: 7327.882
     url: http://manhattan.ci.chef.co/job/chefdk-test/82/
@@ -78,20 +88,6 @@ stages:
         duration: 7327.488
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/82/
-        acceptanceTiming:
-        - trivial:
-            provision: '00:57:32'
-            force-destroy: '00:00:08'
-            Total: '01:00:42'
-          Run:
-            Total: '01:00:42'
-        - top-cookbooks:
-            provision: '00:54:44'
-            verify: '00:00:35'
-            destroy: '00:00:36'
-            Total: '00:59:43'
-          Run:
-            Total: '00:59:43'
         failureCause:
           cause: chef-acceptance
           detailedCause: chef-acceptance[trivial (provision)]
@@ -283,6 +279,20 @@ stages:
           tests:
             chef-acceptance:
             - trivial (provision)
+        acceptanceTiming:
+        - trivial:
+            provision: '00:57:32'
+            force-destroy: '00:00:08'
+            Total: '01:00:42'
+          Run:
+            Total: '01:00:42'
+        - top-cookbooks:
+            provision: '00:54:44'
+            verify: '00:00:35'
+            destroy: '00:00:36'
+            Total: '00:59:43'
+          Run:
+            Total: '00:59:43'
         omnibusTiming: {}
       debian-6:
         result: FAILURE
@@ -1235,11 +1245,6 @@ stages:
             chef verify:
             - tk-policyfile-provisioner
         omnibusTiming: {}
-    failures:
-      chef verify[tk-policyfile-provisioner]: debian-6,debian-7,el,windows
-      chef-acceptance[trivial (provision)]: acceptance
-      chef verify[tk-policyfile-provisioner,berkshelf]: debian-8,ubuntu
-      chef verify[tk-policyfile-provisioner,test-kitchen]: mac_os_x
   chefdk-build:
     result: SUCCESS
     timestamp: '2016-04-06T09:29:08-07:00'
@@ -1316,8 +1321,3 @@ stages:
       GIT_REF: salam/revert-stuff
       EXPIRE_CACHE: false
     runs: {}
-result: FAILURE
-timestamp: '2016-04-06T09:28:51-07:00'
-duration: 17976.177
-version: 0.13.9+20160406162908
-git_commit: 48b3300c6212de2a5024165112cc37385653fe2c

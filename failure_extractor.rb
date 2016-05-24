@@ -30,7 +30,7 @@ class FailureExtractor
             if suspicious_block =~ /^\s*Verification of component '(.+)' failed.\s*$/i
               cause["tests"] ||= {}
               cause["tests"]["chef verify"] ||= []
-              cause["tests"]["chef verify"] << $1
+              cause["tests"]["chef verify"] |= [ $1 ]
             end
 
             if suspicious_block =~ /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i
@@ -106,6 +106,9 @@ class FailureExtractor
         end
 
         if cause["tests"]
+          cause["tests"].each do |type,tests|
+            tests.uniq!
+          end
           cause["cause"] = "#{cause["tests"].keys.join(",")}"
           cause["detailedCause"] = cause["tests"].map do |test_type, t|
             if t.size <= 3
@@ -155,7 +158,7 @@ class FailureExtractor
           cause["tests"] ||=  {}
           cause["tests"]["chef-acceptance"] ||= []
           failures.each do |failure|
-            cause["tests"]["chef-acceptance"] << "#{failure["suite"]} (#{failure["command"]})"
+            cause["tests"]["chef-acceptance"] |= [ "#{failure["suite"]} (#{failure["command"]})" ]
           end
         end
 
