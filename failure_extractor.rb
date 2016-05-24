@@ -67,10 +67,6 @@ class FailureExtractor
               cause["cause"] = "jenkins copy"
               cause["detailedCause"] = "jenkins copy"
 
-            when /^\s*using dumb terminal settings\s*fatal: Not a git repository (or any of the parent directories): .git\s*$/i
-              cause["cause"] = "bad git sha"
-              cause["detailedCause"] = "bad git sha"
-
             when /Failed to connect to (.+) port (\d+): Timed out/i,
                  /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
               cause["cause"] = "network timeout"
