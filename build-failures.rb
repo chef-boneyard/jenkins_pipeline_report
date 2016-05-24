@@ -20,6 +20,29 @@ end
 ARGV.each do |job_url|
   job = File.basename(job_url)
   builds = JenkinsCli.builds(job_url)
+  puts "SUMMARY"
+  failure_types = {}
+  builds.flat_map do |build|
+    if build["failures"]
+      build["failures"].keys.each do |failure|
+        failure_types[failure] ||= 0
+        failure_types[failure] += 1
+      end
+    else
+      failure_types["success"] ||= 0
+      failure_types["success"] += 1
+    end
+  end
+  puts "total: #{builds.size}"
+  # Reverse sort
+  failure_types = failure_types.to_a.sort { |(ak,av),(bk,bv)| bv <=> av }
+  failure_types.each do |key, value|
+    percent = value.to_f/builds.size.to_f*100.0
+    puts "#{key}: #{value} (#{percent.round(2)}%)"
+  end
+
+  puts ""
+  puts "BY BUILD"
   builds.each do |build|
     if JenkinsData.failed?(build)
       build_number = File.basename(build["stages"][job]["url"])

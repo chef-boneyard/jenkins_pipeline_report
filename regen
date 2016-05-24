@@ -5,6 +5,12 @@ set -ex
 for job_url in http://manhattan.ci.chef.co/job/chef-trigger-release http://manhattan.ci.chef.co/job/chef-trigger-ad_hoc http://manhattan.ci.chef.co/job/chefdk-trigger-release http://manhattan.ci.chef.co/job/chefdk-trigger-ad_hoc http://wilson.ci.chef.co/job/chef-server-12-trigger-release http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll
 do
   job_name=${job_url##*/}
-  ruby jenkins-data.rb $* $job_url > reports/$job_name.failures
-  ruby build-failures.rb --local $job_url > reports/$job_name.failures
+#  ruby jenkins-data.rb $* $job_url > reports/$job_name.failures
+  #ruby build-failures.rb --local $job_url > reports/$job_name.failures
+done
+
+for job_url in http://manhattan.ci.chef.co/job/chef-trigger-ad_hoc http://manhattan.ci.chef.co/job/chefdk-trigger-ad_hoc
+do
+  job_name=${job_url##*/}
+  ruby build-failures.rb --local --where triggeredBy=chef-jenkins $job_url > reports/$job_name.bumpbot.failures
 done

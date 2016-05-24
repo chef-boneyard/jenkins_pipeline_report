@@ -1,5 +1,6 @@
 require "optparse"
 require_relative "jenkins_data"
+require_relative "jenkins_query"
 require "pp"
 
 module JenkinsCli
@@ -26,18 +27,7 @@ module JenkinsCli
       force_refresh_logs: options[:force_refresh_logs],
       force_reprocess_logs: options[:force_reprocess_logs]
     ) do |build|
-      result = true
-      if options[:where]
-        options[:where].each do |composite_key, must_match|
-          keys = composite_key.split(".")
-          value = build
-          keys.each do |key|
-            value = value[key]
-          end
-          result = false unless must_match === value
-        end
-      end
-      result
+      options[:where] === build
     end
   end
 
@@ -49,9 +39,11 @@ module JenkinsCli
         logger.level = Logger.const_get(v.upcase)
       end
       opts.on("--where KEY=VALUE", "Only pick builds with KEY (a.b.c) equal to value") do |v|
-        key, value = v.split("=", 2)
-        options[:where] ||= {}
-        options[:where][key] = value
+        if options[:where]
+          options[:where] = JenkinsQuery.and(options[:where], JenkinsQuery.parse(v))
+        else
+          options[:where] = JenkinsQuery.parse(v)
+        end
       end
       opts.on("--[no-]local", "Whether to get the list of builds locally (default: false).") do |v|
         options[:local] = v
