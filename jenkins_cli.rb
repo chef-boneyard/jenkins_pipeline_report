@@ -27,7 +27,11 @@ module JenkinsCli
       force_refresh_logs: options[:force_refresh_logs],
       force_reprocess_logs: options[:force_reprocess_logs]
     ) do |build|
-      options[:where] === build
+      if options[:where]
+        options[:where] === build
+      else
+        true
+      end
     end
   end
 
