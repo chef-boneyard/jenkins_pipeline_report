@@ -1,6 +1,6 @@
 require_relative "jenkins_cli"
 
-options = { urls: true }
+options = {}
 JenkinsCli.parse_options do |opts|
   opts.banner = <<-EOM
     USAGE: ruby #{File.basename(__FILE__)} JOB_URL ...
@@ -12,7 +12,7 @@ JenkinsCli.parse_options do |opts|
     You must upload your public SSH key to your Jenkins server from ~/.ssh/id_rsa.
   EOM
 
-  opts.on("--[no-]urls", "Whether to show the URLs for all failing jobs (default: true).") do |v|
+  opts.on("--[no-]urls", "Whether to show the URLs for all failing jobs (default: false).") do |v|
     options[:urls] = v
   end
 end

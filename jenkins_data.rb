@@ -76,7 +76,7 @@ class JenkinsData
   end
 
   def load
-    raise "#{job_path} does not exist! Cannot load local builds." unless File.directory?(job_path)
+    return [] unless File.directory?(job_path)
 
     builds = Dir.entries(job_path).map do |entry|
       next unless File.extname(entry) == ".yaml"
@@ -372,7 +372,7 @@ class JenkinsData
       TimingExtractor.extract(configuration, run, console_text)
     end
 
-    if run["changedThisTime"] || force || !run.has_key?("failureCause") || true
+    if run["changedThisTime"] || force || !run.has_key?("failureCause")
       if failed?(run)
         console_text ||= console_text(build, run)
         return unless console_text
