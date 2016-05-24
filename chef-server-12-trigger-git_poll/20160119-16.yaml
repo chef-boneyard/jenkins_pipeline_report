@@ -66,9 +66,56 @@ stages:
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-server,role=tester/39/
         failureCause:
           jenkinsBuildStep: Invoke XShell command
-          suspiciousLines:
-          - 'ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to
-            exception'
+          suspiciousBlocks:
+            2497: |
+              No entry for terminal type "unknown";
+              using dumb terminal settings.
+              /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/platform.rb:408:in `associate_user_with_org': Bad response 403 from POST /organizations/pedant_testorg_ip-10-194-12-222_6873/users w/ { 'username' : 'pedant_testorg_ip-10-194-12-222_6873_owner'}: {"error":"This invitation is no longer valid. Please notify an administrator and request to be re-invited to the organization."} (RuntimeError)
+                from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/platform.rb:473:in `associate_in_groups'
+                from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/platform.rb:463:in `make_owner'
+            2509: |
+              Creating org pedant_testorg_ip-10-194-12-222_6873
+              Validating Org Creation
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            2530: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to chef-server-ubuntu-12.04-tester-5b0c0e(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+            2558: |2
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              [BFA] Scanning build for known causes...
+              [BFA] No failure causes found
         failureReason:
           jenkinsBuildStep: Invoke XShell command
         omnibusTiming: {}

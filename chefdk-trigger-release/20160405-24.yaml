@@ -36,54 +36,49 @@ stages:
         failureCause:
           cause: git index.lock
           detailedCause: git index.lock
-          shellCommand:
-            exitStatus: '128'
-            command: git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk
-              --work-tree=/opt/chefdk add -A -f
-            stderr: 'fatal: Unable to create ''/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock'':
-              File exists.'
           jenkinsBuildStep: Invoke XShell command
           lastOmnibusLine: "[GitCache: preparation] I | $ git -c core.autocrlf=false
             --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk --work-tree=/opt/chefdk
             add -A -f"
           lastOmnibusStep: 'GitCache: preparation'
-          stacktraces:
-          - - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/util.rb:101:in
-              `rescue in shellout!'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/util.rb:97:in
-              `shellout!'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/git_cache.rb:182:in
-              `git_cmd'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/git_cache.rb:116:in
-              `incremental'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/software.rb:1145:in
-              `execute_build'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/software.rb:1010:in
-              `build_me'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/project.rb:1077:in
-              `block in build'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/project.rb:1076:in
-              `each'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/project.rb:1076:in
-              `build'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/cli.rb:83:in
-              `build'
-            - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
-              `run'
-            - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
-              `invoke_command'
-            - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in
-              `dispatch'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/cli/base.rb:33:in
-              `dispatch'
-            - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
-              `start'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/cli.rb:41:in
-              `execute!'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/bin/omnibus:16:in
-              `<top (required)>'
-            - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
-            - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+          suspiciousBlocks:
+            539: "            [GitCache: preparation] I | Removing git directories\n
+              \           [GitCache: preparation] I | $ git -c core.autocrlf=false
+              --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk --work-tree=/opt/chefdk
+              add -A -f\n                                    I | fatal: Unable to
+              create '/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock': File
+              exists.\n                                    I | \n                                    I
+              | If no other git process is currently running, this probably means
+              a\n                                    I | git process crashed in this
+              repository earlier. Make sure no other git\n                                    I
+              | process is running and remove the file manually to continue.\nThe
+              following shell command exited with status 128:\n\n    $ git -c core.autocrlf=false
+              --git-dir=/var/cache/omnibus/cache/git_cache/opt/chefdk --work-tree=/opt/chefdk
+              add -A -f\n\nOutput:\n\n    (nothing)\n\nError:\n\n    fatal: Unable
+              to create '/var/cache/omnibus/cache/git_cache/opt/chefdk/index.lock':
+              File exists.\n\nIf no other git process is currently running, this probably
+              means a\ngit process crashed in this repository earlier. Make sure no
+              other git\nprocess is running and remove the file manually to continue.\n\n/Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/util.rb:101:in
+              `rescue in shellout!'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/util.rb:97:in
+              `shellout!'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/git_cache.rb:182:in
+              `git_cmd'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/git_cache.rb:116:in
+              `incremental'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/software.rb:1145:in
+              `execute_build'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/software.rb:1010:in
+              `build_me'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/project.rb:1077:in
+              `block in build'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/project.rb:1076:in
+              `each'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/project.rb:1076:in
+              `build'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/cli.rb:83:in
+              `build'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
+              `run'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
+              `invoke_command'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in
+              `dispatch'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/cli/base.rb:33:in
+              `dispatch'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
+              `start'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/lib/omnibus/cli.rb:41:in
+              `execute!'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4368863fdc71/bin/omnibus:16:in
+              `<top (required)>'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in
+              `load'\n  /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in
+              `<main>'\nBuild step 'Invoke XShell command' marked build as failure\nArchiving
+              artifacts\nRecording fingerprints\n"
         omnibusTiming: {}
       debian-6:
         result: SUCCESS

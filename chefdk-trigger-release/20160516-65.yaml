@@ -89,14 +89,17 @@ stages:
         failureCause:
           jenkinsBuildStep: Invoke XShell command
           suspiciousBlocks:
-            404: |
-              ============================================================
+            405: |2
 
               You are replacing the current local value of gemfile, which is currently nil
               The --deployment flag requires a
               ../../../../../../../../../../../../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.41/acceptance/Gemfile.lock.
               Please make sure you have checked your
               ../../../../../../../../../../../../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.41/acceptance/Gemfile.lock
+              into version control before deploying.
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
         omnibusTiming: {}
       ubuntu-12.04:
         result: FAILURE
@@ -108,31 +111,37 @@ stages:
           cause: chef verify
           detailedCause: chef verify[berkshelf]
           jenkinsBuildStep: Invoke XShell command
-          stacktraces:
-          - - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:95:in
-              `block in materialize'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:88:in
-              `map!'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:88:in
-              `materialize'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:140:in
-              `specs'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:185:in
-              `specs_for'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:174:in
-              `requested_specs'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/environment.rb:19:in
-              `requested_specs'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/runtime.rb:14:in
-              `setup'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler.rb:95:in
-              `setup'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/setup.rb:19:in
-              `<top (required)>'"
-            - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in
-              `require'"
-            - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in
-              `require'"
+          suspiciousBlocks:
+            435: |
+              bundler: failed to load command: /opt/chefdk/embedded/bin/rspec (/opt/chefdk/embedded/bin/rspec)
+
+              fatal: Not a git repository (or any of the parent directories): .git
+              Bundler::GemNotFound: Could not find reel-0.6.1 in any of the sources
+                /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:95:in `block in materialize'
+                /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:88:in `map!'
+                /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/spec_set.rb:88:in `materialize'
+                /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:140:in `specs'
+                /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:185:in `specs_for'
+                /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/definition.rb:174:in `requested_specs'
+                /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/environment.rb:19:in `requested_specs'
+                /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/runtime.rb:14:in `setup'
+                /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler.rb:95:in `setup'
+                /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/setup.rb:19:in `<top (required)>'
+                /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+                /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+
+              ............................................................................................................................................................................................................................................................................................................................................................................................................................................................
+            467: |
+              Verification of component 'package installation' succeeded.
+              Verification of component 'test-kitchen' succeeded.
+              Verification of component 'berkshelf' failed.
+              Verification of component 'chef-provisioning' succeeded.
+              Verification of component 'chefspec' succeeded.
+              Verification of component 'chef-dk' succeeded.
+              Verification of component 'chef-client' succeeded.
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
           tests:
             chef verify:
             - berkshelf

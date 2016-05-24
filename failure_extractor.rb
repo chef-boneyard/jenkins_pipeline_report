@@ -27,6 +27,16 @@ class FailureExtractor
 
         if cause["suspiciousBlocks"]
           cause["suspiciousBlocks"].each do |line_number, suspicious_block|
+            if suspicious_block =~ /^\s*Verification of component '(.+)' failed.\s*$/i
+              cause["tests"] ||= {}
+              cause["tests"]["chef verify"] ||= []
+              cause["tests"]["chef verify"] << $1
+            end
+
+            if suspicious_block =~ /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i
+              cause["jenkinsBuildStep"] ||= $1
+            end
+
             case suspicious_block
             when /The --deployment flag requires a .*\/([^\/]+\/Gemfile.lock)/
               cause["cause"] = "missing Gemfile.lock"
@@ -49,11 +59,6 @@ class FailureExtractor
               cause["cause"] = "network reset"
               cause["detailedCause"] = "network reset#{hostname ? " #{hostname}" : ""}"
 
-            when /Verification of component '(.+)' failed./
-              cause["tests"] ||= {}
-              cause["tests"]["chef verify"] ||= []
-              cause["tests"]["chef verify"] << $1
-
             when /jenkinsci.*Connection timed out/i
               cause["cause"] = "network timeout"
               cause["detailedCause"] = "network timeout jenkins"
@@ -61,6 +66,44 @@ class FailureExtractor
             when /IOException.*: Failed to extract/i
               cause["cause"] = "jenkins copy"
               cause["detailedCause"] = "jenkins copy"
+
+            when /^\s*using dumb terminal settings\s*fatal: Not a git repository (or any of the parent directories): .git\s*$/i
+              cause["cause"] = "bad git sha"
+              cause["detailedCause"] = "bad git sha"
+
+            when /Failed to connect to (.+) port (\d+): Timed out/i,
+                 /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
+              cause["cause"] = "network timeout"
+              cause["detailedCause"] = "network timeout #{$1}:#{$2}"
+              return
+
+            when /Unable to create .*index.lock.*File exists/mi
+              cause["cause"] = "git index.lock"
+              cause["detailedCause"] = "git index.lock"
+
+            when /Dumping stack trace to\s+(\S+).stackdump/mi
+              cause["cause"] = "segfault"
+              cause["detailedCause"] = "segfault #{$1}"
+
+            when /Finder got an error: Application isn.*t running/i
+              cause["cause"] = "mac not logged in"
+              cause["detailedCause"] = "mac not logged in"
+
+            when /Gemfile\.lock is corrupt/
+              cause["cause"] = "corrupt Gemfile.lock"
+              cause["detailedCause"] = cause["cause"]
+
+            when /An error occurred while installing (\S+) \(([^\)]+)\)/i
+              cause["cause"] = "gem install"
+              cause["detailedCause"] = "gem install #{$1} -v #{$2}"
+
+            when /rubygems\.org.*Checksum of (\S+) does not match the checksum provided by server/mi
+              cause["cause"] = "rubygems checksum"
+              cause["detailedCause"] = "rubygems #{$1} checksum"
+
+            when /Could not find (\S+) in any of the sources/i
+              cause["cause"] = "yanked gem"
+              cause["detailedCause"] = "yanked gem #{$1}"
 
             end
           end
@@ -75,46 +118,6 @@ class FailureExtractor
               test_type
             end
           end.join(",")
-        end
-
-        if cause["shellCommand"]
-          case cause["shellCommand"]["stderr"]
-          when /Failed to connect to (.+) port (\d+): Timed out/i,
-               /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
-            cause["cause"] = "network timeout"
-            cause["detailedCause"] = "network timeout #{$1}:#{$2}"
-            return
-
-          when /Unable to create .*index.lock.*File exists/mi
-            cause["cause"] = "git index.lock"
-            cause["detailedCause"] = "git index.lock"
-
-          when /Dumping stack trace to\s+(\S+).stackdump/mi
-            cause["cause"] = "segfault"
-            cause["detailedCause"] = "segfault #{$1}"
-
-          when /Finder got an error: Application isn.*t running/i
-            cause["cause"] = "mac not logged in"
-            cause["detailedCause"] = "mac not logged in"
-          end
-
-          case cause["shellCommand"]["stdout"]
-          when /Gemfile\.lock is corrupt/
-            cause["cause"] = "corrupt Gemfile.lock"
-            cause["detailedCause"] = cause["cause"]
-
-          when /An error occurred while installing (\S+) \(([^\)]+)\)/i
-            cause["cause"] = "gem install"
-            cause["detailedCause"] = "gem install #{$1} -v #{$2}"
-
-          when /rubygems\.org.*Checksum of (\S+) does not match the checksum provided by server/mi
-            cause["cause"] = "rubygems checksum"
-            cause["detailedCause"] = "rubygems #{$1} checksum"
-
-          when /Could not find (\S+) in any of the sources/i
-            cause["cause"] = "yanked gem"
-            cause["detailedCause"] = "yanked gem #{$1}"
-          end
         end
       end
     ensure
@@ -133,7 +136,7 @@ class FailureExtractor
 
   def self.order_fields(cause)
     JenkinsHelpers.reorder_fields(cause,
-      %w{cause detailedCause shellCommand stacktrace jenkinsBuildStep})
+      %w{cause detailedCause shellCommand jenkinsBuildStep})
   end
 
   attr_reader :lines
@@ -149,34 +152,6 @@ class FailureExtractor
       line = lines[index]
       # Build step 'Invoke XShell command' marked build as failure
       case line
-      when /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i
-        cause["jenkinsBuildStep"] ||= $1
-
-      when /^\s*(\S+)(:\d+:in `.+')\s*$/
-        index, stacktrace = extract_stacktrace(lines, index)
-        if stacktrace.any?
-          cause["stacktraces"] ||= []
-          cause["stacktraces"] << stacktrace
-        end
-
-      # Kitchen stack trace
-      #     D      ------Backtrace-------
-      when /^\s*\S\s+-+Backtrace-+\s*$/
-        stacktrace = extract_kitchen_stacktrace(lines, index+1)
-        if stacktrace.any?
-          cause["stacktraces"] ||= []
-          cause["stacktraces"] << stacktrace
-        end
-
-      when /^The following shell command exited with status (-?\d+):\s/
-        command = extract_shell_command(lines, index, $1)
-        cause["shellCommand"] ||= command if command
-
-      when /^\s*Verification of component '(.+)' failed.\s*$/
-        cause["tests"] ||= {}
-        cause["tests"]["chef verify"] ||= []
-        cause["tests"]["chef verify"] << $1
-
       when /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
         index, results = JenkinsHelpers.extract_chef_acceptance_result(lines, index)
         failures = results.select { |result| result["error"] == "Y" && result["command"] != "Total" }
@@ -198,7 +173,7 @@ class FailureExtractor
     end
   end
 
-  def extract_suspicious_blocks(run, cause, context: 3)
+  def extract_suspicious_blocks(run, cause, context: 2)
     current_block = nil
     suspicious_blocks = {}
     lines.each_with_index do |line,index|
@@ -208,176 +183,105 @@ class FailureExtractor
       when /The --deployment flag requires a/,
            /EACCES/,
            /\bERROR\b/,
-           /\bFATAL\b/,
+           /\bFATAL\b/i,
            /Errno::ECONNRESET/,
            /Permission denied/i,
            /Connection timed out/i,
-           /Failed to complete (.*) action:/i
+           /Failed to complete (.*) action:/i,
+           #  java stacktrace
+           # 	at com.michelin.cio.hudson.plugins.copytoslave.MyFilePath.copyRecursiveTo(MyFilePath.java:147)
+           /^\s*at ([a-z_]\w*\.)+[A-Z_]\w*\.[a-z_]\w*\([^\)]*\)\s*$/,
+           # ruby stacktrace
+           #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:61:in `block (2 levels) in initialize'
+           /^\s*(\S+):(\d+):in `([^']*)'/,
+           /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i,
+           /^\s*Verification of component '(.+)' failed.\s*$/i
 
         range = index..index
+
+      # The following shell command exited with status 128:
+      #
+      #     $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
+      #
+      # Output:
+      #
+      #     (nothing)
+      #
+      # Error:
+      #
+      #     fatal: unable to access 'http://git.savannah.gnu.org/r/config.git/': Failed connect to git.savannah.gnu.org:80; Operation now in progress
+      #
+      when /^\s*The following shell command exited with status \S+:\s*$/i
+        # The following shell command exited with status 128:
+        #
+        end_index = index
+
+        while lines[end_index].chomp != ""
+          end_index += 1
+        end
+        end_index += 1
+
+        #     $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
+        #
+        while lines[end_index].chomp != ""
+          end_index += 1
+        end
+        end_index += 1
+
+        # Output:
+        #
+        while lines[end_index].chomp != ""
+          end_index += 1
+        end
+        end_index += 1
+
+        #     (nothing)
+        #
+        while lines[end_index].chomp != ""
+          end_index += 1
+        end
+        end_index += 1
+
+        # Error:
+        #
+        while lines[end_index].chomp != ""
+          end_index += 1
+        end
+        end_index += 1
+
+        #     fatal: unable to access 'http://git.savannah.gnu.org/r/config.git/': Failed connect to git.savannah.gnu.org:80; Operation now in progress
+        #
+        while lines[end_index].chomp != ""
+          end_index += 1
+        end
+        end_index += 1
+
+        range = index..end_index
+
       end
 
       if range
         # Add context
         range = (range.min-context)..(range.max+context)
         # If we're part of the range-being-emitted, extend the range
-        if current_block && range.min <= current_block.end+1
-          (current_block.max+1).upto(range.max) do |i|
-            suspicious_blocks[current_block.min] << lines[i]
-          end
-          current_block = current_block.min..range.max
+        if current_block && range.min <= current_block.max+1
+          start_emit = current_block.max+1
+          current_block = current_block.min..range.max if range.max > current_block.max
         else
-          suspicious_blocks[range.min] = ""
-          range.each do |i|
-            suspicious_blocks[range.min] << lines[i]
-          end
+          start_emit = range.min
           current_block = range
+        end
+        block = suspicious_blocks[current_block.min] ||= ""
+        start_emit.upto(current_block.max) do |i|
+          block << fix_unsightly_characters(lines[i])
         end
       end
     end
     cause["suspiciousBlocks"] = suspicious_blocks unless suspicious_blocks.empty?
   end
 
-  # /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:101:in `rescue in shellout!'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/util.rb:97:in `shellout!'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/fetchers/git_fetcher.rb:263:in `revision_from_remote_reference'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/fetchers/git_fetcher.rb:237:in `resolve_version'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/fetcher.rb:186:in `resolve_version'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:827:in `to_manifest_entry'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:115:in `manifest_entry'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:986:in `fetcher'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/software.rb:842:in `fetch'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/project.rb:1067:in `block (3 levels) in download'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:64:in `call'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:64:in `block (4 levels) in initialize'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:62:in `loop'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:62:in `block (3 levels) in initialize'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:61:in `catch'
-  #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:61:in `block (2 levels) in initialize'
-  def extract_stacktrace(lines, index)
-    stacktrace = []
-
-    # Go backwards up the file until we stop seeing stacktrace lines
-    while index >= 0
-      trace_line = massage_ruby_stacktrace_line(lines[index])
-      break unless trace_line
-      # We are traveling backwards through the file, so we push new things at the top
-      stacktrace.unshift(trace_line)
-      index -= 1
-    end
-
-    [ index+1, skip_useless_stacktrace_lines(stacktrace) ]
-  end
-
-  # D      ------Backtrace-------
-  # D      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:394:in `parse_response'
-  # D      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:203:in `check_files'
-  # D      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:80:in `block in upload'
-  # D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
-  # D      ----------------------
-  def extract_kitchen_stacktrace(lines, index)
-    stacktrace = []
-    while true
-      # ---------------
-      break if lines[index] =~ /^\s*-+\s*/
-
-      trace_line = massage_ruby_stacktrace_line(lines[index])
-      # If something went wrong and we aren't seeing stack traces, stop.
-      break unless trace_line
-      stacktrace << trace_line
-      index += 1
-    end
-    skip_useless_stacktrace_lines(stacktrace)
-  end
-
-  # Get rid of the annoying project/workspace stuff at the beginning of most lines
-  def massage_ruby_stacktrace_line(trace_line)
-    trace_line = trace_line.strip
-    if trace_line =~ /(\S+)(:\d+:in `.+'.*)/
-      filename = $1
-      rest_of_line = $2
-      # /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:394:in `parse_response'
-      # -> acceptance/vendor/bundle/ruby/2.1.0/gems/winrm-fs-0.4.2/lib/winrm-fs/core/file_transporter.rb:394:in `parse_response'
-      if filename =~ /[\/\\]architecture[\/\\][^\/\\]+[\/\\]platform[\/\\][^\/\\]+[\/\\]project[\/\\][^\/\\]+[\/\\]role[\/\\][^\/\\]+[\/\\](.+)/
-        filename = $1
-      end
-      "#{filename}#{rest_of_line}"
-    else
-      nil
-    end
-  end
-
-  def skip_useless_stacktrace_lines(stacktrace)
-    # Skim useless things from the top
-    index = stacktrace.size - 1
-    # Always leave the top one on even if it seems useless. Never make it empty
-    while index > 0
-      case stacktrace[index]
-      when /\bthread_pool\.rb:/
-        stacktrace.pop
-      else
-        # It's not a skippable, stop skipping things
-        break
-      end
-
-      index -= 1
-    end
-    stacktrace
-  end
-
-  def extract_shell_command(lines, index, exit_status)
-    start_index = index
-    command = { "exitStatus" => exit_status }
-
-    # The following shell command exited with status 128:
-    index += 1
-
-    #
-    #     $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
-    index += 1 while lines[index].chomp == ""
-    command["command"] = lines[index].strip
-    index += 1
-    # Get rid of the $
-    command["command"] = $1 if command["command"] =~ /^\s*\$\s*(.+)/
-    command["command"] = command["command"].strip
-
-    #
-    # Output:
-    #
-    #     (nothing)
-    #
-    # Error:
-    index += 1 while lines[index].strip == ""
-    unless lines[index].chomp == "Output:"
-      return nil
-    end
-    index += 1
-    index += 1 while lines[index].chomp == ""
-    return nil unless lines[index].start_with?("    ")
-    command["stdout"] = lines[index][4..-1]
-    index += 1
-    while lines[index].chomp != "Error:"
-      command["stdout"] << lines[index]
-      index += 1
-    end
-    command["stdout"] = command["stdout"].strip
-    command.delete("stdout") if command["stdout"] == "(nothing)"
-
-    # Error:
-    #
-    #     fatal: unable to access 'http://git.savannah.gnu.org/r/config.git/': Failed connect to git.savannah.gnu.org:80; Operation now in progress
-    index += 1
-    index += 1 while lines[index].chomp == ""
-    return nil unless lines[index].start_with?("    ")
-    command["stderr"] = lines[index][4..-1]
-    index += 1
-    while lines[index].chomp != ""
-      command["stderr"] << lines[index]
-      index += 1
-    end
-    command["stderr"] = command["stderr"].strip
-    command.delete("stderr") if command["stderr"] == "(nothing)"
-
-    command
+  def fix_unsightly_characters(line)
+    line = line.gsub("\r", "")
+    line.gsub("\t", "  ")
   end
 end

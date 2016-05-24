@@ -8,7 +8,7 @@ stages:
   chefdk-build:
     result: FAILURE
     failures:
-      gem install winrm-elevated -v 0.4.0: debian
+      network reset rubygems.org: debian
     timestamp: '2016-05-13T06:51:57-07:00'
     duration: 6749.144
     url: http://manhattan.ci.chef.co/job/chefdk-build/396/
@@ -34,19 +34,153 @@ stages:
         builtOn: chefdk-debian-6-builder-2ccc58
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/396/
         failureCause:
-          cause: gem install
-          detailedCause: gem install winrm-elevated -v 0.4.0
-          shellCommand:
-            exitStatus: '5'
-            command: BUNDLE_GEMFILE=/var/cache/omnibus/src/chef-dk/Gemfile CFLAGS=-I/opt/chefdk/embedded/include
-              -O2 CPPFLAGS=-I/opt/chefdk/embedded/include -O2 CXXFLAGS=-I/opt/chefdk/embedded/include
-              -O2 LDFLAGS=-Wl,-rpath,/opt/chefdk/embedded/lib -L/opt/chefdk/embedded/lib
-              LD_RUN_PATH=/opt/chefdk/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-              PATH=/opt/chefdk/bin:/opt/chefdk/embedded/bin:/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
-              PKG_CONFIG_PATH=/opt/chefdk/embedded/lib/pkgconfig /opt/chefdk/embedded/bin/bundle
-              install --verbose
-            stdout: |-
-              HTTP GET https://index.rubygems.org/versions
+          cause: network reset
+          detailedCause: network reset rubygems.org
+          jenkinsBuildStep: Invoke XShell command
+          lastOmnibusLine: "[Builder: chef-dk] I | 2016-05-13T14:35:48+00:00 | Build
+            chef-dk: 89.0899s"
+          lastOmnibusStep: 'Builder: chef-dk'
+          suspiciousBlocks:
+            362: |2
+                 [Software: libarchive] I | 2016-05-13T13:53:47+00:00 | Resolving manifest entry for libarchive
+                   [Software: autoconf] I | 2016-05-13T13:53:47+00:00 | Resolving manifest entry for autoconf
+                                        I | 2016-05-13T13:53:47+00:00 | fatal: git cat-file: could not get object info
+              [GitFetcher: config_guess] D | 2016-05-13T13:53:47+00:00 | unable to determine presence of commit 81063d2a4a93dce6ab2b7064f004a4ee33c24250
+              [GitFetcher: config_guess] I | 2016-05-13T13:53:47+00:00 | Fetching from `http://git.savannah.gnu.org/r/config.git'
+            3308: "                          D | 2016-05-13T13:56:37+00:00 | install:
+              copying file /opt/chefdk/embedded/share/zsh/site-functions/_cargo\n
+              \                         D | 2016-05-13T13:56:37+00:00 | install: running
+              ldconfig\n                          D | 2016-05-13T13:56:37+00:00 |
+              ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission
+              denied\n                          D | 2016-05-13T13:56:37+00:00 | \n
+              \                         D | 2016-05-13T13:56:37+00:00 |     Rust is
+              ready to roll.\n"
+            5918: |2
+                                        D | 2016-05-13T14:10:17+00:00 | /usr/bin/ld: data size 19656480
+                                        D | 2016-05-13T14:10:17+00:00 | test -z "" && /sbin/ldconfig
+                                        D | 2016-05-13T14:10:17+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-13T14:10:17+00:00 | make[1]: [/opt/chefdk/embedded/lib/libtinfo.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-13T14:10:17+00:00 | installing ../lib/libtinfo.a as /opt/chefdk/embedded/lib/libtinfo.a
+            5931: |2
+                                        D | 2016-05-13T14:10:18+00:00 | cd /opt/chefdk/embedded/lib && (ln -s -f libncurses.so.5.9 libcurses.so; )
+                                        D | 2016-05-13T14:10:18+00:00 | test -z "" && /sbin/ldconfig
+                                        D | 2016-05-13T14:10:18+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-13T14:10:18+00:00 | make[1]: [/opt/chefdk/embedded/lib/libncurses.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-13T14:10:18+00:00 | installing ../lib/libncurses.a as /opt/chefdk/embedded/lib/libncurses.a
+            5968: |2
+                                        D | 2016-05-13T14:10:18+00:00 | cd /opt/chefdk/embedded/lib && (ln -s -f libpanel.so.5.9 libpanel.so.5; ln -s -f libpanel.so.5 libpanel.so; )
+                                        D | 2016-05-13T14:10:18+00:00 | test -z "" && /sbin/ldconfig
+                                        D | 2016-05-13T14:10:18+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-13T14:10:18+00:00 | make[1]: [/opt/chefdk/embedded/lib/libpanel.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-13T14:10:18+00:00 | installing ../lib/libpanel.a as /opt/chefdk/embedded/lib/libpanel.a
+            5988: |2
+                                        D | 2016-05-13T14:10:19+00:00 | cd ../lib && (ln -s -f libmenu.so.5.9 libmenu.so.5; ln -s -f libmenu.so.5 libmenu.so; )
+                                        D | 2016-05-13T14:10:19+00:00 | test -z "" && /sbin/ldconfig
+                                        D | 2016-05-13T14:10:19+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-13T14:10:19+00:00 | make[1]: [/opt/chefdk/embedded/lib/libmenu.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-13T14:10:19+00:00 | installing ../lib/libmenu.a as /opt/chefdk/embedded/lib/libmenu.a
+            6009: |2
+                                        D | 2016-05-13T14:10:19+00:00 | cd ../lib && (ln -s -f libform.so.5.9 libform.so.5; ln -s -f libform.so.5 libform.so; )
+                                        D | 2016-05-13T14:10:19+00:00 | test -z "" && /sbin/ldconfig
+                                        D | 2016-05-13T14:10:19+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-13T14:10:19+00:00 | make[1]: [/opt/chefdk/embedded/lib/libform.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-13T14:10:19+00:00 | installing ../lib/libform.a as /opt/chefdk/embedded/lib/libform.a
+            7582: |2
+                                        D | 2016-05-13T14:10:58+00:00 | /usr/bin/ld: data size 14536480
+                                        D | 2016-05-13T14:10:58+00:00 | test -z "" && /sbin/ldconfig
+                                        D | 2016-05-13T14:10:58+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-13T14:10:58+00:00 | make[1]: [/opt/chefdk/embedded/lib/libtinfow.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-13T14:10:58+00:00 | installing ../lib/libtinfow.a as /opt/chefdk/embedded/lib/libtinfow.a
+            7593: |2
+                                        D | 2016-05-13T14:10:58+00:00 | cd /opt/chefdk/embedded/lib && (ln -s -f libncursesw.so.5.9 libncursesw.so.5; ln -s -f libncursesw.so.5 libncursesw.so; )
+                                        D | 2016-05-13T14:10:58+00:00 | test -z "" && /sbin/ldconfig
+                                        D | 2016-05-13T14:10:58+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission deniedinstalling ../lib/libncursesw.a as /opt/chefdk/embedded/lib/libncursesw.a
+                                        D | 2016-05-13T14:10:58+00:00 | /usr/bin/install -c -m 644 ../lib/libncursesw.a /opt/chefdk/embedded/lib/libncursesw.a
+                                        D | 2016-05-13T14:10:58+00:00 | ranlib /opt/chefdk/embedded/lib/libncursesw.a
+            7628: |2
+                                        D | 2016-05-13T14:10:59+00:00 | /usr/bin/ld: total time in link: 0.064004
+                                        D | 2016-05-13T14:10:59+00:00 | /usr/bin/ld: data size 8720160
+                                        D | 2016-05-13T14:10:59+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-13T14:10:59+00:00 | make[1]: [/opt/chefdk/embedded/lib/libpanelw.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-13T14:10:59+00:00 | installing ../lib/libpanelw.a as /opt/chefdk/embedded/lib/libpanelw.a
+            7648: |2
+                                        D | 2016-05-13T14:10:59+00:00 | cd /opt/chefdk/embedded/lib && (ln -s -f libmenuw.so.5.9 libmenuw.so.5; ln -s -f libmenuw.so.5 libmenuw.so; )
+                                        D | 2016-05-13T14:10:59+00:00 | test -z "" && /sbin/ldconfig
+                                        D | 2016-05-13T14:10:59+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-13T14:10:59+00:00 | make[1]: [/opt/chefdk/embedded/lib/libmenuw.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-13T14:10:59+00:00 | installing ../lib/libmenuw.a as /opt/chefdk/embedded/lib/libmenuw.a
+            7669: |2
+                                        D | 2016-05-13T14:10:59+00:00 | cd ../lib && (ln -s -f libformw.so.5.9 libformw.so.5; ln -s -f libformw.so.5 libformw.so; )
+                                        D | 2016-05-13T14:10:59+00:00 | test -z "" && /sbin/ldconfig
+                                        D | 2016-05-13T14:10:59+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-13T14:10:59+00:00 | make[1]: [/opt/chefdk/embedded/lib/libformw.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-13T14:10:59+00:00 | installing ../lib/libformw.a as /opt/chefdk/embedded/lib/libformw.a
+            15307: |2
+                                        D | 2016-05-13T14:18:39+00:00 |   gcc -std=gnu99  -I.   -I/opt/chefdk/embedded/include -O2  -I/opt/chefdk/embedded/include -O2 -MT exitfail.o -MD -MP -MF $depbase.Tpo -c -o exitfail.o exitfail.c &&\
+                                        D | 2016-05-13T14:18:39+00:00 |   mv -f $depbase.Tpo $depbase.Po
+                                        D | 2016-05-13T14:18:39+00:00 | depbase=`echo fatal-signal.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`;\
+                                        D | 2016-05-13T14:18:39+00:00 |   gcc -std=gnu99  -I.   -I/opt/chefdk/embedded/include -O2  -I/opt/chefdk/embedded/include -O2 -MT fatal-signal.o -MD -MP -MF $depbase.Tpo -c -o fatal-signal.o fatal-signal.c &&\
+                                        D | 2016-05-13T14:18:39+00:00 |   mv -f $depbase.Tpo $depbase.Po
+                                        D | 2016-05-13T14:18:39+00:00 | depbase=`echo fd-hook.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`;\
+            15518: |2
+                                        D | 2016-05-13T14:18:41+00:00 |   mv -f $depbase.Tpo $depbase.Po
+                                        D | 2016-05-13T14:18:41+00:00 | rm -f libm4.a
+                                        D | 2016-05-13T14:18:41+00:00 | ar cru libm4.a gl_avltree_oset.o binary-io.o c-ctype.o c-stack.o c-strcasecmp.o c-strncasecmp.o clean-temp.o cloexec.o close-stream.o closein.o closeout.o dirname.o basename.o dirname-lgpl.o basename-lgpl.o stripslash.o execute.o exitfail.o fatal-signal.o fd-hook.o fd-safer-flag.o dup-safer-flag.o filenamecat.o filenamecat-lgpl.o fopen-safer.o freading.o gl_linkedhash_list.o gl_list.o localcharset.o glthread/lock.o malloca.o math.o memchr2.o gl_oset.o pipe2.o pipe2-safer.o printf-frexp.o printf-frexpl.o progname.o quotearg.o sig-handler.o spawn-pipe.o mkstemp-safer.o tempname.o glthread/threadlib.o glthread/tls.o tmpdir.o unistd.o dup-safer.o fd-safer.o pipe-safer.o verror.o version-etc.o version-etc-fsf.o wait-process.o wctype-h.o xmalloc.o xalloc-die.o gl_xlist.o xmalloca.o gl_xoset.o xprintf.o xsize.o xstrndup.o xvasprintf.o xasprintf.o asnprintf.o asprintf.o fclose.o fcntl.o fflush.o fpurge.o freadahead.o fseek.o fseeko.o getopt.o getopt1.o isnanl.o printf-args.o printf-parse.o regex.o secure_getenv.o strstr.o vasnprintf.o vasprintf.o
+                                        D | 2016-05-13T14:18:41+00:00 | ranlib libm4.a
+                                        D | 2016-05-13T14:18:41+00:00 | make[3]: Leaving directory `/var/cache/omnibus/src/m4/m4-1.4.17/lib'
+            19266: |2
+                                        D | 2016-05-13T14:28:11+00:00 | configuring -test-/exception
+                                        D | 2016-05-13T14:28:11+00:00 | linking encoding cp949.so
+                                        D | 2016-05-13T14:28:11+00:00 | configuring -test-/fatal
+                                        D | 2016-05-13T14:28:11+00:00 | linking encoding euc_jp.so
+                                        D | 2016-05-13T14:28:11+00:00 | configuring -test-/file
+            19447: |2
+                                        D | 2016-05-13T14:29:27+00:00 | compiling init.c
+                                        D | 2016-05-13T14:29:27+00:00 | make[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/funcall'
+                                        D | 2016-05-13T14:29:27+00:00 | make[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/fatal'
+                                        D | 2016-05-13T14:29:27+00:00 | compiling passing_block.c
+                                        D | 2016-05-13T14:29:27+00:00 | make[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/iter'
+            19455: |2
+                                        D | 2016-05-13T14:29:27+00:00 | installing default file libraries
+                                        D | 2016-05-13T14:29:27+00:00 | installing default funcall libraries
+                                        D | 2016-05-13T14:29:27+00:00 | linking shared-object -test-/fatal/rb_fatal.so
+                                        D | 2016-05-13T14:29:27+00:00 | linking shared-object -test-/file.so
+                                        D | 2016-05-13T14:29:27+00:00 | compiling init.c
+            19488: |2
+                                        D | 2016-05-13T14:29:28+00:00 | compiling arity.c
+                                        D | 2016-05-13T14:29:28+00:00 | linking shared-object -test-/num2int/num2int.so
+                                        D | 2016-05-13T14:29:28+00:00 | make[2]: Leaving directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/fatal'
+                                        D | 2016-05-13T14:29:28+00:00 | make[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/old_thread_select'
+                                        D | 2016-05-13T14:29:28+00:00 | compiling old_thread_select.c
+            19953: |2
+                                        D | 2016-05-13T14:29:55+00:00 | make[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/bignum'
+                                        D | 2016-05-13T14:29:55+00:00 | make[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/file'
+                                        D | 2016-05-13T14:29:55+00:00 | make[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/fatal'
+                                        D | 2016-05-13T14:29:55+00:00 | installing default bignum libraries
+                                        D | 2016-05-13T14:29:55+00:00 | make[2]: Leaving directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/bignum'
+                                        D | 2016-05-13T14:29:55+00:00 | installing default rb_fatal libraries
+                                        D | 2016-05-13T14:29:55+00:00 | make[2]: Leaving directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/fatal'
+                                        D | 2016-05-13T14:29:55+00:00 | installing default bug libraries
+                                        D | 2016-05-13T14:29:55+00:00 | make[2]: Leaving directory `/var/cache/omnibus/src/ruby/ruby-2.1.8/ext/-test-/bug-3571'
+            25894: "                          D | 2016-05-13T14:35:45+00:00 | 4:  google-api-client
+              (0.8.6) from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/specifications/google-api-client-0.8.6.gemspec\n
+              \                         D | 2016-05-13T14:35:45+00:00 | \n                          D
+              | 2016-05-13T14:35:45+00:00 | Gem::RemoteFetcher::FetchError: Errno::ECONNRESET:
+              Connection reset by peer - SSL_connect (https://rubygems.org/gems/winrm-elevated-0.4.0.gem)\n
+              \                         D | 2016-05-13T14:35:45+00:00 | /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:308:in
+              `rescue in fetch_path'\n                          D | 2016-05-13T14:35:45+00:00
+              | /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:281:in
+              `fetch_path'\n"
+            25926: |2
+                     [Builder: chef-dk] I | 2016-05-13T14:35:48+00:00 | bundle `install --verbose': 89.0701s
+                     [Builder: chef-dk] I | 2016-05-13T14:35:48+00:00 | Build chef-dk: 89.0899s
+              The following shell command exited with status 5:
+
+                  $ BUNDLE_GEMFILE=/var/cache/omnibus/src/chef-dk/Gemfile CFLAGS=-I/opt/chefdk/embedded/include -O2 CPPFLAGS=-I/opt/chefdk/embedded/include -O2 CXXFLAGS=-I/opt/chefdk/embedded/include -O2 LDFLAGS=-Wl,-rpath,/opt/chefdk/embedded/lib -L/opt/chefdk/embedded/lib LD_RUN_PATH=/opt/chefdk/embedded/lib NOKOGIRI_USE_SYSTEM_LIBRARIES=true PATH=/opt/chefdk/bin:/opt/chefdk/embedded/bin:/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin PKG_CONFIG_PATH=/opt/chefdk/embedded/lib/pkgconfig /opt/chefdk/embedded/bin/bundle install --verbose
+
+              Output:
+
+                  HTTP GET https://index.rubygems.org/versions
               HTTP 206 Partial Content
               HTTP GET https://index.rubygems.org/versions
               HTTP 200 OK
@@ -612,231 +746,51 @@ stages:
               An error occurred while installing winrm-elevated (0.4.0), and Bundler cannot
               continue.
               Make sure that `gem install winrm-elevated -v '0.4.0'` succeeds before bundling.
-          jenkinsBuildStep: Invoke XShell command
-          lastOmnibusLine: "[Builder: chef-dk] I | 2016-05-13T14:35:48+00:00 | Build
-            chef-dk: 89.0899s"
-          lastOmnibusStep: 'Builder: chef-dk'
-          stacktraces:
-          - - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/util.rb:101:in
-              `rescue in shellout!'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/util.rb:97:in
-              `shellout!'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:825:in
-              `shellout!'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:329:in
-              `block in bundle'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:1012:in
-              `instance_eval'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:1012:in
-              `run'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:843:in
-              `block (3 levels) in execute'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:865:in
-              `call'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:865:in
-              `with_retries'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:842:in
-              `block (2 levels) in execute'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/instrumentation.rb:23:in
-              `call'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/instrumentation.rb:23:in
-              `measure'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:841:in
-              `block in execute'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:915:in
-              `call'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:915:in
-              `with_clean_env'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:840:in
-              `execute'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:704:in
-              `block (2 levels) in build'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:703:in
-              `each'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:703:in
-              `block in build'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/instrumentation.rb:23:in
-              `call'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/instrumentation.rb:23:in
-              `measure'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:702:in
-              `build'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/software.rb:1161:in
-              `execute_build'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/software.rb:1024:in
-              `build_me'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/project.rb:1077:in
-              `block in build'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/project.rb:1076:in
-              `each'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/project.rb:1076:in
-              `build'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/cli.rb:84:in
-              `build'
-            - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in
-              `run'
-            - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in
-              `invoke_command'
-            - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in
-              `dispatch'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/cli/base.rb:33:in
-              `dispatch'
-            - omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in
-              `start'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/cli.rb:42:in
-              `execute!'
-            - omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/bin/omnibus:16:in
-              `<top (required)>'
-            - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
-            - omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
-          - - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:308:in
-              `rescue in fetch_path'"
-            - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:281:in
-              `fetch_path'"
-            - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:324:in
-              `cache_update_path'"
-            - "/opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:188:in
-              `download'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/rubygems_integration.rb:615:in
-              `download_gem'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/source/rubygems.rb:410:in
-              `fetch_gem'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/source/rubygems.rb:116:in
-              `install'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/installer/gem_installer.rb:57:in
-              `install'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/installer/gem_installer.rb:15:in
-              `install_from_spec'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/installer/parallel_installer.rb:91:in
-              `block in worker_pool'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/worker.rb:65:in
-              `call'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/worker.rb:65:in
-              `apply_func'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/worker.rb:60:in
-              `block in process_queue'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/worker.rb:57:in
-              `loop'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/worker.rb:57:in
-              `process_queue'"
-            - "/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.3/lib/bundler/worker.rb:29:in
-              `block (2 levels) in initialize'"
-          suspiciousBlocks:
-            3307: "                          D | 2016-05-13T13:56:37+00:00 | install:
-              copying file /opt/chefdk/embedded/share/man/man1/cargo.1\n                          D
-              | 2016-05-13T13:56:37+00:00 | install: copying file /opt/chefdk/embedded/share/zsh/site-functions/_cargo\n
-              \                         D | 2016-05-13T13:56:37+00:00 | install: running
-              ldconfig\n                          D | 2016-05-13T13:56:37+00:00 |
-              ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission
-              denied\n                          D | 2016-05-13T13:56:37+00:00 | \n
-              \                         D | 2016-05-13T13:56:37+00:00 |     Rust is
-              ready to roll.\n                          D | 2016-05-13T13:56:37+00:00
-              | \n"
-            5917: |2
-                                        D | 2016-05-13T14:10:17+00:00 | /usr/bin/ld: total time in link: 0.084006
-                                        D | 2016-05-13T14:10:17+00:00 | /usr/bin/ld: data size 19656480
-                                        D | 2016-05-13T14:10:17+00:00 | test -z "" && /sbin/ldconfig
-                                        D | 2016-05-13T14:10:17+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
-                                        D | 2016-05-13T14:10:17+00:00 | make[1]: [/opt/chefdk/embedded/lib/libtinfo.so.5.9] Error 1 (ignored)
-                                        D | 2016-05-13T14:10:17+00:00 | installing ../lib/libtinfo.a as /opt/chefdk/embedded/lib/libtinfo.a
-                                        D | 2016-05-13T14:10:17+00:00 | /usr/bin/install -c -m 644 ../lib/libtinfo.a /opt/chefdk/embedded/lib/libtinfo.a
-            5930: |2
-                                        D | 2016-05-13T14:10:18+00:00 | linking libncurses.so.5.9 to libcurses.so
-                                        D | 2016-05-13T14:10:18+00:00 | cd /opt/chefdk/embedded/lib && (ln -s -f libncurses.so.5.9 libcurses.so; )
-                                        D | 2016-05-13T14:10:18+00:00 | test -z "" && /sbin/ldconfig
-                                        D | 2016-05-13T14:10:18+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
-                                        D | 2016-05-13T14:10:18+00:00 | make[1]: [/opt/chefdk/embedded/lib/libncurses.so.5.9] Error 1 (ignored)
-                                        D | 2016-05-13T14:10:18+00:00 | installing ../lib/libncurses.a as /opt/chefdk/embedded/lib/libncurses.a
-                                        D | 2016-05-13T14:10:18+00:00 | /usr/bin/install -c -m 644 ../lib/libncurses.a /opt/chefdk/embedded/lib/libncurses.a
-            5967: |2
-                                        D | 2016-05-13T14:10:18+00:00 | /usr/bin/ld: data size 10497824
-                                        D | 2016-05-13T14:10:18+00:00 | cd /opt/chefdk/embedded/lib && (ln -s -f libpanel.so.5.9 libpanel.so.5; ln -s -f libpanel.so.5 libpanel.so; )
-                                        D | 2016-05-13T14:10:18+00:00 | test -z "" && /sbin/ldconfig
-                                        D | 2016-05-13T14:10:18+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
-                                        D | 2016-05-13T14:10:18+00:00 | make[1]: [/opt/chefdk/embedded/lib/libpanel.so.5.9] Error 1 (ignored)
-                                        D | 2016-05-13T14:10:18+00:00 | installing ../lib/libpanel.a as /opt/chefdk/embedded/lib/libpanel.a
-                                        D | 2016-05-13T14:10:18+00:00 | /usr/bin/install -c -m 644 ../lib/libpanel.a /opt/chefdk/embedded/lib/libpanel.a
-            5987: |2
-                                        D | 2016-05-13T14:10:19+00:00 | /usr/bin/ld: data size 21675808
-                                        D | 2016-05-13T14:10:19+00:00 | cd ../lib && (ln -s -f libmenu.so.5.9 libmenu.so.5; ln -s -f libmenu.so.5 libmenu.so; )
-                                        D | 2016-05-13T14:10:19+00:00 | test -z "" && /sbin/ldconfig
-                                        D | 2016-05-13T14:10:19+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
-                                        D | 2016-05-13T14:10:19+00:00 | make[1]: [/opt/chefdk/embedded/lib/libmenu.so.5.9] Error 1 (ignored)
-                                        D | 2016-05-13T14:10:19+00:00 | installing ../lib/libmenu.a as /opt/chefdk/embedded/lib/libmenu.a
-                                        D | 2016-05-13T14:10:19+00:00 | /usr/bin/install -c -m 644 ../lib/libmenu.a /opt/chefdk/embedded/lib/libmenu.a
-            6008: |2
-                                        D | 2016-05-13T14:10:19+00:00 | /usr/bin/ld: data size 7950112
-                                        D | 2016-05-13T14:10:19+00:00 | cd ../lib && (ln -s -f libform.so.5.9 libform.so.5; ln -s -f libform.so.5 libform.so; )
-                                        D | 2016-05-13T14:10:19+00:00 | test -z "" && /sbin/ldconfig
-                                        D | 2016-05-13T14:10:19+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
-                                        D | 2016-05-13T14:10:19+00:00 | make[1]: [/opt/chefdk/embedded/lib/libform.so.5.9] Error 1 (ignored)
-                                        D | 2016-05-13T14:10:19+00:00 | installing ../lib/libform.a as /opt/chefdk/embedded/lib/libform.a
-                                        D | 2016-05-13T14:10:19+00:00 | /usr/bin/install -c -m 644 ../lib/libform.a /opt/chefdk/embedded/lib/libform.a
-            7581: |2
-                                        D | 2016-05-13T14:10:58+00:00 | /usr/bin/ld: total time in link: 0.064004
-                                        D | 2016-05-13T14:10:58+00:00 | /usr/bin/ld: data size 14536480
-                                        D | 2016-05-13T14:10:58+00:00 | test -z "" && /sbin/ldconfig
-                                        D | 2016-05-13T14:10:58+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
-                                        D | 2016-05-13T14:10:58+00:00 | make[1]: [/opt/chefdk/embedded/lib/libtinfow.so.5.9] Error 1 (ignored)
-                                        D | 2016-05-13T14:10:58+00:00 | installing ../lib/libtinfow.a as /opt/chefdk/embedded/lib/libtinfow.a
-                                        D | 2016-05-13T14:10:58+00:00 | /usr/bin/install -c -m 644 ../lib/libtinfow.a /opt/chefdk/embedded/lib/libtinfow.a
-            7592: "                          D | 2016-05-13T14:10:58+00:00 | /usr/bin/ld:
-              data size 28827424\n                          D | 2016-05-13T14:10:58+00:00
-              | cd /opt/chefdk/embedded/lib && (ln -s -f libncursesw.so.5.9 libncursesw.so.5;
-              ln -s -f libncursesw.so.5 libncursesw.so; )\n                          D
-              | 2016-05-13T14:10:58+00:00 | test -z \"\" && /sbin/ldconfig\n                          D
-              | 2016-05-13T14:10:58+00:00 | /sbin/ldconfig: Can't create temporary
-              cache file /etc/ld.so.cache~: Permission deniedinstalling ../lib/libncursesw.a
-              as /opt/chefdk/embedded/lib/libncursesw.a\n                          D
-              | 2016-05-13T14:10:58+00:00 | /usr/bin/install -c -m 644 ../lib/libncursesw.a
-              /opt/chefdk/embedded/lib/libncursesw.a\n                          D
-              | 2016-05-13T14:10:58+00:00 | ranlib /opt/chefdk/embedded/lib/libncursesw.a\n
-              \                         D | 2016-05-13T14:10:58+00:00 | \n"
-            7627: |2
-                                        D | 2016-05-13T14:10:59+00:00 | test -z "" && /sbin/ldconfig
-                                        D | 2016-05-13T14:10:59+00:00 | /usr/bin/ld: total time in link: 0.064004
-                                        D | 2016-05-13T14:10:59+00:00 | /usr/bin/ld: data size 8720160
-                                        D | 2016-05-13T14:10:59+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
-                                        D | 2016-05-13T14:10:59+00:00 | make[1]: [/opt/chefdk/embedded/lib/libpanelw.so.5.9] Error 1 (ignored)
-                                        D | 2016-05-13T14:10:59+00:00 | installing ../lib/libpanelw.a as /opt/chefdk/embedded/lib/libpanelw.a
-                                        D | 2016-05-13T14:10:59+00:00 | /usr/bin/install -c -m 644 ../lib/libpanelw.a /opt/chefdk/embedded/lib/libpanelw.a
-            7647: |2
-                                        D | 2016-05-13T14:10:59+00:00 | /usr/bin/ld: data size 29241120
-                                        D | 2016-05-13T14:10:59+00:00 | cd /opt/chefdk/embedded/lib && (ln -s -f libmenuw.so.5.9 libmenuw.so.5; ln -s -f libmenuw.so.5 libmenuw.so; )
-                                        D | 2016-05-13T14:10:59+00:00 | test -z "" && /sbin/ldconfig
-                                        D | 2016-05-13T14:10:59+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
-                                        D | 2016-05-13T14:10:59+00:00 | make[1]: [/opt/chefdk/embedded/lib/libmenuw.so.5.9] Error 1 (ignored)
-                                        D | 2016-05-13T14:10:59+00:00 | installing ../lib/libmenuw.a as /opt/chefdk/embedded/lib/libmenuw.a
-                                        D | 2016-05-13T14:10:59+00:00 | /usr/bin/install -c -m 644 ../lib/libmenuw.a /opt/chefdk/embedded/lib/libmenuw.a
-            7668: |2
-                                        D | 2016-05-13T14:10:59+00:00 | /usr/bin/ld: data size 31747872
-                                        D | 2016-05-13T14:10:59+00:00 | cd ../lib && (ln -s -f libformw.so.5.9 libformw.so.5; ln -s -f libformw.so.5 libformw.so; )
-                                        D | 2016-05-13T14:10:59+00:00 | test -z "" && /sbin/ldconfig
-                                        D | 2016-05-13T14:10:59+00:00 | /sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
-                                        D | 2016-05-13T14:10:59+00:00 | make[1]: [/opt/chefdk/embedded/lib/libformw.so.5.9] Error 1 (ignored)
-                                        D | 2016-05-13T14:10:59+00:00 | installing ../lib/libformw.a as /opt/chefdk/embedded/lib/libformw.a
-                                        D | 2016-05-13T14:10:59+00:00 | /usr/bin/install -c -m 644 ../lib/libformw.a /opt/chefdk/embedded/lib/libformw.a
-            25893: "                          D | 2016-05-13T14:35:45+00:00 | 0:  serverspec
-              (2.34.0) from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/specifications/serverspec-2.34.0.gemspec\n
-              \                         D | 2016-05-13T14:35:45+00:00 | 4:  google-api-client
-              (0.8.6) from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/specifications/google-api-client-0.8.6.gemspec\n
-              \                         D | 2016-05-13T14:35:45+00:00 | \n                          D
-              | 2016-05-13T14:35:45+00:00 | Gem::RemoteFetcher::FetchError: Errno::ECONNRESET:
-              Connection reset by peer - SSL_connect (https://rubygems.org/gems/winrm-elevated-0.4.0.gem)\n
-              \                         D | 2016-05-13T14:35:45+00:00 | /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:308:in
-              `rescue in fetch_path'\n                          D | 2016-05-13T14:35:45+00:00
-              | /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:281:in
-              `fetch_path'\n                          D | 2016-05-13T14:35:45+00:00
-              | /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:324:in
-              `cache_update_path'\n"
-            26467: |
-              0:  serverspec (2.34.0) from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/specifications/serverspec-2.34.0.gemspec
-              4:  google-api-client (0.8.6) from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/specifications/google-api-client-0.8.6.gemspec
 
-              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/winrm-elevated-0.4.0.gem)
-              /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:308:in `rescue in fetch_path'
-              /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:281:in `fetch_path'
-              /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:324:in `cache_update_path'
+              Error:
+
+                  (nothing)
+
+              /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/util.rb:101:in `rescue in shellout!'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/util.rb:97:in `shellout!'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:825:in `shellout!'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:329:in `block in bundle'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:1012:in `instance_eval'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:1012:in `run'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:843:in `block (3 levels) in execute'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:865:in `call'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:865:in `with_retries'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:842:in `block (2 levels) in execute'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/instrumentation.rb:23:in `call'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/instrumentation.rb:23:in `measure'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:841:in `block in execute'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:915:in `call'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:915:in `with_clean_env'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:840:in `execute'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:704:in `block (2 levels) in build'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:703:in `each'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:703:in `block in build'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/instrumentation.rb:23:in `call'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/instrumentation.rb:23:in `measure'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/builder.rb:702:in `build'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/software.rb:1161:in `execute_build'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/software.rb:1024:in `build_me'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/project.rb:1077:in `block in build'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/project.rb:1076:in `each'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/project.rb:1076:in `build'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/cli.rb:84:in `build'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/cli/base.rb:33:in `dispatch'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/cli.rb:42:in `execute!'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/bin/omnibus:16:in `<top (required)>'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+                /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
         omnibusTiming:
           chef-dk: 89.0899
           chef-dk-gem-ruby-shadow: 11.5722
