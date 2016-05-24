@@ -21,14 +21,16 @@ class JenkinsData
     @jenkins_pipeline = JenkinsPipeline.new(jenkins_options)
   end
 
-  def builds(local: false, **options)
+  def builds(local: false, **options, &where)
     builds = load
     # Merge remote build information with local
     builds = merge_builds(load, fetch_builds) unless local
+    builds.select! { |build| where.call(build) } if where
     builds.sort_by! { |build| Time.parse(build["timestamp"]) }
     builds.reverse!
 
     builds.each do |build|
+      next if where && !where.call(build)
       refresh_build(build, **options)
     end
 
@@ -40,6 +42,8 @@ class JenkinsData
     refresh_runs(build, force: force_refresh_runs)
     cache_console_texts(build, force: force_refresh_logs)
     process_console_texts(build, force: force_reprocess_logs)
+    # Do one last reordering of everything
+    build = process_build(build)
     cache_build(build)
   end
 
@@ -73,7 +77,6 @@ class JenkinsData
       stage["runs"].each do |configuration,run|
         process_console_text(build, configuration, run, force: force)
       end
-      process_stage(stage)
     end
   end
 
@@ -217,7 +220,9 @@ class JenkinsData
     build = { "stages" => {} }
     # Reverse the stage order so last is first, to make it easier to see errors
     jenkins_pipeline.build_stages(remote_build).reverse_each do |stage|
-      build["stages"][stage["job"]] = stage.dup
+      stage = stage.dup
+      build["stages"][stage["job"]] = stage
+      stage["retries"].map { |build| File.basename(build["url"]).to_i } if stage["retries"]
     end
 
     build = process_build(build)
@@ -237,13 +242,28 @@ class JenkinsData
 
     # Add in calculated data
     build["version"] = last_stage["parameters"]["OMNIBUS_BUILD_VERSION"] if last_stage["parameters"]
+    build["git_ref"] = first_stage["parameters"]["GIT_REF"] if first_stage["parameters"]
     build["git_commit"] = last_stage["parameters"]["GIT_COMMIT"] if last_stage["parameters"]
     build["result"] = last_stage["result"]
     build["timestamp"] = first_stage["timestamp"]
     build["duration"] = build["stages"].values.inject(0.0) { |sum,stage| sum += stage["duration"] }
+    triggered_by = first_stage["causes"].map { |cause| cause["userId"] }.compact.first if first_stage["causes"]
+    build["triggeredBy"] = triggered_by if triggered_by
+    build["url"] = build["stages"][jenkins_pipeline.job]["url"]
+
+    # Summarize failures
+    failures = {}
+    build["stages"].each do |job,stage|
+      if stage["failures"]
+        stage["failures"].each do |category,configurations|
+          failures["#{job} #{category}"] = configurations
+        end
+      end
+    end
+    build["failures"] = failures if failures
 
     # Reorder build data for nicer printing
-    build = JenkinsHelpers.reorder_fields(build, %w{result timestamp duration version git_commit}, "stages")
+    build = JenkinsHelpers.reorder_fields(build, %w{result timestamp duration triggeredBy url version git_ref git_commit}, "stages")
 
     build
   end
@@ -259,6 +279,8 @@ class JenkinsData
     # Delete unnecessary data
     %w{job number upstreams downstreams}.each { |key| stage.delete(key) }
 
+    stage["retries"] = stage["retries"].map { |r| r.is_a?(Hash) ? File.basename(r["url"]).to_i : r } if stage["retries"]
+    stage["retries"] = stage["retries"].sort.reverse if stage["retries"]
     stage["retryOf"] = stage["retryOf"].sort.reverse if stage["retryOf"]
 
     if stage["runs"]
@@ -424,6 +446,7 @@ class JenkinsData
     filename = build_filename(build)
     desired_output = Psych.dump(build)
     unless File.exist?(filename) && IO.read(filename) == desired_output
+      puts "Writing!"
       JenkinsCli.logger.info "Writing #{filename} ..."
       FileUtils.mkdir_p(File.dirname(filename))
       IO.write(filename, desired_output)
