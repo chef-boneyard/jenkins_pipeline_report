@@ -159,25 +159,21 @@ class JenkinsPipeline
   end
 
   def set_retries_and_downstreams
-    #
-    # If jobs B and C are both downstream of job A, one is a retry of the other.
-    #
     jobs.each do |job_name, job|
-      job["allBuilds"].each do |build|
-        #
-        # If an earlier build in our job has the same upstream we are a retry
-        # of it.
-        #
-        job["allBuilds"].each do |other|
-          if other["number"] < build["number"] && build["upstreams"] && other["upstreams"]
-            shared_upstreams = build["upstreams"] & other["upstreams"]
-            if shared_upstreams.any?
-              build["retryOf"] ||= []
-              build["retryOf"] |= [ other["number"] ]
-              build["upstreams"] -= shared_upstreams
-              build.delete("upstreams") if build["upstreams"].empty?
-            end
+      by_upstream = {}
+      job["allBuilds"].sort_by { |b| b["number"] }.each do |build|
+        next unless build["upstreams"]
+        build["upstreams"].dup.each do |upstream|
+          existing_build = by_upstream[upstream]
+          if existing_build
+            # A build with a lower number (existing_downstream) has the
+            # same upstream as us. Set this build as a retryOf that other build.
+            build["retryOf"] ||= []
+            build["retryOf"] |= [ existing_build["number"] ]
+            build["upstreams"].delete(upstream)
+            build.delete("upstreams") if build["upstreams"].empty?
           end
+          by_upstream[upstream] = build
         end
       end
     end

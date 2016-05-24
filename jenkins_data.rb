@@ -160,21 +160,23 @@ class JenkinsData
   end
 
   def merge_builds(local_builds, remote_builds)
+    local_builds = Hash[local_builds.map { |build| [build_filename(build), build] }]
     remote_builds = remote_builds.map do |remote_build|
       # Grab the corresponding local build (if any)
-      local_build = local_builds.select { |local_build| build_filename(remote_build) == build_filename(local_build) }.first
+      remote_filename = build_filename(remote_build)
+      local_build = local_builds[remote_filename]
       if local_build
-        local_builds.delete(local_build) if local_build
-        # This is definitely in Jenkins
+        local_builds.delete(remote_filename)
+        # This is definitely in Jenkins; correct the record if that used to be an issue
         local_build.delete("missingFromJenkins")
       end
       merge_build(local_build, remote_build)
     end
     # Mark the remaining builds as missing from jenkins
-    local_builds.each do |local_build|
+    local_builds.each_value do |local_build|
       local_build["missingFromJenkins"] = true
     end
-    remote_builds + local_builds
+    remote_builds + local_builds.values
   end
 
   def merge_build(local_build, remote_build)
