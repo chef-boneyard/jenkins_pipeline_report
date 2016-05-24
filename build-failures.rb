@@ -17,14 +17,18 @@ JenkinsCli.parse_options do |opts|
   end
 end
 
-ARGV.each do |job_url|
-  job = File.basename(job_url)
-  builds = JenkinsCli.builds(job_url)
+builds = ARGV.flat_map do |job_url|
+  JenkinsCli.builds(job_url)
+end.sort_by { |build| build["timestamp"] }.reverse
+
+def report_summary(builds)
   puts "SUMMARY"
   failure_types = {}
   builds.flat_map do |build|
     if build["failures"]
       build["failures"].keys.each do |failure|
+        # Leave the build job out of it
+        failure = failure.split(" ", 2)[1]
         failure_types[failure] ||= 0
         failure_types[failure] += 1
       end
@@ -34,25 +38,41 @@ ARGV.each do |job_url|
     end
   end
   puts "total: #{builds.size}"
+
   # Reverse sort
   failure_types = failure_types.to_a.sort { |(ak,av),(bk,bv)| bv <=> av }
   failure_types.each do |key, value|
     percent = value.to_f/builds.size.to_f*100.0
     puts "#{key}: #{value} (#{percent.round(2)}%)"
   end
+end
 
+report_summary(builds)
+
+def report_build_failures(builds, urls: false)
   puts ""
   puts "BY BUILD"
   builds.each do |build|
     if JenkinsData.failed?(build)
-      build_number = File.basename(build["stages"][job]["url"])
+      job = File.basename(File.dirname(build["url"]))
+      build_number = File.basename(build["url"])
       failure_summary = build["stages"].map do |name,stage|
         if JenkinsData.failed?(stage)
           name
         end
       end.compact.join(", ")
 
-      puts "#{build_number}: #{build["result"].downcase.capitalize} in #{failure_summary} at #{build["timestamp"]}"
+      if ARGV.size == 1
+        prefix = build_number
+      else
+        if urls
+          prefix = build["url"]
+        else
+          prefix = "#{job}/#{build_number}"
+        end
+      end
+
+      puts "#{prefix}: #{build["result"].downcase.capitalize} in #{failure_summary} at #{build["timestamp"]}"
       build["stages"].each do |job,stage|
         if stage["failures"]
           failures = stage["failures"].sort_by { |cause,failures| cause }
@@ -62,7 +82,7 @@ ARGV.each do |job_url|
         end
       end
 
-      if options[:urls]
+      if urls
         printed_anything = false
         build["stages"].each do |job,stage|
           if JenkinsData.failed?(stage)
@@ -88,3 +108,5 @@ ARGV.each do |job_url|
     end
   end
 end
+
+report_build_failures(builds, **options)
