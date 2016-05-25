@@ -90,9 +90,9 @@ stages:
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/156/
         failureCause:
-          cause: chef-acceptance
-          detailedCause: chef-acceptance[trivial (provision),trivial (force-destroy)]
+          cause: chef-acceptance[trivial (provision),trivial (force-destroy)]
           jenkinsBuildStep: Invoke XShell command
+          category: chef-acceptance
           suspiciousBlocks:
             905: |2
                                        Running handlers complete
@@ -179,16 +179,53 @@ stages:
               `to_spec'\n                  /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in
               `find_by_name'\n                  /opt/chefdk/bin/kitchen:14:in `<top
               (required)>'\nTRIVIAL::PROVISION::[2016-05-06 18:24:07 +0000] \nTRIVIAL::PROVISION::[2016-05-06
-              18:24:07 +0000]       \n"
-            4970: |2
-                    STDERR: Gem::MissingSpecVersionError: Could not find 'test-kitchen' (= 1.8.0) - did find: [test-kitchen-1.7.3]
-                    Checked in 'GEM_PATH=/opt/chefdk/embedded/lib/ruby/gems/2.1.0:/home/jenkins/.chefdk/gem/ruby/2.1.0', execute `gem env` for more information
-                      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:310:in `to_specs'
-                      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:320:in `to_spec'
-                      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in `find_by_name'
-                      /opt/chefdk/bin/kitchen:14:in `<top (required)>'
-                    ---- End output of bundle exec kitchen setup  -c ----
-                    Ran bundle exec kitchen setup  -c returned 1
+              18:24:07 +0000]       \n      ================================================================================\n
+              \     Error executing action `run` on resource 'execute[bundle exec
+              kitchen setup  -c]'\n      ================================================================================\n
+              \     \n      Mixlib::ShellOut::ShellCommandFailed\n      ------------------------------------\n
+              \     Expected process to exit with [0], but received '1'\n      ----
+              Begin output of bundle exec kitchen setup  -c ----\n      STDOUT: bundler:
+              failed to load command: kitchen (/opt/chefdk/bin/kitchen)\n      STDERR:
+              Gem::MissingSpecVersionError: Could not find 'test-kitchen' (= 1.8.0)
+              - did find: [test-kitchen-1.7.3]\n      Checked in 'GEM_PATH=/opt/chefdk/embedded/lib/ruby/gems/2.1.0:/home/jenkins/.chefdk/gem/ruby/2.1.0',
+              execute `gem env` for more information\n        /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:310:in
+              `to_specs'\n        /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:320:in
+              `to_spec'\n        /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in
+              `find_by_name'\n        /opt/chefdk/bin/kitchen:14:in `<top (required)>'\n
+              \     ---- End output of bundle exec kitchen setup  -c ----\n      Ran
+              bundle exec kitchen setup  -c returned 1\n      \n      Resource Declaration:\n
+              \     ---------------------\n      # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb\n
+              \     \n       36:       execute \"bundle exec kitchen #{command}#{instances
+              ? \" #{instances}\" : \"\"}#{kitchen_options ? \" #{kitchen_options}\"
+              : \"\"}\" do\n       37:         cwd kitchen_dir\n       38:         env({\n
+              \      39:           \"KITCHEN_DRIVER\" => driver,\n       40:           \"KITCHEN_INSTANCES\"
+              => instances,\n       41:           \"KITCHEN_LOCAL_YAML\" => ::File.expand_path(\"../../.kitchen.#{driver}.yml\",
+              __FILE__),\n       42:           \"KITCHEN_CHEF_PRODUCT\" => chef_product,\n
+              \      43:           \"KITCHEN_CHEF_CHANNEL\" => chef_channel,\n       44:
+              \          \"KITCHEN_CHEF_VERSION\" => chef_version,\n       45:           \"ARTIFACTORY_USERNAME\"
+              => artifactory_username,\n       46:           \"ARTIFACTORY_PASSWORD\"
+              => artifactory_password\n       47:         }.merge(new_resource.env))\n
+              \      48:       end\n       49:     end\n      \n      Compiled Resource:\n
+              \     ------------------\n      # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:36:in
+              `block in <class:Kitchen>'\n      \n      execute(\"bundle exec kitchen
+              setup  -c\") do\n        action [:run]\n        retries 0\n        retry_delay
+              2\n        default_guard_interpreter :execute\n        command \"bundle
+              exec kitchen setup  -c\"\n        backup 5\n        cwd \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial\"\n
+              \       environment {\"KITCHEN_DRIVER\"=>\"ec2\", \"KITCHEN_INSTANCES\"=>\"\",
+              \"KITCHEN_LOCAL_YAML\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/.kitchen.ec2.yml\",
+              \"KITCHEN_CHEF_PRODUCT\"=>\"chefdk\", \"KITCHEN_CHEF_CHANNEL\"=>\"unstable\",
+              \"KITCHEN_CHEF_VERSION\"=>\"latest\", \"ARTIFACTORY_USERNAME\"=>\"chef-web-downloads\",
+              \"ARTIFACTORY_PASSWORD\"=>\"fWPxYSB69EiuSpl8*3Dr^kGwf#hxUE6cmjeZRB%H!Cruit7qiKp%toH3nXKStQUg\"}\n
+              \       returns 0\n        declared_type :execute\n        cookbook_name
+              \"acceptance-cookbook\"\n      end\n      \n      Platform:\n      ---------\n
+              \     x86_64-linux\n      \n    \n    ================================================================================\n
+              \   Error executing action `run` on resource 'kitchen[setup]'\n    ================================================================================\n
+              \   \n    Mixlib::ShellOut::ShellCommandFailed\n    ------------------------------------\n
+              \   execute[bundle exec kitchen setup  -c] (/opt/chefdk/embedde\nTRIVIAL::PROVISION::[2016-05-06
+              18:24:07 +0000] d/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '1'\n    ---- Begin output of
+              bundle exec kitchen setup  -c ----\n"
             5031: |2
                   STDERR: Gem::MissingSpecVersionError: Could not find 'test-kitchen' (= 1.8.0) - did find: [test-kitchen-1.7.3]
                   Checked in 'GEM_PATH=/opt/chefdk/embedded/lib/ruby/gems/2.1.0:/home/jenkins/.chefdk/gem/ruby/2.1.0', execute `gem env` for more information
@@ -219,25 +256,72 @@ stages:
               `to_specs'\n                  /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:320:in
               `to_spec'\n                  /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in
               `find_by_name'\n                  /opt/chefdk/bin/kitchen:14:in `<top
-              (required)>'\n      \n      ================================================================================\n"
-            5118: |2
-                    STDERR: Gem::MissingSpecVersionError: Could not find 'test-kitchen' (= 1.8.0) - did find: [test-kitchen-1.7.3]
-                    Checked in 'GEM_PATH=/opt/chefdk/embedded/lib/ruby/gems/2.1.0:/home/jenkins/.chefdk/gem/ruby/2.1.0', execute `gem env` for more information
-                      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:310:in `to_specs'
-                      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:320:in `to_spec'
-                      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in `find_by_name'
-                      /opt/chefdk/bin/kitchen:14:in `<top (required)>'
-                    ---- End output of bundle exec kitchen setup  -c ----
-                    Ran bundle exec kitchen setup  -c returned 1
-            5178: |2
-                  STDERR: Gem::MissingSpecVersionError: Could not find 'test-kitchen' (= 1.8.0) - did find: [test-kitchen-1.7.3]
-                  Checked in 'GEM_PATH=/opt/chefdk/embedded/lib/ruby/gems/2.1.0:/home/jenkins/.chefdk/gem/ruby/2.1.0', execute `gem env` for more information
-                    /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:310:in `to_specs'
-                    /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:320:in `to_spec'
-                    /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in `find_by_name'
-                    /opt/chefdk/bin/kitchen:14:in `<top (required)>'
-                  ---- End output of bundle exec kitchen setup  -c ----
-                  Ran bundle exec kitchen setup  -c returned 1
+              (required)>'\n      \n      ================================================================================\n
+              \     Error executing action `run` on resource 'execute[bundle exec
+              kitchen setup  -c]'\n      ================================================================================\n
+              \     \n      Mixlib::ShellOut::ShellCommandFailed\n      ------------------------------------\n
+              \     Expected process to exit with [0], but received '1'\n      ----
+              Begin output of bundle exec kitchen setup  -c ----\n      STDOUT: bundler:
+              failed to load command: kitchen (/opt/chefdk/bin/kitchen)\n      STDERR:
+              Gem::MissingSpecVersionError: Could not find 'test-kitchen' (= 1.8.0)
+              - did find: [test-kitchen-1.7.3]\n      Checked in 'GEM_PATH=/opt/chefdk/embedded/lib/ruby/gems/2.1.0:/home/jenkins/.chefdk/gem/ruby/2.1.0',
+              execute `gem env` for more information\n        /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:310:in
+              `to_specs'\n        /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:320:in
+              `to_spec'\n        /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in
+              `find_by_name'\n        /opt/chefdk/bin/kitchen:14:in `<top (required)>'\n
+              \     ---- End output of bundle exec kitchen setup  -c ----\n      Ran
+              bundle exec kitchen setup  -c returned 1\n      \n      Resource Declaration:\n
+              \     ---------------------\n      # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb\n
+              \     \n       36:       execute \"bundle exec kitchen #{command}#{instances
+              ? \" #{instances}\" : \"\"}#{kitchen_options ? \" #{kitchen_options}\"
+              : \"\"}\" do\n       37:         cwd kitchen_dir\n       38:         env({\n
+              \      39:           \"KITCHEN_DRIVER\" => driver,\n       40:           \"KITCHEN_INSTANCES\"
+              => instances,\n       41:           \"KITCHEN_LOCAL_YAML\" => ::File.expand_path(\"../../.kitchen.#{driver}.yml\",
+              __FILE__),\n       42:           \"KITCHEN_CHEF_PRODUCT\" => chef_product,\n
+              \      43:           \"KITCHEN_CHEF_CHANNEL\" => chef_channel,\n       44:
+              \          \"KITCHEN_CHEF_VERSION\" => chef_version,\n       45:           \"ARTIFACTORY_USERNAME\"
+              => artifactory_username,\n       46:           \"ARTIFACTORY_PASSWORD\"
+              => artifactory_password\n       47:         }.merge(new_resource.env))\n
+              \      48:       end\n       49:     end\n      \n      Compiled Resource:\n
+              \     ------------------\n      # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:36:in
+              `block in <class:Kitchen>'\n      \n      execute(\"bundle exec kitchen
+              setup  -c\") do\n        action [:run]\n        retries 0\n        retry_delay
+              2\n        default_guard_interpreter :execute\n        command \"bundle
+              exec kitchen setup  -c\"\n        backup 5\n        cwd \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial\"\n
+              \       environment {\"KITCHEN_DRIVER\"=>\"ec2\", \"KITCHEN_INSTANCES\"=>\"\",
+              \"KITCHEN_LOCAL_YAML\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/.kitchen.ec2.yml\",
+              \"KITCHEN_CHEF_PRODUCT\"=>\"chefdk\", \"KITCHEN_CHEF_CHANNEL\"=>\"unstable\",
+              \"KITCHEN_CHEF_VERSION\"=>\"latest\", \"ARTIFACTORY_USERNAME\"=>\"chef-web-downloads\",
+              \"ARTIFACTORY_PASSWORD\"=>\"fWPxYSB69EiuSpl8*3Dr^kGwf#hxUE6cmjeZRB%H!Cruit7qiKp%toH3nXKStQUg\"}\n
+              \       returns 0\n        declared_type :execute\n        cookbook_name
+              \"acceptance-cookbook\"\n      end\n      \n      Platform:\n      ---------\n
+              \     x86_64-linux\n      \n    \n    ================================================================================\n
+              \   Error executing action `run` on resource 'kitchen[setup]'\n    ================================================================================\n
+              \   \n    Mixlib::ShellOut::ShellCommandFailed\n    ------------------------------------\n
+              \   execute[bundle exec kitchen setup  -c] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '1'\n    ---- Begin output of
+              bundle exec kitchen setup  -c ----\n    STDOUT: bundler: failed to load
+              command: kitchen (/opt/chefdk/bin/kitchen)\n    STDERR: Gem::MissingSpecVersionError:
+              Could not find 'test-kitchen' (= 1.8.0) - did find: [test-kitchen-1.7.3]\n
+              \   Checked in 'GEM_PATH=/opt/chefdk/embedded/lib/ruby/gems/2.1.0:/home/jenkins/.chefdk/gem/ruby/2.1.0',
+              execute `gem env` for more information\n      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:310:in
+              `to_specs'\n      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:320:in
+              `to_spec'\n      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in
+              `find_by_name'\n      /opt/chefdk/bin/kitchen:14:in `<top (required)>'\n
+              \   ---- End output of bundle exec kitchen setup  -c ----\n    Ran bundle
+              exec kitchen setup  -c returned 1\n    \n    Resource Declaration:\n
+              \   ---------------------\n    # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/provision.rb\n
+              \   \n      1: kitchen \"setup\"\n    \n    Compiled Resource:\n    ------------------\n
+              \   # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in
+              `from_file'\n    \n    kitchen(\"setup\") do\n      action [:run]\n
+              \     retries 0\n      retry_delay 2\n      default_guard_interpreter
+              :default\n      declared_type :kitchen\n      cookbook_name \"acceptance-cookbook\"\n
+              \     recipe_name \"provision\"\n      command \"setup\"\n      kitchen_options
+              \"-c\"\n      kitchen_dir \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial\"\n
+              \     chef_channel \"unstable\"\n      chef_version \"latest\"\n    end\n
+              \   \n    Platform:\n    ---------\n    x86_64-linux\n    \nStarting
+              audit phase\n\n"
             5221: "\nRunning handlers:\n[2016-05-06T18:24:07+00:00] ERROR: Running
               exception handlers\nRunning handlers complete\n[2016-05-06T18:24:07+00:00]
               ERROR: Exception handlers complete\nChef Client failed. 0 resources
@@ -278,16 +362,53 @@ stages:
               `to_spec'\n                  /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in
               `find_by_name'\n                  /opt/chefdk/bin/kitchen:14:in `<top
               (required)>'\nTRIVIAL::DESTROY::[2016-05-06 18:24:15 +0000]       \n
-              \     ================================================================================\n"
-            5285: |2
-                    STDERR: Gem::MissingSpecVersionError: Could not find 'test-kitchen' (= 1.8.0) - did find: [test-kitchen-1.7.3]
-                    Checked in 'GEM_PATH=/opt/chefdk/embedded/lib/ruby/gems/2.1.0:/home/jenkins/.chefdk/gem/ruby/2.1.0', execute `gem env` for more information
-                      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:310:in `to_specs'
-                      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:320:in `to_spec'
-                      /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in `find_by_name'
-                      /opt/chefdk/bin/kitchen:14:in `<top (required)>'
-                    ---- End output of bundle exec kitchen destroy  -c ----
-                    Ran bundle exec kitchen destroy  -c returned 1
+              \     ================================================================================\n
+              \     Error executing action `run` on resource 'execute[bundle exec
+              kitchen destroy  -c]'\n      ================================================================================\n
+              \     \n      Mixlib::ShellOut::ShellCommandFailed\n      ------------------------------------\n
+              \     Expected process to exit with [0], but received '1'\n      ----
+              Begin output of bundle exec kitchen destroy  -c ----\n      STDOUT:
+              bundler: failed to load command: kitchen (/opt/chefdk/bin/kitchen)\n
+              \     STDERR: Gem::MissingSpecVersionError: Could not find 'test-kitchen'
+              (= 1.8.0) - did find: [test-kitchen-1.7.3]\n      Checked in 'GEM_PATH=/opt/chefdk/embedded/lib/ruby/gems/2.1.0:/home/jenkins/.chefdk/gem/ruby/2.1.0',
+              execute `gem env` for more information\n        /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:310:in
+              `to_specs'\n        /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency.rb:320:in
+              `to_spec'\n        /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1028:in
+              `find_by_name'\n        /opt/chefdk/bin/kitchen:14:in `<top (required)>'\n
+              \     ---- End output of bundle exec kitchen destroy  -c ----\n      Ran
+              bundle exec kitchen destroy  -c returned 1\n      \n      Resource Declaration:\n
+              \     ---------------------\n      # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb\n
+              \     \n       36:       execute \"bundle exec kitchen #{command}#{instances
+              ? \" #{instances}\" : \"\"}#{kitchen_options ? \" #{kitchen_options}\"
+              : \"\"}\" do\n       37:         cwd kitchen_dir\n       38:         env({\n
+              \      39:           \"KITCHEN_DRIVER\" => driver,\n       40:           \"KITCHEN_INSTANCES\"
+              => instances,\n       41:           \"KITCHEN_LOCAL_YAML\" => ::File.expand_path(\"../../.kitchen.#{driver}.yml\",
+              __FILE__),\n       42:           \"KITCHEN_CHEF_PRODUCT\" => chef_product,\n
+              \      43:           \"KITCHEN_CHEF_CHANNEL\" => chef_channel,\n       44:
+              \          \"KITCHEN_CHEF_VERSION\" => chef_version,\n       45:           \"ARTIFACTORY_USERNAME\"
+              => artifactory_username,\n       46:           \"ARTIFACTORY_PASSWORD\"
+              => artifactory_password\n       47:         }.merge(new_resource.env))\n
+              \      48:       end\n       49:     end\n      \n      Compiled Resource:\n
+              \     ------------------\n      # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:36:in
+              `block in <class:Kitchen>'\n      \n      execute(\"bundle exec kitchen
+              destroy  -c\") do\n        action [:run]\n        retries 0\n        retry_delay
+              2\n        default_guard_interpreter :execute\n        command \"bundle
+              exec kitchen destroy  -c\"\n        backup 5\n        cwd \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial\"\n
+              \       environment {\"KITCHEN_DRIVER\"=>\"ec2\", \"KITCHEN_INSTANCES\"=>\"\",
+              \"KITCHEN_LOCAL_YAML\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/.kitchen.ec2.yml\",
+              \"KITCHEN_CHEF_PRODUCT\"=>\"chefdk\", \"KITCHEN_CHEF_CHANNEL\"=>\"unstable\",
+              \"KITCHEN_CHEF_VERSION\"=>\"latest\", \"ARTIFACTORY_USERNAME\"=>\"chef-web-downloads\",
+              \"ARTIFACTORY_PASSWORD\"=>\"fWPxYSB69EiuSpl8*3Dr^kGwf#hxUE6cmjeZRB%H!Cruit7qiKp%toH3nXKStQUg\"}\n
+              \       returns 0\n        declared_type :execute\n        cookbook_name
+              \"acceptance-cookbook\"\n      end\n      \n      Platform:\n      ---------\n
+              \     x86_64-linux\n      \n    \n    ================================================================================\n
+              \   Error executing action `run` on resource 'kitchen[destroy]'\n    ================================================================================\n
+              \   \n    Mixlib::ShellOut::ShellCommandFailed\n    ------------------------------------\n
+              \   execute[bundle exec kitchen destroy  -c] (/op\nTRIVIAL::DESTROY::[2016-05-06
+              18:24:15 +0000] t/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.14.12/acceptance/trivial/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '1'\n    ---- Begin output of
+              bundle exec kitchen destroy  -c ----\n"
             5346: |2
                   STDERR: Gem::MissingSpecVersionError: Could not find 'test-kitchen' (= 1.8.0) - did find: [test-kitchen-1.7.3]
                   Checked in 'GEM_PATH=/opt/chefdk/embedded/lib/ruby/gems/2.1.0:/home/jenkins/.chefdk/gem/ruby/2.1.0', execute `gem env` for more information

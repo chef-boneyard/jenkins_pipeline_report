@@ -32,18 +32,28 @@ def report_summary(builds)
         failure_types[failure] ||= 0
         failure_types[failure] += 1
       end
+    elsif JenkinsData.failed?(build)
+      failure_types["unknown"] ||= 0
+      failure_types["unknown"] += 1
     else
       failure_types["success"] ||= 0
       failure_types["success"] += 1
     end
   end
+
   puts "total: #{builds.size}"
+  failed_builds = builds.select { |build| JenkinsData.failed?(build) }
+  puts "failed: #{failed_builds.size} (#{(failed_builds.size/builds.size.to_f*100.0).round(1)}%)"
 
   # Reverse sort
-  failure_types = failure_types.to_a.sort { |(ak,av),(bk,bv)| bv <=> av }
+  failure_types = failure_types.to_a.sort { |(a_name,a_total),(b_name,b_total)|
+    result = b_total <=> a_total
+    result = a_name <=> b_name if result == 0
+    result
+  }
   failure_types.each do |key, value|
-    percent = value.to_f/builds.size.to_f*100.0
-    puts "#{key}: #{value} (#{percent.round(2)}%)"
+    percent = value.to_f/failed_builds.size.to_f*100.0
+    puts "#{key}: #{value} (#{percent.round(1)}% of failures)"
   end
 end
 

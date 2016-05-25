@@ -13,16 +13,16 @@ class FailureExtractor
         cause ||= begin
           run["failureCause"] = {}
         end
-        cause["cause"] = run["result"].downcase
-        cause["detailedCause"] = cause["cause"]
+        cause["category"] = run["result"].downcase
+        cause["cause"] = cause["category"]
         return
       end
 
       if cause
         # If we can't think of anything more specific, the cause will be the last omnibus step
         if cause["lastOmnibusStep"]
-          cause["cause"] = "omnibus"
-          cause["detailedCause"] = "omnibus #{cause["lastOmnibusStep"]}"
+          cause["category"] = "omnibus"
+          cause["cause"] = "omnibus #{cause["lastOmnibusStep"]}"
         end
 
         if cause["suspiciousBlocks"]
@@ -39,67 +39,67 @@ class FailureExtractor
 
             case suspicious_block
             when /The --deployment flag requires a .*\/([^\/]+\/Gemfile.lock)/
-              cause["cause"] = "missing Gemfile.lock"
-              cause["detailedCause"] = "missing #{$1}"
+              cause["category"] = "missing Gemfile.lock"
+              cause["cause"] = "missing #{$1}"
 
             when /(EACCES)/,
                  /java.io.FileNotFoundException.*(Permission denied)/
-              cause["cause"] = "disk space"
-              cause["detailedCause"] = "disk space (#{$1})"
+              cause["category"] = "disk space"
+              cause["cause"] = "disk space (#{$1})"
 
             when /Cannot delete workspace:.*The process cannot access the file because it is being used by another process./i
+              cause["category"] = "zombie jenkins"
               cause["cause"] = "zombie jenkins"
-              cause["detailedCause"] = "zombie jenkins"
 
             when /ECONNRESET/
               if suspicious_block =~ /ECONNRESET.*(https?:\/\/\S+)/
                 url = $1
                 hostname = URI(url).hostname
               end
-              cause["cause"] = "network reset"
-              cause["detailedCause"] = "network reset#{hostname ? " #{hostname}" : ""}"
+              cause["category"] = "network reset"
+              cause["cause"] = "network reset#{hostname ? " #{hostname}" : ""}"
 
             when /jenkinsci.*Connection timed out/i
-              cause["cause"] = "network timeout"
-              cause["detailedCause"] = "network timeout jenkins"
+              cause["category"] = "network timeout"
+              cause["cause"] = "network timeout jenkins"
 
             when /IOException.*: Failed to extract/i
+              cause["category"] = "jenkins copy"
               cause["cause"] = "jenkins copy"
-              cause["detailedCause"] = "jenkins copy"
 
             when /Failed to connect to (.+) port (\d+): Timed out/i,
                  /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
-              cause["cause"] = "network timeout"
-              cause["detailedCause"] = "network timeout #{$1}:#{$2}"
+              cause["category"] = "network timeout"
+              cause["cause"] = "network timeout #{$1}:#{$2}"
               return
 
             when /Unable to create .*index.lock.*File exists/mi
+              cause["category"] = "git index.lock"
               cause["cause"] = "git index.lock"
-              cause["detailedCause"] = "git index.lock"
 
             when /Dumping stack trace to\s+(\S+).stackdump/mi
-              cause["cause"] = "segfault"
-              cause["detailedCause"] = "segfault #{$1}"
+              cause["category"] = "segfault"
+              cause["cause"] = "segfault #{$1}"
 
             when /Finder got an error: Application isn.*t running/i
+              cause["category"] = "mac not logged in"
               cause["cause"] = "mac not logged in"
-              cause["detailedCause"] = "mac not logged in"
 
             when /Gemfile\.lock is corrupt/
-              cause["cause"] = "corrupt Gemfile.lock"
-              cause["detailedCause"] = cause["cause"]
+              cause["category"] = "corrupt Gemfile.lock"
+              cause["cause"] = cause["category"]
 
             when /An error occurred while installing (\S+) \(([^\)]+)\)/i
-              cause["cause"] = "gem install"
-              cause["detailedCause"] = "gem install #{$1} -v #{$2}"
+              cause["category"] = "gem install"
+              cause["cause"] = "gem install #{$1} -v #{$2}"
 
             when /rubygems\.org.*Checksum of (\S+) does not match the checksum provided by server/mi
-              cause["cause"] = "rubygems checksum"
-              cause["detailedCause"] = "rubygems #{$1} checksum"
+              cause["category"] = "rubygems checksum"
+              cause["cause"] = "rubygems #{$1} checksum"
 
             when /Could not find (\S+) in any of the sources/i
-              cause["cause"] = "yanked gem"
-              cause["detailedCause"] = "yanked gem #{$1}"
+              cause["category"] = "yanked gem"
+              cause["cause"] = "yanked gem #{$1}"
 
             end
           end
@@ -109,8 +109,8 @@ class FailureExtractor
           cause["tests"].each do |type,tests|
             tests.uniq!
           end
-          cause["cause"] = "#{cause["tests"].keys.join(",")}"
-          cause["detailedCause"] = cause["tests"].map do |test_type, t|
+          cause["category"] = "#{cause["tests"].keys.join(",")}"
+          cause["cause"] = cause["tests"].map do |test_type, t|
             if t.size <= 3
               "#{test_type}[#{t.join(",")}]"
             else
@@ -194,9 +194,76 @@ class FailureExtractor
            #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:61:in `block (2 levels) in initialize'
            /^\s*(\S+):(\d+):in `([^']*)'/,
            /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i,
-           /^\s*Verification of component '(.+)' failed.\s*$/i
+           /^\s*Verification of component '(.+)' failed.\s*$/i,
+           /freed prematurely/,
+           /Chef Client failed/i
 
         range = index..index
+
+        #       # Chef error
+        #       ================================================================================
+        #       Error executing action `restart` on resource 'docker_service_manager_upstart[default]'
+        #       ================================================================================
+        #
+        #       Mixlib::ShellOut::CommandTimeout
+        #       --------------------------------
+        #       service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
+        #       Command exceeded allowed execution time, process terminated
+        #       ---- Begin output of /sbin/start docker ----
+        #       STDOUT:
+        #       STDERR:
+        #       ---- End output of /sbin/start docker ----
+        #       Ran /sbin/start docker returned
+        #
+        #       Cookbook Trace:
+        #       ---------------
+        #       /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+        #       /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+        #       /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+        #       /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+        #       /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+        #
+        #       Resource Declaration:
+        #       ---------------------
+        #       # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb
+        #
+        #  7: docker_service_manager_upstart 'default' do
+        #  8:   host 'unix:///var/run/docker.sock'
+        #  9:   action :start
+        # 10: end
+        # 11:
+        #
+        #       Compiled Resource:
+        #       ------------------
+        #       # Declared in /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in `from_file'
+        #
+        #       docker_service_manager_upstart("default") do
+        #  action [:start]
+        #  updated true
+        #  updated_by_last_action true
+        #  retries 0
+        #  retry_delay 2
+        #  default_guard_interpreter :default
+        #  declared_type :docker_service_manager_upstart
+        #  cookbook_name "docker_test"
+        #  recipe_name "service_upstart"
+        #  host ["unix:///var/run/docker.sock"]
+        #  pidfile "/var/run/docker.pid"
+        #       end
+        #
+        #       Platform:
+        #       ---------
+        #       x86_64-linux
+        #
+        #
+      when /^(\s*)(={10,})\s*$/
+        whitespace = $1
+        if lines[index+1].start_with?("#{whitespace}Error executing action")
+          # The only good way to do this appears to be to skip through sections until we
+          # find a line with less whitespace than the first line
+          end_index = skip_until(index) { |line| !line.start_with?(whitespace) } - 1
+          range = index..end_index
+        end
 
       # The following shell command exited with status 128:
       #
@@ -214,49 +281,29 @@ class FailureExtractor
         # The following shell command exited with status 128:
         #
         end_index = index
-
-        while lines[end_index].chomp != ""
-          end_index += 1
-        end
-        end_index += 1
+        end_index = skip_until(end_index+1) { |line| line.chomp == "" }
 
         #     $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
         #
-        while lines[end_index].chomp != ""
-          end_index += 1
-        end
-        end_index += 1
+        end_index = skip_until(end_index+1) { |line| line.chomp == "" }
 
         # Output:
         #
-        while lines[end_index].chomp != ""
-          end_index += 1
-        end
-        end_index += 1
+        end_index = skip_until(end_index+1) { |line| line.chomp == "" }
 
         #     (nothing)
         #
-        while lines[end_index].chomp != ""
-          end_index += 1
-        end
-        end_index += 1
+        end_index = skip_until(end_index+1) { |line| line.chomp == "" }
 
         # Error:
         #
-        while lines[end_index].chomp != ""
-          end_index += 1
-        end
-        end_index += 1
+        end_index = skip_until(end_index+1) { |line| line.chomp == "" }
 
         #     fatal: unable to access 'http://git.savannah.gnu.org/r/config.git/': Failed connect to git.savannah.gnu.org:80; Operation now in progress
         #
-        while lines[end_index].chomp != ""
-          end_index += 1
-        end
-        end_index += 1
+        end_index = skip_until(end_index+1) { |line| line.chomp == "" }
 
         range = index..end_index
-
       end
 
       if range
@@ -277,6 +324,14 @@ class FailureExtractor
       end
     end
     cause["suspiciousBlocks"] = suspicious_blocks unless suspicious_blocks.empty?
+  end
+
+  def skip_until(index, match=nil, &block)
+    while lines[index] && !(block && block.call(lines[index])) && !(match && !(match === lines[index]))
+      break unless lines[index+1]
+      index += 1
+    end
+    index
   end
 
   def fix_unsightly_characters(line)

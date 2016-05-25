@@ -288,7 +288,7 @@ class JenkinsData
     if stage["runs"]
       failures = stage["runs"].select { |c,run| failed?(run) }
       if failures.any?
-        failures = failures.group_by { |c,run| (run["failureCause"] && run["failureCause"]["detailedCause"]) || "unknown" }
+        failures = failures.group_by { |c,run| (run["failureCause"] && run["failureCause"]["cause"]) || "unknown" }
         failures.each do |cause, causedFailures|
           configurations = causedFailures.map { |configuration,run| configuration }
           failures[cause] = categorize_run_types(configurations, stage["runs"].keys).join(",")
@@ -448,7 +448,6 @@ class JenkinsData
     filename = build_filename(build)
     desired_output = Psych.dump(build)
     unless File.exist?(filename) && IO.read(filename) == desired_output
-      puts "Writing!"
       JenkinsCli.logger.info "Writing #{filename} ..."
       FileUtils.mkdir_p(File.dirname(filename))
       IO.write(filename, desired_output)

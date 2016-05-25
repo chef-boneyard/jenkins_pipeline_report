@@ -59,9 +59,9 @@ stages:
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/98/
         failureCause:
-          cause: chef-acceptance
-          detailedCause: chef-acceptance[top-cookbooks (provision)]
+          cause: chef-acceptance[top-cookbooks (provision)]
           jenkinsBuildStep: Invoke XShell command
+          category: chef-acceptance
           suspiciousBlocks:
             638: |2
                                   rc=$?
@@ -89,6 +89,60 @@ stages:
                                     echo "ERROR 404"
                                     http_404_error
                                   fi
+            1308: "                  >>>>>> ----------------------\nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:37 +0000]                   \nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:37 +0000] zlib(finalizer): the stream was freed prematurely.\nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:37 +0000]         \n        ================================================================================\n
+              \       Error executing action `run` on resource 'execute[bundle exec
+              kitchen converge  -c]'\n        ================================================================================\n
+              \       \n        Mixlib::ShellOut::ShellCommandFailed\n        ------------------------------------\n
+              \       Expected process to exit with [0], but received '10'\n        ----
+              Begin output of bundle exec kitchen converge  -c ----\n        STDOUT:
+              -----> Starting Kitchen (v1.7.2)\n        -----> Creating <docker-default-ubuntu-1404>...\n
+              \              If you are not using an account that qualifies under
+              the AWS\n        free-tier, you may be charged to run these suites.
+              The charge\n        should be minimal, but neither Test Kitchen nor
+              its maintainers\n        are responsible for your incurred costs.\n
+              \       \n               Instance <i-54444b93> requested.\n               Polling
+              AWS for existence, attempt 0...\n               Attempting to tag the
+              instance, 0 retries\n               EC2 instance <i-54444b93> created.\n
+              \              Waited 0/300s for instance <i-54444b93> to become ready.\n
+              \              Waited 5/300s for instance <i-54444b93> to become ready.\n
+              \              Waited 10/300s for instance <i-54444b93> to become ready.\n
+              \              Waited 15/300s for instance <i-54444b93> to become ready.\n
+              \              Waited 20/300s for instance <i-54444b93> to become ready.\n
+              \              Waited 25/300s for instance <i-54444b93> to become ready.\n
+              \              EC2 instance <i-54444b93> ready.\n               Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n               [SSH]
+              Established\n               Finished creating <docker-default-ubuntu-1404>
+              (1m16.61s).\n        -----> Converging <docker-default-ubuntu-1404>...\n
+              \              Preparing files for transfer\n               Preparing
+              dna.json\n               Resolving cookbook dependencies with Berkshelf
+              4.3.2...\n               Removing non-cookbook files before transfer\n
+              \              Preparing validation.pem\n               Preparing client.rb\n
+              \              ubuntu 14.04 x86_64\n               downloading http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\n
+              \              http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\n
+              \                to file /tmp/install.sh.1355/chefdk_0.13.19-1_amd64.deb\n
+              \              trying wget...\n               trying curl...\n               /tmp/chef-installer.sh:
+              line 140: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n               grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n               trying perl...\n               /tmp/chef-installer.sh:
+              line 170: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n               grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n               trying python...\n               /tmp/chef-installer.sh:
+              line 191: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n               grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n               Unable to retrieve a valid
+              package!\n               Version: latest\n               \n               Please
+              file a Bug Report at https://github.com/chef/omnitruck/issues/new\n
+              \              Alternatively, feel free to open a Support Ticket at
+              https://www.chef.io/support/tickets\n               More Chef support
+              resources can be\nTOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:37 +0000]
+              \ found at https://www.chef.io/support\n               \n"
             1507: |2
                         rc=$?
                         # check for 404
@@ -115,6 +169,64 @@ stages:
                           echo "ERROR 404"
                           http_404_error
                         fi
+            2182: |2
+                      sudo -E /tmp/chef-installer.sh]
+                      >>>>>> ----------------------
+                      zlib(finalizer): the stream was freed prematurely.
+                      ---- End output of bundle exec kitchen converge  -c ----
+                      Ran bundle exec kitchen converge  -c returned 10
+            2229: "        \nTOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:37 +0000]
+              \      \n      ================================================================================\n
+              \     Error executing action `run` on resource 'cookbook_kitchen[converge
+              docker]'\n      ================================================================================\n
+              \     \n      Mixlib::ShellOut::ShellCommandFailed\n      ------------------------------------\n
+              \     execute[bundle exec kitchen converge  -c] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '10'\n      ---- Begin output
+              of bundle exec kitchen converge  -c ----\n      STDOUT: -----> Starting
+              Kitchen (v1.7.2)\n      -----> Creating <docker-default-ubuntu-1404>...\n
+              \            If you are not using an account that qualifies under the
+              AWS\n      free-tier, you may be charged to run these suites. The charge\n
+              \     should be minimal, but neither Test Kitchen nor its maintainers\n
+              \     are responsible for your incurred costs.\n      \n             Instance
+              <i-54444b93> requested.\n             Polling AWS for existence, attempt
+              0...\n             Attempting to tag the instance, 0 retries\n             EC2
+              instance <i-54444b93> created.\n             Waited 0/300s for instance
+              <i-54444b93> to become ready.\n             Waited 5/300s for instance
+              <i-54444b93> to become ready.\n             Waited 10/300s for instance
+              <i-54444b93> to become ready.\n             Waited 15/300s for instance
+              <i-54444b93> to become ready.\n             Waited 20/300s for instance
+              <i-54444b93> to become ready.\n             Waited 25/300s for instance
+              <i-54444b93> to become ready.\n             EC2 instance <i-54444b93>
+              ready.\n             Waiting for SSH service on 10.194.9.98:22, retrying
+              in 3 seconds\n             Waiting for SSH service on 10.194.9.98:22,
+              retrying in 3 seconds\n             Waiting for SSH service on 10.194.9.98:22,
+              retrying in 3 seconds\n             Waiting for SSH service on 10.194.9.98:22,
+              retrying in 3 seconds\n             Waiting for SSH service on 10.194.9.98:22,
+              retrying in 3 seconds\n             [SSH] Established\n             Finished
+              creating <docker-default-ubuntu-1404> (1m16.61s).\n      -----> Converging
+              <docker-default-ubuntu-1404>...\n             Preparing files for transfer\n
+              \            Preparing dna.json\n             Resolving cookbook dependencies
+              with Berkshelf 4.3.2...\n             Removing non-cookbook files before
+              transfer\n             Preparing validation.pem\n             Preparing
+              client.rb\n             ubuntu 14.04 x86_64\n             downloading
+              http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\n
+              \            http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\n
+              \              to file /tmp/install.sh.1355/chefdk_0.13.19-1_amd64.deb\n
+              \            trying wget...\n             trying curl...\n             /tmp/chef-installer.sh:
+              line 140: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n             grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n             trying perl...\n             /tmp/chef-installer.sh:
+              line 170: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n             grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n             trying python...\n             /tmp/chef-installer.sh:
+              line 191: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n             grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n             Unable to retrieve a valid package!\n
+              \            Version: latest\n             \n             Please file
+              a Bug Report at https://github.com/ch\nTOP-COOKBOOKS::PROVISION::[2016-04-12
+              19:31:37 +0000] ef/omnitruck/issues/new\n             Alternatively,
+              feel free to open a Support Ticket at https://www.chef.io/support/tickets\n"
             2426: |2
                       rc=$?
                       # check for 404
@@ -141,6 +253,23 @@ stages:
                         echo "ERROR 404"
                         http_404_error
                       fi
+            3093: |2
+                    sudo -E /tmp/chef-installer.sh]
+                    >>>>>> ----------------------
+                    zlib(finalizer): the stream was freed prematurely.
+                    ---- End output of bundle exec kitchen converge  -c ----
+                    Ran bundle exec kitchen converge  -c returned 10
+            3135: "      \n    \n    ================================================================================\n
+              \   Error executing action `run` on resource 'top_cookbooks[converge]'\n
+              \   ================================================================================\n
+              \   \n    Mixlib::ShellOut::ShellCommandFailed\n    ------------------------------------\n
+              \   cookbook_kitchen[converge docker] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+              line 7) had an error: Mixlib::ShellOut::ShellCommandFailed: execute[bundle
+              exec kitchen converge  -\nTOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:37
+              +0000] c] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '10'\n    ---- Begin output of
+              bundle exec kitchen converge  -c ----\n"
             3333: |2
                     rc=$?
                     # check for 404
@@ -167,6 +296,12 @@ stages:
                       echo "ERROR 404"
                       http_404_error
                     fi
+            4004: |2
+                  sudo -E /tmp/chef-installer.sh]
+                  >>>>>> ----------------------
+                  zlib(finalizer): the stream was freed prematurely.
+                  ---- End output of bundle exec kitchen converge  -c ----
+                  Ran bundle exec kitchen converge  -c returned 10
             4045: "TOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000] Running handlers:\nTOP-COOKBOOKS::PROVISION::[2016-04-12
               19:31:38 +0000] \nTOP-COOKBOOKS::PROVISION::[2016-04-12 19:31:38 +0000]
               [2016-04-12T19:31:38+00:00] ERROR: Running exception handlers\nTOP-COOKBOOKS::PROVISION::[2016-04-12
@@ -216,84 +351,1486 @@ stages:
                                     echo "ERROR 404"
                                     http_404_error
                                   fi
-            5121: |2
-                        rc=$?
-                        # check for 404
-                        grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-                        if test $? -eq 0; then
-                          echo "ERROR 404"
-                          http_404_error
-                        fi
-            5144: |2
-                        grep "404 Not Found" $tmp_dir/stderr 2>&1 >/dev/null
-                        if test $? -eq 0; then
-                          echo "ERROR 404"
-                          http_404_error
-                        fi
-            5174: |2
-                        grep "404 Not Found" $tmp_dir/stderr 2>&1 >/dev/null
-                        if test $? -eq 0; then
-                          echo "ERROR 404"
-                          http_404_error
-                        fi
-            5195: |2
-                        grep "HTTP Error 404" $tmp_dir/stderr 2>&1 >/dev/null
-                        if test $? -eq 0; then
-                          echo "ERROR 404"
-                          http_404_error
-                        fi
-            6022: |2
-                      rc=$?
-                      # check for 404
-                      grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-                      if test $? -eq 0; then
-                        echo "ERROR 404"
-                        http_404_error
-                      fi
-            6045: |2
-                      grep "404 Not Found" $tmp_dir/stderr 2>&1 >/dev/null
-                      if test $? -eq 0; then
-                        echo "ERROR 404"
-                        http_404_error
-                      fi
-            6075: |2
-                      grep "404 Not Found" $tmp_dir/stderr 2>&1 >/dev/null
-                      if test $? -eq 0; then
-                        echo "ERROR 404"
-                        http_404_error
-                      fi
-            6096: |2
-                      grep "HTTP Error 404" $tmp_dir/stderr 2>&1 >/dev/null
-                      if test $? -eq 0; then
-                        echo "ERROR 404"
-                        http_404_error
-                      fi
-            6919: |2
-                    rc=$?
-                    # check for 404
-                    grep "ERROR 404" $tmp_dir/stderr 2>&1 >/dev/null
-                    if test $? -eq 0; then
-                      echo "ERROR 404"
-                      http_404_error
-                    fi
-            6942: |2
-                    grep "404 Not Found" $tmp_dir/stderr 2>&1 >/dev/null
-                    if test $? -eq 0; then
-                      echo "ERROR 404"
-                      http_404_error
-                    fi
-            6972: |2
-                    grep "404 Not Found" $tmp_dir/stderr 2>&1 >/dev/null
-                    if test $? -eq 0; then
-                      echo "ERROR 404"
-                      http_404_error
-                    fi
-            6993: |2
-                    grep "HTTP Error 404" $tmp_dir/stderr 2>&1 >/dev/null
-                    if test $? -eq 0; then
-                      echo "ERROR 404"
-                      http_404_error
-                    fi
+            4924: "                  sudo -E /tmp/chef-installer.sh]\n                  >>>>>>
+              ----------------------\n                  zlib(finalizer): the stream
+              was freed prematurely.\n        \n        ================================================================================\n
+              \       Error executing action `run` on resource 'execute[bundle exec
+              kitchen converge  -c]'\n        ================================================================================\n
+              \       \n        Mixlib::ShellOut::ShellCommandFailed\n        ------------------------------------\n
+              \       Expected process to exit with [0], but received '10'\n        ----
+              Begin output of bundle exec kitchen converge  -c ----\n        STDOUT:
+              -----> Starting Kitchen (v1.7.2)\n        -----> Creating <docker-default-ubuntu-1404>...\n
+              \              If you are not using an account that qualifies under
+              the AWS\n        free-tier, you may be charged to run these suites.
+              The charge\n        should be minimal, but neither Test Kitchen nor
+              its maintainers\n        are responsible for your incurred costs.\n
+              \       \n               Instance <i-54444b93> requested.\n               Polling
+              AWS for existence, attempt 0...\n               Attempting to tag the
+              instance, 0 retries\n               EC2 instance <i-54444b93> created.\n
+              \              Waited 0/300s for instance <i-54444b93> to become ready.\n
+              \              Waited 5/300s for instance <i-54444b93> to become ready.\n
+              \              Waited 10/300s for instance <i-54444b93> to become ready.\n
+              \              Waited 15/300s for instance <i-54444b93> to become ready.\n
+              \              Waited 20/300s for instance <i-54444b93> to become ready.\n
+              \              Waited 25/300s for instance <i-54444b93> to become ready.\n
+              \              EC2 instance <i-54444b93> ready.\n               Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n               [SSH]
+              Established\n               Finished creating <docker-default-ubuntu-1404>
+              (1m16.61s).\n        -----> Converging <docker-default-ubuntu-1404>...\n
+              \              Preparing files for transfer\n               Preparing
+              dna.json\n               Resolving cookbook dependencies with Berkshelf
+              4.3.2...\n               Removing non-cookbook files before transfer\n
+              \              Preparing validation.pem\n               Preparing client.rb\n
+              \              ubuntu 14.04 x86_64\n               downloading http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\n
+              \              http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\n
+              \                to file /tmp/install.sh.1355/chefdk_0.13.19-1_amd64.deb\n
+              \              trying wget...\n               trying curl...\n               /tmp/chef-installer.sh:
+              line 140: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n               grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n               trying perl...\n               /tmp/chef-installer.sh:
+              line 170: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n               grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n               trying python...\n               /tmp/chef-installer.sh:
+              line 191: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n               grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n               Unable to retrieve a valid
+              package!\n               Version: latest\n               \n               Please
+              file a Bug Report at https://github.com/chef/omnitruck/issues/new\n
+              \              Alternatively, feel free to open a Support Ticket at
+              https://www.chef.io/support/tickets\n               More Chef support
+              resources can be found at https://www.chef.io/support\n               \n
+              \              Please include as many details about the problem as possible
+              i.e., how to reproduce\n               the problem (if possible), type
+              of the Operating System and its version, etc.,\n               and any
+              other relevant details that might help us with troubleshooting.\n               \n
+              \              Metadata URL: \n               Download URL: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\n
+              \              http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\n
+              \              \\nDEBUG OUTPUT FOLLOWS:\\n\\nSTDERR from wget:\\n\\nhttp://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\\n\n        STDERR: >>>>>> Converge failed
+              on instance <docker-default-ubuntu-1404>.\n        >>>>>> Please see
+              .kitchen/logs/docker-default-ubuntu-1404.log for more details\n        >>>>>>
+              ------Exception-------\n        >>>>>> Class: Kitchen::ActionFailed\n
+              \       >>>>>> Message: SSH exited (1) for command: [sudo -E cat > /tmp/chef-installer.sh
+              <<\"EOL\"\n        #!/bin/bash\n        #!/bin/sh\n        # WARNING:
+              REQUIRES /bin/sh\n        #\n        # - must run on /bin/sh on solaris
+              9\n        # - must run on /bin/sh on AIX 6.x\n        #\n        #
+              Copyright:: Copyright (c) 2010-2015 Chef Software, Inc.\n        # License::
+              Apache License, Version 2.0\n        #\n        # Licensed under the
+              Apache License, Version 2.0 (the \"License\");\n        # you may not
+              use this file except in compliance with the License.\n        # You
+              may obtain a copy of the License at\n        #\n        #     http://www.apache.org/licenses/LICENSE-2.0\n
+              \       #\n        # Unless required by applicable law or agreed to
+              in writing, software\n        # distributed under the License is distributed
+              on an \"AS IS\" BASIS,\n        # WITHOUT WARRANTIES OR CONDITIONS OF
+              ANY KIND, either express or implied.\n        # See the License for
+              the specific language governing permissions and\n        # limitations
+              under the License.\n        #\n        \n        # helpers.sh\n        ############\n
+              \       # This section has some helper functions to make life easier.\n
+              \       #\n        # Outputs:\n        # $tmp_dir: secure-ish temp directory
+              that can be used during installation.\n        ############\n        \n
+              \       # Check whether a command exists - returns 0 if it does, 1 if
+              it does not\n        exists() {\n          if command -v $1 >/dev/null
+              2>&1\n          then\n            return 0\n          else\n            return
+              1\n          fi\n        }\n        \n        # Output the instructions
+              to report bug about this script\n        report_bug() {\n          echo
+              \"Version: $version\"\n          echo \"\"\n          echo \"Please
+              file a Bug Report at https://github.com/chef/omnitruck/issues/new\"\n
+              \         echo \"Alternatively, feel free to open a Support Ticket at
+              https://www.chef.io/support/tickets\"\n          echo \"More Chef support
+              resources can be found at https://www.chef.io/support\"\n          echo
+              \"\"\n          echo \"Please include as many details about the problem
+              as possible i.e., how to reproduce\"\n          echo \"the problem (if
+              possible), type of the Operating System and its version, etc.,\"\n          echo
+              \"and any other relevant details that might help us with troubleshooting.\"\n
+              \         echo \"\"\n        }\n        \n        checksum_mismatch()
+              {\n          echo \"Package checksum mismatch!\"\n          report_bug\n
+              \         exit 1\n        }\n        \n        unable_to_retrieve_package()
+              {\n          echo \"Unable to retrieve a valid package!\"\n          report_bug\n
+              \         echo \"Metadata URL: $metadata_url\"\n          if test \"x$download_url\"
+              != \"x\"; then\n            echo \"Download URL: $download_url\"\n          fi\n
+              \         if test \"x$stderr_results\" != \"x\"; then\n            echo
+              \"\\nDEBUG OUTPUT FOLLOWS:\\n$stderr_results\"\n          fi\n          exit
+              1\n        }\n        \n        http_404_error() {\n          echo \"Omnitruck
+              artifact does not exist for version $version on platform $platform\"\n
+              \         echo \"\"\n          echo \"Either this means:\"\n          echo
+              \"   - We do not support $platform\"\n          echo \"   - We do not
+              have an artifact for $version\"\n          echo \"\"\n          echo
+              \"This is often the latter case due to running a prerelease or RC version
+              of chef\"\n          echo \"or a gem version which was only pushed to
+              rubygems and not omnitruck.\"\n          echo \"\"\n          echo \"You
+              may be able to set your knife[:bootstrap_version] to the most recent
+              stable\"\n          echo \"release of Chef to fix this problem (or the
+              most recent stable major version number).\"\n          echo \"\"\n          echo
+              \"In order to test the version parameter, adventurous users may take
+              the Metadata URL\"\n          echo \"below and modify the '&v=<number>'
+              parameter until you successfully get a URL that\"\n          echo \"does
+              not 404 (e.g. via curl or wget).  You should be able to use '&v=11'
+              or '&v=12'\"\n          echo \"succesfully.\"\n          echo \"\"\n
+              \         echo \"If you cannot fix this problem by setting the bootstrap_version,
+              it probably means\"\n          echo \"that $platform is not supported.\"\n
+              \         echo \"\"\n          # deliberately do not call report_bug
+              to suppress bug report noise.\n          echo \"Metadata URL: $metadata_url\"\n
+              \         if test \"x$download_url\" != \"x\"; then\n            echo
+              \"Download URL: $download_url\"\n          fi\n          if test \"x$stderr_results\"
+              != \"x\"; then\n            echo \"\\nDEBUG OUTPUT FOLLOWS:\\n$stderr_results\"\n
+              \         fi\n          exit 1\n        }\n        \n        capture_tmp_stderr()
+              {\n          # spool up /tmp/stderr from all the commands we called\n
+              \         if test -f \"$tmp_dir/stderr\"; then\n            output=`cat
+              $tmp_dir/stderr`\n            stderr_results=\"${stderr_results}\\nSTDERR
+              from $1:\\n\\n$output\\n\"\n            rm $tmp_dir/stderr\n          fi\n
+              \       }\n        \n        # do_wget URL FILENAME\n        do_wget()
+              {\n          echo \"trying wget...\"\n          wget -O \"$2\" \"$1\"
+              2>$tmp_dir/stderr\n          rc=$?\n          # check for 404\n          grep
+              \"ERROR 404\" $tmp_dir/stderr 2>&1 >/dev/null\n          if test $?
+              -eq 0; then\n            echo \"ERROR 404\"\n            http_404_error\n
+              \         fi\n        \n          # check for bad return status or empty
+              output\n          if test $rc -ne 0 || test ! -s \"$2\"; then\n            capture_tmp_stderr
+              \"wget\"\n            return 1\n          fi\n        \n          return
+              0\n        }\n        \n        # do_curl URL FILENAME\n        do_curl()
+              {\n          echo \"trying curl...\"\n          curl --retry 5 -sL -D
+              $tmp_dir/stderr \"$1\" > \"$2\"\n          rc=$?\n          # check
+              for 404\n          grep \"404 Not Found\" $tmp_dir/stderr 2>&1 >/dev/null\n
+              \         if test $? -eq 0; then\n            echo \"ERROR 404\"\n            http_404_error\n
+              \         fi\n        \n          # check for bad return status or empty
+              output\n          if test $rc -ne 0 || test ! -s \"$2\"; then\n            capture_tmp_stderr
+              \"curl\"\n            return 1\n          fi\n        \n          return
+              0\n        }\n        \n        # do_fetch URL FILENAME\n        do_fetch()
+              {\n          echo \"trying fetch...\"\n          fetch -o \"$2\" \"$1\"
+              2>$tmp_dir/stderr\n          # check for bad return status\n          test
+              $? -ne 0 && return 1\n          return 0\n        }\n        \n        #
+              do_perl URL FILENAME\n        do_perl() {\n          echo \"trying perl...\"\n
+              \         perl -e 'use LWP::Simple; getprint($ARGV[0]);' \"$1\" > \"$2\"
+              2>$tmp_dir/stderr\n          rc=$?\n          # check for 404\n          grep
+              \"404 Not Found\" $tmp_dir/stderr 2>&1 >/dev/null\n          if test
+              $? -eq 0; then\n            echo \"ERROR 404\"\n            http_404_error\n
+              \         fi\n        \n          # check for bad return status or empty
+              output\n          if test $rc -ne 0 || test ! -s \"$2\"; then\n            capture_tmp_stderr
+              \"perl\"\n            return 1\n          fi\n        \n          return
+              0\n        }\n        \n        # do_python URL FILENAME\n        do_python()
+              {\n          echo \"trying python...\"\n          python -c \"import
+              sys,urllib2 ; sys.stdout.write(urllib2.urlopen(sys.argv[1]).read())\"
+              \"$1\" > \"$2\" 2>$tmp_dir/stderr\n          rc=$?\n          # check
+              for 404\n          grep \"HTTP Error 404\" $tmp_dir/stderr 2>&1 >/dev/null\n
+              \         if test $? -eq 0; then\n            echo \"ERROR 404\"\n            http_404_error\n
+              \         fi\n        \n          # check for bad return status or empty
+              output\n          if test $rc -ne 0 || test ! -s \"$2\"; then\n            capture_tmp_stderr
+              \"python\"\n            return 1\n          fi\n          return 0\n
+              \       }\n        \n        # returns 0 if checksums match\n        do_checksum()
+              {\n          if exists sha256sum; then\n            echo \"Comparing
+              checksum with sha256sum...\"\n            checksum=`sha256sum $1 | awk
+              '{ print $1 }'`\n            return `test \"x$checksum\" = \"x$2\"`\n
+              \         elif exists shasum; then\n            echo \"Comparing checksum
+              with shasum...\"\n            checksum=`shasum -a 256 $1 | awk '{ print
+              $1 }'`\n            return `test \"x$checksum\" = \"x$2\"`\n          else\n
+              \           echo \"WARNING: could not find a valid checksum program,
+              pre-install shasum or sha256sum in your O/S image to get valdation...\"\n
+              \           return 0\n          fi\n        }\n        \n        # do_download
+              URL FILENAME\n        do_download() {\n          echo \"downloading
+              $1\"\n          echo \"  to file $2\"\n        \n          url=`echo
+              $1`\n          if test \"x$platform\" = \"xsolaris2\"; then\n            if
+              test \"x$platform_version\" = \"x5.9\" -o \"x$platform_version\" = \"x5.10\";
+              then\n              # solaris 9 lacks openssl, solaris 10 lacks recent
+              enough credentials - your base O/S is completely insecure, please upgrade\n
+              \             url=`echo $url | sed -e 's/https/http/'`\n            fi\n
+              \         fi\n        \n          # we try all of these until we get
+              success.\n          # perl, in particular may be present but LWP::Simple
+              may not be installed\n        \n          if exists wget; then\n            do_wget
+              $url $2 && return 0\n          fi\n        \n          if exists curl;
+              then\n            do_curl $url $2 && return 0\n          fi\n        \n
+              \         if exists fetch; then\n            do_fetch $url $2 && return
+              0\n          fi\n        \n          if exists perl; then\n            do_perl
+              $url $2 && return 0\n          fi\n        \n          if exists python;
+              then\n            do_python $url $2 && return 0\n          fi\n        \n
+              \         unable_to_retrieve_package\n        }\n        \n        #
+              install_file TYPE FILENAME\n        # TYPE is \"rpm\", \"deb\", \"solaris\",
+              \"sh\", etc.\n        install_file() {\n          echo \"Installing
+              $project $version\"\n          case \"$1\" in\n            \"rpm\")\n
+              \             if test \"x$platform\" = \"xnexus\" || test \"x$platform\"
+              = \"xios_xr\"; then\n                echo \"installing with yum...\"\n
+              \               yum install -yv \"$2\"\n              else\n                echo
+              \"installing with rpm...\"\n                rpm -Uvh --oldpackage --replacepkgs
+              \"$2\"\n              fi\n              ;;\n            \"deb\")\n              echo
+              \"installing with dpkg...\"\n              dpkg -i \"$2\"\n              ;;\n
+              \           \"bff\")\n              echo \"installing with installp...\"\n
+              \             installp -aXYgd \"$2\" all\n              ;;\n            \"solaris\")\n
+              \             echo \"installing with pkgadd...\"\n              echo
+              \"conflict=nocheck\" > $tmp_dir/nocheck\n              echo \"action=nocheck\"
+              >> $tmp_dir/nocheck\n              echo \"mail=\" >> $tmp_dir/nocheck\n
+              \             pkgrm -a $tmp_dir/nocheck -n $project >/dev/null 2>&1
+              || true\n              pkgadd -G -n -d \"$2\" -a $tmp_dir/nocheck $project\n
+              \             ;;\n            \"pkg\")\n              echo \"installing
+              with installer...\"\n              cd / && /usr/sbin/installer -pkg
+              \"$2\" -target /\n              ;;\n            \"dmg\")\n              echo
+              \"installing dmg file...\"\n              hdiutil detach \"/Volumes/chef_software\"
+              >/dev/null 2>&1 || true\n              hdiutil attach \"$2\" -mountpoint
+              \"/Volumes/chef_software\"\n              cd / && /usr/sbin/installer
+              -pkg `find \"/Volumes/chef_software\" -name \\*.pkg` -target /\n              hdiutil
+              detach \"/Volumes/chef_software\"\n              ;;\n            \"sh\"
+              )\n              echo \"installing with sh...\"\n              sh \"$2\"\n
+              \             ;;\n            *)\n              echo \"Unknown filetype:
+              $1\"\n              report_bug\n              exit 1\n              ;;\n
+              \         esac\n          if test $? -ne 0; then\n            echo \"Installation
+              failed\"\n            report_bug\n            exit 1\n          fi\n
+              \       }\n        \n        if test \"x$TMPDIR\" = \"x\"; then\n          tmp=\"/tmp\"\n
+              \       else\n          tmp=$TMPDIR\n        fi\n        # secure-ish
+              temp dir creation without having mktemp available (DDoS-able but not
+              expliotable)\n        tmp_dir=\"$tmp/install.sh.$$\"\n        (umask
+              077 && mkdir $tmp_dir) || exit 1\n        \n        ############\n        #
+              end of helpers.sh\n        ############\n        \n        \n        project=chefdk\n
+              \       version=latest\n        channel=unstable\n        \n        \n
+              \       # platform_detection.sh\n        ############\n        # This
+              section makes platform detection compatible with omnitruck on the system\n
+              \       #   it runs.\n        #\n        # Outputs:\n        # $platform:
+              Name of the platform.\n        # $platform_version: Version of the platform.\n
+              \       # $machine: System's architecture.\n        ############\n        \n
+              \       #\n        # Platform and Platform Version detection\n        #\n
+              \       # NOTE: This should now match ohai platform and platform_version
+              matching.\n        # do not invented new platform and platform_version
+              schemas, just make this behave\n        # like what ohai returns as
+              platform and platform_version for the server.\n        #\n        #
+              ALSO NOTE: Do not mangle platform or platform_version here.  It is less
+              error\n        # prone and more future-proof to do that in the server,
+              and then all omnitruck clients\n        # will 'inherit' the changes
+              (install.sh is not the only client of the omnitruck\n        # endpoint
+              out there).\n        #\n        \n        machine=`uname -m`\n        os=`uname
+              -s`\n        \n        if test -f \"/etc/lsb-release\" && grep -q DISTRIB_ID
+              /etc/lsb-release && ! grep -q wrlinux /etc/lsb-release; then\n          platform=`grep
+              DISTRIB_ID /etc/lsb-release | cut -d \"=\" -f 2 | tr '[A-Z]' '[a-z]'`\n
+              \         platform_version=`grep DISTRIB_RELEASE /etc/lsb-release |
+              cut -d \"=\" -f 2`\n        elif test -f \"/etc/debian_version\"; then\n
+              \         platform=\"debian\"\n          platform_version=`cat /etc/debian_version`\n
+              \       elif test -f \"/etc/redhat-release\"; then\n          platform=`sed
+              's/^\\(.\\+\\) release.*/\\1/' /etc/redhat-release | tr '[A-Z]' '[a-z]'`\n
+              \         platform_version=`sed 's/^.\\+ release \\([.0-9]\\+\\).*/\\1/'
+              /etc/redhat-release`\n        \n          # If /etc/redhat-release exists,
+              we act like RHEL by default\n          if test \"$platform\" = \"fedora\";
+              then\n            # FIXME: stop remapping fedora to el\n            #
+              FIXME: remove client side platform_version mangling and hard coded yolo\n
+              \           # Change platform version for use below.\n            platform_version=\"6.0\"\n
+              \         fi\n        \n          if test \"$platform\" = \"xenserver\";
+              then\n            # Current XenServer 6.2 is based on CentOS 5, platform
+              is not reset to \"el\" server should hanlde response\n            platform=\"xenserver\"\n
+              \         else\n            # FIXME: use \"redhat\"\n            platform=\"el\"\n
+              \         fi\n        \n        elif test -f \"/etc/system-release\";
+              then\n          platform=`sed 's/^\\(.\\+\\) release.\\+/\\1/' /etc/system-release
+              | tr '[A-Z]' '[a-z]'`\n          platform_version=`sed 's/^.\\+ release
+              \\([.0-9]\\+\\).*/\\1/' /etc/system-release | tr '[A-Z]' '[a-z]'`\n
+              \         # amazon is built off of fedora, so act like RHEL\n          if
+              test \"$platform\" = \"amazon linux ami\"; then\n            # FIXME:
+              remove client side platform_version mangling and hard coded yolo, and
+              remapping to deprecated \"el\"\n            platform=\"el\"\n            platform_version=\"6.0\"\n
+              \         fi\n        # Apple OS X\n        elif test -f \"/usr/bin/sw_vers\";
+              then\n          platform=\"mac_os_x\"\n          # Matching the tab-space
+              with sed is error-prone\n          platform_version=`sw_vers | awk '/^ProductVersion:/
+              { print $2 }' | cut -d. -f1,2`\n        \n          # x86_64 Apple hardware
+              often runs 32-bit kernels (see OHAI-63)\n          x86_64=`sysctl -n
+              hw.optional.x86_64`\n          if test $x86_64 -eq 1; then\n            machine=\"x86_64\"\n
+              \         fi\n        elif test -f \"/etc/release\"; then\n          machine=`/usr/bin/uname
+              -p`\n          if grep -q SmartOS /etc/release; then\n            platform=\"smartos\"\n
+              \           platform_version=`grep ^Image /etc/product | awk '{ print
+              $3 }'`\n          else\n            platform=\"solaris2\"\n            platform_version=`/usr/bin/uname
+              -r`\n          fi\n        elif test -f \"/etc/SuSE-release\"; then\n
+              \         if grep -q 'Enterprise' /etc/SuSE-release;\n          then\n
+              \             platform=\"sles\"\n              platform_version=`awk
+              '/^VERSION/ {V = $3}; /^PATCHLEVEL/ {P = $3}; END {print V \".\" P}'
+              /etc/SuSE-release`\n          else\n              platform=\"suse\"\n
+              \             platform_version=`awk '/^VERSION =/ { print $3 }' /etc/SuSE-release`\n
+              \         fi\n        elif test \"x$os\" = \"xFreeBSD\"; then\n          platform=\"freebsd\"\n
+              \         platform_version=`uname -r | sed 's/-.*//'`\n        elif
+              test \"x$os\" = \"xAIX\"; then\n          platform=\"aix\"\n          platform_version=\"`uname
+              -v`.`uname -r`\"\n          machine=\"powerpc\"\n        elif test -f
+              \"/etc/os-release\"; then\n          . /etc/os-release\n          if
+              test \"x$CISCO_RELEASE_INFO\" != \"x\"; then\n            . $CISCO_RELEASE_INFO\n
+              \         fi\n        \n          platform=$ID\n          platform_version=$VERSION\n
+              \       fi\n        \n        if test \"x$platform\" = \"x\"; then\n
+              \         echo \"Unable to determine platform version!\"\n          report_bug\n
+              \         exit 1\n        fi\n        \n        #\n        # NOTE: platform
+              manging in the install.sh is DEPRECATED\n        #\n        # - install.sh
+              should be true to ohai and should not remap\n        #   platform or
+              platform versions.\n        #\n        # - remapping platform and mangling
+              platform version numbers is\n        #   now the complete responsibility
+              of the server-side endpoints\n        #\n        \n        major_version=`echo
+              $platform_version | cut -d. -f1`\n        case $platform in\n          #
+              FIXME: should remove this case statement completely\n          \"el\")\n
+              \           # FIXME:  \"el\" is deprecated, should use \"redhat\"\n
+              \           platform_version=$major_version\n            ;;\n          \"debian\")\n
+              \           # FIXME: remove client-side yolo here\n            case
+              $major_version in\n              \"5\") platform_version=\"6\";;  #
+              FIXME: need to port this \"reverse-yolo\" into platform.rb\n              \"6\")
+              platform_version=\"6\";;\n              \"7\") platform_version=\"6\";;\n
+              \           esac\n            ;;\n          \"freebsd\")\n            platform_version=$major_version\n
+              \           ;;\n          \"sles\")\n            platform_version=$major_version\n
+              \           ;;\n          \"suse\")\n            platform_version=$major_version\n
+              \           ;;\n        esac\n        \n        if test \"x$platform_version\"
+              = \"x\"; then\n          echo \"Unable to determine platform version!\"\n
+              \         report_bug\n          exit 1\n        fi\n        \n        if
+              test \"x$platform\" = \"xsolaris2\"; then\n          # hack up the path
+              on Solaris to find wget, pkgadd\n          PATH=/usr/sfw/bin:/usr/sbin:$PATH\n
+              \         export PATH\n        fi\n        \n        echo \"$platform
+              $platform_version $machine\"\n        \n        ############\n        #
+              end of platform_detection.sh\n        ############\n        \n        \n
+              \       # artifactory_urls.sh\n        ############\n        # This
+              section sets up the information for a build to be installed from artifactory\n
+              \       #  then uses $platform, $platform_version and $machine to select
+              the correct\n        #  version.\n        #\n        # Inputs:\n        #
+              $platform:\n        # $platform_version:\n        # $machine:\n        #\n
+              \       # Outputs:\n        # $download_url:\n        # $sha256:\n        ############\n
+              \       \n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/14.04/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.9/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.9/chefdk-0.13.19-1.dmg.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/debian/8/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/8/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012r2/i386\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012r2/chefdk-0.13.19-1-x86.msi\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 e82aaeb0ccefd32ae049e8b32045cc6d2acce75f7e4ae68e6e96bf198cb937b7\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.11/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.11/chefdk-0.13.19-1.dmg.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/debian/6/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/6/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 bb5d254b05d1a536f58ef69e64e581dc113bdb32275c6104553a1782182c2cdb\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/windows/2008r2/i386\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2008r2/chefdk-0.13.19-1-x86.msi.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/debian/6/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/6/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.9/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.9/chefdk-0.13.19-1.dmg\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 dfd9d05caab653a92717263fef698b83e14046f2d92cd627fd3725f10009062b\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012r2/i386\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012r2/chefdk-0.13.19-1-x86.msi.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012/i386\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012/chefdk-0.13.19-1-x86.msi\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 e82aaeb0ccefd32ae049e8b32045cc6d2acce75f7e4ae68e6e96bf198cb937b7\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/windows/2008r2/i386\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2008r2/chefdk-0.13.19-1-x86.msi\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 e82aaeb0ccefd32ae049e8b32045cc6d2acce75f7e4ae68e6e96bf198cb937b7\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/debian/7/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/7/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 bb5d254b05d1a536f58ef69e64e581dc113bdb32275c6104553a1782182c2cdb\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/el/7/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/7/chefdk-0.13.19-1.el7.x86_64.rpm\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 95cedf524c58cdb37421867aa6133a9774080136b5f35ea68d2822b6db9fdbfc\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012/i386\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012/chefdk-0.13.19-1-x86.msi.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/debian/7/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/7/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/12.04/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/12.04/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/debian/8/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/8/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 bb5d254b05d1a536f58ef69e64e581dc113bdb32275c6104553a1782182c2cdb\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/el/6/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/6/chefdk-0.13.19-1.el6.x86_64.rpm.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/12.04/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/12.04/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 530bca33b6b06f29b96056f79d024a8c58f9dee92e85f53bf5aa567b4f94a0f8\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/el/6/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/6/chefdk-0.13.19-1.el6.x86_64.rpm\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 2aa10bc3f4948ea3788d8774a653ef048364841bb38b70f3eda6c8e64b27d152\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/14.04/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 530bca33b6b06f29b96056f79d024a8c58f9dee92e85f53bf5aa567b4f94a0f8\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.10/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.10/chefdk-0.13.19-1.dmg\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 dfd9d05caab653a92717263fef698b83e14046f2d92cd627fd3725f10009062b\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/el/7/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/7/chefdk-0.13.19-1.el7.x86_64.rpm.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.11/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.11/chefdk-0.13.19-1.dmg\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 dfd9d05caab653a92717263fef698b83e14046f2d92cd627fd3725f10009062b\"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n          artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.10/x86_64\"\n
+              \         mkdir -p $artifact_info_dir\n          touch \"$artifact_info_dir/artifact_info\"\n
+              \         echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.10/chefdk-0.13.19-1.dmg.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n          echo \"sha256 \"
+              >> \"$artifact_info_dir/artifact_info\"\n        \n        \n        artifact_info_for_platform=\"$tmp_dir/artifact_info/$platform/$platform_version/$machine/artifact_info\"\n
+              \       \n        download_url=`awk '$1 == \"url\" { print $2 }' \"$artifact_info_for_platform\"`\n
+              \       sha256=`awk '$1 == \"sha256\" { print $2 }' \"$artifact_info_for_platform\"`\n
+              \       \n        \n        # fetch_package.sh\n        ############\n
+              \       # This section fetchs a package from $download_url and verifies
+              its metadata.\n        #\n        # Inputs:\n        # $download_url:\n
+              \       # $tmp_dir:\n        # Optional Inputs:\n        # $cmdline_filename:
+              Name of the package downloaded on local disk.\n        # $cmdline_dl_dir:
+              Name of the directory downloaded package will be saved to on local disk.\n
+              \       #\n        # Outputs:\n        # $download_filename: Name of
+              the downloaded file on local disk.\n        # $filetype: Type of the
+              file downloaded.\n        ############\n        \n        filename=`echo
+              $download_url | sed -e 's/^.*\\///'`\n        filetype=`echo $filename
+              | sed -e 's/^.*\\.//'`\n        \n        # use either $tmp_dir, the
+              provided directory (-d) or the provided filename (-f)\n        if test
+              \"x$cmdline_filename\" != \"x\"; then\n          download_filename=\"$cmdline_filename\"\n
+              \       elif test \"x$cmdline_dl_dir\" != \"x\"; then\n          download_filename=\"$cmdline_dl_dir/$filename\"\n
+              \       else\n          download_filename=\"$tmp_dir/$filename\"\n        fi\n
+              \       \n        # ensure the parent directory where to download the
+              installer always exists\n        download_dir=`dirname $download_filename`\n
+              \       (umask 077 && mkdir -p $download_dir) || exit 1\n        \n
+              \       # check if we have that file locally available and if so verify
+              the checksum\n        cached_file_available=\"false\"\n        if test
+              -f $download_filename; then\n          echo \"$download_filename already
+              exists, verifiying checksum...\"\n          if do_checksum \"$download_filename\"
+              \"$sha256\"; then\n            echo \"checksum compare succeeded, using
+              existing file!\"\n            cached_file_available=\"true\"\n          else\n
+              \           echo \"checksum mismatch, downloading latest version of
+              the file\"\n          fi\n        fi\n        \n        # download if
+              no local version of the file available\n        if test \"x$cached_file_available\"
+              != \"xtrue\"; then\n          do_download \"$download_url\"  \"$download_filename\"\n
+              \         do_checksum \"$download_filename\" \"$sha256\" || checksum_mismatch\n
+              \       fi\n        \n        ############\n        # end of fetch_package.sh\n
+              \       ############\n        \n        \n        # install_package.sh\n
+              \       ############\n        # Installs a package and removed the temp
+              directory.\n        #\n        # Inputs:\n        # $download_filename:
+              Name of the file to be installed.\n        # $filetype: Type of the
+              file to be installed.\n        # $version: The version requested. Used
+              only for warning user if not set.\n        ############\n        \n
+              \       if test \"x$version\" = \"x\"; then\n          echo\n          echo
+              \"WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING\"\n
+              \         echo\n          echo \"You are installing an omnibus package
+              without a version pin.  If you are installing\"\n          echo \"on
+              production servers via an automated process this is DANGEROUS and you
+              will\"\n          echo \"be upgraded without warning on new releases,
+              even to new major releases.\"\n          echo \"Letting the version
+              float is only appropriate in desktop, test, development or\"\n          echo
+              \"CI/CD environments.\"\n          echo\n          echo \"WARNING WARNING
+              WARNING WARNING WARNING WARNING WARNING WARNING WARNING\"\n          echo\n
+              \       fi\n        \n        install_file $filetype \"$download_filename\"\n
+              \       \n        if test \"x$tmp_dir\" != \"x\"; then\n          rm
+              -r \"$tmp_dir\"\n        fi\n        \n        ############\n        #
+              end of install_package.sh\n        ############\n        \n        EOL\n
+              \       chmod +x /tmp/chef-installer.sh\n        sudo -E /tmp/chef-installer.sh]\n
+              \       >>>>>> ----------------------\n        zlib(finalizer): the
+              stream was freed prematurely.\n        ---- End output of bundle exec
+              kitchen converge  -c ----\n        Ran bundle exec kitchen converge
+              \ -c returned 10\n        \n        Resource Declaration:\n        ---------------------\n
+              \       # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb\n
+              \       \n         36:       execute \"bundle exec kitchen #{command}#{instances
+              ? \" #{instances}\" : \"\"}#{kitchen_options ? \" #{kitchen_options}\"
+              : \"\"}\" do\n         37:         cwd kitchen_dir\n         38:         env({\n
+              \        39:           \"KITCHEN_DRIVER\" => driver,\n         40:           \"KITCHEN_INSTANCES\"
+              => instances,\n         41:           \"KITCHEN_LOCAL_YAML\" => ::File.expand_path(\"../../.kitchen.#{driver}.yml\",
+              __FILE__),\n         42:           \"KITCHEN_CHEF_PRODUCT\" => chef_product,\n
+              \        43:           \"KITCHEN_CHEF_CHANNEL\" => chef_channel,\n         44:
+              \          \"KITCHEN_CHEF_VERSION\" => chef_version,\n         45:           \"ARTIFACTORY_USERNAME\"
+              => artifactory_username,\n         46:           \"ARTIFACTORY_PASSWORD\"
+              => artifactory_password\n         47:         }.merge(new_resource.env))\n
+              \        48:       end\n         49:     end\n        \n        Compiled
+              Resource:\n        ------------------\n        # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:36:in
+              `block in <class:Kitchen>'\n        \n        execute(\"bundle exec
+              kitchen converge  -c\") do\n          action [:run]\n          retries
+              0\n          retry_delay 2\n          default_guard_interpreter :execute\n
+              \         command \"bundle exec kitchen converge  -c\"\n          backup
+              5\n          cwd \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/test_run/docker/\"\n
+              \         environment {\"KITCHEN_DRIVER\"=>\"ec2\", \"KITCHEN_INSTANCES\"=>\"\",
+              \"KITCHEN_LOCAL_YAML\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/.kitchen.ec2.yml\",
+              \"KITCHEN_CHEF_PRODUCT\"=>\"chefdk\", \"KITCHEN_CHEF_CHANNEL\"=>\"unstable\",
+              \"KITCHEN_CHEF_VERSION\"=>\"latest\", \"ARTIFACTORY_USERNAME\"=>\"chef-web-downloads\",
+              \"ARTIFACTORY_PASSWORD\"=>\"fWPxYSB69EiuSpl8*3Dr^kGwf#hxUE6cmjeZRB%H!Cruit7qiKp%toH3nXKStQUg\",
+              \"BUNDLE_GEMFILE\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/Gemfile\",
+              \"KITCHEN_YAML\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.kitchen.docker.yml\"}\n
+              \         returns 0\n          declared_type :execute\n          cookbook_name
+              \"acceptance-cookbook\"\n        end\n        \n        Platform:\n
+              \       ---------\n        x86_64-linux\n        \n      \n      ================================================================================\n
+              \     Error executing action `run` on resource 'cookbook_kitchen[converge
+              docker]'\n      ================================================================================\n
+              \     \n      Mixlib::ShellOut::ShellCommandFailed\n      ------------------------------------\n
+              \     execute[bundle exec kitchen converge  -c] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '10'\n      ---- Begin output
+              of bundle exec kitchen converge  -c ----\n      STDOUT: -----> Starting
+              Kitchen (v1.7.2)\n      -----> Creating <docker-default-ubuntu-1404>...\n
+              \            If you are not using an account that qualifies under the
+              AWS\n      free-tier, you may be charged to run these suites. The charge\n
+              \     should be minimal, but neither Test Kitchen nor its maintainers\n
+              \     are responsible for your incurred costs.\n      \n             Instance
+              <i-54444b93> requested.\n             Polling AWS for existence, attempt
+              0...\n             Attempting to tag the instance, 0 retries\n             EC2
+              instance <i-54444b93> created.\n             Waited 0/300s for instance
+              <i-54444b93> to become ready.\n             Waited 5/300s for instance
+              <i-54444b93> to become ready.\n             Waited 10/300s for instance
+              <i-54444b93> to become ready.\n             Waited 15/300s for instance
+              <i-54444b93> to become ready.\n             Waited 20/300s for instance
+              <i-54444b93> to become ready.\n             Waited 25/300s for instance
+              <i-54444b93> to become ready.\n             EC2 instance <i-54444b93>
+              ready.\n             Waiting for SSH service on 10.194.9.98:22, retrying
+              in 3 seconds\n             Waiting for SSH service on 10.194.9.98:22,
+              retrying in 3 seconds\n             Waiting for SSH service on 10.194.9.98:22,
+              retrying in 3 seconds\n             Waiting for SSH service on 10.194.9.98:22,
+              retrying in 3 seconds\n             Waiting for SSH service on 10.194.9.98:22,
+              retrying in 3 seconds\n             [SSH] Established\n             Finished
+              creating <docker-default-ubuntu-1404> (1m16.61s).\n      -----> Converging
+              <docker-default-ubuntu-1404>...\n             Preparing files for transfer\n
+              \            Preparing dna.json\n             Resolving cookbook dependencies
+              with Berkshelf 4.3.2...\n             Removing non-cookbook files before
+              transfer\n             Preparing validation.pem\n             Preparing
+              client.rb\n             ubuntu 14.04 x86_64\n             downloading
+              http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\n
+              \            http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\n
+              \              to file /tmp/install.sh.1355/chefdk_0.13.19-1_amd64.deb\n
+              \            trying wget...\n             trying curl...\n             /tmp/chef-installer.sh:
+              line 140: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n             grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n             trying perl...\n             /tmp/chef-installer.sh:
+              line 170: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n             grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n             trying python...\n             /tmp/chef-installer.sh:
+              line 191: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n             grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n             Unable to retrieve a valid package!\n
+              \            Version: latest\n             \n             Please file
+              a Bug Report at https://github.com/chef/omnitruck/issues/new\n             Alternatively,
+              feel free to open a Support Ticket at https://www.chef.io/support/tickets\n
+              \            More Chef support resources can be found at https://www.chef.io/support\n
+              \            \n             Please include as many details about the
+              problem as possible i.e., how to reproduce\n             the problem
+              (if possible), type of the Operating System and its version, etc.,\n
+              \            and any other relevant details that might help us with
+              troubleshooting.\n             \n             Metadata URL: \n             Download
+              URL: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\n
+              \            http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\n
+              \            \\nDEBUG OUTPUT FOLLOWS:\\n\\nSTDERR from wget:\\n\\nhttp://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\\n\n      STDERR: >>>>>> Converge failed on
+              instance <docker-default-ubuntu-1404>.\n      >>>>>> Please see .kitchen/logs/docker-default-ubuntu-1404.log
+              for more details\n      >>>>>> ------Exception-------\n      >>>>>>
+              Class: Kitchen::ActionFailed\n      >>>>>> Message: SSH exited (1) for
+              command: [sudo -E cat > /tmp/chef-installer.sh <<\"EOL\"\n      #!/bin/bash\n
+              \     #!/bin/sh\n      # WARNING: REQUIRES /bin/sh\n      #\n      #
+              - must run on /bin/sh on solaris 9\n      # - must run on /bin/sh on
+              AIX 6.x\n      #\n      # Copyright:: Copyright (c) 2010-2015 Chef Software,
+              Inc.\n      # License:: Apache License, Version 2.0\n      #\n      #
+              Licensed under the Apache License, Version 2.0 (the \"License\");\n
+              \     # you may not use this file except in compliance with the License.\n
+              \     # You may obtain a copy of the License at\n      #\n      #     http://www.apache.org/licenses/LICENSE-2.0\n
+              \     #\n      # Unless required by applicable law or agreed to in writing,
+              software\n      # distributed under the License is distributed on an
+              \"AS IS\" BASIS,\n      # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+              either express or implied.\n      # See the License for the specific
+              language governing permissions and\n      # limitations under the License.\n
+              \     #\n      \n      # helpers.sh\n      ############\n      # This
+              section has some helper functions to make life easier.\n      #\n      #
+              Outputs:\n      # $tmp_dir: secure-ish temp directory that can be used
+              during installation.\n      ############\n      \n      # Check whether
+              a command exists - returns 0 if it does, 1 if it does not\n      exists()
+              {\n        if command -v $1 >/dev/null 2>&1\n        then\n          return
+              0\n        else\n          return 1\n        fi\n      }\n      \n      #
+              Output the instructions to report bug about this script\n      report_bug()
+              {\n        echo \"Version: $version\"\n        echo \"\"\n        echo
+              \"Please file a Bug Report at https://github.com/chef/omnitruck/issues/new\"\n
+              \       echo \"Alternatively, feel free to open a Support Ticket at
+              https://www.chef.io/support/tickets\"\n        echo \"More Chef support
+              resources can be found at https://www.chef.io/support\"\n        echo
+              \"\"\n        echo \"Please include as many details about the problem
+              as possible i.e., how to reproduce\"\n        echo \"the problem (if
+              possible), type of the Operating System and its version, etc.,\"\n        echo
+              \"and any other relevant details that might help us with troubleshooting.\"\n
+              \       echo \"\"\n      }\n      \n      checksum_mismatch() {\n        echo
+              \"Package checksum mismatch!\"\n        report_bug\n        exit 1\n
+              \     }\n      \n      unable_to_retrieve_package() {\n        echo
+              \"Unable to retrieve a valid package!\"\n        report_bug\n        echo
+              \"Metadata URL: $metadata_url\"\n        if test \"x$download_url\"
+              != \"x\"; then\n          echo \"Download URL: $download_url\"\n        fi\n
+              \       if test \"x$stderr_results\" != \"x\"; then\n          echo
+              \"\\nDEBUG OUTPUT FOLLOWS:\\n$stderr_results\"\n        fi\n        exit
+              1\n      }\n      \n      http_404_error() {\n        echo \"Omnitruck
+              artifact does not exist for version $version on platform $platform\"\n
+              \       echo \"\"\n        echo \"Either this means:\"\n        echo
+              \"   - We do not support $platform\"\n        echo \"   - We do not
+              have an artifact for $version\"\n        echo \"\"\n        echo \"This
+              is often the latter case due to running a prerelease or RC version of
+              chef\"\n        echo \"or a gem version which was only pushed to rubygems
+              and not omnitruck.\"\n        echo \"\"\n        echo \"You may be able
+              to set your knife[:bootstrap_version] to the most recent stable\"\n
+              \       echo \"release of Chef to fix this problem (or the most recent
+              stable major version number).\"\n        echo \"\"\n        echo \"In
+              order to test the version parameter, adventurous users may take the
+              Metadata URL\"\n        echo \"below and modify the '&v=<number>' parameter
+              until you successfully get a URL that\"\n        echo \"does not 404
+              (e.g. via curl or wget).  You should be able to use '&v=11' or '&v=12'\"\n
+              \       echo \"succesfully.\"\n        echo \"\"\n        echo \"If
+              you cannot fix this problem by setting the bootstrap_version, it probably
+              means\"\n        echo \"that $platform is not supported.\"\n        echo
+              \"\"\n        # deliberately do not call report_bug to suppress bug
+              report noise.\n        echo \"Metadata URL: $metadata_url\"\n        if
+              test \"x$download_url\" != \"x\"; then\n          echo \"Download URL:
+              $download_url\"\n        fi\n        if test \"x$stderr_results\" !=
+              \"x\"; then\n          echo \"\\nDEBUG OUTPUT FOLLOWS:\\n$stderr_results\"\n
+              \       fi\n        exit 1\n      }\n      \n      capture_tmp_stderr()
+              {\n        # spool up /tmp/stderr from all the commands we called\n
+              \       if test -f \"$tmp_dir/stderr\"; then\n          output=`cat
+              $tmp_dir/stderr`\n          stderr_results=\"${stderr_results}\\nSTDERR
+              from $1:\\n\\n$output\\n\"\n          rm $tmp_dir/stderr\n        fi\n
+              \     }\n      \n      # do_wget URL FILENAME\n      do_wget() {\n        echo
+              \"trying wget...\"\n        wget -O \"$2\" \"$1\" 2>$tmp_dir/stderr\n
+              \       rc=$?\n        # check for 404\n        grep \"ERROR 404\" $tmp_dir/stderr
+              2>&1 >/dev/null\n        if test $? -eq 0; then\n          echo \"ERROR
+              404\"\n          http_404_error\n        fi\n      \n        # check
+              for bad return status or empty output\n        if test $rc -ne 0 ||
+              test ! -s \"$2\"; then\n          capture_tmp_stderr \"wget\"\n          return
+              1\n        fi\n      \n        return 0\n      }\n      \n      # do_curl
+              URL FILENAME\n      do_curl() {\n        echo \"trying curl...\"\n        curl
+              --retry 5 -sL -D $tmp_dir/stderr \"$1\" > \"$2\"\n        rc=$?\n        #
+              check for 404\n        grep \"404 Not Found\" $tmp_dir/stderr 2>&1 >/dev/null\n
+              \       if test $? -eq 0; then\n          echo \"ERROR 404\"\n          http_404_error\n
+              \       fi\n      \n        # check for bad return status or empty output\n
+              \       if test $rc -ne 0 || test ! -s \"$2\"; then\n          capture_tmp_stderr
+              \"curl\"\n          return 1\n        fi\n      \n        return 0\n
+              \     }\n      \n      # do_fetch URL FILENAME\n      do_fetch() {\n
+              \       echo \"trying fetch...\"\n        fetch -o \"$2\" \"$1\" 2>$tmp_dir/stderr\n
+              \       # check for bad return status\n        test $? -ne 0 && return
+              1\n        return 0\n      }\n      \n      # do_perl URL FILENAME\n
+              \     do_perl() {\n        echo \"trying perl...\"\n        perl -e
+              'use LWP::Simple; getprint($ARGV[0]);' \"$1\" > \"$2\" 2>$tmp_dir/stderr\n
+              \       rc=$?\n        # check for 404\n        grep \"404 Not Found\"
+              $tmp_dir/stderr 2>&1 >/dev/null\n        if test $? -eq 0; then\n          echo
+              \"ERROR 404\"\n          http_404_error\n        fi\n      \n        #
+              check for bad return status or empty output\n        if test $rc -ne
+              0 || test ! -s \"$2\"; then\n          capture_tmp_stderr \"perl\"\n
+              \         return 1\n        fi\n      \n        return 0\n      }\n
+              \     \n      # do_python URL FILENAME\n      do_python() {\n        echo
+              \"trying python...\"\n        python -c \"import sys,urllib2 ; sys.stdout.write(urllib2.urlopen(sys.argv[1]).read())\"
+              \"$1\" > \"$2\" 2>$tmp_dir/stderr\n        rc=$?\n        # check for
+              404\n        grep \"HTTP Error 404\" $tmp_dir/stderr 2>&1 >/dev/null\n
+              \       if test $? -eq 0; then\n          echo \"ERROR 404\"\n          http_404_error\n
+              \       fi\n      \n        # check for bad return status or empty output\n
+              \       if test $rc -ne 0 || test ! -s \"$2\"; then\n          capture_tmp_stderr
+              \"python\"\n          return 1\n        fi\n        return 0\n      }\n
+              \     \n      # returns 0 if checksums match\n      do_checksum() {\n
+              \       if exists sha256sum; then\n          echo \"Comparing checksum
+              with sha256sum...\"\n          checksum=`sha256sum $1 | awk '{ print
+              $1 }'`\n          return `test \"x$checksum\" = \"x$2\"`\n        elif
+              exists shasum; then\n          echo \"Comparing checksum with shasum...\"\n
+              \         checksum=`shasum -a 256 $1 | awk '{ print $1 }'`\n          return
+              `test \"x$checksum\" = \"x$2\"`\n        else\n          echo \"WARNING:
+              could not find a valid checksum program, pre-install shasum or sha256sum
+              in your O/S image to get valdation...\"\n          return 0\n        fi\n
+              \     }\n      \n      # do_download URL FILENAME\n      do_download()
+              {\n        echo \"downloading $1\"\n        echo \"  to file $2\"\n
+              \     \n        url=`echo $1`\n        if test \"x$platform\" = \"xsolaris2\";
+              then\n          if test \"x$platform_version\" = \"x5.9\" -o \"x$platform_version\"
+              = \"x5.10\"; then\n            # solaris 9 lacks openssl, solaris 10
+              lacks recent enough credentials - your base O/S is completely insecure,
+              please upgrade\n            url=`echo $url | sed -e 's/https/http/'`\n
+              \         fi\n        fi\n      \n        # we try all of these until
+              we get success.\n        # perl, in particular may be present but LWP::Simple
+              may not be installed\n      \n        if exists wget; then\n          do_wget
+              $url $2 && return 0\n        fi\n      \n        if exists curl; then\n
+              \         do_curl $url $2 && return 0\n        fi\n      \n        if
+              exists fetch; then\n          do_fetch $url $2 && return 0\n        fi\n
+              \     \n        if exists perl; then\n          do_perl $url $2 && return
+              0\n        fi\n      \n        if exists python; then\n          do_python
+              $url $2 && return 0\n        fi\n      \n        unable_to_retrieve_package\n
+              \     }\n      \n      # install_file TYPE FILENAME\n      # TYPE is
+              \"rpm\", \"deb\", \"solaris\", \"sh\", etc.\n      install_file() {\n
+              \       echo \"Installing $project $version\"\n        case \"$1\" in\n
+              \         \"rpm\")\n            if test \"x$platform\" = \"xnexus\"
+              || test \"x$platform\" = \"xios_xr\"; then\n              echo \"installing
+              with yum...\"\n              yum install -yv \"$2\"\n            else\n
+              \             echo \"installing with rpm...\"\n              rpm -Uvh
+              --oldpackage --replacepkgs \"$2\"\n            fi\n            ;;\n
+              \         \"deb\")\n            echo \"installing with dpkg...\"\n            dpkg
+              -i \"$2\"\n            ;;\n          \"bff\")\n            echo \"installing
+              with installp...\"\n            installp -aXYgd \"$2\" all\n            ;;\n
+              \         \"solaris\")\n            echo \"installing with pkgadd...\"\n
+              \           echo \"conflict=nocheck\" > $tmp_dir/nocheck\n            echo
+              \"action=nocheck\" >> $tmp_dir/nocheck\n            echo \"mail=\" >>
+              $tmp_dir/nocheck\n            pkgrm -a $tmp_dir/nocheck -n $project
+              >/dev/null 2>&1 || true\n            pkgadd -G -n -d \"$2\" -a $tmp_dir/nocheck
+              $project\n            ;;\n          \"pkg\")\n            echo \"installing
+              with installer...\"\n            cd / && /usr/sbin/installer -pkg \"$2\"
+              -target /\n            ;;\n          \"dmg\")\n            echo \"installing
+              dmg file...\"\n            hdiutil detach \"/Volumes/chef_software\"
+              >/dev/null 2>&1 || true\n            hdiutil attach \"$2\" -mountpoint
+              \"/Volumes/chef_software\"\n            cd / && /usr/sbin/installer
+              -pkg `find \"/Volumes/chef_software\" -name \\*.pkg` -target /\n            hdiutil
+              detach \"/Volumes/chef_software\"\n            ;;\n          \"sh\"
+              )\n            echo \"installing with sh...\"\n            sh \"$2\"\n
+              \           ;;\n          *)\n            echo \"Unknown filetype: $1\"\n
+              \           report_bug\n            exit 1\n            ;;\n        esac\n
+              \       if test $? -ne 0; then\n          echo \"Installation failed\"\n
+              \         report_bug\n          exit 1\n        fi\n      }\n      \n
+              \     if test \"x$TMPDIR\" = \"x\"; then\n        tmp=\"/tmp\"\n      else\n
+              \       tmp=$TMPDIR\n      fi\n      # secure-ish temp dir creation
+              without having mktemp available (DDoS-able but not expliotable)\n      tmp_dir=\"$tmp/install.sh.$$\"\n
+              \     (umask 077 && mkdir $tmp_dir) || exit 1\n      \n      ############\n
+              \     # end of helpers.sh\n      ############\n      \n      \n      project=chefdk\n
+              \     version=latest\n      channel=unstable\n      \n      \n      #
+              platform_detection.sh\n      ############\n      # This section makes
+              platform detection compatible with omnitruck on the system\n      #
+              \  it runs.\n      #\n      # Outputs:\n      # $platform: Name of the
+              platform.\n      # $platform_version: Version of the platform.\n      #
+              $machine: System's architecture.\n      ############\n      \n      #\n
+              \     # Platform and Platform Version detection\n      #\n      # NOTE:
+              This should now match ohai platform and platform_version matching.\n
+              \     # do not invented new platform and platform_version schemas, just
+              make this behave\n      # like what ohai returns as platform and platform_version
+              for the server.\n      #\n      # ALSO NOTE: Do not mangle platform
+              or platform_version here.  It is less error\n      # prone and more
+              future-proof to do that in the server, and then all omnitruck clients\n
+              \     # will 'inherit' the changes (install.sh is not the only client
+              of the omnitruck\n      # endpoint out there).\n      #\n      \n      machine=`uname
+              -m`\n      os=`uname -s`\n      \n      if test -f \"/etc/lsb-release\"
+              && grep -q DISTRIB_ID /etc/lsb-release && ! grep -q wrlinux /etc/lsb-release;
+              then\n        platform=`grep DISTRIB_ID /etc/lsb-release | cut -d \"=\"
+              -f 2 | tr '[A-Z]' '[a-z]'`\n        platform_version=`grep DISTRIB_RELEASE
+              /etc/lsb-release | cut -d \"=\" -f 2`\n      elif test -f \"/etc/debian_version\";
+              then\n        platform=\"debian\"\n        platform_version=`cat /etc/debian_version`\n
+              \     elif test -f \"/etc/redhat-release\"; then\n        platform=`sed
+              's/^\\(.\\+\\) release.*/\\1/' /etc/redhat-release | tr '[A-Z]' '[a-z]'`\n
+              \       platform_version=`sed 's/^.\\+ release \\([.0-9]\\+\\).*/\\1/'
+              /etc/redhat-release`\n      \n        # If /etc/redhat-release exists,
+              we act like RHEL by default\n        if test \"$platform\" = \"fedora\";
+              then\n          # FIXME: stop remapping fedora to el\n          # FIXME:
+              remove client side platform_version mangling and hard coded yolo\n          #
+              Change platform version for use below.\n          platform_version=\"6.0\"\n
+              \       fi\n      \n        if test \"$platform\" = \"xenserver\"; then\n
+              \         # Current XenServer 6.2 is based on CentOS 5, platform is
+              not reset to \"el\" server should hanlde response\n          platform=\"xenserver\"\n
+              \       else\n          # FIXME: use \"redhat\"\n          platform=\"el\"\n
+              \       fi\n      \n      elif test -f \"/etc/system-release\"; then\n
+              \       platform=`sed 's/^\\(.\\+\\) release.\\+/\\1/' /etc/system-release
+              | tr '[A-Z]' '[a-z]'`\n        platform_version=`sed 's/^.\\+ release
+              \\([.0-9]\\+\\).*/\\1/' /etc/system-release | tr '[A-Z]' '[a-z]'`\n
+              \       # amazon is built off of fedora, so act like RHEL\n        if
+              test \"$platform\" = \"amazon linux ami\"; then\n          # FIXME:
+              remove client side platform_version mangling and hard coded yolo, and
+              remapping to deprecated \"el\"\n          platform=\"el\"\n          platform_version=\"6.0\"\n
+              \       fi\n      # Apple OS X\n      elif test -f \"/usr/bin/sw_vers\";
+              then\n        platform=\"mac_os_x\"\n        # Matching the tab-space
+              with sed is error-prone\n        platform_version=`sw_vers | awk '/^ProductVersion:/
+              { print $2 }' | cut -d. -f1,2`\n      \n        # x86_64 Apple hardware
+              often runs 32-bit kernels (see OHAI-63)\n        x86_64=`sysctl -n hw.optional.x86_64`\n
+              \       if test $x86_64 -eq 1; then\n          machine=\"x86_64\"\n
+              \       fi\n      elif test -f \"/etc/release\"; then\n        machine=`/usr/bin/uname
+              -p`\n        if grep -q SmartOS /etc/release; then\n          platform=\"smartos\"\n
+              \         platform_version=`grep ^Image /etc/product | awk '{ print
+              $3 }'`\n        else\n          platform=\"solaris2\"\n          platform_version=`/usr/bin/uname
+              -r`\n        fi\n      elif test -f \"/etc/SuSE-release\"; then\n        if
+              grep -q 'Enterprise' /etc/SuSE-release;\n        then\n            platform=\"sles\"\n
+              \           platform_version=`awk '/^VERSION/ {V = $3}; /^PATCHLEVEL/
+              {P = $3}; END {print V \".\" P}' /etc/SuSE-release`\n        else\n
+              \           platform=\"suse\"\n            platform_version=`awk '/^VERSION
+              =/ { print $3 }' /etc/SuSE-release`\n        fi\n      elif test \"x$os\"
+              = \"xFreeBSD\"; then\n        platform=\"freebsd\"\n        platform_version=`uname
+              -r | sed 's/-.*//'`\n      elif test \"x$os\" = \"xAIX\"; then\n        platform=\"aix\"\n
+              \       platform_version=\"`uname -v`.`uname -r`\"\n        machine=\"powerpc\"\n
+              \     elif test -f \"/etc/os-release\"; then\n        . /etc/os-release\n
+              \       if test \"x$CISCO_RELEASE_INFO\" != \"x\"; then\n          .
+              $CISCO_RELEASE_INFO\n        fi\n      \n        platform=$ID\n        platform_version=$VERSION\n
+              \     fi\n      \n      if test \"x$platform\" = \"x\"; then\n        echo
+              \"Unable to determine platform version!\"\n        report_bug\n        exit
+              1\n      fi\n      \n      #\n      # NOTE: platform manging in the
+              install.sh is DEPRECATED\n      #\n      # - install.sh should be true
+              to ohai and should not remap\n      #   platform or platform versions.\n
+              \     #\n      # - remapping platform and mangling platform version
+              numbers is\n      #   now the complete responsibility of the server-side
+              endpoints\n      #\n      \n      major_version=`echo $platform_version
+              | cut -d. -f1`\n      case $platform in\n        # FIXME: should remove
+              this case statement completely\n        \"el\")\n          # FIXME:
+              \ \"el\" is deprecated, should use \"redhat\"\n          platform_version=$major_version\n
+              \         ;;\n        \"debian\")\n          # FIXME: remove client-side
+              yolo here\n          case $major_version in\n            \"5\") platform_version=\"6\";;
+              \ # FIXME: need to port this \"reverse-yolo\" into platform.rb\n            \"6\")
+              platform_version=\"6\";;\n            \"7\") platform_version=\"6\";;\n
+              \         esac\n          ;;\n        \"freebsd\")\n          platform_version=$major_version\n
+              \         ;;\n        \"sles\")\n          platform_version=$major_version\n
+              \         ;;\n        \"suse\")\n          platform_version=$major_version\n
+              \         ;;\n      esac\n      \n      if test \"x$platform_version\"
+              = \"x\"; then\n        echo \"Unable to determine platform version!\"\n
+              \       report_bug\n        exit 1\n      fi\n      \n      if test
+              \"x$platform\" = \"xsolaris2\"; then\n        # hack up the path on
+              Solaris to find wget, pkgadd\n        PATH=/usr/sfw/bin:/usr/sbin:$PATH\n
+              \       export PATH\n      fi\n      \n      echo \"$platform $platform_version
+              $machine\"\n      \n      ############\n      # end of platform_detection.sh\n
+              \     ############\n      \n      \n      # artifactory_urls.sh\n      ############\n
+              \     # This section sets up the information for a build to be installed
+              from artifactory\n      #  then uses $platform, $platform_version and
+              $machine to select the correct\n      #  version.\n      #\n      #
+              Inputs:\n      # $platform:\n      # $platform_version:\n      # $machine:\n
+              \     #\n      # Outputs:\n      # $download_url:\n      # $sha256:\n
+              \     ############\n      \n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/14.04/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.9/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.9/chefdk-0.13.19-1.dmg.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/debian/8/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/8/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012r2/i386\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012r2/chefdk-0.13.19-1-x86.msi\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 e82aaeb0ccefd32ae049e8b32045cc6d2acce75f7e4ae68e6e96bf198cb937b7\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.11/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.11/chefdk-0.13.19-1.dmg.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/debian/6/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/6/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 bb5d254b05d1a536f58ef69e64e581dc113bdb32275c6104553a1782182c2cdb\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/windows/2008r2/i386\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2008r2/chefdk-0.13.19-1-x86.msi.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/debian/6/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/6/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.9/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.9/chefdk-0.13.19-1.dmg\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 dfd9d05caab653a92717263fef698b83e14046f2d92cd627fd3725f10009062b\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012r2/i386\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012r2/chefdk-0.13.19-1-x86.msi.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012/i386\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012/chefdk-0.13.19-1-x86.msi\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 e82aaeb0ccefd32ae049e8b32045cc6d2acce75f7e4ae68e6e96bf198cb937b7\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/windows/2008r2/i386\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2008r2/chefdk-0.13.19-1-x86.msi\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 e82aaeb0ccefd32ae049e8b32045cc6d2acce75f7e4ae68e6e96bf198cb937b7\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/debian/7/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/7/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 bb5d254b05d1a536f58ef69e64e581dc113bdb32275c6104553a1782182c2cdb\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/el/7/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/7/chefdk-0.13.19-1.el7.x86_64.rpm\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 95cedf524c58cdb37421867aa6133a9774080136b5f35ea68d2822b6db9fdbfc\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012/i386\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012/chefdk-0.13.19-1-x86.msi.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/debian/7/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/7/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/12.04/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/12.04/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/debian/8/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/8/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 bb5d254b05d1a536f58ef69e64e581dc113bdb32275c6104553a1782182c2cdb\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/el/6/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/6/chefdk-0.13.19-1.el6.x86_64.rpm.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/12.04/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/12.04/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 530bca33b6b06f29b96056f79d024a8c58f9dee92e85f53bf5aa567b4f94a0f8\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/el/6/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/6/chefdk-0.13.19-1.el6.x86_64.rpm\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 2aa10bc3f4948ea3788d8774a653ef048364841bb38b70f3eda6c8e64b27d152\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/14.04/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 530bca33b6b06f29b96056f79d024a8c58f9dee92e85f53bf5aa567b4f94a0f8\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.10/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.10/chefdk-0.13.19-1.dmg\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 dfd9d05caab653a92717263fef698b83e14046f2d92cd627fd3725f10009062b\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/el/7/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/7/chefdk-0.13.19-1.el7.x86_64.rpm.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.11/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.11/chefdk-0.13.19-1.dmg\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 dfd9d05caab653a92717263fef698b83e14046f2d92cd627fd3725f10009062b\"
+              >> \"$artifact_info_dir/artifact_info\"\n      \n        artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.10/x86_64\"\n
+              \       mkdir -p $artifact_info_dir\n        touch \"$artifact_info_dir/artifact_info\"\n
+              \       echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.10/chefdk-0.13.19-1.dmg.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n        echo \"sha256 \" >>
+              \"$artifact_info_dir/artifact_info\"\n      \n      \n      artifact_info_for_platform=\"$tmp_dir/artifact_info/$platform/$platform_version/$machine/artifact_info\"\n
+              \     \n      download_url=`awk '$1 == \"url\" { print $2 }' \"$artifact_info_for_platform\"`\n
+              \     sha256=`awk '$1 == \"sha256\" { print $2 }' \"$artifact_info_for_platform\"`\n
+              \     \n      \n      # fetch_package.sh\n      ############\n      #
+              This section fetchs a package from $download_url and verifies its metadata.\n
+              \     #\n      # Inputs:\n      # $download_url:\n      # $tmp_dir:\n
+              \     # Optional Inputs:\n      # $cmdline_filename: Name of the package
+              downloaded on local disk.\n      # $cmdline_dl_dir: Name of the directory
+              downloaded package will be saved to on local disk.\n      #\n      #
+              Outputs:\n      # $download_filename: Name of the downloaded file on
+              local disk.\n      # $filetype: Type of the file downloaded.\n      ############\n
+              \     \n      filename=`echo $download_url | sed -e 's/^.*\\///'`\n
+              \     filetype=`echo $filename | sed -e 's/^.*\\.//'`\n      \n      #
+              use either $tmp_dir, the provided directory (-d) or the provided filename
+              (-f)\n      if test \"x$cmdline_filename\" != \"x\"; then\n        download_filename=\"$cmdline_filename\"\n
+              \     elif test \"x$cmdline_dl_dir\" != \"x\"; then\n        download_filename=\"$cmdline_dl_dir/$filename\"\n
+              \     else\n        download_filename=\"$tmp_dir/$filename\"\n      fi\n
+              \     \n      # ensure the parent directory where to download the installer
+              always exists\n      download_dir=`dirname $download_filename`\n      (umask
+              077 && mkdir -p $download_dir) || exit 1\n      \n      # check if we
+              have that file locally available and if so verify the checksum\n      cached_file_available=\"false\"\n
+              \     if test -f $download_filename; then\n        echo \"$download_filename
+              already exists, verifiying checksum...\"\n        if do_checksum \"$download_filename\"
+              \"$sha256\"; then\n          echo \"checksum compare succeeded, using
+              existing file!\"\n          cached_file_available=\"true\"\n        else\n
+              \         echo \"checksum mismatch, downloading latest version of the
+              file\"\n        fi\n      fi\n      \n      # download if no local version
+              of the file available\n      if test \"x$cached_file_available\" !=
+              \"xtrue\"; then\n        do_download \"$download_url\"  \"$download_filename\"\n
+              \       do_checksum \"$download_filename\" \"$sha256\" || checksum_mismatch\n
+              \     fi\n      \n      ############\n      # end of fetch_package.sh\n
+              \     ############\n      \n      \n      # install_package.sh\n      ############\n
+              \     # Installs a package and removed the temp directory.\n      #\n
+              \     # Inputs:\n      # $download_filename: Name of the file to be
+              installed.\n      # $filetype: Type of the file to be installed.\n      #
+              $version: The version requested. Used only for warning user if not set.\n
+              \     ############\n      \n      if test \"x$version\" = \"x\"; then\n
+              \       echo\n        echo \"WARNING WARNING WARNING WARNING WARNING
+              WARNING WARNING WARNING WARNING\"\n        echo\n        echo \"You
+              are installing an omnibus package without a version pin.  If you are
+              installing\"\n        echo \"on production servers via an automated
+              process this is DANGEROUS and you will\"\n        echo \"be upgraded
+              without warning on new releases, even to new major releases.\"\n        echo
+              \"Letting the version float is only appropriate in desktop, test, development
+              or\"\n        echo \"CI/CD environments.\"\n        echo\n        echo
+              \"WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING\"\n
+              \       echo\n      fi\n      \n      install_file $filetype \"$download_filename\"\n
+              \     \n      if test \"x$tmp_dir\" != \"x\"; then\n        rm -r \"$tmp_dir\"\n
+              \     fi\n      \n      ############\n      # end of install_package.sh\n
+              \     ############\n      \n      EOL\n      chmod +x /tmp/chef-installer.sh\n
+              \     sudo -E /tmp/chef-installer.sh]\n      >>>>>> ----------------------\n
+              \     zlib(finalizer): the stream was freed prematurely.\n      ----
+              End output of bundle exec kitchen converge  -c ----\n      Ran bundle
+              exec kitchen converge  -c returned 10\n      \n      Resource Declaration:\n
+              \     ---------------------\n      # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb\n
+              \     \n        7:     cookbook_kitchen \"#{command} docker\" do\n        8:
+              \    end\n        9: \n      \n      Compiled Resource:\n      ------------------\n
+              \     # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb:7:in
+              `block in <class:TopCookbooks>'\n      \n      cookbook_kitchen(\"converge
+              docker\") do\n        action [:run]\n        updated true\n        updated_by_last_action
+              true\n        retries 0\n        retry_delay 2\n        default_guard_interpreter
+              :default\n        declared_type :cookbook_kitchen\n        cookbook_name
+              \"acceptance-cookbook\"\n        repository \"https://github.com/chef-cookbooks/docker.git\"\n
+              \       test_cookbook \"docker\"\n        repository_root \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/test_run/docker\"\n
+              \       branch \"master\"\n        command \"converge\"\n        kitchen_options
+              \"-c\"\n        kitchen_dir \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/test_run/docker/\"\n
+              \       chef_channel \"unstable\"\n        chef_version \"latest\"\n
+              \       env {\"BUNDLE_GEMFILE\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/Gemfile\",
+              \"KITCHEN_YAML\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.kitchen.docker.yml\"}\n
+              \     end\n      \n      Platform:\n      ---------\n      x86_64-linux\n
+              \     \n    \n    ================================================================================\n
+              \   Error executing action `run` on resource 'top_cookbooks[converge]'\n
+              \   ================================================================================\n
+              \   \n    Mixlib::ShellOut::ShellCommandFailed\n    ------------------------------------\n
+              \   cookbook_kitchen[converge docker] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+              line 7) had an error: Mixlib::ShellOut::ShellCommandFailed: execute[bundle
+              exec kitchen converge  -c] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '10'\n    ---- Begin output of
+              bundle exec kitchen converge  -c ----\n    STDOUT: -----> Starting Kitchen
+              (v1.7.2)\n    -----> Creating <docker-default-ubuntu-1404>...\n           If
+              you are not using an account that qualifies under the AWS\n    free-tier,
+              you may be charged to run these suites. The charge\n    should be minimal,
+              but neither Test Kitchen nor its maintainers\n    are responsible for
+              your incurred costs.\n    \n           Instance <i-54444b93> requested.\n
+              \          Polling AWS for existence, attempt 0...\n           Attempting
+              to tag the instance, 0 retries\n           EC2 instance <i-54444b93>
+              created.\n           Waited 0/300s for instance <i-54444b93> to become
+              ready.\n           Waited 5/300s for instance <i-54444b93> to become
+              ready.\n           Waited 10/300s for instance <i-54444b93> to become
+              ready.\n           Waited 15/300s for instance <i-54444b93> to become
+              ready.\n           Waited 20/300s for instance <i-54444b93> to become
+              ready.\n           Waited 25/300s for instance <i-54444b93> to become
+              ready.\n           EC2 instance <i-54444b93> ready.\n           Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n           Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n           Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n           Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n           Waiting
+              for SSH service on 10.194.9.98:22, retrying in 3 seconds\n           [SSH]
+              Established\n           Finished creating <docker-default-ubuntu-1404>
+              (1m16.61s).\n    -----> Converging <docker-default-ubuntu-1404>...\n
+              \          Preparing files for transfer\n           Preparing dna.json\n
+              \          Resolving cookbook dependencies with Berkshelf 4.3.2...\n
+              \          Removing non-cookbook files before transfer\n           Preparing
+              validation.pem\n           Preparing client.rb\n           ubuntu 14.04
+              x86_64\n           downloading http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\n
+              \          http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\n
+              \            to file /tmp/install.sh.1355/chefdk_0.13.19-1_amd64.deb\n
+              \          trying wget...\n           trying curl...\n           /tmp/chef-installer.sh:
+              line 140: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n           grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n           trying perl...\n           /tmp/chef-installer.sh:
+              line 170: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n           grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n           trying python...\n           /tmp/chef-installer.sh:
+              line 191: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\n           grep: /tmp/install.sh.1355/stderr:
+              No such file or directory\n           Unable to retrieve a valid package!\n
+              \          Version: latest\n           \n           Please file a Bug
+              Report at https://github.com/chef/omnitruck/issues/new\n           Alternatively,
+              feel free to open a Support Ticket at https://www.chef.io/support/tickets\n
+              \          More Chef support resources can be found at https://www.chef.io/support\n
+              \          \n           Please include as many details about the problem
+              as possible i.e., how to reproduce\n           the problem (if possible),
+              type of the Operating System and its version, etc.,\n           and
+              any other relevant details that might help us with troubleshooting.\n
+              \          \n           Metadata URL: \n           Download URL: http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\n
+              \          http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\n
+              \          \\nDEBUG OUTPUT FOLLOWS:\\n\\nSTDERR from wget:\\n\\nhttp://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb:
+              No such file or directory\\n\n    STDERR: >>>>>> Converge failed on
+              instance <docker-default-ubuntu-1404>.\n    >>>>>> Please see .kitchen/logs/docker-default-ubuntu-1404.log
+              for more details\n    >>>>>> ------Exception-------\n    >>>>>> Class:
+              Kitchen::ActionFailed\n    >>>>>> Message: SSH exited (1) for command:
+              [sudo -E cat > /tmp/chef-installer.sh <<\"EOL\"\n    #!/bin/bash\n    #!/bin/sh\n
+              \   # WARNING: REQUIRES /bin/sh\n    #\n    # - must run on /bin/sh
+              on solaris 9\n    # - must run on /bin/sh on AIX 6.x\n    #\n    # Copyright::
+              Copyright (c) 2010-2015 Chef Software, Inc.\n    # License:: Apache
+              License, Version 2.0\n    #\n    # Licensed under the Apache License,
+              Version 2.0 (the \"License\");\n    # you may not use this file except
+              in compliance with the License.\n    # You may obtain a copy of the
+              License at\n    #\n    #     http://www.apache.org/licenses/LICENSE-2.0\n
+              \   #\n    # Unless required by applicable law or agreed to in writing,
+              software\n    # distributed under the License is distributed on an \"AS
+              IS\" BASIS,\n    # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+              express or implied.\n    # See the License for the specific language
+              governing permissions and\n    # limitations under the License.\n    #\n
+              \   \n    # helpers.sh\n    ############\n    # This section has some
+              helper functions to make life easier.\n    #\n    # Outputs:\n    #
+              $tmp_dir: secure-ish temp directory that can be used during installation.\n
+              \   ############\n    \n    # Check whether a command exists - returns
+              0 if it does, 1 if it does not\n    exists() {\n      if command -v
+              $1 >/dev/null 2>&1\n      then\n        return 0\n      else\n        return
+              1\n      fi\n    }\n    \n    # Output the instructions to report bug
+              about this script\n    report_bug() {\n      echo \"Version: $version\"\n
+              \     echo \"\"\n      echo \"Please file a Bug Report at https://github.com/chef/omnitruck/issues/new\"\n
+              \     echo \"Alternatively, feel free to open a Support Ticket at https://www.chef.io/support/tickets\"\n
+              \     echo \"More Chef support resources can be found at https://www.chef.io/support\"\n
+              \     echo \"\"\n      echo \"Please include as many details about the
+              problem as possible i.e., how to reproduce\"\n      echo \"the problem
+              (if possible), type of the Operating System and its version, etc.,\"\n
+              \     echo \"and any other relevant details that might help us with
+              troubleshooting.\"\n      echo \"\"\n    }\n    \n    checksum_mismatch()
+              {\n      echo \"Package checksum mismatch!\"\n      report_bug\n      exit
+              1\n    }\n    \n    unable_to_retrieve_package() {\n      echo \"Unable
+              to retrieve a valid package!\"\n      report_bug\n      echo \"Metadata
+              URL: $metadata_url\"\n      if test \"x$download_url\" != \"x\"; then\n
+              \       echo \"Download URL: $download_url\"\n      fi\n      if test
+              \"x$stderr_results\" != \"x\"; then\n        echo \"\\nDEBUG OUTPUT
+              FOLLOWS:\\n$stderr_results\"\n      fi\n      exit 1\n    }\n    \n
+              \   http_404_error() {\n      echo \"Omnitruck artifact does not exist
+              for version $version on platform $platform\"\n      echo \"\"\n      echo
+              \"Either this means:\"\n      echo \"   - We do not support $platform\"\n
+              \     echo \"   - We do not have an artifact for $version\"\n      echo
+              \"\"\n      echo \"This is often the latter case due to running a prerelease
+              or RC version of chef\"\n      echo \"or a gem version which was only
+              pushed to rubygems and not omnitruck.\"\n      echo \"\"\n      echo
+              \"You may be able to set your knife[:bootstrap_version] to the most
+              recent stable\"\n      echo \"release of Chef to fix this problem (or
+              the most recent stable major version number).\"\n      echo \"\"\n      echo
+              \"In order to test the version parameter, adventurous users may take
+              the Metadata URL\"\n      echo \"below and modify the '&v=<number>'
+              parameter until you successfully get a URL that\"\n      echo \"does
+              not 404 (e.g. via curl or wget).  You should be able to use '&v=11'
+              or '&v=12'\"\n      echo \"succesfully.\"\n      echo \"\"\n      echo
+              \"If you cannot fix this problem by setting the bootstrap_version, it
+              probably means\"\n      echo \"that $platform is not supported.\"\n
+              \     echo \"\"\n      # deliberately do not call report_bug to suppress
+              bug report noise.\n      echo \"Metadata URL: $metadata_url\"\n      if
+              test \"x$download_url\" != \"x\"; then\n        echo \"Download URL:
+              $download_url\"\n      fi\n      if test \"x$stderr_results\" != \"x\";
+              then\n        echo \"\\nDEBUG OUTPUT FOLLOWS:\\n$stderr_results\"\n
+              \     fi\n      exit 1\n    }\n    \n    capture_tmp_stderr() {\n      #
+              spool up /tmp/stderr from all the commands we called\n      if test
+              -f \"$tmp_dir/stderr\"; then\n        output=`cat $tmp_dir/stderr`\n
+              \       stderr_results=\"${stderr_results}\\nSTDERR from $1:\\n\\n$output\\n\"\n
+              \       rm $tmp_dir/stderr\n      fi\n    }\n    \n    # do_wget URL
+              FILENAME\n    do_wget() {\n      echo \"trying wget...\"\n      wget
+              -O \"$2\" \"$1\" 2>$tmp_dir/stderr\n      rc=$?\n      # check for 404\n
+              \     grep \"ERROR 404\" $tmp_dir/stderr 2>&1 >/dev/null\n      if test
+              $? -eq 0; then\n        echo \"ERROR 404\"\n        http_404_error\n
+              \     fi\n    \n      # check for bad return status or empty output\n
+              \     if test $rc -ne 0 || test ! -s \"$2\"; then\n        capture_tmp_stderr
+              \"wget\"\n        return 1\n      fi\n    \n      return 0\n    }\n
+              \   \n    # do_curl URL FILENAME\n    do_curl() {\n      echo \"trying
+              curl...\"\n      curl --retry 5 -sL -D $tmp_dir/stderr \"$1\" > \"$2\"\n
+              \     rc=$?\n      # check for 404\n      grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n      if test $? -eq 0; then\n        echo \"ERROR
+              404\"\n        http_404_error\n      fi\n    \n      # check for bad
+              return status or empty output\n      if test $rc -ne 0 || test ! -s
+              \"$2\"; then\n        capture_tmp_stderr \"curl\"\n        return 1\n
+              \     fi\n    \n      return 0\n    }\n    \n    # do_fetch URL FILENAME\n
+              \   do_fetch() {\n      echo \"trying fetch...\"\n      fetch -o \"$2\"
+              \"$1\" 2>$tmp_dir/stderr\n      # check for bad return status\n      test
+              $? -ne 0 && return 1\n      return 0\n    }\n    \n    # do_perl URL
+              FILENAME\n    do_perl() {\n      echo \"trying perl...\"\n      perl
+              -e 'use LWP::Simple; getprint($ARGV[0]);' \"$1\" > \"$2\" 2>$tmp_dir/stderr\n
+              \     rc=$?\n      # check for 404\n      grep \"404 Not Found\" $tmp_dir/stderr
+              2>&1 >/dev/null\n      if test $? -eq 0; then\n        echo \"ERROR
+              404\"\n        http_404_error\n      fi\n    \n      # check for bad
+              return status or empty output\n      if test $rc -ne 0 || test ! -s
+              \"$2\"; then\n        capture_tmp_stderr \"perl\"\n        return 1\n
+              \     fi\n    \n      return 0\n    }\n    \n    # do_python URL FILENAME\n
+              \   do_python() {\n      echo \"trying python...\"\n      python -c
+              \"import sys,urllib2 ; sys.stdout.write(urllib2.urlopen(sys.argv[1]).read())\"
+              \"$1\" > \"$2\" 2>$tmp_dir/stderr\n      rc=$?\n      # check for 404\n
+              \     grep \"HTTP Error 404\" $tmp_dir/stderr 2>&1 >/dev/null\n      if
+              test $? -eq 0; then\n        echo \"ERROR 404\"\n        http_404_error\n
+              \     fi\n    \n      # check for bad return status or empty output\n
+              \     if test $rc -ne 0 || test ! -s \"$2\"; then\n        capture_tmp_stderr
+              \"python\"\n        return 1\n      fi\n      return 0\n    }\n    \n
+              \   # returns 0 if checksums match\n    do_checksum() {\n      if exists
+              sha256sum; then\n        echo \"Comparing checksum with sha256sum...\"\n
+              \       checksum=`sha256sum $1 | awk '{ print $1 }'`\n        return
+              `test \"x$checksum\" = \"x$2\"`\n      elif exists shasum; then\n        echo
+              \"Comparing checksum with shasum...\"\n        checksum=`shasum -a 256
+              $1 | awk '{ print $1 }'`\n        return `test \"x$checksum\" = \"x$2\"`\n
+              \     else\n        echo \"WARNING: could not find a valid checksum
+              program, pre-install shasum or sha256sum in your O/S image to get valdation...\"\n
+              \       return 0\n      fi\n    }\n    \n    # do_download URL FILENAME\n
+              \   do_download() {\n      echo \"downloading $1\"\n      echo \"  to
+              file $2\"\n    \n      url=`echo $1`\n      if test \"x$platform\" =
+              \"xsolaris2\"; then\n        if test \"x$platform_version\" = \"x5.9\"
+              -o \"x$platform_version\" = \"x5.10\"; then\n          # solaris 9 lacks
+              openssl, solaris 10 lacks recent enough credentials - your base O/S
+              is completely insecure, please upgrade\n          url=`echo $url | sed
+              -e 's/https/http/'`\n        fi\n      fi\n    \n      # we try all
+              of these until we get success.\n      # perl, in particular may be present
+              but LWP::Simple may not be installed\n    \n      if exists wget; then\n
+              \       do_wget $url $2 && return 0\n      fi\n    \n      if exists
+              curl; then\n        do_curl $url $2 && return 0\n      fi\n    \n      if
+              exists fetch; then\n        do_fetch $url $2 && return 0\n      fi\n
+              \   \n      if exists perl; then\n        do_perl $url $2 && return
+              0\n      fi\n    \n      if exists python; then\n        do_python $url
+              $2 && return 0\n      fi\n    \n      unable_to_retrieve_package\n    }\n
+              \   \n    # install_file TYPE FILENAME\n    # TYPE is \"rpm\", \"deb\",
+              \"solaris\", \"sh\", etc.\n    install_file() {\n      echo \"Installing
+              $project $version\"\n      case \"$1\" in\n        \"rpm\")\n          if
+              test \"x$platform\" = \"xnexus\" || test \"x$platform\" = \"xios_xr\";
+              then\n            echo \"installing with yum...\"\n            yum install
+              -yv \"$2\"\n          else\n            echo \"installing with rpm...\"\n
+              \           rpm -Uvh --oldpackage --replacepkgs \"$2\"\n          fi\n
+              \         ;;\n        \"deb\")\n          echo \"installing with dpkg...\"\n
+              \         dpkg -i \"$2\"\n          ;;\n        \"bff\")\n          echo
+              \"installing with installp...\"\n          installp -aXYgd \"$2\" all\n
+              \         ;;\n        \"solaris\")\n          echo \"installing with
+              pkgadd...\"\n          echo \"conflict=nocheck\" > $tmp_dir/nocheck\n
+              \         echo \"action=nocheck\" >> $tmp_dir/nocheck\n          echo
+              \"mail=\" >> $tmp_dir/nocheck\n          pkgrm -a $tmp_dir/nocheck -n
+              $project >/dev/null 2>&1 || true\n          pkgadd -G -n -d \"$2\" -a
+              $tmp_dir/nocheck $project\n          ;;\n        \"pkg\")\n          echo
+              \"installing with installer...\"\n          cd / && /usr/sbin/installer
+              -pkg \"$2\" -target /\n          ;;\n        \"dmg\")\n          echo
+              \"installing dmg file...\"\n          hdiutil detach \"/Volumes/chef_software\"
+              >/dev/null 2>&1 || true\n          hdiutil attach \"$2\" -mountpoint
+              \"/Volumes/chef_software\"\n          cd / && /usr/sbin/installer -pkg
+              `find \"/Volumes/chef_software\" -name \\*.pkg` -target /\n          hdiutil
+              detach \"/Volumes/chef_software\"\n          ;;\n        \"sh\" )\n
+              \         echo \"installing with sh...\"\n          sh \"$2\"\n          ;;\n
+              \       *)\n          echo \"Unknown filetype: $1\"\n          report_bug\n
+              \         exit 1\n          ;;\n      esac\n      if test $? -ne 0;
+              then\n        echo \"Installation failed\"\n        report_bug\n        exit
+              1\n      fi\n    }\n    \n    if test \"x$TMPDIR\" = \"x\"; then\n      tmp=\"/tmp\"\n
+              \   else\n      tmp=$TMPDIR\n    fi\n    # secure-ish temp dir creation
+              without having mktemp available (DDoS-able but not expliotable)\n    tmp_dir=\"$tmp/install.sh.$$\"\n
+              \   (umask 077 && mkdir $tmp_dir) || exit 1\n    \n    ############\n
+              \   # end of helpers.sh\n    ############\n    \n    \n    project=chefdk\n
+              \   version=latest\n    channel=unstable\n    \n    \n    # platform_detection.sh\n
+              \   ############\n    # This section makes platform detection compatible
+              with omnitruck on the system\n    #   it runs.\n    #\n    # Outputs:\n
+              \   # $platform: Name of the platform.\n    # $platform_version: Version
+              of the platform.\n    # $machine: System's architecture.\n    ############\n
+              \   \n    #\n    # Platform and Platform Version detection\n    #\n
+              \   # NOTE: This should now match ohai platform and platform_version
+              matching.\n    # do not invented new platform and platform_version schemas,
+              just make this behave\n    # like what ohai returns as platform and
+              platform_version for the server.\n    #\n    # ALSO NOTE: Do not mangle
+              platform or platform_version here.  It is less error\n    # prone and
+              more future-proof to do that in the server, and then all omnitruck clients\n
+              \   # will 'inherit' the changes (install.sh is not the only client
+              of the omnitruck\n    # endpoint out there).\n    #\n    \n    machine=`uname
+              -m`\n    os=`uname -s`\n    \n    if test -f \"/etc/lsb-release\" &&
+              grep -q DISTRIB_ID /etc/lsb-release && ! grep -q wrlinux /etc/lsb-release;
+              then\n      platform=`grep DISTRIB_ID /etc/lsb-release | cut -d \"=\"
+              -f 2 | tr '[A-Z]' '[a-z]'`\n      platform_version=`grep DISTRIB_RELEASE
+              /etc/lsb-release | cut -d \"=\" -f 2`\n    elif test -f \"/etc/debian_version\";
+              then\n      platform=\"debian\"\n      platform_version=`cat /etc/debian_version`\n
+              \   elif test -f \"/etc/redhat-release\"; then\n      platform=`sed
+              's/^\\(.\\+\\) release.*/\\1/' /etc/redhat-release | tr '[A-Z]' '[a-z]'`\n
+              \     platform_version=`sed 's/^.\\+ release \\([.0-9]\\+\\).*/\\1/'
+              /etc/redhat-release`\n    \n      # If /etc/redhat-release exists, we
+              act like RHEL by default\n      if test \"$platform\" = \"fedora\";
+              then\n        # FIXME: stop remapping fedora to el\n        # FIXME:
+              remove client side platform_version mangling and hard coded yolo\n        #
+              Change platform version for use below.\n        platform_version=\"6.0\"\n
+              \     fi\n    \n      if test \"$platform\" = \"xenserver\"; then\n
+              \       # Current XenServer 6.2 is based on CentOS 5, platform is not
+              reset to \"el\" server should hanlde response\n        platform=\"xenserver\"\n
+              \     else\n        # FIXME: use \"redhat\"\n        platform=\"el\"\n
+              \     fi\n    \n    elif test -f \"/etc/system-release\"; then\n      platform=`sed
+              's/^\\(.\\+\\) release.\\+/\\1/' /etc/system-release | tr '[A-Z]' '[a-z]'`\n
+              \     platform_version=`sed 's/^.\\+ release \\([.0-9]\\+\\).*/\\1/'
+              /etc/system-release | tr '[A-Z]' '[a-z]'`\n      # amazon is built off
+              of fedora, so act like RHEL\n      if test \"$platform\" = \"amazon
+              linux ami\"; then\n        # FIXME: remove client side platform_version
+              mangling and hard coded yolo, and remapping to deprecated \"el\"\n        platform=\"el\"\n
+              \       platform_version=\"6.0\"\n      fi\n    # Apple OS X\n    elif
+              test -f \"/usr/bin/sw_vers\"; then\n      platform=\"mac_os_x\"\n      #
+              Matching the tab-space with sed is error-prone\n      platform_version=`sw_vers
+              | awk '/^ProductVersion:/ { print $2 }' | cut -d. -f1,2`\n    \n      #
+              x86_64 Apple hardware often runs 32-bit kernels (see OHAI-63)\n      x86_64=`sysctl
+              -n hw.optional.x86_64`\n      if test $x86_64 -eq 1; then\n        machine=\"x86_64\"\n
+              \     fi\n    elif test -f \"/etc/release\"; then\n      machine=`/usr/bin/uname
+              -p`\n      if grep -q SmartOS /etc/release; then\n        platform=\"smartos\"\n
+              \       platform_version=`grep ^Image /etc/product | awk '{ print $3
+              }'`\n      else\n        platform=\"solaris2\"\n        platform_version=`/usr/bin/uname
+              -r`\n      fi\n    elif test -f \"/etc/SuSE-release\"; then\n      if
+              grep -q 'Enterprise' /etc/SuSE-release;\n      then\n          platform=\"sles\"\n
+              \         platform_version=`awk '/^VERSION/ {V = $3}; /^PATCHLEVEL/
+              {P = $3}; END {print V \".\" P}' /etc/SuSE-release`\n      else\n          platform=\"suse\"\n
+              \         platform_version=`awk '/^VERSION =/ { print $3 }' /etc/SuSE-release`\n
+              \     fi\n    elif test \"x$os\" = \"xFreeBSD\"; then\n      platform=\"freebsd\"\n
+              \     platform_version=`uname -r | sed 's/-.*//'`\n    elif test \"x$os\"
+              = \"xAIX\"; then\n      platform=\"aix\"\n      platform_version=\"`uname
+              -v`.`uname -r`\"\n      machine=\"powerpc\"\n    elif test -f \"/etc/os-release\";
+              then\n      . /etc/os-release\n      if test \"x$CISCO_RELEASE_INFO\"
+              != \"x\"; then\n        . $CISCO_RELEASE_INFO\n      fi\n    \n      platform=$ID\n
+              \     platform_version=$VERSION\n    fi\n    \n    if test \"x$platform\"
+              = \"x\"; then\n      echo \"Unable to determine platform version!\"\n
+              \     report_bug\n      exit 1\n    fi\n    \n    #\n    # NOTE: platform
+              manging in the install.sh is DEPRECATED\n    #\n    # - install.sh should
+              be true to ohai and should not remap\n    #   platform or platform versions.\n
+              \   #\n    # - remapping platform and mangling platform version numbers
+              is\n    #   now the complete responsibility of the server-side endpoints\n
+              \   #\n    \n    major_version=`echo $platform_version | cut -d. -f1`\n
+              \   case $platform in\n      # FIXME: should remove this case statement
+              completely\n      \"el\")\n        # FIXME:  \"el\" is deprecated, should
+              use \"redhat\"\n        platform_version=$major_version\n        ;;\n
+              \     \"debian\")\n        # FIXME: remove client-side yolo here\n        case
+              $major_version in\n          \"5\") platform_version=\"6\";;  # FIXME:
+              need to port this \"reverse-yolo\" into platform.rb\n          \"6\")
+              platform_version=\"6\";;\n          \"7\") platform_version=\"6\";;\n
+              \       esac\n        ;;\n      \"freebsd\")\n        platform_version=$major_version\n
+              \       ;;\n      \"sles\")\n        platform_version=$major_version\n
+              \       ;;\n      \"suse\")\n        platform_version=$major_version\n
+              \       ;;\n    esac\n    \n    if test \"x$platform_version\" = \"x\";
+              then\n      echo \"Unable to determine platform version!\"\n      report_bug\n
+              \     exit 1\n    fi\n    \n    if test \"x$platform\" = \"xsolaris2\";
+              then\n      # hack up the path on Solaris to find wget, pkgadd\n      PATH=/usr/sfw/bin:/usr/sbin:$PATH\n
+              \     export PATH\n    fi\n    \n    echo \"$platform $platform_version
+              $machine\"\n    \n    ############\n    # end of platform_detection.sh\n
+              \   ############\n    \n    \n    # artifactory_urls.sh\n    ############\n
+              \   # This section sets up the information for a build to be installed
+              from artifactory\n    #  then uses $platform, $platform_version and
+              $machine to select the correct\n    #  version.\n    #\n    # Inputs:\n
+              \   # $platform:\n    # $platform_version:\n    # $machine:\n    #\n
+              \   # Outputs:\n    # $download_url:\n    # $sha256:\n    ############\n
+              \   \n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/14.04/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.9/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.9/chefdk-0.13.19-1.dmg.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/debian/8/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/8/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012r2/i386\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012r2/chefdk-0.13.19-1-x86.msi\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 e82aaeb0ccefd32ae049e8b32045cc6d2acce75f7e4ae68e6e96bf198cb937b7\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.11/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.11/chefdk-0.13.19-1.dmg.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/debian/6/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/6/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 bb5d254b05d1a536f58ef69e64e581dc113bdb32275c6104553a1782182c2cdb\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/windows/2008r2/i386\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2008r2/chefdk-0.13.19-1-x86.msi.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/debian/6/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/6/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.9/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.9/chefdk-0.13.19-1.dmg\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 dfd9d05caab653a92717263fef698b83e14046f2d92cd627fd3725f10009062b\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012r2/i386\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012r2/chefdk-0.13.19-1-x86.msi.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012/i386\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012/chefdk-0.13.19-1-x86.msi\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 e82aaeb0ccefd32ae049e8b32045cc6d2acce75f7e4ae68e6e96bf198cb937b7\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/windows/2008r2/i386\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2008r2/chefdk-0.13.19-1-x86.msi\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 e82aaeb0ccefd32ae049e8b32045cc6d2acce75f7e4ae68e6e96bf198cb937b7\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/debian/7/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/7/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 bb5d254b05d1a536f58ef69e64e581dc113bdb32275c6104553a1782182c2cdb\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/el/7/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/7/chefdk-0.13.19-1.el7.x86_64.rpm\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 95cedf524c58cdb37421867aa6133a9774080136b5f35ea68d2822b6db9fdbfc\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/windows/2012/i386\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/windows/2012/chefdk-0.13.19-1-x86.msi.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/debian/7/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/7/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/12.04/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/12.04/chefdk_0.13.19-1_amd64.deb.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/debian/8/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/debian/8/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 bb5d254b05d1a536f58ef69e64e581dc113bdb32275c6104553a1782182c2cdb\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/el/6/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/6/chefdk-0.13.19-1.el6.x86_64.rpm.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/12.04/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/12.04/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 530bca33b6b06f29b96056f79d024a8c58f9dee92e85f53bf5aa567b4f94a0f8\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/el/6/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/6/chefdk-0.13.19-1.el6.x86_64.rpm\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 2aa10bc3f4948ea3788d8774a653ef048364841bb38b70f3eda6c8e64b27d152\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/ubuntu/14.04/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/ubuntu/14.04/chefdk_0.13.19-1_amd64.deb\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 530bca33b6b06f29b96056f79d024a8c58f9dee92e85f53bf5aa567b4f94a0f8\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.10/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.10/chefdk-0.13.19-1.dmg\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 dfd9d05caab653a92717263fef698b83e14046f2d92cd627fd3725f10009062b\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/el/7/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/el/7/chefdk-0.13.19-1.el7.x86_64.rpm.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n      artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.11/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.11/chefdk-0.13.19-1.dmg\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 dfd9d05caab653a92717263fef698b83e14046f2d92cd627fd3725f10009062b\"
+              >> \"$artifact_info_dir/artifact_info\"\n    \n      artifact_info_dir=\"$tmp_dir/artifact_info/mac_os_x/10.10/x86_64\"\n
+              \     mkdir -p $artifact_info_dir\n      touch \"$artifact_info_dir/artifact_info\"\n
+              \     echo \"url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.13.19/mac_os_x/10.10/chefdk-0.13.19-1.dmg.metadata.json\"
+              >> \"$artifact_info_dir/artifact_info\"\n      echo \"sha256 \" >> \"$artifact_info_dir/artifact_info\"\n
+              \   \n    \n    artifact_info_for_platform=\"$tmp_dir/artifact_info/$platform/$platform_version/$machine/artifact_info\"\n
+              \   \n    download_url=`awk '$1 == \"url\" { print $2 }' \"$artifact_info_for_platform\"`\n
+              \   sha256=`awk '$1 == \"sha256\" { print $2 }' \"$artifact_info_for_platform\"`\n
+              \   \n    \n    # fetch_package.sh\n    ############\n    # This section
+              fetchs a package from $download_url and verifies its metadata.\n    #\n
+              \   # Inputs:\n    # $download_url:\n    # $tmp_dir:\n    # Optional
+              Inputs:\n    # $cmdline_filename: Name of the package downloaded on
+              local disk.\n    # $cmdline_dl_dir: Name of the directory downloaded
+              package will be saved to on local disk.\n    #\n    # Outputs:\n    #
+              $download_filename: Name of the downloaded file on local disk.\n    #
+              $filetype: Type of the file downloaded.\n    ############\n    \n    filename=`echo
+              $download_url | sed -e 's/^.*\\///'`\n    filetype=`echo $filename |
+              sed -e 's/^.*\\.//'`\n    \n    # use either $tmp_dir, the provided
+              directory (-d) or the provided filename (-f)\n    if test \"x$cmdline_filename\"
+              != \"x\"; then\n      download_filename=\"$cmdline_filename\"\n    elif
+              test \"x$cmdline_dl_dir\" != \"x\"; then\n      download_filename=\"$cmdline_dl_dir/$filename\"\n
+              \   else\n      download_filename=\"$tmp_dir/$filename\"\n    fi\n    \n
+              \   # ensure the parent directory where to download the installer always
+              exists\n    download_dir=`dirname $download_filename`\n    (umask 077
+              && mkdir -p $download_dir) || exit 1\n    \n    # check if we have that
+              file locally available and if so verify the checksum\n    cached_file_available=\"false\"\n
+              \   if test -f $download_filename; then\n      echo \"$download_filename
+              already exists, verifiying checksum...\"\n      if do_checksum \"$download_filename\"
+              \"$sha256\"; then\n        echo \"checksum compare succeeded, using
+              existing file!\"\n        cached_file_available=\"true\"\n      else\n
+              \       echo \"checksum mismatch, downloading latest version of the
+              file\"\n      fi\n    fi\n    \n    # download if no local version of
+              the file available\n    if test \"x$cached_file_available\" != \"xtrue\";
+              then\n      do_download \"$download_url\"  \"$download_filename\"\n
+              \     do_checksum \"$download_filename\" \"$sha256\" || checksum_mismatch\n
+              \   fi\n    \n    ############\n    # end of fetch_package.sh\n    ############\n
+              \   \n    \n    # install_package.sh\n    ############\n    # Installs
+              a package and removed the temp directory.\n    #\n    # Inputs:\n    #
+              $download_filename: Name of the file to be installed.\n    # $filetype:
+              Type of the file to be installed.\n    # $version: The version requested.
+              Used only for warning user if not set.\n    ############\n    \n    if
+              test \"x$version\" = \"x\"; then\n      echo\n      echo \"WARNING WARNING
+              WARNING WARNING WARNING WARNING WARNING WARNING WARNING\"\n      echo\n
+              \     echo \"You are installing an omnibus package without a version
+              pin.  If you are installing\"\n      echo \"on production servers via
+              an automated process this is DANGEROUS and you will\"\n      echo \"be
+              upgraded without warning on new releases, even to new major releases.\"\n
+              \     echo \"Letting the version float is only appropriate in desktop,
+              test, development or\"\n      echo \"CI/CD environments.\"\n      echo\n
+              \     echo \"WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+              WARNING WARNING\"\n      echo\n    fi\n    \n    install_file $filetype
+              \"$download_filename\"\n    \n    if test \"x$tmp_dir\" != \"x\"; then\n
+              \     rm -r \"$tmp_dir\"\n    fi\n    \n    ############\n    # end
+              of install_package.sh\n    ############\n    \n    EOL\n    chmod +x
+              /tmp/chef-installer.sh\n    sudo -E /tmp/chef-installer.sh]\n    >>>>>>
+              ----------------------\n    zlib(finalizer): the stream was freed prematurely.\n
+              \   ---- End output of bundle exec kitchen converge  -c ----\n    Ran
+              bundle exec kitchen converge  -c returned 10\n    \n    Resource Declaration:\n
+              \   ---------------------\n    # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/provision.rb\n
+              \   \n      1: top_cookbooks \"converge\"\n    \n    Compiled Resource:\n
+              \   ------------------\n    # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in
+              `from_file'\n    \n    top_cookbooks(\"converge\") do\n      action
+              [:run]\n      updated true\n      updated_by_last_action true\n      retries
+              0\n      retry_delay 2\n      default_guard_interpreter :default\n      declared_type
+              :top_cookbooks\n      cookbook_name \"acceptance-cookbook\"\n      recipe_name
+              \"provision\"\n      command \"converge\"\n    end\n    \n    Platform:\n
+              \   ---------\n    x86_64-linux\n    \nStarting audit phase\n\n"
             7617: "\nRunning handlers:\n[2016-04-12T19:31:38+00:00] ERROR: Running
               exception handlers\nRunning handlers complete\n[2016-04-12T19:31:38+00:00]
               ERROR: Exception handlers complete\nChef Client failed. 2 resources

@@ -93,25 +93,79 @@ stages:
         builtOn: chefdk-ubuntu-14.04-acceptance-6eb047
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef-acceptance
-          detailedCause: chef-acceptance[top-cookbooks (provision),top-cookbooks (force-destroy)]
+          cause: chef-acceptance[top-cookbooks (provision),top-cookbooks (force-destroy)]
           jenkinsBuildStep: Invoke XShell command
+          category: chef-acceptance
           suspiciousBlocks:
-            535: "        ---- Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+            526: "TOP-COOKBOOKS::PROVISION::[2016-04-22 22:33:17 +0000] \n        \n
+              \       ================================================================================\n
+              \       Error executing action `sync` on resource 'git[/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker]'\n
+              \       ================================================================================\n
+              \       \n        Mixlib::ShellOut::ShellCommandFailed\n        ------------------------------------\n
+              \       Expected process to exit with [0], but received '128'\n        ----
+              Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
               \"master*\" ----\n        STDOUT: \n        STDERR: fatal: unable to
               access 'https://github.com/chef-cookbooks/docker.git/': error setting
               certificate verify locations:\n          CAfile: /opt/chefdk/embedded/ssl/certs\n
-              \         CApath: none\n"
-            584: "      ---- Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
-              \"master*\" ----\n      STDOUT: \n      STDERR: fatal: unable to access
-              'https://github.com/chef-cookbooks/docker.git/': error setting certificate
-              verify locations:\n        CAfile: /opt/chefdk/embedded/ssl/certs\n
-              \       CApath: none\n"
-            638: "    ---- Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
-              \"master*\" ----\n    STDOUT: \n    STDERR: fatal: unable to access
-              'https://github.com/chef-cookbooks/docker.git/': error setting certificate
-              verify locations:\n      CAfile: /opt/chefdk/embedded/ssl/certs\n      CApath:
-              none\n"
+              \         CApath: none\n        ---- End output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" ----\n        Ran git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" returned 128\n        \n        Resource Declaration:\n
+              \       ---------------------\n        # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb\n
+              \       \n         36:     git repository_root do\n         37:       repository
+              new_resource.repository\n         38:       branch new_resource.branch\n
+              \        39:     end\n         40: \n        \n        Compiled Resource:\n
+              \       ------------------\n        # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb:36:in
+              `block in <class:CookbookKitchen>'\n        \n        git(\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker\")
+              do\n          action [:sync]\n          retries 0\n          retry_delay
+              2\n          default_guard_interpreter :default\n          destination
+              \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker\"\n
+              \         enable_checkout true\n          revision \"master\"\n          remote
+              \"origin\"\n          checkout_branch \"deploy\"\n          declared_type
+              :git\n          cookbook_name \"acceptance-cookbook\"\n          repository
+              \"https://github.com/chef-cookbooks/docker.git\"\n        end\n        \n
+              \       Platform:\n        ---------\n        x86_64-linux\n        \n
+              \     \n      ================================================================================\n
+              \     Error executing action `run` on resource 'cookbook_kitchen[converge
+              docker]'\n      ================================================================================\n
+              \     \n      Mixlib::ShellOut::ShellCommandFailed\n      ------------------------------------\n
+              \     git[/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker]
+              (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '128'\n      ---- Begin output
+              of git ls-remote \"https://github.com/chef-cookbooks/docker.git\" \"master*\"
+              ----\n      STDOUT: \n      STDERR: fatal: unable to access 'https://github.com/chef-cookbooks/docker.git/':
+              error setting certificate verify locations:\n        CAfile: /opt/chefdk/embedded/ssl/certs\n
+              \       CApath: none\n      ---- End output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" ----\n      Ran git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" returned 128\n      \n      Resource Declaration:\n      ---------------------\n
+              \     # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/coo\nTOP-COOKBOOKS::PROVISION::[2016-04-22
+              22:33:17 +0000] kbooks/acceptance-cookbook/libraries/top_cookbooks.rb\n
+              \     \n"
+            629: "      \n    \n    ================================================================================\n
+              \   Error executing action `run` on resource 'top_cookbooks[converge]'\n
+              \   ================================================================================\n
+              \   \n    Mixlib::ShellOut::ShellCommandFailed\n    ------------------------------------\n
+              \   cookbook_kitchen[converge docker] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+              line 7) had an error: Mixlib::ShellOut::ShellCommandFailed: git[/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker]
+              (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '128'\n    ---- Begin output
+              of git ls-remote \"https://github.com/chef-cookbooks/docker.git\" \"master*\"
+              ----\n    STDOUT: \n    STDERR: fatal: unable to access 'https://github.com/chef-cookbooks/docker.git/':
+              error setting certificate verify locations:\n      CAfile: /opt/chefdk/embedded/ssl/certs\n
+              \     CApath: none\n    ---- End output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" ----\n    Ran git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" returned 128\n    \n    Resource Declaration:\n    ---------------------\n
+              \   # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/provision.rb\n
+              \   \n      1: top_cookbooks \"converge\"\n    \n    Compiled Resource:\n
+              \   ------------------\n    # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in
+              `from_file'\n    \n    top_cookbooks(\"converge\") do\n      action
+              [:run]\n      updated true\n      updated_by_last_action true\n      retries
+              0\n      retry_delay 2\n      default_guard_interpreter :default\n      declared_type
+              :top_cookbooks\n      cookbook_name \"acceptance-cookbook\"\n      recipe_name
+              \"provision\"\n      command \"converge\"\n    end\n    \n    Platform:\n
+              \   ---------\n    x\nTOP-COOKBOOKS::PROVISION::[2016-04-22 22:33:17
+              +0000] 86_64-linux\n    \n"
             679: |2
 
               Running handlers:
@@ -126,21 +180,87 @@ stages:
               TOP-COOKBOOKS::PROVISION::[2016-04-22 22:33:18 +0000] [2016-04-22T22:33:18+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
               CHEF-ACCEPTANCE::[2016-04-22 22:33:18 +0000] Encountered an error running the recipe provision: Expected process to exit with [0], but received '1'
               ---- Begin output of chef-client -z -c /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/config.rb --force-formatter -j /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/dna.json -o acceptance-cookbook::provision --no-color ----
-            717: "        ---- Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+            708: "      * git[/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker]
+              action sync\n        \n        ================================================================================\n
+              \       Error executing action `sync` on resource 'git[/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker]'\n
+              \       ================================================================================\n
+              \       \n        Mixlib::ShellOut::ShellCommandFailed\n        ------------------------------------\n
+              \       Expected process to exit with [0], but received '128'\n        ----
+              Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
               \"master*\" ----\n        STDOUT: \n        STDERR: fatal: unable to
               access 'https://github.com/chef-cookbooks/docker.git/': error setting
               certificate verify locations:\n          CAfile: /opt/chefdk/embedded/ssl/certs\n
-              \         CApath: none\n"
-            766: "      ---- Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
-              \"master*\" ----\n      STDOUT: \n      STDERR: fatal: unable to access
-              'https://github.com/chef-cookbooks/docker.git/': error setting certificate
-              verify locations:\n        CAfile: /opt/chefdk/embedded/ssl/certs\n
-              \       CApath: none\n"
-            819: "    ---- Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
-              \"master*\" ----\n    STDOUT: \n    STDERR: fatal: unable to access
-              'https://github.com/chef-cookbooks/docker.git/': error setting certificate
-              verify locations:\n      CAfile: /opt/chefdk/embedded/ssl/certs\n      CApath:
-              none\n"
+              \         CApath: none\n        ---- End output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" ----\n        Ran git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" returned 128\n        \n        Resource Declaration:\n
+              \       ---------------------\n        # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb\n
+              \       \n         36:     git repository_root do\n         37:       repository
+              new_resource.repository\n         38:       branch new_resource.branch\n
+              \        39:     end\n         40: \n        \n        Compiled Resource:\n
+              \       ------------------\n        # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb:36:in
+              `block in <class:CookbookKitchen>'\n        \n        git(\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker\")
+              do\n          action [:sync]\n          retries 0\n          retry_delay
+              2\n          default_guard_interpreter :default\n          destination
+              \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker\"\n
+              \         enable_checkout true\n          revision \"master\"\n          remote
+              \"origin\"\n          checkout_branch \"deploy\"\n          declared_type
+              :git\n          cookbook_name \"acceptance-cookbook\"\n          repository
+              \"https://github.com/chef-cookbooks/docker.git\"\n        end\n        \n
+              \       Platform:\n        ---------\n        x86_64-linux\n        \n
+              \     \n      ================================================================================\n
+              \     Error executing action `run` on resource 'cookbook_kitchen[converge
+              docker]'\n      ================================================================================\n
+              \     \n      Mixlib::ShellOut::ShellCommandFailed\n      ------------------------------------\n
+              \     git[/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker]
+              (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '128'\n      ---- Begin output
+              of git ls-remote \"https://github.com/chef-cookbooks/docker.git\" \"master*\"
+              ----\n      STDOUT: \n      STDERR: fatal: unable to access 'https://github.com/chef-cookbooks/docker.git/':
+              error setting certificate verify locations:\n        CAfile: /opt/chefdk/embedded/ssl/certs\n
+              \       CApath: none\n      ---- End output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" ----\n      Ran git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" returned 128\n      \n      Resource Declaration:\n      ---------------------\n
+              \     # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb\n
+              \     \n        7:     cookbook_kitchen \"#{command} docker\" do\n        8:
+              \    end\n        9: \n      \n      Compiled Resource:\n      ------------------\n
+              \     # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb:7:in
+              `block in <class:TopCookbooks>'\n      \n      cookbook_kitchen(\"converge
+              docker\") do\n        action [:run]\n        updated true\n        updated_by_last_action
+              true\n        retries 0\n        retry_delay 2\n        default_guard_interpreter
+              :default\n        declared_type :cookbook_kitchen\n        cookbook_name
+              \"acceptance-cookbook\"\n        repository \"https://github.com/chef-cookbooks/docker.git\"\n
+              \       test_cookbook \"docker\"\n        repository_root \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker\"\n
+              \       branch \"master\"\n        command \"converge\"\n        kitchen_options
+              \"-c\"\n        kitchen_dir \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker/\"\n
+              \       chef_channel \"unstable\"\n        chef_version \"latest\"\n
+              \       env {\"BUNDLE_GEMFILE\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/Gemfile\",
+              \"KITCHEN_YAML\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.kitchen.docker.yml\"}\n
+              \     end\n      \n      Platform:\n      ---------\n      x86_64-linux\n
+              \     \n    \n    ================================================================================\n
+              \   Error executing action `run` on resource 'top_cookbooks[converge]'\n
+              \   ================================================================================\n
+              \   \n    Mixlib::ShellOut::ShellCommandFailed\n    ------------------------------------\n
+              \   cookbook_kitchen[converge docker] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+              line 7) had an error: Mixlib::ShellOut::ShellCommandFailed: git[/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker]
+              (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '128'\n    ---- Begin output
+              of git ls-remote \"https://github.com/chef-cookbooks/docker.git\" \"master*\"
+              ----\n    STDOUT: \n    STDERR: fatal: unable to access 'https://github.com/chef-cookbooks/docker.git/':
+              error setting certificate verify locations:\n      CAfile: /opt/chefdk/embedded/ssl/certs\n
+              \     CApath: none\n    ---- End output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" ----\n    Ran git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" returned 128\n    \n    Resource Declaration:\n    ---------------------\n
+              \   # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/provision.rb\n
+              \   \n      1: top_cookbooks \"converge\"\n    \n    Compiled Resource:\n
+              \   ------------------\n    # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in
+              `from_file'\n    \n    top_cookbooks(\"converge\") do\n      action
+              [:run]\n      updated true\n      updated_by_last_action true\n      retries
+              0\n      retry_delay 2\n      default_guard_interpreter :default\n      declared_type
+              :top_cookbooks\n      cookbook_name \"acceptance-cookbook\"\n      recipe_name
+              \"provision\"\n      command \"converge\"\n    end\n    \n    Platform:\n
+              \   ---------\n    x86_64-linux\n    \nStarting audit phase\n\n"
             859: "\nRunning handlers:\n[2016-04-22T22:33:18+00:00] ERROR: Running
               exception handlers\nRunning handlers complete\n[2016-04-22T22:33:18+00:00]
               ERROR: Exception handlers complete\nChef Client failed. 1 resources
@@ -174,21 +294,74 @@ stages:
               --force-destroy specified so attempting to run the destroy recipe\nTOP-COOKBOOKS::DESTROY::[2016-04-22
               22:33:18 +0000] Initialized [.acceptance_logs/top-cookbooks/destroy.log]
               logger...\n"
-            933: "        ---- Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+            924: "TOP-COOKBOOKS::DESTROY::[2016-04-22 22:33:24 +0000] \n        \n
+              \       ================================================================================\n
+              \       Error executing action `sync` on resource 'git[/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker]'\n
+              \       ================================================================================\n
+              \       \n        Mixlib::ShellOut::ShellCommandFailed\n        ------------------------------------\n
+              \       Expected process to exit with [0], but received '128'\n        ----
+              Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
               \"master*\" ----\n        STDOUT: \n        STDERR: fatal: unable to
               access 'https://github.com/chef-cookbooks/docker.git/': error setting
               certificate verify locations:\n          CAfile: /opt/chefdk/embedded/ssl/certs\n
-              \         CApath: none\n"
-            982: "      ---- Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
-              \"master*\" ----\n      STDOUT: \n      STDERR: fatal: unable to access
-              'https://github.com/chef-cookbooks/docker.git/': error setting certificate
-              verify locations:\n        CAfile: /opt/chefdk/embedded/ssl/certs\n
-              \       CApath: none\n"
-            1034: "    ---- Begin output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
-              \"master*\" ----\n    STDOUT: \n    STDERR: fatal: unable to access
-              'https://github.com/chef-cookbooks/docker.git/': error setting certificate
-              verify locations:\n      CAfile: /opt/chefdk/embedded/ssl/certs\n      CApath:
-              none\n"
+              \         CApath: none\n        ---- End output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" ----\n        Ran git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" returned 128\n        \n        Resource Declaration:\n
+              \       ---------------------\n        # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb\n
+              \       \n         36:     git repository_root do\n         37:       repository
+              new_resource.repository\n         38:       branch new_resource.branch\n
+              \        39:     end\n         40: \n        \n        Compiled Resource:\n
+              \       ------------------\n        # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb:36:in
+              `block in <class:CookbookKitchen>'\n        \n        git(\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker\")
+              do\n          action [:sync]\n          retries 0\n          retry_delay
+              2\n          default_guard_interpreter :default\n          destination
+              \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker\"\n
+              \         enable_checkout true\n          revision \"master\"\n          remote
+              \"origin\"\n          checkout_branch \"deploy\"\n          declared_type
+              :git\n          cookbook_name \"acceptance-cookbook\"\n          repository
+              \"https://github.com/chef-cookbooks/docker.git\"\n        end\n        \n
+              \       Platform:\n        ---------\n        x86_64-linux\n        \n
+              \     \n      ================================================================================\n
+              \     Error executing action `run` on resource 'cookbook_kitchen[destroy
+              docker]'\n      ================================================================================\n
+              \     \n      Mixlib::ShellOut::ShellCommandFailed\n      ------------------------------------\n
+              \     git[/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker]
+              (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '128'\n      ---- Begin output
+              of git ls-remote \"https://github.com/chef-cookbooks/docker.git\" \"master*\"
+              ----\n      STDOUT: \n      STDERR: fatal: unable to access 'https://github.com/chef-cookbooks/docker.git/':
+              error setting certificate verify locations:\n        CAfile: /opt/chefdk/embedded/ssl/certs\n
+              \       CApath: none\n      ---- End output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" ----\n      Ran git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" returned 128\n      \n      Resource Declaration:\n      ---------------------\n
+              \     # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cook\nTOP-COOKBOOKS::DESTROY::[2016-04-22
+              22:33:24 +0000] books/acceptance-cookbook/libraries/top_cookbooks.rb\n
+              \     \n"
+            1025: "      \n    \n    ================================================================================\n
+              \   Error executing action `run` on resource 'top_cookbooks[destroy]'\n
+              \   ================================================================================\n
+              \   \n    Mixlib::ShellOut::ShellCommandFailed\n    ------------------------------------\n
+              \   cookbook_kitchen[destroy docker] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+              line 7) had an error: Mixlib::ShellOut::ShellCommandFailed: git[/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/test_run/docker]
+              (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/cookbook_kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '128'\n    ---- Begin output
+              of git ls-remote \"https://github.com/chef-cookbooks/docker.git\" \"master*\"
+              ----\n    STDOUT: \n    STDERR: fatal: unable to access 'https://github.com/chef-cookbooks/docker.git/':
+              error setting certificate verify locations:\n      CAfile: /opt/chefdk/embedded/ssl/certs\n
+              \     CApath: none\n    ---- End output of git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" ----\n    Ran git ls-remote \"https://github.com/chef-cookbooks/docker.git\"
+              \"master*\" returned 128\n    \n    Resource Declaration:\n    ---------------------\n
+              \   # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/destroy.rb\n
+              \   \n      1: top_cookbooks \"destroy\"\n    \n    Compiled Resource:\n
+              \   ------------------\n    # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.13/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/destroy.rb:1:in
+              `from_file'\n    \n    top_cookbooks(\"destroy\") do\n      action [:run]\n
+              \     retries 0\n      retry_delay 2\n      default_guard_interpreter
+              :default\n      declared_type :top_cookbooks\n      cookbook_name \"acceptance-cookbook\"\n
+              \     recipe_name \"destroy\"\n      command \"destroy\"\n    end\n
+              \   \n    Platform:\n    ---------\n    x86_64-linux\n    \nStarting
+              audit phase\nTOP-COOKBOOKS::DESTROY::[2016-04-22 22:33:25 +0000] \n"
             1074: "TOP-COOKBOOKS::DESTROY::[2016-04-22 22:33:25 +0000] Running handlers:\nTOP-COOKBOOKS::DESTROY::[2016-04-22
               22:33:25 +0000] \nTOP-COOKBOOKS::DESTROY::[2016-04-22 22:33:25 +0000]
               [2016-04-22T22:33:25+00:00] ERROR: Running exception handlers\nTOP-COOKBOOKS::DESTROY::[2016-04-22
@@ -234,9 +407,9 @@ stages:
         builtOn: chefdk-debian-6-tester-31349b
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef verify
-          detailedCause: chef verify[opscode-pushy-client]
+          cause: chef verify[opscode-pushy-client]
           jenkinsBuildStep: Invoke XShell command
+          category: chef verify
           suspiciousBlocks:
             509: |2
 
@@ -274,9 +447,9 @@ stages:
         builtOn: chefdk-debian-7-tester-6585d4
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-7,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef verify
-          detailedCause: chef verify[opscode-pushy-client]
+          cause: chef verify[opscode-pushy-client]
           jenkinsBuildStep: Invoke XShell command
+          category: chef verify
           suspiciousBlocks:
             494: |2
 
@@ -314,9 +487,9 @@ stages:
         builtOn: chefdk-debian-8-tester-b7ac3b
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-8,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef verify
-          detailedCause: chef verify[opscode-pushy-client]
+          cause: chef verify[opscode-pushy-client]
           jenkinsBuildStep: Invoke XShell command
+          category: chef verify
           suspiciousBlocks:
             492: |2
 
@@ -354,9 +527,9 @@ stages:
         builtOn: chefdk-rhel-6-tester-42bd5e
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-6,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef verify
-          detailedCause: chef verify[opscode-pushy-client]
+          cause: chef verify[opscode-pushy-client]
           jenkinsBuildStep: Invoke XShell command
+          category: chef verify
           suspiciousBlocks:
             481: |2
 
@@ -394,9 +567,9 @@ stages:
         builtOn: chefdk-rhel-7-tester-ce15ff
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-7,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef verify
-          detailedCause: chef verify[opscode-pushy-client]
+          cause: chef verify[opscode-pushy-client]
           jenkinsBuildStep: Invoke XShell command
+          category: chef verify
           suspiciousBlocks:
             488: |2
 
@@ -434,9 +607,9 @@ stages:
         builtOn: chefdk-mac_os_x-10.10-tester-f8e0cd
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.10,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef verify
-          detailedCause: chef verify[opscode-pushy-client]
+          cause: chef verify[opscode-pushy-client]
           jenkinsBuildStep: Invoke XShell command
+          category: chef verify
           suspiciousBlocks:
             388: "/dev/disk1            GUID_partition_scheme            \n/dev/disk1s1
               \         Apple_HFS                        /Volumes/chefdk\nfind: /Volumes/chefdk/.Trashes:
@@ -484,9 +657,9 @@ stages:
         builtOn: chefdk-mac_os_x-10.11-tester-fb35b7
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.11,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef verify
-          detailedCause: chef verify[opscode-pushy-client]
+          cause: chef verify[opscode-pushy-client]
           jenkinsBuildStep: Invoke XShell command
+          category: chef verify
           suspiciousBlocks:
             388: "/dev/disk1            GUID_partition_scheme            \n/dev/disk1s1
               \         Apple_HFS                        /Volumes/chefdk\nfind: /Volumes/chefdk/.Trashes:
@@ -534,9 +707,9 @@ stages:
         builtOn: chefdk-mac_os_x-10.9-tester-8a14ce
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef verify
-          detailedCause: chef verify[opscode-pushy-client]
+          cause: chef verify[opscode-pushy-client]
           jenkinsBuildStep: Invoke XShell command
+          category: chef verify
           suspiciousBlocks:
             388: "/dev/disk1            GUID_partition_scheme            \n/dev/disk1s1
               \         Apple_HFS                        /Volumes/chefdk\nfind: /Volumes/chefdk/.Trashes:
@@ -584,9 +757,9 @@ stages:
         builtOn: chefdk-ubuntu-12.04-tester-d64e0a
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef verify
-          detailedCause: chef verify[opscode-pushy-client]
+          cause: chef verify[opscode-pushy-client]
           jenkinsBuildStep: Invoke XShell command
+          category: chef verify
           suspiciousBlocks:
             494: |2
 
@@ -624,9 +797,9 @@ stages:
         builtOn: chefdk-ubuntu-14.04-tester-48c4bf
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/130/
         failureCause:
-          cause: chef verify
-          detailedCause: chef verify[opscode-pushy-client]
+          cause: chef verify[opscode-pushy-client]
           jenkinsBuildStep: Invoke XShell command
+          category: chef verify
           suspiciousBlocks:
             496: |2
 
