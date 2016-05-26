@@ -1,4 +1,9 @@
+#!/usr/bin/env ruby
+
 require_relative "jenkins_cli"
+
+# some syntax in this project doesn't work on 2.0.0
+raise 'Ruby >= 2.1 required' unless RUBY_VERSION.to_f >= 2.1
 
 options = { urls: true }
 JenkinsCli.parse_options do |opts|
