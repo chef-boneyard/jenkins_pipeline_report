@@ -262,7 +262,11 @@ class JenkinsData
         end
       end
     end
-    build["failures"] = failures if failures
+    if failures.any?
+      build["failures"] = failures
+    else
+      build.delete("failures")
+    end
 
     # Reorder build data for nicer printing
     build = JenkinsHelpers.reorder_fields(build, %w{result timestamp duration triggeredBy url version git_ref git_commit}, "stages")
@@ -288,12 +292,20 @@ class JenkinsData
     if stage["runs"]
       failures = stage["runs"].select { |c,run| failed?(run) }
       if failures.any?
-        failures = failures.group_by { |c,run| (run["failureCause"] && run["failureCause"]["cause"]) || "unknown" }
+        failures = failures.group_by do |c,run|
+          if run["failureCause"]
+            category = run["failureCause"]["category"]
+            cause = run["failureCause"]["cause"]
+          end
+          "#{(category || "unknown")} - #{(cause || "unknown")}"
+        end
         failures.each do |cause, causedFailures|
           configurations = causedFailures.map { |configuration,run| configuration }
           failures[cause] = categorize_run_types(configurations, stage["runs"].keys).join(",")
         end
         stage["failures"] = failures
+      else
+        stage.delete("failures")
       end
 
       # Reorder runs by failure first, then by configuration name
@@ -394,7 +406,7 @@ class JenkinsData
        (configuration == "acceptance" && !run.has_key?("acceptanceTiming"))
       console_text ||= console_text(build, run)
       return unless console_text
-      JenkinsCli.logger.info("Extracting timing from #{File.basename(console_text_filename(build, run))}...")
+      JenkinsCli.logger.info("Extracting timing from #{console_text_filename(build, run)}...")
       TimingExtractor.extract(configuration, run, console_text)
     end
 
@@ -402,7 +414,7 @@ class JenkinsData
       if failed?(run)
         console_text ||= console_text(build, run)
         return unless console_text
-        JenkinsCli.logger.info("Extracting failure cause from #{File.basename(console_text_filename(build, run))}...")
+        JenkinsCli.logger.info("Extracting failure cause from #{console_text_filename(build, run)}...")
         FailureExtractor.extract(build, run, console_text)
       end
     end

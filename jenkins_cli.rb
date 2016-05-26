@@ -10,7 +10,7 @@ module JenkinsCli
 
   def self.logger
     @logger ||= begin
-      logger = Logger.new(STDOUT)
+      logger = Logger.new(STDERR)
       logger.level = Logger::ERROR
       logger
     end
@@ -39,7 +39,7 @@ module JenkinsCli
     OptionParser.new do |opts|
       yield opts
 
-      opts.on("-l", "--log-level", "Log level (debug,info,warn,error,fatal).") do |v|
+      opts.on("-l=LEVEL", "--log-level=LEVEL", "Log level (debug,info,warn,error,fatal).") do |v|
         logger.level = Logger.const_get(v.upcase)
       end
       opts.on("--where KEY=VALUE", "Only pick builds with KEY (a.b.c) equal to value") do |v|

@@ -7,6 +7,11 @@ class FailureExtractor
   end
 
   def self.deduce_cause(run)
+    if JenkinsData.succeeded?(run)
+      run.delete("failureCause")
+      return
+    end
+
     begin
       cause = run["failureCause"]
       if JenkinsData.failed?(run) && run["result"].downcase != "failure"
@@ -14,14 +19,14 @@ class FailureExtractor
           run["failureCause"] = {}
         end
         cause["category"] = run["result"].downcase
-        cause["cause"] = cause["category"]
+        cause["cause"] = run["result"].downcase
         return
       end
 
       if cause
         # If we can't think of anything more specific, the cause will be the last omnibus step
         if cause["lastOmnibusStep"]
-          cause["category"] = "omnibus"
+          cause["category"] = "code"
           cause["cause"] = "omnibus #{cause["lastOmnibusStep"]}"
         end
 
@@ -38,17 +43,21 @@ class FailureExtractor
             end
 
             case suspicious_block
+            when /Slave went offline during the build/
+              cause["category"] = "network"
+              cause["cause"] = "worker disconnected"
+
             when /The --deployment flag requires a .*\/([^\/]+\/Gemfile.lock)/
-              cause["category"] = "missing Gemfile.lock"
+              cause["category"] = "code"
               cause["cause"] = "missing #{$1}"
 
             when /(EACCES)/,
                  /java.io.FileNotFoundException.*(Permission denied)/
-              cause["category"] = "disk space"
+              cause["category"] = "machine"
               cause["cause"] = "disk space (#{$1})"
 
             when /Cannot delete workspace:.*The process cannot access the file because it is being used by another process./i
-              cause["category"] = "zombie jenkins"
+              cause["category"] = "machine"
               cause["cause"] = "zombie jenkins"
 
             when /ECONNRESET/
@@ -56,49 +65,49 @@ class FailureExtractor
                 url = $1
                 hostname = URI(url).hostname
               end
-              cause["category"] = "network reset"
+              cause["category"] = "network"
               cause["cause"] = "network reset#{hostname ? " #{hostname}" : ""}"
 
             when /jenkinsci.*Connection timed out/i
-              cause["category"] = "network timeout"
+              cause["category"] = "network"
               cause["cause"] = "network timeout jenkins"
 
             when /IOException.*: Failed to extract/i
-              cause["category"] = "jenkins copy"
+              cause["category"] = "network"
               cause["cause"] = "jenkins copy"
 
             when /Failed to connect to (.+) port (\d+): Timed out/i,
                  /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
-              cause["category"] = "network timeout"
+              cause["category"] = "network"
               cause["cause"] = "network timeout #{$1}:#{$2}"
               return
 
             when /Unable to create .*index.lock.*File exists/mi
-              cause["category"] = "git index.lock"
+              cause["category"] = "machine"
               cause["cause"] = "git index.lock"
 
             when /Dumping stack trace to\s+(\S+).stackdump/mi
-              cause["category"] = "segfault"
+              cause["category"] = "machine"
               cause["cause"] = "segfault #{$1}"
 
             when /Finder got an error: Application isn.*t running/i
-              cause["category"] = "mac not logged in"
+              cause["category"] = "machine"
               cause["cause"] = "mac not logged in"
 
             when /Gemfile\.lock is corrupt/
-              cause["category"] = "corrupt Gemfile.lock"
-              cause["cause"] = cause["category"]
+              cause["category"] = "code"
+              cause["cause"] = "corrupt Gemfile.lock"
 
             when /An error occurred while installing (\S+) \(([^\)]+)\)/i
-              cause["category"] = "gem install"
+              cause["category"] = "code"
               cause["cause"] = "gem install #{$1} -v #{$2}"
 
             when /rubygems\.org.*Checksum of (\S+) does not match the checksum provided by server/mi
-              cause["category"] = "rubygems checksum"
+              cause["category"] = "network"
               cause["cause"] = "rubygems #{$1} checksum"
 
             when /Could not find (\S+) in any of the sources/i
-              cause["category"] = "yanked gem"
+              cause["category"] = "code"
               cause["cause"] = "yanked gem #{$1}"
 
             end
@@ -109,7 +118,7 @@ class FailureExtractor
           cause["tests"].each do |type,tests|
             tests.uniq!
           end
-          cause["category"] = "#{cause["tests"].keys.join(",")}"
+          cause["category"] = "code"
           cause["cause"] = cause["tests"].map do |test_type, t|
             if t.size <= 3
               "#{test_type}[#{t.join(",")}]"
@@ -196,7 +205,8 @@ class FailureExtractor
            /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i,
            /^\s*Verification of component '(.+)' failed.\s*$/i,
            /freed prematurely/,
-           /Chef Client failed/i
+           /Chef Client failed/i,
+           /Slave went offline during the build/i
 
         range = index..index
 
