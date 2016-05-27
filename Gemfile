@@ -1,3 +1,3 @@
 source "https://rubygems.org"
-gem "jenkins_api_client"
-gem "psych"
+gemspec
+gem "chef_ruby_project", github: "chef/chef_ruby_project"

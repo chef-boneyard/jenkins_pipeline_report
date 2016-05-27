@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -ex
+
+. reports/job-urls
+for job_url in $job_urls
+do
+  job_name=${job_url##*/}
+  bundle exec jenkins-pipeline-failures $* $job_url > reports/${job_name}.failures
+done
+
+# bumpbot builds
+for job_url in http://manhattan.ci.chef.co/job/chef-trigger-ad_hoc http://manhattan.ci.chef.co/job/chefdk-trigger-ad_hoc
+do
+  job_name=${job_url##*/}
+  bundle exec jenkins-pipeline-failures --local --where triggeredBy=chef-jenkins $* $job_url > reports/$job_name.bumpbot.failures
+done
+
+bundle exec jenkins-pipeline-failures --local $* $job_urls > reports/all.failures

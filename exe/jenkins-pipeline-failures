@@ -1,12 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative "jenkins_cli"
-
-# some syntax in this project doesn't work on 2.0.0
-raise 'Ruby >= 2.1 required' unless RUBY_VERSION.to_f >= 2.1
+require "jenkins_pipeline_report"
 
 options = { urls: true }
-JenkinsCli.parse_options do |opts|
+JenkinsPipelineReport::Cli.parse_options do |opts|
   opts.banner = <<-EOM
     USAGE: ruby #{File.basename(__FILE__)} JOB_URL ...
 
@@ -23,8 +20,12 @@ JenkinsCli.parse_options do |opts|
 end
 
 builds = ARGV.flat_map do |job_url|
-  JenkinsCli.builds(job_url)
+  JenkinsPipelineReport::Cli.builds(job_url)
 end.sort_by { |build| build["timestamp"] }.reverse
+
+def failed?(build)
+  JenkinsPipelineReport::SummaryCache.failed?(build)
+end
 
 def report_summary(builds)
   puts "SUMMARY"
@@ -37,7 +38,7 @@ def report_summary(builds)
         category, cause = failure.split(" - ", 2)
         [ category, cause ]
       end
-    elsif JenkinsData.failed?(build)
+    elsif failed?(build)
       failures = [ [ "unknown", "unrecorded" ] ]
     else
       failures = []
@@ -55,7 +56,7 @@ def report_summary(builds)
   end
 
   puts "total: #{builds.size}"
-  failed_builds = builds.select { |build| JenkinsData.failed?(build) }
+  failed_builds = builds.select { |build| failed?(build) }
   puts "failed: #{failed_builds.size} (#{(failed_builds.size/builds.size.to_f*100.0).round(1)}%)"
 
   # Reverse sort
@@ -85,11 +86,11 @@ def report_build_failures(builds, urls: false)
   puts ""
   puts "BY BUILD"
   builds.each do |build|
-    if JenkinsData.failed?(build)
+    if failed?(build)
       job = File.basename(File.dirname(build["url"]))
       build_number = File.basename(build["url"])
       failure_summary = build["stages"].map do |name,stage|
-        if JenkinsData.failed?(stage)
+        if failed?(stage)
           name
         end
       end.compact.join(", ")
@@ -117,12 +118,12 @@ def report_build_failures(builds, urls: false)
       if urls
         printed_anything = false
         build["stages"].each do |job,stage|
-          if JenkinsData.failed?(stage)
+          if failed?(stage)
             printed_anything = true
             puts "  - #{stage["result"].downcase}: #{stage["url"]}"
           end
           stage["runs"].values.each do |run|
-            if JenkinsData.failed?(run)
+            if failed?(run)
               printed_anything = true
               puts "  - run #{run["result"].downcase}: #{run["url"]}"
             end
