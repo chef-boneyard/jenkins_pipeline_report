@@ -89,14 +89,41 @@ class JenkinsData
       build = Psych.load(IO.read(filename))
       desired_filename = build_filename(build)
       if filename != desired_filename
+        logs = filename[0..-6]
+        desired_logs = desired_filename[0..-6]
         if File.exist?(desired_filename)
-          JenkinsCli.logger.info "Deleting #{filename} (#{desired_filename} already exists)..."
+          JenkinsCli.logger.info "Deleting #{filename} (#{desired_filename} already exists) ..."
           # We will (or have already) encountered the desired version of this. Delete and skip.
           File.delete(filename)
+
+          if File.exist?(logs)
+            if File.exist?(desired_logs)
+              # Delete logs if they already exist
+              JenkinsCli.logger.info "Deleting #{logs} (#{desired_logs} already exists) ..."
+              FileUtils.rm_rf(logs)
+            else
+              # Carry logs over if we have no logs
+              JenkinsCli.logger.info "Renaming #{logs} to #{desired_logs} ..."
+              File.rename(logs, desired_logs)
+            end
+          end
+
           next
         else
-          JenkinsCli.logger.info "Renaming #{filename} to #{desired_filename}"
+          JenkinsCli.logger.info "Renaming #{filename} to #{desired_filename} ..."
           File.rename(filename, desired_filename)
+
+          # Carry logs over as well
+          if File.exist?(logs)
+            # Delete logs if they are already there
+            if File.exist?(desired_logs)
+              JenkinsCli.logger.info "Deleting #{desired_logs} ..."
+              FileUtils.rm_rf(desired_logs)
+            end
+
+            JenkinsCli.logger.info "Renaming #{logs} to #{desired_logs} ..."
+            File.rename(logs, desired_logs)
+          end
         end
       end
 
