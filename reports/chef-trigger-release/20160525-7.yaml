@@ -1,22 +1,18 @@
 ---
-result: FAILURE
-timestamp: '2016-05-25T14:39:58-07:00'
-duration: 6637.258
+result: SUCCESS
+timestamp: 2016-05-25 21:39:58 UTC
+duration: 6687.3949999999995
 triggeredBy: chef-jenkins
 url: http://manhattan.ci.chef.co/job/chef-trigger-release/7/
 version: 12.11.4
 git_ref: v12.11.4
 git_commit: c1f88e1de25cf1987d3aad4ef6e8d7cd5e67cf3d
-failures:
-  chef-test network - worker disconnected: windows-2008r2
 stages:
-  chef-test:
-    result: FAILURE
-    failures:
-      network - worker disconnected: windows-2008r2
-    timestamp: '2016-05-25T15:13:49-07:00'
-    duration: 4621.123
-    url: http://manhattan.ci.chef.co/job/chef-test/16/
+  chef-promote:
+    result: SUCCESS
+    timestamp: 2016-05-26 15:48:00 UTC
+    duration: 28.552
+    url: http://manhattan.ci.chef.co/job/chef-promote/8/
     parameters:
       OMNIBUS_BUILD_VERSION: 12.11.4
       DELIVERY_CHANGE: ''
@@ -116,381 +112,404 @@ stages:
       PIPELINE_BUILD_JOB_NUMBER: '24'
       PIPELINE_BUILD_JOB_NAME: chef-build
       PIPELINE_RUN_FINGERPRINT: jenkins-chef-trigger-release-7/7/2016-05-25_21-39-58
+    runs: {}
+  chef-test:
+    result: SUCCESS
+    timestamp: 2016-05-26 14:30:29 UTC
+    duration: 4642.708
+    url: http://manhattan.ci.chef.co/job/chef-test/17/
+    causes:
+    - shortDescription: 'Started by Naginator after build #16 failure'
+    parameters:
+      OMNIBUS_BUILD_VERSION: 12.11.4
+      DELIVERY_CHANGE: ''
+      DELIVERY_SHA: ''
+      GIT_REF: v12.11.4
+      APPEND_TIMESTAMP: false
+      EXPIRE_CACHE: false
+      RELEASE_BUILD: 'true'
+      PIPELINE_NAME: chef
+      GIT_COMMIT: c1f88e1de25cf1987d3aad4ef6e8d7cd5e67cf3d
+      PROJECT: chef
+      PROMOTE: 'true'
+      PIPELINE_TRIGGER_BUILD_NUMBER: '7'
+      GIT_BRANCH: v12.11.4
+      PIPELINE_TRIGGER_JOB_NAME: chef-trigger-release
+      PLATFORM_MAPPINGS_JSON: |-
+        {
+          "build_to_test": {
+            "debian-6": [
+              "debian-6",
+              "debian-7",
+              "debian-8"
+            ],
+            "el-5": [
+              "el-5"
+            ],
+            "el-6": [
+              "el-6"
+            ],
+            "el-7": [
+              "el-7"
+            ],
+            "freebsd-9": [
+              "freebsd-9"
+            ],
+            "freebsd-10": [
+              "freebsd-10"
+            ],
+            "ios_xr-6": [
+              "ios_xr-6"
+            ],
+            "mac_os_x-10.9": [
+              "mac_os_x-10.9",
+              "mac_os_x-10.10",
+              "mac_os_x-10.11"
+            ],
+            "solaris-10": [
+              "solaris-10",
+              "solaris-11"
+            ],
+            "aix-6.1": [
+              "aix-6.1",
+              "aix-7.1"
+            ],
+            "nexus-7": [
+              "nexus-7"
+            ],
+            "ubuntu-10.04": [
+              "ubuntu-10.04",
+              "ubuntu-12.04",
+              "ubuntu-14.04",
+              "acceptance"
+            ],
+            "windows-2008r2": [
+              "windows-2008r2",
+              "windows-2012",
+              "windows-2012r2"
+            ]
+          },
+          "test_to_build": {
+            "debian-6": "debian-6",
+            "debian-7": "debian-6",
+            "debian-8": "debian-6",
+            "el-5": "el-5",
+            "el-6": "el-6",
+            "el-7": "el-7",
+            "freebsd-9": "freebsd-9",
+            "freebsd-10": "freebsd-10",
+            "ios_xr-6": "ios_xr-6",
+            "mac_os_x-10.9": "mac_os_x-10.9",
+            "mac_os_x-10.10": "mac_os_x-10.9",
+            "mac_os_x-10.11": "mac_os_x-10.9",
+            "solaris-10": "solaris-10",
+            "solaris-11": "solaris-10",
+            "aix-6.1": "aix-6.1",
+            "aix-7.1": "aix-6.1",
+            "nexus-7": "nexus-7",
+            "ubuntu-10.04": "ubuntu-10.04",
+            "ubuntu-12.04": "ubuntu-10.04",
+            "ubuntu-14.04": "ubuntu-10.04",
+            "acceptance": "ubuntu-10.04",
+            "windows-2008r2": "windows-2008r2",
+            "windows-2012": "windows-2008r2",
+            "windows-2012r2": "windows-2008r2"
+          }
+        }
+      PIPELINE_BUILD_JOB_NUMBER: '24'
+      PIPELINE_BUILD_JOB_NAME: chef-build
+      PIPELINE_RUN_FINGERPRINT: jenkins-chef-trigger-release-7/7/2016-05-25_21-39-58
+    retryOf:
+    - 16
     runs:
-      windows-2008r2:
-        result: FAILURE
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 1114.179
-        builtOn: chef-windows-2008r2-tester-fa3715
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=windows-2008r2,project=chef,role=tester/16/
-        failureCause:
-          cause: worker disconnected
-          jenkinsBuildStep: Invoke XShell command
-          category: network
-          suspiciousBlocks:
-            505: |2
-
-              Uninstalling all previous versions of "Chef Client"
-              Slave went offline during the build
-              ERROR: Connection was broken: java.io.IOException: Connection timed out
-                at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
-                at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
-                at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
-                at sun.nio.ch.IOUtil.read(IOUtil.java:197)
-                at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:379)
-                at hudson.remoting.SocketChannelStream$1.read(SocketChannelStream.java:35)
-                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:65)
-                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:109)
-                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:103)
-                at java.io.BufferedInputStream.fill(BufferedInputStream.java:235)
-                at java.io.BufferedInputStream.read1(BufferedInputStream.java:275)
-                at java.io.BufferedInputStream.read(BufferedInputStream.java:334)
-                at hudson.remoting.FlightRecorderInputStream.read(FlightRecorderInputStream.java:90)
-                at hudson.remoting.ChunkedInputStream.read(ChunkedInputStream.java:46)
-                at hudson.remoting.ChunkedInputStream.readUntilBreak(ChunkedInputStream.java:97)
-                at hudson.remoting.ChunkedCommandTransport.readBlock(ChunkedCommandTransport.java:39)
-                at hudson.remoting.AbstractSynchronousByteArrayCommandTransport.read(AbstractSynchronousByteArrayCommandTransport.java:34)
-                at hudson.remoting.SynchronousCommandTransport$ReaderThread.run(SynchronousCommandTransport.java:48)
-
-              Build step 'Invoke XShell command' marked build as failure
-              FATAL: channel is already closed
-              hudson.remoting.ChannelClosedException: channel is already closed
-                at hudson.remoting.Channel.send(Channel.java:550)
-                at hudson.remoting.Request.call(Request.java:129)
-                at hudson.remoting.Channel.call(Channel.java:752)
-                at hudson.Launcher$RemoteLauncher.kill(Launcher.java:941)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:542)
-                at hudson.model.Run.execute(Run.java:1741)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              Caused by: java.io.IOException: Connection timed out
-                at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
-                at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
-                at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
-                at sun.nio.ch.IOUtil.read(IOUtil.java:197)
-                at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:379)
-                at hudson.remoting.SocketChannelStream$1.read(SocketChannelStream.java:35)
-                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:65)
-                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:109)
-                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:103)
-                at java.io.BufferedInputStream.fill(BufferedInputStream.java:235)
-                at java.io.BufferedInputStream.read1(BufferedInputStream.java:275)
-                at java.io.BufferedInputStream.read(BufferedInputStream.java:334)
-                at hudson.remoting.FlightRecorderInputStream.read(FlightRecorderInputStream.java:90)
-                at hudson.remoting.ChunkedInputStream.read(ChunkedInputStream.java:46)
-                at hudson.remoting.ChunkedInputStream.readUntilBreak(ChunkedInputStream.java:97)
-                at hudson.remoting.ChunkedCommandTransport.readBlock(ChunkedCommandTransport.java:39)
-                at hudson.remoting.AbstractSynchronousByteArrayCommandTransport.read(AbstractSynchronousByteArrayCommandTransport.java:34)
-                at hudson.remoting.SynchronousCommandTransport$ReaderThread.run(SynchronousCommandTransport.java:48)
-              ERROR: Publisher hudson.tasks.ArtifactArchiver aborted due to exception
-              hudson.AbortException: no workspace for chef-test/architecture=x86_64,platform=windows-2008r2,project=chef,role=tester #16
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-            565: |2
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              ERROR: Publisher hudson.tasks.Fingerprinter aborted due to exception
-              hudson.AbortException: no workspace for chef-test/architecture=x86_64,platform=windows-2008r2,project=chef,role=tester #16
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-            577: |2
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              Regular expression run condition: Expression=[^(?!true)$], Label=[]
-              Run condition [Regular expression match] enabling perform for step [[Editable Email Notification]]
-        omnibusTiming: {}
       acceptance:
-        result: 
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 0.0
+        result: SUCCESS
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 4169.454
         builtOn: chef-ubuntu-14.04-acceptance-469d58
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/17/
         acceptanceTiming:
         - omnitruck:
             provision: '00:00:11'
             verify: '00:00:14'
-            destroy: '00:00:04'
-            Total: '00:00:46'
+            destroy: '00:00:06'
+            Total: '00:00:48'
           trivial:
-            provision: '00:05:00'
+            provision: '00:05:12'
             verify: '00:00:11'
             destroy: '00:00:09'
-            Total: '00:06:07'
+            Total: '00:06:19'
           windows-service:
-            provision: '00:06:22'
-            verify: '00:00:49'
-            destroy: '00:00:08'
-            Total: '00:08:13'
+            provision: '00:05:48'
+            verify: '00:01:30'
+            destroy: '00:00:10'
+            Total: '00:08:18'
           basics:
-            provision: '00:00:53'
-            verify: '00:00:21'
+            provision: '00:01:29'
+            verify: '00:00:27'
             destroy: '00:00:07'
-            Total: '00:01:38'
+            Total: '00:02:23'
           fips:
-            provision: '00:04:39'
-            verify: '00:17:02'
-            destroy: '00:00:07'
-            Total: '00:23:38'
+            provision: '00:04:40'
+            verify: '00:17:42'
+            destroy: '00:00:09'
+            Total: '00:24:21'
           top-cookbooks:
-            provision: '00:42:09'
-            verify: '00:00:34'
+            provision: '01:01:35'
+            verify: '00:00:33'
             destroy: '00:00:33'
-            Total: '00:47:22'
+            Total: '01:07:45'
           Run:
-            Total: '00:47:22'
+            Total: '01:07:45'
         omnibusTiming: {}
       aix-6.1-powerpc:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 1276.578
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 1288.164
         builtOn: chef-aix-6-powerpc-tester-9495ea
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=powerpc,platform=aix-6.1,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=powerpc,platform=aix-6.1,project=chef,role=tester/17/
         omnibusTiming: {}
       aix-7.1-powerpc:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 1205.201
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 1222.374
         builtOn: chef-aix-7-powerpc-tester-c0a4cc
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=powerpc,platform=aix-7.1,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=powerpc,platform=aix-7.1,project=chef,role=tester/17/
         omnibusTiming: {}
       debian-6:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 1174.36
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 1147.595
         builtOn: chef-debian-6-tester-61fa80
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=debian-6,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=debian-6,project=chef,role=tester/17/
         omnibusTiming: {}
       debian-6-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 614.312
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 610.772
         builtOn: chef-debian-6-i386-tester-52378a
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=debian-6,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=debian-6,project=chef,role=tester/17/
         omnibusTiming: {}
       debian-7:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 805.362
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 809.865
         builtOn: chef-debian-7-tester-c208ec
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=debian-7,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=debian-7,project=chef,role=tester/17/
         omnibusTiming: {}
       debian-7-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 643.102
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 649.16
         builtOn: chef-debian-7-i386-tester-d74358
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=debian-7,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=debian-7,project=chef,role=tester/17/
         omnibusTiming: {}
       debian-8:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 914.301
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 860.311
         builtOn: chef-debian-8-tester-26c16f
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=debian-8,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=debian-8,project=chef,role=tester/17/
         omnibusTiming: {}
       el-5:
-        result: 
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 0.0
+        result: SUCCESS
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 1936.651
         builtOn: chef-rhel-5-tester-3d4799
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-5,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-5,project=chef,role=tester/17/
         omnibusTiming: {}
       el-5-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 1357.612
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 1350.273
         builtOn: chef-rhel-5-i386-tester-6b2182
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=el-5,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=el-5,project=chef,role=tester/17/
         omnibusTiming: {}
       el-6:
-        result: 
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 0.0
+        result: SUCCESS
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 2892.239
         builtOn: chef-rhel-6-tester-ad4e43
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-6,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-6,project=chef,role=tester/17/
         omnibusTiming: {}
       el-6-i386:
-        result: 
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 0.0
+        result: SUCCESS
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 1802.853
         builtOn: chef-rhel-6-i386-tester-a310b5
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=el-6,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=el-6,project=chef,role=tester/17/
         omnibusTiming: {}
       el-7:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 770.802
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 763.775
         builtOn: chef-rhel-7-tester-ef80de
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-7,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-7,project=chef,role=tester/17/
         omnibusTiming: {}
       freebsd-10:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 863.29
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 842.864
         builtOn: chef-freebsd-10-tester-0e44ab
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=freebsd-10,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=freebsd-10,project=chef,role=tester/17/
         omnibusTiming: {}
       freebsd-10-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 519.118
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 526.522
         builtOn: chef-freebsd-10-i386-tester-f27513
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=freebsd-10,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=freebsd-10,project=chef,role=tester/17/
         omnibusTiming: {}
       freebsd-9:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 965.924
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 928.099
         builtOn: chef-freebsd-9-tester-fe6076
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=freebsd-9,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=freebsd-9,project=chef,role=tester/17/
         omnibusTiming: {}
       freebsd-9-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 572.501
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 574.558
         builtOn: chef-freebsd-9-i386-tester-f811ce
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=freebsd-9,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=freebsd-9,project=chef,role=tester/17/
         omnibusTiming: {}
       ios_xr-6:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 463.071
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 515.261
         builtOn: chef-ios_xr-6-tester-2f039d
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ios_xr-6,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ios_xr-6,project=chef,role=tester/17/
         omnibusTiming: {}
       mac_os_x-10.10:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 631.985
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 631.006
         builtOn: chef-mac_os_x-10.10-tester-f93984
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=mac_os_x-10.10,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=mac_os_x-10.10,project=chef,role=tester/17/
         omnibusTiming: {}
       mac_os_x-10.11:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 466.853
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 460.495
         builtOn: chef-mac_os_x-10.11-tester-bb5587
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=mac_os_x-10.11,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=mac_os_x-10.11,project=chef,role=tester/17/
         omnibusTiming: {}
       mac_os_x-10.9:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 601.628
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 610.073
         builtOn: chef-mac_os_x-10.9-tester-61d54d
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=mac_os_x-10.9,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=mac_os_x-10.9,project=chef,role=tester/17/
         omnibusTiming: {}
       nexus-7:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 600.358
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 675.723
         builtOn: chef-nexus-7-tester-fd11dc
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=nexus-7,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=nexus-7,project=chef,role=tester/17/
         omnibusTiming: {}
       solaris-10-i86pc:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 435.579
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 454.452
         builtOn: chef-solaris-10-i86pc-tester-df8804
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i86pc,platform=solaris-10,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i86pc,platform=solaris-10,project=chef,role=tester/17/
         omnibusTiming: {}
       solaris-10-sun4v:
-        result: 
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 0.0
+        result: SUCCESS
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 4518.929
         builtOn: chef-solaris-10-sun4v-tester-089b13
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-10,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-10,project=chef,role=tester/17/
         omnibusTiming: {}
       solaris-11-i86pc:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 459.759
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 475.642
         builtOn: chef-solaris-11-i86pc-tester-d2a1f7
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i86pc,platform=solaris-11,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i86pc,platform=solaris-11,project=chef,role=tester/17/
         omnibusTiming: {}
       solaris-11-sun4v:
-        result: 
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 0.0
+        result: SUCCESS
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 4640.815
         builtOn: chef-solaris-11-sun4v-tester-988f0a
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-11,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-11,project=chef,role=tester/17/
         omnibusTiming: {}
       ubuntu-10.04:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 919.048
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 907.45
         builtOn: chef-ubuntu-10.04-tester-122b8b
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ubuntu-10.04,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ubuntu-10.04,project=chef,role=tester/17/
         omnibusTiming: {}
       ubuntu-10.04-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 547.003
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 538.4
         builtOn: chef-ubuntu-10.04-i386-tester-eebef0
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=ubuntu-10.04,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=ubuntu-10.04,project=chef,role=tester/17/
         omnibusTiming: {}
       ubuntu-12.04:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 971.489
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 973.945
         builtOn: chef-ubuntu-12.04-tester-d79170
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ubuntu-12.04,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ubuntu-12.04,project=chef,role=tester/17/
         omnibusTiming: {}
       ubuntu-12.04-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 624.576
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 620.931
         builtOn: chef-ubuntu-12.04-i386-tester-a0fc88
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=ubuntu-12.04,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=ubuntu-12.04,project=chef,role=tester/17/
         omnibusTiming: {}
       ubuntu-14.04:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 822.953
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 811.78
         builtOn: chef-ubuntu-14.04-tester-eb4a2d
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ubuntu-14.04,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ubuntu-14.04,project=chef,role=tester/17/
         omnibusTiming: {}
       ubuntu-14.04-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 641.623
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 636.247
         builtOn: chef-ubuntu-14.04-i386-tester-dd49dd
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=ubuntu-14.04,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=ubuntu-14.04,project=chef,role=tester/17/
+        omnibusTiming: {}
+      windows-2008r2:
+        result: SUCCESS
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 1053.225
+        builtOn: chef-windows-2008r2-tester-fa3715
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=windows-2008r2,project=chef,role=tester/17/
         omnibusTiming: {}
       windows-2008r2-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 992.724
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 1016.946
         builtOn: chef-windows-2008r2-i386-tester-d71823
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=windows-2008r2,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=windows-2008r2,project=chef,role=tester/17/
         omnibusTiming: {}
       windows-2012:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 1010.848
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 1015.863
         builtOn: chef-windows-2012-tester-7b2ce5
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=windows-2012,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=windows-2012,project=chef,role=tester/17/
         omnibusTiming: {}
       windows-2012r2:
         result: SUCCESS
-        timestamp: '2016-05-25T15:13:49-07:00'
-        duration: 1123.575
+        timestamp: 2016-05-26 14:30:29 UTC
+        duration: 1143.204
         builtOn: chef-windows-2012r2-tester-802427
-        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=windows-2012r2,project=chef,role=tester/16/
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=windows-2012r2,project=chef,role=tester/17/
         omnibusTiming: {}
   chef-build:
     result: SUCCESS
-    timestamp: '2016-05-25T14:40:33-07:00'
+    timestamp: 2016-05-25 21:40:33 UTC
     duration: 1987.675
     url: http://manhattan.ci.chef.co/job/chef-build/24/
     parameters:
@@ -510,7 +529,7 @@ stages:
     runs:
       aix-6.1-powerpc:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 1053.696
         builtOn: chef-aix-6-powerpc-builder-88f619
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=powerpc,platform=aix-6.1,project=chef,role=builder/24/
@@ -528,7 +547,7 @@ stages:
           chef: 76.5519
       debian-6:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 484.297
         builtOn: chef-debian-6-builder-cdb146
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=debian-6,project=chef,role=builder/24/
@@ -546,7 +565,7 @@ stages:
           chef: 75.3746
       debian-6-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 367.164
         builtOn: chef-debian-6-i386-builder-ade2b2
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=debian-6,project=chef,role=builder/24/
@@ -564,7 +583,7 @@ stages:
           chef: 53.5832
       el-5:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 538.714
         builtOn: chef-rhel-5-builder-0876aa
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-5,project=chef,role=builder/24/
@@ -582,7 +601,7 @@ stages:
           chef: 75.9408
       el-5-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 413.504
         builtOn: chef-rhel-5-i386-builder-1d7cab
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=el-5,project=chef,role=builder/24/
@@ -600,7 +619,7 @@ stages:
           chef: 59.5985
       el-6:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 564.424
         builtOn: chef-rhel-6-builder-358778
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-6,project=chef,role=builder/24/
@@ -618,7 +637,7 @@ stages:
           chef: 85.7867
       el-6-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 420.16
         builtOn: chef-rhel-6-i386-builder-89c0c9
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=el-6,project=chef,role=builder/24/
@@ -636,7 +655,7 @@ stages:
           chef: 63.1011
       el-7:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 424.2
         builtOn: chef-rhel-7-builder-7777fa
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-7,project=chef,role=builder/24/
@@ -654,7 +673,7 @@ stages:
           chef: 56.0402
       freebsd-10:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 504.622
         builtOn: chef-freebsd-10-builder-cd7c49
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=freebsd-10,project=chef,role=builder/24/
@@ -672,7 +691,7 @@ stages:
           chef: 91.3416
       freebsd-10-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 362.201
         builtOn: chef-freebsd-10-i386-builder-2758f7
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-10,project=chef,role=builder/24/
@@ -690,7 +709,7 @@ stages:
           chef: 55.3879
       freebsd-9:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 599.301
         builtOn: chef-freebsd-9-builder-a75aff
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=freebsd-9,project=chef,role=builder/24/
@@ -708,7 +727,7 @@ stages:
           chef: 101.2529
       freebsd-9-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 381.453
         builtOn: chef-freebsd-9-i386-builder-a4d0bd
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-9,project=chef,role=builder/24/
@@ -726,7 +745,7 @@ stages:
           chef: 58.5606
       ios_xr-6:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 321.173
         builtOn: chef-ios_xr-6-builder-ff30c9
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=ios_xr-6,project=chef,role=builder/24/
@@ -744,7 +763,7 @@ stages:
           chef: 50.4792
       mac_os_x-10.9:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 260.435
         builtOn: chef-mac_os_x-10.9-builder-e394f7
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=mac_os_x-10.9,project=chef,role=builder/24/
@@ -762,7 +781,7 @@ stages:
           chef: 41.2962
       nexus-7:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 351.043
         builtOn: chef-nexus-7-builder-bf8ea8
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=nexus-7,project=chef,role=builder/24/
@@ -780,7 +799,7 @@ stages:
           chef: 91.8592
       solaris-10-i86pc:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 432.813
         builtOn: chef-solaris-10-i86pc-builder-438438
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i86pc,platform=solaris-10,project=chef,role=builder/24/
@@ -798,7 +817,7 @@ stages:
           chef: 41.8474
       solaris-10-sun4v:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 1957.681
         builtOn: chef-solaris-10-sun4v-builder-a6fb8f
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=sun4v,platform=solaris-10,project=chef,role=builder/24/
@@ -816,7 +835,7 @@ stages:
           chef: 463.9739
       ubuntu-10.04:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 478.069
         builtOn: chef-ubuntu-10.04-builder-a0c84f
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=ubuntu-10.04,project=chef,role=builder/24/
@@ -834,7 +853,7 @@ stages:
           chef: 70.7788
       ubuntu-10.04-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 366.984
         builtOn: chef-ubuntu-10.04-i386-builder-fe2059
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=ubuntu-10.04,project=chef,role=builder/24/
@@ -852,7 +871,7 @@ stages:
           chef: 54.3874
       windows-2008r2:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 809.321
         builtOn: chef-windows-2008r2-builder-db26a1
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/24/
@@ -872,7 +891,7 @@ stages:
           chef: 130.8089
       windows-2008r2-i386:
         result: SUCCESS
-        timestamp: '2016-05-25T14:40:33-07:00'
+        timestamp: 2016-05-25 21:40:33 UTC
         duration: 638.505
         builtOn: chef-windows-2008r2-i386-builder-de9752
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=windows-2008r2,project=chef,role=builder/24/
@@ -892,7 +911,7 @@ stages:
           chef: 126.3139
   chef-trigger-release:
     result: SUCCESS
-    timestamp: '2016-05-25T14:39:58-07:00'
+    timestamp: 2016-05-25 21:39:58 UTC
     duration: 28.46
     url: http://manhattan.ci.chef.co/job/chef-trigger-release/7/
     causes:

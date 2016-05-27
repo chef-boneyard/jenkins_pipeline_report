@@ -275,6 +275,8 @@ class JenkinsData
   end
 
   def process_stage(stage)
+    stage["timestamp"] = Time.parse(stage["timestamp"]).utc.to_s
+
     # Process runs
     if stage["runs"]
       stage["runs"].each do |configuration, run|
@@ -333,8 +335,11 @@ class JenkinsData
   end
 
   def process_run(stage, run)
+    timestamp = Time.parse(run["timestamp"]).utc
+    run["timestamp"] = timestamp.to_s
+
     # Calculate delay
-    delay = Time.parse(run["timestamp"]) - Time.parse(stage["timestamp"])
+    delay = timestamp - Time.parse(stage["timestamp"])
     run["delay"] = delay
 
     # convert omnibus_timing -> omnibusTiming
@@ -380,7 +385,7 @@ class JenkinsData
     if !File.exist?(filename) || force || in_progress?(run) || run["changedThisTime"]
       console_text = fetch_console_text(run)
       unless File.exist?(filename) && console_text == IO.binread(filename)
-        puts "Writing console text #{filename} ..."
+        JenkinsCli.logger.info "Writing console text #{filename} ..."
         FileUtils.mkdir_p(File.dirname(filename))
         IO.binwrite(filename, console_text)
         run["changedThisTime"] = true
@@ -439,7 +444,7 @@ class JenkinsData
       # we can be passed a remote or local build. this is a remote build.
       stage = build
     end
-    File.join(job_path, "#{Time.parse(stage["timestamp"]).strftime("%Y%m%d")}-#{File.basename(stage["url"])}")
+    File.join(job_path, "#{Time.parse(stage["timestamp"]).utc.strftime("%Y%m%d")}-#{File.basename(stage["url"])}")
   end
 
   def build_filename(build)

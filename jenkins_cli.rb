@@ -11,7 +11,7 @@ module JenkinsCli
   def self.logger
     @logger ||= begin
       logger = Logger.new(STDERR)
-      logger.level = Logger::ERROR
+      logger.level = Logger::DEBUG
       logger
     end
   end

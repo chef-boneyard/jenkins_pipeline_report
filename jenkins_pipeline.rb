@@ -388,7 +388,7 @@ class JenkinsPipeline
 
 # 1462900986044 is "time since 1970 in milliseconds"
   def timestamp_to_datetime(timestamp)
-    Time.at(timestamp.to_f / 1000.0).utc.to_datetime.to_s
+    Time.at(timestamp.to_f / 1000.0).utc.to_s
   end
 
   # 13759911 is duration in milliseconds

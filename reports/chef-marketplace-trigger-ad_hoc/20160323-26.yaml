@@ -1,0 +1,111 @@
+---
+result: FAILURE
+timestamp: 2016-03-23 22:14:20 UTC
+duration: 2011.96
+triggeredBy: ryancragun
+url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-ad_hoc/26/
+version: 
+git_ref: ryan/chefstyle
+git_commit: a856fabea99dfdfc173c11948ad7227c18bc04c4
+failures:
+  chef-marketplace-build network - network reset rubygems.org: el-6
+  chef-marketplace-build code - gem install hashie -v 3.4.3: ubuntu
+stages:
+  chef-marketplace-build:
+    result: FAILURE
+    failures:
+      network - network reset rubygems.org: el-6
+      code - gem install hashie -v 3.4.3: ubuntu
+    timestamp: 2016-03-23 22:14:35 UTC
+    duration: 2006.722
+    url: http://wilson.ci.chef.co/job/chef-marketplace-build/169/
+    parameters:
+      GIT_REF: ryan/chefstyle
+      APPEND_TIMESTAMP: true
+      DELIVERY_CHANGE: ''
+      DELIVERY_SHA: ''
+      EXPIRE_CACHE: false
+      RELEASE_BUILD: 'false'
+      PIPELINE_NAME: chef-marketplace
+      GIT_COMMIT: a856fabea99dfdfc173c11948ad7227c18bc04c4
+      PROJECT: chef-marketplace
+      PROMOTE: 'false'
+      PIPELINE_TRIGGER_BUILD_NUMBER: '26'
+      ADHOC_BUILD: 'true'
+      GIT_BRANCH: origin/ryan/chefstyle
+      PIPELINE_TRIGGER_JOB_NAME: chef-marketplace-trigger-ad_hoc
+    runs:
+      el-6:
+        result: FAILURE
+        timestamp: 2016-03-23 22:14:35 UTC
+        duration: 94.624
+        builtOn: marketplace-rhel-6-builder-81ed33
+        url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-6,project=chef-marketplace,role=builder/169/
+        failureCause:
+          cause: network reset rubygems.org
+          jenkinsBuildStep: Invoke XShell command
+          category: network
+          suspiciousBlocks:
+            168: |
+              Installing addressable 2.4.0
+
+              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/ast-2.2.0.gem)
+              An error occurred while installing ast (2.2.0), and Bundler cannot continue.
+              Make sure that `gem install ast -v '2.2.0'` succeeds before bundling.
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+        omnibusTiming: {}
+      ubuntu-14.04:
+        result: FAILURE
+        timestamp: 2016-03-23 22:14:35 UTC
+        duration: 453.335
+        builtOn: marketplace-ubuntu-14.04-builder-5dad2b
+        url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=builder/169/
+        failureCause:
+          cause: gem install hashie -v 3.4.3
+          jenkinsBuildStep: Invoke XShell command
+          category: code
+          suspiciousBlocks:
+            171: |
+              Installing buff-extensions 1.0.0
+
+              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/hashie-3.4.3.gem)
+              Installing buff-ignore 1.1.1
+              Installing buff-ruby_engine 0.1.0
+            198: |
+              Installing ffi 1.9.10 with native extensions
+
+              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/ipaddress-0.8.3.gem)
+              Installing systemu 2.6.5
+              Installing wmi-lite 1.0.0
+            225: |
+              An error occurred while installing hashie (3.4.3), and Bundler cannot continue.
+              Make sure that `gem install hashie -v '3.4.3'` succeeds before bundling.
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+        omnibusTiming: {}
+      el-7:
+        result: SUCCESS
+        timestamp: 2016-03-23 22:14:35 UTC
+        duration: 1294.543
+        builtOn: marketplace-rhel-7-builder-272b6d
+        url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-7,project=chef-marketplace,role=builder/169/
+        omnibusTiming: {}
+  chef-marketplace-trigger-ad_hoc:
+    result: SUCCESS
+    timestamp: 2016-03-23 22:14:20 UTC
+    duration: 5.238
+    url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-ad_hoc/26/
+    causes:
+    - shortDescription: Started by user Ryan Cragun
+      userId: ryancragun
+      userName: Ryan Cragun
+    parameters:
+      GIT_REF: ryan/chefstyle
+      EXPIRE_CACHE: false
+    retryOf:
+    - 25
+    - 24
+    runs: {}

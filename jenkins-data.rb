@@ -1,7 +1,5 @@
 require_relative "jenkins_cli"
 
-JenkinsCli.logger.level = Logger::DEBUG
-
 JenkinsCli.parse_options do |opts|
   opts.banner = <<-EOM
     USAGE: ruby #{File.basename(__FILE__)} JOB_URL ...
