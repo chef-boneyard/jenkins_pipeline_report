@@ -21,7 +21,7 @@ module JenkinsPipelineReport
       reordered_hash
     end
 
-    def self.extract_chef_acceptance_result(lines, index)
+    def self.extract_chef_acceptance_results(excerpt)
       # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] chef-acceptance run succeeded
       # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | Suite   | Command   | Duration | Error |
       # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | provision | 00:01:21 | N     |
@@ -29,18 +29,25 @@ module JenkinsPipelineReport
       # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | destroy   | 00:00:07 | N     |
       # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | trivial | Total     | 00:01:58 | N     |
       # CHEF-ACCEPTANCE::[2016-05-13 20:19:04 +0000] | Run     | Total     | 00:01:58 | N     |
-      rows = []
-      while lines[index] =~ /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
-        rows.unshift($1.split("|").map { |f| f.strip })
-        index -= 1
-        line = lines[index]
-      end
-      field_names = rows.shift.map { |name| name.downcase }
       results = []
-      rows.each do |row|
-        results << Hash[field_names.zip(row)]
+      field_names = nil
+      excerpt.each_line do |line|
+        if line =~ /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
+          row = $1.split("|").map { |f| f.strip }
+          if field_names
+            results[-1] << Hash[field_names.zip(row)]
+          else
+            # If the current_result exists, this is a new section. Add a result
+            # and parse field names
+            field_names = row.map { |name| name.downcase }
+            results << []
+          end
+        else
+          # We're not in a result block anymore, so clear out field names
+          field_names = nil
+        end
       end
-      [ index + 1, results ]
+      results
     end
   end
 end

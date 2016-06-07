@@ -1,4 +1,5 @@
 require_relative "jenkins_pipeline"
+require_relative "log_extractor"
 require_relative "failure_extractor"
 require_relative "timing_extractor"
 require_relative "helpers"
@@ -25,11 +26,12 @@ module JenkinsPipelineReport
     def builds(local: false, **options, &where)
       builds = load
       # Merge remote build information with local
-      builds = merge_builds(load, fetch_builds) unless local
+      builds = merge_builds(builds, fetch_builds) unless local
       builds.select! { |build| where.call(build) } if where
       builds.sort_by! { |build| Time.parse(build["timestamp"]) }
       builds.reverse!
 
+      Cli.logger.info("Refreshing builds ...")
       builds.each do |build|
         next if where && !where.call(build)
         refresh_build(build, **options)
@@ -41,7 +43,7 @@ module JenkinsPipelineReport
     def refresh_build(build, force_refresh_runs: false, force_refresh_logs: false, force_reprocess_logs: false)
       Cli.logger.info "Processing #{build["stages"].values.last["url"]} ..."
       refresh_runs(build, force: force_refresh_runs)
-      cache_console_texts(build, force: force_refresh_logs)
+      cache_console_texts(build) if force_refresh_logs
       process_console_texts(build, force: force_reprocess_logs)
       # Do one last reordering of everything
       build = process_build(build)
@@ -76,17 +78,21 @@ module JenkinsPipelineReport
     def process_console_texts(build, force: false)
       build["stages"].each do |job,stage|
         stage["runs"].each do |configuration,run|
-          process_console_text(build, configuration, run, force: force)
+          LogExtractor.extract(self, build, run, force: force)
+          TimingExtractor.extract(configuration, run, force: force)
+          FailureExtractor.extract(run, force: force)
         end
       end
     end
 
     def load
+      Cli.logger.info("Loading builds from #{job_path} ...")
       return [] unless File.directory?(job_path)
 
       builds = Dir.entries(job_path).map do |entry|
         next unless File.extname(entry) == ".yaml"
         filename = File.join(job_path, entry)
+        Cli.logger.debug("Loading build #{filename} ...")
         build = Psych.load(IO.read(filename))
         desired_filename = build_filename(build)
         if filename != desired_filename
@@ -145,14 +151,17 @@ module JenkinsPipelineReport
       builds.sort_by { |build| build["timestamp"] }.reverse
     end
 
-    def console_text(build, run)
-      filename = console_text_filename(build, run)
-      if File.exist?(filename)
-        IO.binread(filename)
-      elsif build["missingFromJenkins"]
+    def console_text(build, run, force: false)
+      filename = cache_console_text(build, run, force: force)
+      if filename && File.exist?(filename)
+        Cli.logger.debug("Reading log #{filename} ...")
+        content = IO.binread(filename)
+      end
+      if build["missingFromJenkins"]
         # TODO when we have a warning system, warn
         # warn "Console logs for #{build["data"]} are no longer in Jenkins! Cannot fetch."
       end
+      content
     end
 
     # Tell if a build, stage or run succeeded
@@ -184,6 +193,7 @@ module JenkinsPipelineReport
     #
 
     def fetch_builds
+      Cli.logger.info("Fetching remote builds ...")
       jenkins_pipeline.builds.map { |build| normalize_build(build) }
     end
 
@@ -266,14 +276,25 @@ module JenkinsPipelineReport
         build["stages"][job] = process_stage(stage)
       end
 
+      # Calculate parameters
+      parameters = {}
+      build["stages"].each do |job, stage|
+        if stage["parameters"]
+          parameters = stage["parameters"].merge(parameters)
+          stage["parameters"].delete_if { |key, value| parameters[key] == value }
+          stage.delete("parameters") if stage["parameters"].empty?
+        end
+      end
+      build["parameters"] = Helpers.reorder_fields(parameters)
+
       # Calculate build info
       first_stage = build["stages"].values.last
       last_stage = build["stages"].values.first
 
       # Add in calculated data
-      build["version"] = last_stage["parameters"]["OMNIBUS_BUILD_VERSION"] if last_stage["parameters"]
-      build["git_ref"] = first_stage["parameters"]["GIT_REF"] if first_stage["parameters"]
-      build["git_commit"] = last_stage["parameters"]["GIT_COMMIT"] if last_stage["parameters"]
+      build["version"] = build["parameters"]["OMNIBUS_BUILD_VERSION"]
+      build["git_ref"] = build["parameters"]["GIT_REF"]
+      build["git_commit"] = build["parameters"]["GIT_COMMIT"]
       build["result"] = last_stage["result"]
       build["timestamp"] = first_stage["timestamp"]
       build["duration"] = build["stages"].values.inject(0.0) { |sum,stage| sum += stage["duration"] }
@@ -297,7 +318,7 @@ module JenkinsPipelineReport
       end
 
       # Reorder build data for nicer printing
-      build = Helpers.reorder_fields(build, %w{result timestamp duration triggeredBy url version git_ref git_commit}, "stages")
+      build = Helpers.reorder_fields(build, %w{result timestamp duration triggeredBy url version git_ref git_commit}, %w{stages parameters})
 
       build
     end
@@ -315,6 +336,11 @@ module JenkinsPipelineReport
       # Delete unnecessary data
       %w{job number upstreams downstreams}.each { |key| stage.delete(key) }
 
+      if stage["parameters"]
+        # Sort the parameters
+        stage["parameters"] = Helpers.reorder_fields(stage["parameters"])
+      end
+
       stage["retries"] = stage["retries"].map { |r| r.is_a?(Hash) ? File.basename(r["url"]).to_i : r } if stage["retries"]
       stage["retries"] = stage["retries"].sort.reverse if stage["retries"]
       stage["retryOf"] = stage["retryOf"].sort.reverse if stage["retryOf"]
@@ -323,11 +349,7 @@ module JenkinsPipelineReport
         failures = stage["runs"].select { |c,run| failed?(run) }
         if failures.any?
           failures = failures.group_by do |c,run|
-            if run["failureCause"]
-              category = run["failureCause"]["category"]
-              cause = run["failureCause"]["cause"]
-            end
-            "#{(category || "unknown")} - #{(cause || "unknown")}"
+            "#{(run["failureCategory"] || "unknown")} - #{(run["failureCause"] || "unknown")}"
           end
           failures.each do |cause, causedFailures|
             configurations = causedFailures.map { |configuration,run| configuration }
@@ -375,11 +397,43 @@ module JenkinsPipelineReport
         run["omnibusTiming"] = timing
       end
 
+      # Fix up failure cause from older versions
+      if Hash === run["failureCause"]
+        failure_cause = run["failureCause"]
+
+        run["failedIn"] ||= {}
+        run["failedIn"]["omnibus"] ||= failure_cause.delete("lastOmnibusStep") if failure_cause["lastOmnibusStep"]
+        run["failedIn"]["jenkins"] ||= failure_cause.delete("jenkinsBuildStep") if failure_cause["jenkinsBuildStep"]
+        run["failedIn"].merge!(failure_cause.delete("tests")) if failure_cause["tests"]
+        failure_cause.delete("lastOmnibusLine") # just don't need this anymore; logExcerpts has it
+        if failure_cause["suspiciousBlocks"]
+          run["logExcerpts"] ||= {}
+          run["logExcerpts"]["consoleText"] ||= failure_cause.delete("suspiciousBlocks")
+        end
+
+        run["failureCategory"] ||= failure_cause.delete("category")
+        cause = failure_cause.delete("cause")
+        unless failure_cause.empty?
+          raise "failureCause for #{run["url"]} still has keys #{failure_cause.keys}! Cannot convert."
+        end
+        run["failureCause"] = cause
+      end
+
+      #
+      # If it succeeded, it didn't fail :)
+      #
+      if SummaryCache.succeeded?(run)
+        run.delete("failureCategory")
+        run.delete("failureCause")
+        run.delete("failedIn")
+      end
+
+      # Clean up empty fields
       run.delete("delay") if run["delay"] == 0.0
       %w{configuration job number artifacts}.each { |key| run.delete(key) }
 
       # Reorder run data for nicer printing
-      run = Helpers.reorder_fields(run, %w{result timestamp duration delay builtOn url failureCause})
+      run = Helpers.reorder_fields(run, %w{result failureCause failureCategory timestamp duration delay builtOn url})
 
       run
     end
@@ -410,20 +464,29 @@ module JenkinsPipelineReport
 
     def cache_console_text(build, run, force: false)
       filename = console_text_filename(build, run)
+      return filename if run["cachedThisTime"]
+
       if !File.exist?(filename) || force || in_progress?(run) || run["changedThisTime"]
-        console_text = fetch_console_text(run)
+        if build["missingFromJenkins"]
+          Cli.logger.info("Not caching #{filename} because it's gone from Jenkins.")
+        else
+          console_text = fetch_console_text(run)
+        end
+        return nil if console_text.nil?
         unless File.exist?(filename) && console_text == IO.binread(filename)
           Cli.logger.info "Writing console text #{filename} ..."
           FileUtils.mkdir_p(File.dirname(filename))
           IO.binwrite(filename, console_text)
           run["changedThisTime"] = true
+          run["cachedThisTime"] = true
         end
       end
+      filename
     end
 
     def fetch_console_text(run)
       path = URI(File.join(run["url"], "consoleText")).path
-      Cli.logger.debug "GET #{path}"
+      Cli.logger.info "GET #{path}"
       jenkins_pipeline.client.api_get_request(path, nil, nil, true).body
     end
 
@@ -431,31 +494,6 @@ module JenkinsPipelineReport
       job, build_number, configuration = jenkins_pipeline.parse_run_url(run["url"])
       configuration.gsub!(/[^A-Za-z0-9\-]/, "_")
       File.join(build_directory(build), "#{job}-#{configuration}-#{build_number}.log")
-    end
-
-    def process_console_text(build, configuration, run, force: false)
-      if run["changedThisTime"] || force ||
-         !run.has_key?("omnibusTiming") ||
-         (configuration == "acceptance" && !run.has_key?("acceptanceTiming"))
-        console_text ||= console_text(build, run)
-        return unless console_text
-        Cli.logger.info("Extracting timing from #{console_text_filename(build, run)}...")
-        TimingExtractor.extract(configuration, run, console_text)
-      end
-
-      if run["changedThisTime"] || force || !run.has_key?("failureCause")
-        if failed?(run)
-          console_text ||= console_text(build, run)
-          return unless console_text
-          Cli.logger.info("Extracting failure cause from #{console_text_filename(build, run)}...")
-          FailureExtractor.extract(build, run, console_text)
-        end
-      end
-
-      #
-      # Decide on a cause using heuristics
-      #
-      FailureExtractor.deduce_cause(run)
     end
 
     #
@@ -486,6 +524,7 @@ module JenkinsPipelineReport
         stage.delete("changedThisTime")
         stage["runs"].each do |configuration,run|
           run.delete("changedThisTime")
+          run.delete("cachedThisTime")
         end
       end
 

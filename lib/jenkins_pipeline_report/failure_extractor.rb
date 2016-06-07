@@ -3,351 +3,177 @@ require_relative "helpers"
 
 module JenkinsPipelineReport
   class FailureExtractor
-    def self.extract(build, run, console_text)
-      FailureExtractor.new(console_text).extract(build, run)
-    end
-
-    def self.deduce_cause(run)
-      if SummaryCache.succeeded?(run)
-        run.delete("failureCause")
-        return
-      end
-
-      begin
-        cause = run["failureCause"]
-        if SummaryCache.failed?(run) && run["result"].downcase != "failure"
-          cause ||= begin
-            run["failureCause"] = {}
-          end
-          cause["category"] = run["result"].downcase
-          cause["cause"] = run["result"].downcase
-          return
-        end
-
-        if cause
-          # If we can't think of anything more specific, the cause will be the last omnibus step
-          if cause["lastOmnibusStep"]
-            cause["category"] = "code"
-            cause["cause"] = "omnibus #{cause["lastOmnibusStep"]}"
-          end
-
-          if cause["suspiciousBlocks"]
-            cause["suspiciousBlocks"].each do |line_number, suspicious_block|
-              if suspicious_block =~ /^\s*Verification of component '(.+)' failed.\s*$/i
-                cause["tests"] ||= {}
-                cause["tests"]["chef verify"] ||= []
-                cause["tests"]["chef verify"] |= [ $1 ]
-              end
-
-              if suspicious_block =~ /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i
-                cause["jenkinsBuildStep"] ||= $1
-              end
-
-              case suspicious_block
-              when /Slave went offline during the build/
-                cause["category"] = "network"
-                cause["cause"] = "worker disconnected"
-
-              when /The --deployment flag requires a .*\/([^\/]+\/Gemfile.lock)/
-                cause["category"] = "code"
-                cause["cause"] = "missing #{$1}"
-
-              when /(EACCES)/,
-                   /java.io.FileNotFoundException.*(Permission denied)/
-                cause["category"] = "machine"
-                cause["cause"] = "disk space (#{$1})"
-
-              when /Cannot delete workspace:.*The process cannot access the file because it is being used by another process./i
-                cause["category"] = "machine"
-                cause["cause"] = "zombie jenkins"
-
-              when /ECONNRESET/
-                if suspicious_block =~ /ECONNRESET.*(https?:\/\/\S+)/
-                  url = $1
-                  hostname = URI(url).hostname
-                end
-                cause["category"] = "network"
-                cause["cause"] = "network reset#{hostname ? " #{hostname}" : ""}"
-
-              when /jenkinsci.*Connection timed out/i
-                cause["category"] = "network"
-                cause["cause"] = "network timeout jenkins"
-
-              when /IOException.*: Failed to extract/i
-                cause["category"] = "network"
-                cause["cause"] = "jenkins copy"
-
-              when /Failed to connect to (.+) port (\d+): Timed out/i,
-                   /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
-                cause["category"] = "network"
-                cause["cause"] = "network timeout #{$1}:#{$2}"
-                return
-
-              when /Unable to create .*index.lock.*File exists/mi
-                cause["category"] = "machine"
-                cause["cause"] = "git index.lock"
-
-              when /Dumping stack trace to\s+(\S+).stackdump/mi
-                cause["category"] = "machine"
-                cause["cause"] = "segfault #{$1}"
-
-              when /Finder got an error: Application isn.*t running/i
-                cause["category"] = "machine"
-                cause["cause"] = "mac not logged in"
-
-              when /Gemfile\.lock is corrupt/
-                cause["category"] = "code"
-                cause["cause"] = "corrupt Gemfile.lock"
-
-              when /An error occurred while installing (\S+) \(([^\)]+)\)/i
-                cause["category"] = "code"
-                cause["cause"] = "gem install #{$1} -v #{$2}"
-
-              when /rubygems\.org.*Checksum of (\S+) does not match the checksum provided by server/mi
-                cause["category"] = "network"
-                cause["cause"] = "rubygems #{$1} checksum"
-
-              when /Could not find (\S+) in any of the sources/i
-                cause["category"] = "code"
-                cause["cause"] = "yanked gem #{$1}"
-
-              end
-            end
-          end
-
-          if cause["tests"]
-            cause["tests"].each do |type,tests|
-              tests.uniq!
-            end
-            cause["category"] = "code"
-            cause["cause"] = cause["tests"].map do |test_type, t|
-              if t.size <= 3
-                "#{test_type}[#{t.join(",")}]"
-              else
-                test_type
-              end
-            end.join(",")
-          end
-        end
-      ensure
-        run["failureCause"] = order_fields(cause) if cause
-      end
-    end
-
-    def extract(build, run)
-      cause = {}
-      extract_suspicious_blocks(run, cause)
-      extract_other_stuff(run, cause)
-      run["failureCause"] = self.class.order_fields(cause)
+    def self.extract(run, force: false)
+      extract_failed_in(run, force: force)
+      extract_cause(run, force: force)
     end
 
     private
 
-    def self.order_fields(cause)
-      Helpers.reorder_fields(cause,
-        %w{cause detailedCause shellCommand jenkinsBuildStep})
+    def self.extract_cause(run, force: true)
+      return unless SummaryCache.failed?(run) && (!run["failureCategory"] || !run["failureCause"] || force)
+
+      # If it failed but its result was something other than failure (such as
+      # "aborted"), use that as the cause. For example, "aborted"
+      if run["result"].downcase != "failure"
+        run["failureCategory"] = run["result"].downcase
+        run["failureCause"] = run["result"].downcase
+        return
+      end
+
+      # P1 failures (test failures)
+      if run["failedIn"]
+        failed_tests = {}
+        run["failedIn"].each do |type,tests|
+          next if %w{omnibus jenkins}.include?(type) # not a test
+          failed_tests[type] = tests.uniq
+        end
+        if failed_tests.any?
+          run["failureCategory"] = "code"
+          run["failureCause"] = failed_tests.map do |test_type, tests|
+            if tests.size <= 3
+              "#{test_type}[#{tests.join(",")}]"
+            else
+              test_type
+            end
+          end.join(",")
+          return
+        end
+      end
+
+      if run["logExcerpts"] && run["logExcerpts"]["consoleText"]
+        # P2 failure causes
+        run["logExcerpts"]["consoleText"].each do |line_number, excerpt|
+          case excerpt
+          when /Failed to connect to (.+) port (\d+): Timed out/i,
+               /Failed connect to (.+):(\d+); (Operation|Connection) (timed out|now in progress)/i
+            category, cause = "network", "network timeout #{$1}:#{$2}"
+          end
+          if cause
+            run["failureCategory"] = category
+            run["failureCause"] = cause
+            return
+          end
+        end
+
+        # P3 failure causes
+        run["logExcerpts"]["consoleText"].each do |line_number, excerpt|
+          case excerpt
+          when /Slave went offline during the build/
+            category, cause = "network", "worker disconnected"
+
+          when /The --deployment flag requires a .*\/([^\/]+\/Gemfile.lock)/
+            category, cause = "code", "missing #{$1}"
+
+          when /(EACCES)/,
+               /java.io.FileNotFoundException.*(Permission denied)/
+            category, cause = "machine", "disk space (#{$1})"
+
+          when /Cannot delete workspace:.*The process cannot access the file because it is being used by another process./i
+            category, cause = "machine", "zombie jenkins"
+
+          when /ECONNRESET/
+            if excerpt =~ /ECONNRESET.*(https?:\/\/\S+)/
+              url = $1
+              hostname = URI(url).hostname
+            end
+            category, cause = "network", "network reset#{hostname ? " #{hostname}" : ""}"
+
+          when /jenkinsci.*Connection timed out/i
+            category, cause = "network", "network timeout jenkins"
+
+          when /IOException.*: Failed to extract/i
+            category, cause = "network", "jenkins copy"
+
+          when /Unable to create .*index.lock.*File exists/mi
+            category, cause = "machine", "git index.lock"
+
+          when /Dumping stack trace to\s+(\S+).stackdump/mi
+            category, cause = "machine", "segfault #{$1}"
+
+          when /Finder got an error: Application isn.*t running/i
+            category, cause = "machine", "mac not logged in"
+
+          when /Gemfile\.lock is corrupt/
+            category, cause = "code", "corrupt Gemfile.lock"
+
+          when /An error occurred while installing (\S+) \(([^\)]+)\)/i
+            category, cause = "code", "gem install #{$1} -v #{$2}"
+
+          when /rubygems\.org.*Checksum of (\S+) does not match the checksum provided by server/mi
+            category, cause = "network", "rubygems #{$1} checksum"
+
+          when /Could not find (\S+) in any of the sources/i
+            category, cause = "code", "yanked gem #{$1}"
+
+          end
+
+          if cause
+            run["failureCategory"] = category
+            run["failureCause"] = cause
+            return
+          end
+        end
+      end
+
+      # Mark failureCause as the failed omnibus step if all else fails
+      if run["failedIn"] && run["failedIn"]["omnibus"]
+        run["failureCategory"] ||= "code"
+        run["failureCause"] ||= run["failedIn"]["omnibus"]
+      end
     end
 
-    attr_reader :lines
+    def self.extract_failed_in(run, force: false)
+      # Don't bother if the run failed
+      return unless SummaryCache.failed?(run)
+      # Only reprocess if forced to
+      return unless !run["failedIn"] || force
+      # Can't work on it if there are no logs.
+      return unless run["logExcerpts"] && run["logExcerpts"]["consoleText"]
 
-    def initialize(console_text)
-      @lines = console_text.lines
-    end
+      failed_in = {}
 
-    def extract_other_stuff(run, cause)
-      # Step backwards
-      index = lines.size - 1
-      while index >= 0
-        line = lines[index]
-        # Build step 'Invoke XShell command' marked build as failure
-        case line
-        when /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
-          index, results = Helpers.extract_chef_acceptance_result(lines, index)
+      run["logExcerpts"]["consoleText"].each do |log_index, excerpt|
+        # chef-acceptance failures
+        Helpers.extract_chef_acceptance_results(excerpt).each do |results|
           failures = results.select { |result| result["error"] == "Y" && result["command"] != "Total" }
           if failures.any?
-            cause["tests"] ||=  {}
-            cause["tests"]["chef-acceptance"] ||= []
-            failures.each do |failure|
-              cause["tests"]["chef-acceptance"] |= [ "#{failure["suite"]} (#{failure["command"]})" ]
+            chef_acceptance_failures ||=  {}
+            failed_in["chef-acceptance"] ||= []
+            chef_acceptance_failures.each do |failure|
+              failed_in["chef-acceptance"] |= [ "#{failure["suite"]} (#{failure["command"]})" ]
             end
           end
-
-          #                         [Licensing] W | License file '/var/cache/omnibus/src/pry/LICENSE' does not exist for software 'pry'.
-          when /^\s*\[([^\]]+)\] . \| /
-            cause["lastOmnibusStep"] ||= $1
-            cause["lastOmnibusLine"] ||= line.strip
         end
 
-        index -= 1
+        # chef verify failures
+        excerpt.scan(/^\s*Verification of component '(.+)' failed.\s*$/i) do
+          failed_in ||= {}
+          failed_in["chef verify"] ||= []
+          failed_in["chef verify"] |= [ $1 ]
+        end
+
+        # jenkins failure
+        if excerpt =~ /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i
+          failed_in["jenkins"] ||= $1
+        end
       end
-    end
 
-    def extract_suspicious_blocks(run, cause, context: 2)
-      current_block = nil
-      suspicious_blocks = {}
-      lines.each_with_index do |line,index|
-        range = nil
-
-        case line
-        when /The --deployment flag requires a/,
-             /EACCES/,
-             /\bERROR\b/,
-             /\bFATAL\b/i,
-             /Errno::ECONNRESET/,
-             /Permission denied/i,
-             /Connection timed out/i,
-             /Failed to complete (.*) action:/i,
-             #  java stacktrace
-             # 	at com.michelin.cio.hudson.plugins.copytoslave.MyFilePath.copyRecursiveTo(MyFilePath.java:147)
-             /^\s*at ([a-z_]\w*\.)+[A-Z_]\w*\.[a-z_]\w*\([^\)]*\)\s*$/,
-             # ruby stacktrace
-             #   /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-7c98e2bbceb7/lib/omnibus/thread_pool.rb:61:in `block (2 levels) in initialize'
-             /^\s*(\S+):(\d+):in `([^']*)'/,
-             /^\s*Build step '(.+)' (marked build as|changed build result to) failure\s*$/i,
-             /^\s*Verification of component '(.+)' failed.\s*$/i,
-             /freed prematurely/,
-             /Chef Client failed/i,
-             /Slave went offline during the build/i
-
-          range = index..index
-
-          #       # Chef error
-          #       ================================================================================
-          #       Error executing action `restart` on resource 'docker_service_manager_upstart[default]'
-          #       ================================================================================
-          #
-          #       Mixlib::ShellOut::CommandTimeout
-          #       --------------------------------
-          #       service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
-          #       Command exceeded allowed execution time, process terminated
-          #       ---- Begin output of /sbin/start docker ----
-          #       STDOUT:
-          #       STDERR:
-          #       ---- End output of /sbin/start docker ----
-          #       Ran /sbin/start docker returned
-          #
-          #       Cookbook Trace:
-          #       ---------------
-          #       /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
-          #       /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
-          #       /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
-          #       /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
-          #       /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
-          #
-          #       Resource Declaration:
-          #       ---------------------
-          #       # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb
-          #
-          #  7: docker_service_manager_upstart 'default' do
-          #  8:   host 'unix:///var/run/docker.sock'
-          #  9:   action :start
-          # 10: end
-          # 11:
-          #
-          #       Compiled Resource:
-          #       ------------------
-          #       # Declared in /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in `from_file'
-          #
-          #       docker_service_manager_upstart("default") do
-          #  action [:start]
-          #  updated true
-          #  updated_by_last_action true
-          #  retries 0
-          #  retry_delay 2
-          #  default_guard_interpreter :default
-          #  declared_type :docker_service_manager_upstart
-          #  cookbook_name "docker_test"
-          #  recipe_name "service_upstart"
-          #  host ["unix:///var/run/docker.sock"]
-          #  pidfile "/var/run/docker.pid"
-          #       end
-          #
-          #       Platform:
-          #       ---------
-          #       x86_64-linux
-          #
-          #
-        when /^(\s*)(={10,})\s*$/
-          whitespace = $1
-          if lines[index+1].start_with?("#{whitespace}Error executing action")
-            # The only good way to do this appears to be to skip through sections until we
-            # find a line with less whitespace than the first line
-            end_index = skip_until(index) { |line| !line.start_with?(whitespace) } - 1
-            range = index..end_index
-          end
-
-        # The following shell command exited with status 128:
-        #
-        #     $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
-        #
-        # Output:
-        #
-        #     (nothing)
-        #
-        # Error:
-        #
-        #     fatal: unable to access 'http://git.savannah.gnu.org/r/config.git/': Failed connect to git.savannah.gnu.org:80; Operation now in progress
-        #
-        when /^\s*The following shell command exited with status \S+:\s*$/i
-          # The following shell command exited with status 128:
-          #
-          end_index = index
-          end_index = skip_until(end_index+1) { |line| line.chomp == "" }
-
-          #     $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
-          #
-          end_index = skip_until(end_index+1) { |line| line.chomp == "" }
-
-          # Output:
-          #
-          end_index = skip_until(end_index+1) { |line| line.chomp == "" }
-
-          #     (nothing)
-          #
-          end_index = skip_until(end_index+1) { |line| line.chomp == "" }
-
-          # Error:
-          #
-          end_index = skip_until(end_index+1) { |line| line.chomp == "" }
-
-          #     fatal: unable to access 'http://git.savannah.gnu.org/r/config.git/': Failed connect to git.savannah.gnu.org:80; Operation now in progress
-          #
-          end_index = skip_until(end_index+1) { |line| line.chomp == "" }
-
-          range = index..end_index
-        end
-
-        if range
-          # Add context
-          range = (range.min-context)..(range.max+context)
-          # If we're part of the range-being-emitted, extend the range
-          if current_block && range.min <= current_block.max+1
-            start_emit = current_block.max+1
-            current_block = current_block.min..range.max if range.max > current_block.max
+      # Find the last omnibus line in the last excerpt
+      run["logExcerpts"]["consoleText"].reverse_each do |log_index, excerpt|
+        last_omnibus_line = excerpt.scan(/^\s*\[([^\]]+)\] . \| /).last
+        if last_omnibus_line
+          # If it's timing information, we did *not* fail in omnibus.
+          if last_omnibus_line =~ /:\s+(\d+(\.\d+)?)s$/
+            failed_in.delete("omnibus")
           else
-            start_emit = range.min
-            current_block = range
+            failed_in["omnibus"] = $1
           end
-          block = suspicious_blocks[current_block.min] ||= ""
-          start_emit.upto(current_block.max) do |i|
-            block << fix_unsightly_characters(lines[i])
-          end
+          break
         end
       end
-      cause["suspiciousBlocks"] = suspicious_blocks unless suspicious_blocks.empty?
-    end
 
-    def skip_until(index, match=nil, &block)
-      while lines[index] && !(block && block.call(lines[index])) && !(match && !(match === lines[index]))
-        break unless lines[index+1]
-        index += 1
-      end
-      index
-    end
-
-    def fix_unsightly_characters(line)
-      line = line.gsub("\r", "")
-      line.gsub("\t", "  ")
+      run["failedIn"] = Helpers.reorder_fields(failed_in, [], "omnibus")
     end
   end
 end
