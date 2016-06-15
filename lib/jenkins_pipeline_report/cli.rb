@@ -25,7 +25,8 @@ module JenkinsPipelineReport
         local: options[:local],
         force_refresh_runs: options[:force_refresh_runs],
         force_refresh_logs: options[:force_refresh_logs],
-        force_reprocess_logs: options[:force_reprocess_logs]
+        force_reprocess_logs: options[:force_reprocess_logs],
+        force_resummarize: options[:force_resummarize]
       ) do |build|
         if options[:where]
           options[:where] === build
@@ -63,6 +64,9 @@ module JenkinsPipelineReport
         end
         opts.on("--[no-]force-reprocess-logs", "Whether to reprocess old logs for things like omnibus timing (default: false).") do |v|
           options[:force_reprocess_logs] = v ? v : nil
+        end
+        opts.on("--[no-]force-resummarize", "Whether to recalculate all failure summaries regardless of whether they've been calculated before (default: false).") do |v|
+          options[:force_recalculate] = v
         end
       end.parse!
       # Default these to force

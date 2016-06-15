@@ -14,7 +14,9 @@ module JenkinsPipelineReport
     def each_block
       range_start = nil
       marked.each_with_index do |is_marked, i|
-        if is_marked
+        if is_marked ||
+           (marked[i-1] && marked[i+1]) || # Glue together ranges that differ by just one line
+           range_start == i-1 # Never have a range that is exactly one line
           range_start ||= i
         else
           yield Range.new(range_start, i-1) if range_start

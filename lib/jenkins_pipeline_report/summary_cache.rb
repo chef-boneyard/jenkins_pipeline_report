@@ -40,11 +40,12 @@ module JenkinsPipelineReport
       builds
     end
 
-    def refresh_build(build, force_refresh_runs: false, force_refresh_logs: false, force_reprocess_logs: false)
+    def refresh_build(build, force_refresh_runs: false, force_refresh_logs: false, force_reprocess_logs: false, force_resummarize: false)
       Cli.logger.info "Processing #{build["stages"].values.last["url"]} ..."
       refresh_runs(build, force: force_refresh_runs)
       cache_console_texts(build) if force_refresh_logs
-      process_console_texts(build, force: force_reprocess_logs)
+      extract_console_texts(build, force: force_reprocess_logs)
+      summarize_console_texts(build, force: force_resummarize)
       # Do one last reordering of everything
       build = process_build(build)
       cache_build(build)
@@ -75,10 +76,17 @@ module JenkinsPipelineReport
       end
     end
 
-    def process_console_texts(build, force: false)
+    def extract_console_texts(build, force: false)
       build["stages"].each do |job,stage|
         stage["runs"].each do |configuration,run|
           LogExtractor.extract(self, build, run, force: force)
+        end
+      end
+    end
+
+    def summarize_console_texts(build, force: false)
+      build["stages"].each do |job,stage|
+        stage["runs"].each do |configuration,run|
           TimingExtractor.extract(configuration, run, force: force)
           FailureExtractor.extract(run, force: force)
         end
@@ -277,7 +285,7 @@ module JenkinsPipelineReport
       end
 
       # Calculate parameters
-      parameters = {}
+      parameters = build["parameters"] || {}
       build["stages"].each do |job, stage|
         if stage["parameters"]
           parameters = stage["parameters"].merge(parameters)

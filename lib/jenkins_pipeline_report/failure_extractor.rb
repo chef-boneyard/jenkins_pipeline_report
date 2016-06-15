@@ -11,7 +11,12 @@ module JenkinsPipelineReport
     private
 
     def self.extract_cause(run, force: true)
-      return unless SummaryCache.failed?(run) && (!run["failureCategory"] || !run["failureCause"] || force)
+      return unless SummaryCache.failed?(run) && (!run["failureCategory"] || !run["failureCause"] || force || run["changedThisTime"])
+
+      unless run["logExcerpts"] && run["logExcerpts"]["consoleText"]
+        run["failureCategory"] ||= "system"
+        run["failure"] ||= "no logs"
+      end
 
       # If it failed but its result was something other than failure (such as
       # "aborted"), use that as the cause. For example, "aborted"
@@ -127,7 +132,7 @@ module JenkinsPipelineReport
       # Don't bother if the run failed
       return unless SummaryCache.failed?(run)
       # Only reprocess if forced to
-      return unless !run["failedIn"] || force
+      return unless !run["failedIn"] || force || run["changedThisTime"]
       # Can't work on it if there are no logs.
       return unless run["logExcerpts"] && run["logExcerpts"]["consoleText"]
 
@@ -140,7 +145,7 @@ module JenkinsPipelineReport
           if failures.any?
             chef_acceptance_failures ||=  {}
             failed_in["chef-acceptance"] ||= []
-            chef_acceptance_failures.each do |failure|
+            failures.each do |failure|
               failed_in["chef-acceptance"] |= [ "#{failure["suite"]} (#{failure["command"]})" ]
             end
           end

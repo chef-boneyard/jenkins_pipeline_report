@@ -23,31 +23,52 @@ module JenkinsPipelineReport
 
     def extract_logs(context: 2)
       blocks = BlockMarker.new
-      last_omnibus_step = nil
-      last_omnibus_line = nil
+      last_step = nil
+      last_line = nil
       lines.each_with_index do |line,index|
-        # omnibus lines in general: keep the first and last (w/o context)
-        if line =~ /^\s*\[([^\]]+)\] [A-Z] \| /
-          step = $1
-          unless step == last_omnibus_step
+        # omnibus and acceptance timestamps
+        case line
+        # [Builder: chef] I | 2016-05-11T20:29:35+00:00 | ...
+        #                 I | 2016-05-11T20:29:35+00:00 | ...
+        when /^\s*(\[(.+)\])? [A-Z] \| (\d+-\d+-\d+T\d+:\d+:\d+[+-]\d+:\d+) \|/
+          step = $2 || last_step
+
+          unless step == last_step
             # always mark the first line
-            blocks.mark(index, index+1)
+            blocks.mark(index, index)
             # always mark the last omnibus line of the previous omnibus block
-            blocks.mark(last_omnibus_line-1, last_omnibus_line) if last_omnibus_line
-            last_omnibus_step = step
+            blocks.mark(last_line, last_line) if last_line
+            last_step = step
           end
-          last_omnibus_line = index
+
+          last_line = index
+
+        # CHEF-ACCEPTANCE::PROVISION[2016-06-10 23:54:43 +0000]
+      when /^(CHEF-ACCEPTANCE)::\S*\[(\d+-\d+-\d+ \d+:\d+:\d+ [+-]\d+)\]/
+          step = $1
+
+          unless step == last_step
+            # always mark the first line
+            blocks.mark(index, index)
+            # always mark the last omnibus line of the previous omnibus block
+            blocks.mark(last_line, last_line) if last_line
+            last_step = step
+          end
+
+          last_line = index
+
         # anonymous omnibus lines
         #                I | 2016-06-07T20:28:20+00:00 |
-        elsif line =~ /^\s* [A-Z] \| (\d+-\d+-\d+T\d+:\d+:\d+[+-]\d+:\d+) \|/
-          last_omnibus_line = index if last_omnibus_step
+        when /^\s* [A-Z] \| (\d+-\d+-\d+T\d+:\d+:\d+[+-]\d+:\d+) \|/
+          last_line = index if last_step
         end
+
 
         # More specific lines
         case line
         when /The --deployment flag requires a/,
              /EACCES/,
-             /\bERROR\b/,
+             /(?!(grep|echo) ")ERROR\b/,
              /\bFATAL\b/i,
              /Errno::ECONNRESET/,
              /Permission denied/i,
@@ -183,7 +204,7 @@ module JenkinsPipelineReport
       end
 
       # mark the last last omnibus line.
-      blocks.mark(last_omnibus_line-1, last_omnibus_line+1) if last_omnibus_line
+      blocks.mark(last_line, last_line) if last_line
 
       # Grab the actual blocks
       result = {}
