@@ -1,4 +1,6 @@
 require "optparse"
+require "uri"
+require "pathname"
 require_relative "summary_cache"
 require_relative "cli_query"
 
@@ -20,8 +22,21 @@ module JenkinsPipelineReport
       SummaryCache.new("reports", logger: logger, job_url: job_url)
     end
 
-    def self.builds(job_url)
+    def self.parse_url(url)
+      parts = URI(url).path.split("/")
+      raise "#{url} is not a job URL!" unless parts.size >= 3 && parts[1] == "job"
+      job_url = URI(url)
+      job_url.path = File.join(*parts[0..2])
+      if parts.size > 3
+        build_number = parts[3].to_i
+      end
+      [ job_url, build_number ]
+    end
+
+    def self.builds(url)
+      job_url, build_number = parse_url(url)
       summary_cache(job_url).builds(
+        build_number,
         local: options[:local],
         force_refresh_runs: options[:force_refresh_runs],
         force_refresh_logs: options[:force_refresh_logs],

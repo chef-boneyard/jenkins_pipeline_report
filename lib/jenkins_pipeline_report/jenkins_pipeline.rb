@@ -247,7 +247,7 @@ module JenkinsPipelineReport
     end
 
     def fetch_runs(job_name, build_number)
-      Cli.logger.debug("GET /job/#{job_name}")
+      Cli.logger.debug("GET /job/#{job_name}/#{build_number}")
       client.api_get_request(
         "/job/#{job_name}/#{build_number}",
         "tree=runs[number,url,result,builtOn,timestamp,duration,artifacts[relativePath],failCount,skipCount,totalCount,urlName]"

@@ -44,7 +44,7 @@ module JenkinsPipelineReport
           last_line = index
 
         # CHEF-ACCEPTANCE::PROVISION[2016-06-10 23:54:43 +0000]
-      when /^(CHEF-ACCEPTANCE)::\S*\[(\d+-\d+-\d+ \d+:\d+:\d+ [+-]\d+)\]/
+        when /^(CHEF-ACCEPTANCE)::\S*\[(\d+-\d+-\d+ \d+:\d+:\d+ [+-]\d+)\]/
           step = $1
 
           unless step == last_step
@@ -197,7 +197,23 @@ module JenkinsPipelineReport
         # success lines (omnibus timing, test timing ...). Don't bother with
         # context; it's not a failure thing.
         when /^\s*\[([^\]]+)\] . \| .*:\s+(\d+(\.\d+)?)s$/,
-             /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/
+             /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/,
+             # Chef:
+             # [2016-06-15T16:00:52-04:00] INFO: *** Chef 12.12.2 ***
+             # [2016-06-15T16:00:55-04:00] INFO: Run List expands to [private-chef::default]
+             # [2016-06-15T16:06:37-04:00] INFO: Chef Run complete in 341.141512 seconds
+             /^\[(\d+-\d+-\d+T\d+:\d+:\d+[+-]\d+:\d+)\] INFO: \*\*\* Chef \S+ \*\*\*$/,
+             /^\[(\d+-\d+-\d+T\d+:\d+:\d+[+-]\d+:\d+)\] INFO: Run List expands to \[(.+)\]/,
+             /^\[(\d+-\d+-\d+T\d+:\d+:\d+[+-]\d+:\d+)\] INFO: Chef Run complete in \S+ seconds/,
+
+             # Pedant:
+             # Starting Pedant Run: 2016-06-15 20:08:45 UTC
+             # Finished in 37 minutes 7 seconds (files took 7.53 seconds to load)
+             # 4173 examples, 0 failures, 98 pending
+             /^Starting Pedant Run: (.+)/,
+             /^Finished in (\S+) minutes (\S+) seconds \(files took \S+ seconds to load\)/,
+             /^(\d+) examples, (\d+) failures, (\d+) pending$/
+
           blocks.mark(index-1, index+1)
 
         end
@@ -209,6 +225,10 @@ module JenkinsPipelineReport
       # Grab the actual blocks
       result = {}
       blocks.each_block do |block|
+        # Delete trailing lines with only whitespace (YAML is not thrilled with it)
+        while lines[block.max] =~ /^\s*$/
+          block = Range.new(block.min, block.max-1)
+        end
         result[block.min+1] = lines[block].map { |line| fix_unsightly_characters(line) }.join("")
       end
       result
@@ -225,8 +245,13 @@ module JenkinsPipelineReport
     end
 
     def fix_unsightly_characters(line)
-      line = line.gsub("\r", "")
-      line.gsub("\t", "  ")
+      # Remove trailing whitespace (YAML doesn't like it)
+      line.sub!(/\s+$/, "\n")
+      # Remove leading tabs (YAML doesn't like them)
+      line.gsub!("\t", "  ")
+      # Remove control characters
+      line.gsub!(/[^[:graph:][:space:]]/) { |c| "\\#{c.bytes[0].to_s(8)}" }
+      line
     end
   end
 end

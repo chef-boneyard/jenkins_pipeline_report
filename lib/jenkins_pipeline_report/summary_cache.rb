@@ -23,10 +23,10 @@ module JenkinsPipelineReport
       @jenkins_pipeline = JenkinsPipeline.new(jenkins_options)
     end
 
-    def builds(local: false, **options, &where)
-      builds = load
+    def builds(build_number=nil, local: false, **options, &where)
+      builds = load(build_number)
       # Merge remote build information with local
-      builds = merge_builds(builds, fetch_builds) unless local
+      builds = merge_builds(builds, fetch_builds(build_number)) unless local
       builds.select! { |build| where.call(build) } if where
       builds.sort_by! { |build| Time.parse(build["timestamp"]) }
       builds.reverse!
@@ -93,12 +93,13 @@ module JenkinsPipelineReport
       end
     end
 
-    def load
+    def load(only_build_number=nil)
       Cli.logger.info("Loading builds from #{job_path} ...")
       return [] unless File.directory?(job_path)
 
       builds = Dir.entries(job_path).map do |entry|
         next unless File.extname(entry) == ".yaml"
+        next if only_build_number && !entry.end_with?("-#{only_build_number}.yaml")
         filename = File.join(job_path, entry)
         Cli.logger.debug("Loading build #{filename} ...")
         build = Psych.load(IO.read(filename))
@@ -200,9 +201,11 @@ module JenkinsPipelineReport
     # Builds
     #
 
-    def fetch_builds
+    def fetch_builds(build_number=nil)
       Cli.logger.info("Fetching remote builds ...")
-      jenkins_pipeline.builds.map { |build| normalize_build(build) }
+      builds = jenkins_pipeline.builds
+      builds.select! { |build| build["number"] == build_number } if build_number
+      builds.map { |build| normalize_build(build) }
     end
 
     def merge_builds(local_builds, remote_builds)
@@ -441,7 +444,7 @@ module JenkinsPipelineReport
       %w{configuration job number artifacts}.each { |key| run.delete(key) }
 
       # Reorder run data for nicer printing
-      run = Helpers.reorder_fields(run, %w{result failureCause failureCategory timestamp duration delay builtOn url})
+      run = Helpers.reorder_fields(run, %w{result failureCause failureCategory timestamp duration delay builtOn url}, %w{steps logExcerpts})
 
       run
     end
