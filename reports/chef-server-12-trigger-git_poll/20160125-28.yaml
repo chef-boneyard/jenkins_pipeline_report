@@ -4,7 +4,7 @@ timestamp: 2016-01-25 19:00:08 UTC
 duration: 11725.074999999999
 url: http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll/28/
 version: 12.3.1+20160125190023
-git_ref: 
+git_ref: origin/master
 git_commit: 57acb3df6a8c7aeea5801b9a7a69df94a657bf5e
 stages:
   chef-server-12-promote:
@@ -12,102 +12,12 @@ stages:
     timestamp: 2016-01-25 22:15:53 UTC
     duration: 0.867
     url: http://wilson.ci.chef.co/job/chef-server-12-promote/27/
-    parameters:
-      OMNIBUS_BUILD_VERSION: 12.3.1+20160125190023
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      GIT_REF: origin/master
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-server-12
-      GIT_COMMIT: 57acb3df6a8c7aeea5801b9a7a69df94a657bf5e
-      PROJECT: chef-server
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '28'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
-      BUILD_USER: SCMTrigger
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "ubuntu-10.04": [
-              "ubuntu-10.04",
-              "ubuntu-12.04",
-              "ubuntu-14.04"
-            ],
-            "el-5": [
-              "el-5"
-            ],
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ]
-          },
-          "test_to_build": {
-            "ubuntu-10.04": "ubuntu-10.04",
-            "ubuntu-12.04": "ubuntu-10.04",
-            "ubuntu-14.04": "ubuntu-10.04",
-            "el-5": "el-5",
-            "el-6": "el-6",
-            "el-7": "el-7"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '64'
-      PIPELINE_BUILD_JOB_NAME: chef-server-12-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-git_poll-28/28/2016-01-25_19-00-08
     runs: {}
   chef-server-12-test:
     result: SUCCESS
     timestamp: 2016-01-25 21:09:57 UTC
     duration: 3950.374
     url: http://wilson.ci.chef.co/job/chef-server-12-test/63/
-    parameters:
-      OMNIBUS_BUILD_VERSION: 12.3.1+20160125190023
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      GIT_REF: origin/master
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-server-12
-      GIT_COMMIT: 57acb3df6a8c7aeea5801b9a7a69df94a657bf5e
-      PROJECT: chef-server
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '28'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
-      BUILD_USER: SCMTrigger
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "ubuntu-10.04": [
-              "ubuntu-10.04",
-              "ubuntu-12.04",
-              "ubuntu-14.04"
-            ],
-            "el-5": [
-              "el-5"
-            ],
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ]
-          },
-          "test_to_build": {
-            "ubuntu-10.04": "ubuntu-10.04",
-            "ubuntu-12.04": "ubuntu-10.04",
-            "ubuntu-14.04": "ubuntu-10.04",
-            "el-5": "el-5",
-            "el-6": "el-6",
-            "el-7": "el-7"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '64'
-      PIPELINE_BUILD_JOB_NAME: chef-server-12-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-git_poll-28/28/2016-01-25_19-00-08
     runs:
       el-5:
         result: SUCCESS
@@ -115,61 +25,230 @@ stages:
         duration: 2771.551
         builtOn: chef-server-rhel-5-tester-4e6602
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-5,project=chef-server,role=tester/63/
-        omnibusTiming: {}
+        steps:
+          total: 2771
+          before (setup time): 1458
+          chef-client private-chef::default: 200
+          after (cleanup time): 985
+        logExcerpts:
+          consoleText:
+            382: |2
+
+              [2016-01-25T16:34:15-05:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T16:34:15-05:00] INFO: Chef-client pid: 28884
+            387: |
+              [2016-01-25T16:34:18-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T16:34:18-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T16:34:18-05:00] INFO: Starting Chef Run for ip-10-194-15-112.us-west-2.compute.internal
+            2367: |
+              [2016-01-25T16:37:35-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T16:37:35-05:00] INFO: Chef Run complete in 196.493809 seconds
+              [2016-01-25T16:37:35-05:00] INFO: Running report handlers
+            2401: |2
+
+              Starting Pedant Run: 2016-01-25 21:39:43 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            10851: |
+              Finished in 35 minutes 47 seconds
+              4074 examples, 0 failures, 98 pending
       el-6:
         result: SUCCESS
         timestamp: 2016-01-25 21:09:57 UTC
         duration: 2822.679
         builtOn: chef-server-rhel-6-tester-8151c8
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-6,project=chef-server,role=tester/63/
-        omnibusTiming: {}
+        steps:
+          total: 2822
+          before (setup time): 1209
+          chef-client private-chef::default: 234
+          after (cleanup time): 1252
+        logExcerpts:
+          consoleText:
+            365: |2
+
+              [2016-01-25T16:30:06-05:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T16:30:06-05:00] INFO: Chef-client pid: 8805
+            370: |
+              [2016-01-25T16:30:10-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T16:30:10-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T16:30:10-05:00] INFO: Starting Chef Run for ip-10-194-9-233.us-west-2.compute.internal
+            2338: |
+              [2016-01-25T16:33:59-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T16:34:00-05:00] INFO: Chef Run complete in 229.413127039 seconds
+              [2016-01-25T16:34:00-05:00] INFO: Running report handlers
+            2372: |2
+
+              Starting Pedant Run: 2016-01-25 21:36:07 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            10822: |
+              Finished in 38 minutes 7 seconds
+              4074 examples, 0 failures, 98 pending
       el-7:
         result: SUCCESS
         timestamp: 2016-01-25 21:09:57 UTC
         duration: 2338.984
         builtOn: chef-server-rhel-7-tester-d586ce
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-7,project=chef-server,role=tester/63/
-        omnibusTiming: {}
+        steps:
+          total: 2338
+          before (setup time): 815
+          chef-client private-chef::default: 187
+          after (cleanup time): 1208
+        logExcerpts:
+          consoleText:
+            50737: |
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/int1-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri: remove failed: No such file or directory
+            59765: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception: remove failed: No such file or directory
+            60711: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/MYMETA.json: remove failed: No such file or directory
+            61091: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Dir/Base.pm: remove failed: No such file or directory
+            64906: |
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/typemap: remove failed: No such file or directory
+            74083: |2
+
+              [2016-01-25T16:23:32-05:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T16:23:32-05:00] INFO: Chef-client pid: 4580
+            74088: |
+              [2016-01-25T16:23:37-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T16:23:37-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T16:23:37-05:00] INFO: Starting Chef Run for ip-10-194-10-226.us-west-2.compute.internal
+            76042: |
+              [2016-01-25T16:26:39-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T16:26:39-05:00] INFO: Chef Run complete in 182.412828173 seconds
+              [2016-01-25T16:26:39-05:00] INFO: Running report handlers
+            76076: |2
+
+              Starting Pedant Run: 2016-01-25 21:28:47 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            84526: |
+              Finished in 29 minutes 45 seconds
+              4074 examples, 0 failures, 98 pending
       ubuntu-10.04:
         result: SUCCESS
         timestamp: 2016-01-25 21:09:57 UTC
         duration: 2541.836
         builtOn: chef-server-ubuntu-10.04-tester-f80d1f
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=tester/63/
-        omnibusTiming: {}
+        steps:
+          total: 2541
+          before (setup time): 984
+          chef-client private-chef::default: 149
+          after (cleanup time): 1282
+        logExcerpts:
+          consoleText:
+            392: |2
+
+              [2016-01-25T21:26:21+00:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T21:26:21+00:00] INFO: Chef-client pid: 28048
+            397: |
+              [2016-01-25T21:26:23+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T21:26:23+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T21:26:23+00:00] INFO: Starting Chef Run for ip-10-194-13-26.us-west-2.compute.internal
+            2358: |
+              [2016-01-25T21:28:49+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T21:28:50+00:00] INFO: Chef Run complete in 146.612497582 seconds
+              [2016-01-25T21:28:50+00:00] INFO: Running report handlers
+            2392: |2
+
+              Starting Pedant Run: 2016-01-25 21:30:56 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            10842: |
+              Finished in 34 minutes 57 seconds
+              4074 examples, 0 failures, 98 pending
       ubuntu-12.04:
         result: SUCCESS
         timestamp: 2016-01-25 21:09:57 UTC
         duration: 2600.453
         builtOn: chef-server-ubuntu-12.04-tester-28c735
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-server,role=tester/63/
-        omnibusTiming: {}
+        steps:
+          total: 2600
+          before (setup time): 993
+          chef-client private-chef::default: 180
+          after (cleanup time): 1301
+        logExcerpts:
+          consoleText:
+            391: |2
+
+              [2016-01-25T21:26:30+00:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T21:26:30+00:00] INFO: Chef-client pid: 8291
+            396: |
+              [2016-01-25T21:26:31+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T21:26:31+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T21:26:31+00:00] INFO: Starting Chef Run for ip-10-194-11-179.us-west-2.compute.internal
+            2357: |
+              [2016-01-25T21:29:30+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T21:29:30+00:00] INFO: Chef Run complete in 178.557629267 seconds
+              [2016-01-25T21:29:30+00:00] INFO: Running report handlers
+            2391: |2
+
+              Starting Pedant Run: 2016-01-25 21:31:36 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            10841: |
+              Finished in 34 minutes 23 seconds
+              4074 examples, 0 failures, 98 pending
       ubuntu-14.04:
         result: SUCCESS
         timestamp: 2016-01-25 21:09:57 UTC
         duration: 2489.971
         builtOn: chef-server-ubuntu-14.04-tester-69fc04
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-server,role=tester/63/
-        omnibusTiming: {}
+        steps:
+          total: 2489
+          before (setup time): 940
+          chef-client private-chef::default: 162
+          after (cleanup time): 1261
+        logExcerpts:
+          consoleText:
+            420: |2
+
+              [2016-01-25T21:25:37+00:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T21:25:37+00:00] INFO: Chef-client pid: 11718
+            425: |
+              [2016-01-25T21:25:39+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T21:25:39+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T21:25:39+00:00] INFO: Starting Chef Run for ip-10-194-13-226.us-west-2.compute.internal
+            2385: |
+              [2016-01-25T21:28:18+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T21:28:19+00:00] INFO: Chef Run complete in 159.556671219 seconds
+              [2016-01-25T21:28:19+00:00] INFO: Running report handlers
+            2419: |2
+
+              Starting Pedant Run: 2016-01-25 21:30:25 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            10869: |
+              Finished in 34 minutes 2 seconds
+              4074 examples, 0 failures, 98 pending
   chef-server-12-build:
     result: SUCCESS
     timestamp: 2016-01-25 19:00:23 UTC
     duration: 7766.355
     url: http://wilson.ci.chef.co/job/chef-server-12-build/64/
-    parameters:
-      GIT_REF: origin/master
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-server-12
-      GIT_COMMIT: 57acb3df6a8c7aeea5801b9a7a69df94a657bf5e
-      PROJECT: chef-server
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '28'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
-      BUILD_USER: SCMTrigger
     runs:
       el-5:
         result: SUCCESS
@@ -177,28 +256,439 @@ stages:
         duration: 1952.875
         builtOn: chef-server-rhel-5-builder-dd11b6
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/64/
-        omnibusTiming: {}
+        steps: 1952
+        logExcerpts:
+          consoleText:
+            333: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb'.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/berkshelf2.rb'.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/nokogiri.rb'.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/libxml2.rb'.
+            484: |2
+                                                  I | 4eae1928300d36957b58b7eceabc81f44e9303e0  refs/heads/master
+                               [GitFetcher: chef] I | $ git cat-file -t 4eae1928300d36957b58b7eceabc81f44e9303e0
+                                                  I | fatal: git cat-file: could not get object info
+                               [GitFetcher: chef] D | unable to determine presence of commit 4eae1928300d36957b58b7eceabc81f44e9303e0
+                               [GitFetcher: chef] I | Fetching from `git://github.com/chef/chef'
+            1291: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.9212s
+                [Builder: private-chef-cookbooks] I | Environment:
+            1310: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 3.9686s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0007s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 5.9418s
+                [Builder: private-chef-cookbooks] I | Finished build
+            1323: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0012s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0037s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            1437: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 25.4039s
+                                  [Builder: chef] I | Environment:
+            1505: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 4.3545s
+                                  [Builder: chef] I | Environment:
+            1531: |2
+                                                  D |   File: chef-12.6.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 4.0546s
+                                  [Builder: chef] I | Environment:
+            3402: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc --verbose': 12.275s
+                                  [Builder: chef] I | Environment:
+            3449: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 2.827s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/chef' '/opt/opscode/bin'
+            3456: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 0.2546s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/ohai' '/opt/opscode/bin'
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.8.1/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.3062s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0002s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.0775s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0146s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0025s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0007s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 49.591s
+                                  [Builder: chef] I | Finished build
+            9526: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/warning%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/str3-i.ri:
+            87382: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Tutorial.pod'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Folder.pm:
+            88950: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Config-GitLike-1.16/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/ExtUtils-InstallPaths-0.011/MYMETA.json:
+            91007: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Simple/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/NoWarnings/.packlist:
+            96462: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/bigint.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/Class/Struct.pm:
+            124196: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/EntityDecl/external_id-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/warning%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/str3-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri
+            155030: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/More.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Tutorial.pod
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Folder.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/UseAllModules.pm
+            155555: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Config-GitLike-1.16/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Config-GitLike-1.16/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/ExtUtils-InstallPaths-0.011/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/ExtUtils-InstallPaths-0.011/install.json
+            156273: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Dir/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Simple/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/NoWarnings/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Harness/.packlist
+            158143: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Devel/InnerPackage.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/bigint.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Class/Struct.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/sigtrap.pm
+            167732: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-10.04. Publishing will be skipped for: ubuntu-10.04, ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+              Published 'chef-server-core-12.3.1+20160125190023-1.el5.x86_64.rpm' for el-5
       el-6:
         result: SUCCESS
         timestamp: 2016-01-25 19:00:23 UTC
         duration: 1716.052
         builtOn: chef-server-rhel-6-builder-f4b641
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/64/
-        omnibusTiming: {}
+        steps: 1716
+        logExcerpts:
+          consoleText:
+            330: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb'.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/berkshelf2.rb'.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/nokogiri.rb'.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/libxml2.rb'.
+            481: |2
+                                                  I | 1ba3dd01fa0227280747d3d63a979607b8b28bb2  refs/heads/master
+                               [GitFetcher: chef] I | $ git cat-file -t 1ba3dd01fa0227280747d3d63a979607b8b28bb2
+                                                  I | fatal: git cat-file: could not get object info
+                               [GitFetcher: chef] D | unable to determine presence of commit 1ba3dd01fa0227280747d3d63a979607b8b28bb2
+                               [GitFetcher: chef] I | Fetching from `git://github.com/chef/chef'
+            1288: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.4485s
+                [Builder: private-chef-cookbooks] I | Environment:
+            1307: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 5.1301s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0009s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 6.6192s
+                [Builder: private-chef-cookbooks] I | Finished build
+            1320: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0004s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0035s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            1434: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 31.7021s
+                                  [Builder: chef] I | Environment:
+            1502: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 5.0258s
+                                  [Builder: chef] I | Environment:
+            1528: |2
+                                                  D |   File: chef-12.6.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 4.5219s
+                                  [Builder: chef] I | Environment:
+            3399: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc --verbose': 11.5446s
+                                  [Builder: chef] I | Environment:
+            3446: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 3.2116s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/chef' '/opt/opscode/bin'
+            3453: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 0.3073s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/ohai' '/opt/opscode/bin'
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.8.1/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.337s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0002s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.1159s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0237s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0047s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0015s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 56.839s
+                                  [Builder: chef] I | Finished build
+            81059: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-10.04. Publishing will be skipped for: ubuntu-10.04, ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-5. Publishing will be skipped for: el-5
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+              Published 'chef-server-core-12.3.1+20160125190023-1.el6.x86_64.rpm' for el-6
       el-7:
         result: SUCCESS
         timestamp: 2016-01-25 19:00:23 UTC
         duration: 1474.342
         builtOn: chef-server-rhel-7-builder-1d11c3
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-7,project=chef-server,role=builder/64/
-        omnibusTiming: {}
+        steps: 1474
+        logExcerpts:
+          consoleText:
+            332: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb'.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/berkshelf2.rb'.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/nokogiri.rb'.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/libxml2.rb'.
+            1285: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.3107s
+                [Builder: private-chef-cookbooks] I | Environment:
+            1304: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 4.5949s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0006s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 5.9328s
+                [Builder: private-chef-cookbooks] I | Finished build
+            1317: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0002s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0014s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            1431: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 28.024s
+                                  [Builder: chef] I | Environment:
+            1499: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 3.498s
+                                  [Builder: chef] I | Environment:
+            1525: |2
+                                                  D |   File: chef-12.6.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 4.7372s
+                                  [Builder: chef] I | Environment:
+            3396: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc --verbose': 9.8342s
+                                  [Builder: chef] I | Environment:
+            3443: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 2.2536s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/chef' '/opt/opscode/bin'
+            3450: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 0.2027s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/ohai' '/opt/opscode/bin'
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.8.1/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.236s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.0935s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0192s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0034s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0016s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0s
+                                  [Builder: chef] I | Build chef: 48.921s
+                                  [Builder: chef] I | Finished build
+            44661: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri:
+            67243: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm:
+            73435: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json:
+            73932: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist:
+            80246: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm:
+            158348: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/int1-i.ri
+            166342: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/typemap
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/File/CheckTree.pm
+            168744: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/install.json
+            169006: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Dir/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/Contents/.packlist
+            171145: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Dir/Base.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File/Contents.pm
+            194181: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-10.04. Publishing will be skipped for: ubuntu-10.04, ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-5. Publishing will be skipped for: el-5
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+              Published 'chef-server-core-12.3.1+20160125190023-1.el7.x86_64.rpm' for el-7
       ubuntu-10.04:
         result: SUCCESS
         timestamp: 2016-01-25 19:00:23 UTC
         duration: 1117.506
         builtOn: chef-server-ubuntu-10.04-builder-6f743f
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=builder/64/
-        omnibusTiming: {}
+        steps: 1117
+        logExcerpts:
+          consoleText:
+            329: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb'.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/berkshelf2.rb'.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/nokogiri.rb'.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-0428549848de/config/software/libxml2.rb'.
+            1282: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.6818s
+                [Builder: private-chef-cookbooks] I | Environment:
+            1301: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 3.9382s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0005s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 5.6248s
+                [Builder: private-chef-cookbooks] I | Finished build
+            1314: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0012s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0024s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            1428: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 28.6206s
+                                  [Builder: chef] I | Environment:
+            1496: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 4.1091s
+                                  [Builder: chef] I | Environment:
+            1522: |2
+                                                  D |   File: chef-12.6.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 4.0591s
+                                  [Builder: chef] I | Environment:
+            3393: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc --verbose': 10.979s
+                                  [Builder: chef] I | Environment:
+            3440: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 2.8373s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/chef' '/opt/opscode/bin'
+            3447: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 0.2912s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/ohai' '/opt/opscode/bin'
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.8.1/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.2892s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0002s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.07s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0233s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0045s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0008s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 51.2988s
+                                  [Builder: chef] I | Finished build
+            73970: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-5. Publishing will be skipped for: el-5
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+              Published 'chef-server-core_12.3.1+20160125190023-1_amd64.deb' for ubuntu-10.04
+              Published 'chef-server-core_12.3.1+20160125190023-1_amd64.deb' for ubuntu-12.04
   chef-server-12-trigger-git_poll:
     result: SUCCESS
     timestamp: 2016-01-25 19:00:08 UTC
@@ -206,5 +696,49 @@ stages:
     url: http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll/28/
     causes:
     - shortDescription: Started by an SCM change
-    parameters: {}
     runs: {}
+parameters:
+  BUILD_USER: SCMTrigger
+  DELIVERY_CHANGE: ''
+  DELIVERY_SHA: ''
+  EXPIRE_CACHE: 'false'
+  GIT_BRANCH: origin/master
+  GIT_COMMIT: 57acb3df6a8c7aeea5801b9a7a69df94a657bf5e
+  GIT_REF: origin/master
+  OMNIBUS_BUILD_VERSION: 12.3.1+20160125190023
+  PIPELINE_BUILD_JOB_NAME: chef-server-12-build
+  PIPELINE_BUILD_JOB_NUMBER: '64'
+  PIPELINE_NAME: chef-server-12
+  PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-git_poll-28/28/2016-01-25_19-00-08
+  PIPELINE_TRIGGER_BUILD_NUMBER: '28'
+  PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
+  PLATFORM_MAPPINGS_JSON: |-
+    {
+      "build_to_test": {
+        "ubuntu-10.04": [
+          "ubuntu-10.04",
+          "ubuntu-12.04",
+          "ubuntu-14.04"
+        ],
+        "el-5": [
+          "el-5"
+        ],
+        "el-6": [
+          "el-6"
+        ],
+        "el-7": [
+          "el-7"
+        ]
+      },
+      "test_to_build": {
+        "ubuntu-10.04": "ubuntu-10.04",
+        "ubuntu-12.04": "ubuntu-10.04",
+        "ubuntu-14.04": "ubuntu-10.04",
+        "el-5": "el-5",
+        "el-6": "el-6",
+        "el-7": "el-7"
+      }
+    }
+  PROJECT: chef-server
+  PROMOTE: 'true'
+  RELEASE_BUILD: 'false'

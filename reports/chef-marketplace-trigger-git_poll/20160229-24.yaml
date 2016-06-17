@@ -4,7 +4,7 @@ timestamp: 2016-02-29 19:38:10 UTC
 duration: 7552.624000000001
 url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-git_poll/24/
 version: 0.0.6+20160229193820.git.8.83281f5
-git_ref: 
+git_ref: origin/master
 git_commit: 83281f5171b447799615868447abf80db559eb3b
 stages:
   chef-marketplace-promote:
@@ -12,88 +12,12 @@ stages:
     timestamp: 2016-02-29 21:44:19 UTC
     duration: 4.824
     url: http://wilson.ci.chef.co/job/chef-marketplace-promote/101/
-    parameters:
-      OMNIBUS_BUILD_VERSION: 0.0.6+20160229193820.git.8.83281f5
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      GIT_REF: origin/master
-      APPEND_TIMESTAMP: true
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-marketplace
-      GIT_COMMIT: 83281f5171b447799615868447abf80db559eb3b
-      PROJECT: chef-marketplace
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '24'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-marketplace-trigger-git_poll
-      BUILD_USER: SCMTrigger
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ],
-            "ubuntu-14.04": [
-              "ubuntu-14.04"
-            ]
-          },
-          "test_to_build": {
-            "el-6": "el-6",
-            "el-7": "el-7",
-            "ubuntu-14.04": "ubuntu-14.04"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '128'
-      PIPELINE_BUILD_JOB_NAME: chef-marketplace-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chef-marketplace-trigger-git_poll-24/24/2016-02-29_19-38-10
     runs: {}
   chef-marketplace-test:
     result: SUCCESS
     timestamp: 2016-02-29 20:12:47 UTC
     duration: 5484.238
     url: http://wilson.ci.chef.co/job/chef-marketplace-test/117/
-    parameters:
-      OMNIBUS_BUILD_VERSION: 0.0.6+20160229193820.git.8.83281f5
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      GIT_REF: origin/master
-      APPEND_TIMESTAMP: true
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-marketplace
-      GIT_COMMIT: 83281f5171b447799615868447abf80db559eb3b
-      PROJECT: chef-marketplace
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '24'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-marketplace-trigger-git_poll
-      BUILD_USER: SCMTrigger
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ],
-            "ubuntu-14.04": [
-              "ubuntu-14.04"
-            ]
-          },
-          "test_to_build": {
-            "el-6": "el-6",
-            "el-7": "el-7",
-            "ubuntu-14.04": "ubuntu-14.04"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '128'
-      PIPELINE_BUILD_JOB_NAME: chef-marketplace-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chef-marketplace-trigger-git_poll-24/24/2016-02-29_19-38-10
     runs:
       el-6:
         result: SUCCESS
@@ -101,41 +25,468 @@ stages:
         duration: 4902.993
         builtOn: marketplace-rhel-6-tester-d69206
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-6,project=chef-marketplace,role=tester/117/
-        omnibusTiming: {}
+        steps:
+          total: 4902
+          before (setup time): 2079
+          chef-client private-chef::default: 1212
+          chef-client chef-marketplace::default: 142
+          chef-client chef-marketplace::default 2: 48
+          chef-client chef-marketplace::upgrade: 596
+          chef-client private-chef::default 2: 257
+          chef-client omnibus-chef-manage::default: 216
+          chef-client opscode-reporting::default: 170
+          chef-client chef-marketplace::register_node: 41
+          after (cleanup time): -578
+        logExcerpts:
+          consoleText:
+            469: |2
+
+              [2016-02-29T15:47:26-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T15:47:26-05:00] INFO: Chef-client pid: 20141
+            474: |
+              [2016-02-29T15:47:45-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-02-29T15:47:45-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-02-29T15:47:45-05:00] INFO: Starting Chef Run for ip-10-194-12-180.us-west-2.compute.internal
+            2439: |
+              [2016-02-29T16:07:37-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-02-29T16:07:38-05:00] INFO: Chef Run complete in 1192.900816662 seconds
+              [2016-02-29T16:07:39-05:00] INFO: Running report handlers
+            2446: |2
+
+              [2016-02-29T16:10:18-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T16:10:18-05:00] INFO: Chef-client pid: 26047
+            2451: |
+              [2016-02-29T16:10:49-05:00] INFO: Run List is [recipe[chef-marketplace::default]]
+              [2016-02-29T16:10:49-05:00] INFO: Run List expands to [chef-marketplace::default]
+              [2016-02-29T16:10:49-05:00] INFO: Starting Chef Run for ip-10-194-12-180.us-west-2.compute.internal
+            2799: |
+              [2016-02-29T16:12:36-05:00] INFO: file[/etc/chef-marketplace/chef-marketplace-running.json] mode changed to 644
+              [2016-02-29T16:12:40-05:00] INFO: Chef Run complete in 111.729101799 seconds
+              [2016-02-29T16:12:42-05:00] INFO: Running report handlers
+            3230: |2
+                    loads the role from the running json
+                  when chef marketplace has not been configured
+              \33[31mERROR: \33[0m Could not determine the Chef Marketplace role.
+              Please set the role in /etc/chef-marketplace/marketplace.rb
+              and run 'chef-marketplace-ctl reconfigure'.
+            3247: |
+              Finished in 43.61 seconds (files took 16.75 seconds to load)
+              88 examples, 0 failures, 2 pending
+            3258: |2
+
+              [2016-02-29T16:17:02-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T16:17:02-05:00] INFO: Chef-client pid: 27381
+            3263: |
+              [2016-02-29T16:17:19-05:00] INFO: Run List is [recipe[chef-marketplace::default]]
+              [2016-02-29T16:17:19-05:00] INFO: Run List expands to [chef-marketplace::default]
+              [2016-02-29T16:17:19-05:00] INFO: Starting Chef Run for ip-10-194-12-180.us-west-2.compute.internal
+            3311: |
+              [2016-02-29T16:17:49-05:00] INFO: Processing file[/etc/chef-marketplace/chef-marketplace-running.json] action create (chef-marketplace::default line 3)
+              [2016-02-29T16:17:50-05:00] INFO: Chef Run complete in 30.249355458 seconds
+              [2016-02-29T16:17:50-05:00] INFO: Running report handlers
+            3320: |2
+
+              [2016-02-29T16:18:15-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T16:18:15-05:00] INFO: Chef-client pid: 27750
+            3325: |
+              [2016-02-29T16:18:31-05:00] INFO: Run List is [recipe[chef-marketplace::upgrade]]
+              [2016-02-29T16:18:31-05:00] INFO: Run List expands to [chef-marketplace::upgrade]
+              [2016-02-29T16:18:31-05:00] INFO: Starting Chef Run for ip-10-194-12-180.us-west-2.compute.internal
+            3400: |
+              [2016-02-29T16:28:11-05:00] INFO: bash[chef-server-ctl restart] ran successfully
+              [2016-02-29T16:28:11-05:00] INFO: Chef Run complete in 580.06437397 seconds
+              [2016-02-29T16:28:12-05:00] INFO: Running report handlers
+            3407: |2
+
+              [2016-02-29T16:29:08-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T16:29:08-05:00] INFO: Chef-client pid: 29153
+            3412: |
+              [2016-02-29T16:29:28-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-02-29T16:29:28-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-02-29T16:29:28-05:00] INFO: Starting Chef Run for ip-10-194-12-180.us-west-2.compute.internal
+            3916: |
+              [2016-02-29T16:33:23-05:00] INFO: file[/etc/opscode/chef-server-running.json] updated file contents /etc/opscode/chef-server-running.json
+              [2016-02-29T16:33:25-05:00] INFO: Chef Run complete in 237.275879603 seconds
+              [2016-02-29T16:33:26-05:00] INFO: Running report handlers
+            3925: |
+              [2016-02-29T16:33:49-05:00] INFO: Forking chef instance to converge...
+              [2016-02-29T16:33:49-05:00] INFO: *** Chef 12.4.1 ***
+              [2016-02-29T16:33:49-05:00] INFO: Chef-client pid: 30433
+            3930: |
+              [2016-02-29T16:34:06-05:00] INFO: Run List is [recipe[omnibus-chef-manage::default]]
+              [2016-02-29T16:34:06-05:00] INFO: Run List expands to [omnibus-chef-manage::default]
+              [2016-02-29T16:34:06-05:00] INFO: Starting Chef Run for ip-10-194-12-180.us-west-2.compute.internal
+            4121: |
+              [2016-02-29T16:37:25-05:00] INFO: service[nginx] restarted
+              [2016-02-29T16:37:25-05:00] INFO: Chef Run complete in 199.120873649 seconds
+              [2016-02-29T16:37:25-05:00] INFO: Running report handlers
+            4130: |
+              [2016-02-29T16:37:48-05:00] INFO: Forking chef instance to converge...
+              [2016-02-29T16:37:48-05:00] INFO: *** Chef 12.6.0 ***
+              [2016-02-29T16:37:48-05:00] INFO: Chef-client pid: 31171
+            4135: |
+              [2016-02-29T16:37:51-05:00] INFO: Run List is [recipe[opscode-reporting::default]]
+              [2016-02-29T16:37:51-05:00] INFO: Run List expands to [opscode-reporting::default]
+              [2016-02-29T16:37:51-05:00] INFO: Starting Chef Run for ip-10-194-12-180.us-west-2.compute.internal
+            4303: |
+              [2016-02-29T16:40:38-05:00] INFO: service[opscode-reporting] restarted
+              [2016-02-29T16:40:38-05:00] INFO: Chef Run complete in 167.323946118 seconds
+              [2016-02-29T16:40:39-05:00] INFO: Running report handlers
+            4366: |2
+
+              [2016-02-29T16:43:27-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T16:43:27-05:00] INFO: Chef-client pid: 32524
+            4371: |
+              [2016-02-29T16:43:45-05:00] INFO: Run List is [recipe[chef-marketplace::register_node]]
+              [2016-02-29T16:43:45-05:00] INFO: Run List expands to [chef-marketplace::register_node]
+              [2016-02-29T16:43:45-05:00] INFO: Starting Chef Run for ip-10-194-12-180.us-west-2.compute.internal
+            4637: |
+              [2016-02-29T16:44:08-05:00] INFO: ruby_block[register node] called
+              [2016-02-29T16:44:08-05:00] INFO: Chef Run complete in 22.902063811 seconds
+              [2016-02-29T16:44:08-05:00] INFO: Running report handlers
       el-7:
         result: SUCCESS
         timestamp: 2016-02-29 20:12:47 UTC
         duration: 1458.272
         builtOn: marketplace-rhel-7-tester-b94ddf
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-7,project=chef-marketplace,role=tester/117/
-        omnibusTiming: {}
+        steps:
+          total: 1458
+          before (setup time): 517
+          chef-client private-chef::default: 257
+          chef-client chef-marketplace::default: 13
+          chef-client chef-marketplace::default 2: 10
+          chef-client chef-marketplace::upgrade: 142
+          chef-client private-chef::default 2: 53
+          chef-client omnibus-chef-manage::default: 50
+          chef-client opscode-reporting::default: 31
+          after (cleanup time): 34
+        logExcerpts:
+          consoleText:
+            52892: |
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/int1-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri: remove failed: No such file or directory
+            61973: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception: remove failed: No such file or directory
+            62919: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/MYMETA.json: remove failed: No such file or directory
+            63299: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Dir/Base.pm: remove failed: No such file or directory
+            67112: |
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/typemap: remove failed: No such file or directory
+            98325: |
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/formatter-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/formatter%3d-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error%3f-i.ri: remove failed: No such file or directory
+            99125: |
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/new-c.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/load_workstation_config-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/exit%21-c.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/configure_ohai-i.ri: remove failed: No such file or directory
+            99979: |
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/logger-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/info-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/error-i.ri: remove failed: No such file or directory
+            103899: |
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/warn-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/info-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/error-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri: remove failed: No such file or directory
+            138887: |
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/formatter-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/formatter%3d-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error%3f-i.ri: remove failed: No such file or directory
+            140318: |
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/new-c.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/load_workstation_config-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/exit%21-c.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/configure_ohai-i.ri: remove failed: No such file or directory
+            140576: |
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/int1-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri: remove failed: No such file or directory
+            141923: |
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/logger-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/info-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/error-i.ri: remove failed: No such file or directory
+            145896: |
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/warn-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/info-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/error-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri: remove failed: No such file or directory
+            154471: |2
+
+              [2016-02-29T15:21:24-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T15:21:24-05:00] INFO: Chef-client pid: 11553
+            154476: |
+              [2016-02-29T15:21:29-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-02-29T15:21:29-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-02-29T15:21:29-05:00] INFO: Starting Chef Run for ip-10-194-13-182.us-west-2.compute.internal
+            156432: |
+              [2016-02-29T15:25:40-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-02-29T15:25:41-05:00] INFO: Chef Run complete in 252.006221457 seconds
+              [2016-02-29T15:25:41-05:00] INFO: Running report handlers
+            156439: |2
+
+              [2016-02-29T15:27:49-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T15:27:49-05:00] INFO: Chef-client pid: 15156
+            156444: |
+              [2016-02-29T15:27:52-05:00] INFO: Run List is [recipe[chef-marketplace::default]]
+              [2016-02-29T15:27:52-05:00] INFO: Run List expands to [chef-marketplace::default]
+              [2016-02-29T15:27:52-05:00] INFO: Starting Chef Run for ip-10-194-13-182.us-west-2.compute.internal
+            156780: |
+              [2016-02-29T15:28:01-05:00] INFO: file[/etc/chef-marketplace/chef-marketplace-running.json] mode changed to 644
+              [2016-02-29T15:28:02-05:00] INFO: Chef Run complete in 9.912855762 seconds
+              [2016-02-29T15:28:02-05:00] INFO: Running report handlers
+            157211: |2
+                    loads the role from the running json
+                  when chef marketplace has not been configured
+              \33[31mERROR: \33[0m Could not determine the Chef Marketplace role.
+              Please set the role in /etc/chef-marketplace/marketplace.rb
+              and run 'chef-marketplace-ctl reconfigure'.
+            157228: |
+              Finished in 8.88 seconds (files took 4.74 seconds to load)
+              88 examples, 0 failures, 2 pending
+            157239: |2
+
+              [2016-02-29T15:30:31-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T15:30:31-05:00] INFO: Chef-client pid: 15601
+            157244: |
+              [2016-02-29T15:30:33-05:00] INFO: Run List is [recipe[chef-marketplace::default]]
+              [2016-02-29T15:30:33-05:00] INFO: Run List expands to [chef-marketplace::default]
+              [2016-02-29T15:30:33-05:00] INFO: Starting Chef Run for ip-10-194-13-182.us-west-2.compute.internal
+            157287: |
+              [2016-02-29T15:30:41-05:00] INFO: Processing file[/etc/chef-marketplace/chef-marketplace-running.json] action create (chef-marketplace::default line 3)
+              [2016-02-29T15:30:41-05:00] INFO: Chef Run complete in 7.842398013 seconds
+              [2016-02-29T15:30:41-05:00] INFO: Running report handlers
+            157296: |2
+
+              [2016-02-29T15:30:46-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T15:30:46-05:00] INFO: Chef-client pid: 15823
+            157301: |
+              [2016-02-29T15:30:48-05:00] INFO: Run List is [recipe[chef-marketplace::upgrade]]
+              [2016-02-29T15:30:48-05:00] INFO: Run List expands to [chef-marketplace::upgrade]
+              [2016-02-29T15:30:48-05:00] INFO: Starting Chef Run for ip-10-194-13-182.us-west-2.compute.internal
+            157376: |
+              [2016-02-29T15:33:08-05:00] INFO: bash[chef-server-ctl restart] ran successfully
+              [2016-02-29T15:33:08-05:00] INFO: Chef Run complete in 140.704985443 seconds
+              [2016-02-29T15:33:08-05:00] INFO: Running report handlers
+            157383: |2
+
+              [2016-02-29T15:33:23-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T15:33:23-05:00] INFO: Chef-client pid: 16163
+            157388: |
+              [2016-02-29T15:33:28-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-02-29T15:33:28-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-02-29T15:33:28-05:00] INFO: Starting Chef Run for ip-10-194-13-182.us-west-2.compute.internal
+            157887: |
+              [2016-02-29T15:34:16-05:00] INFO: file[/etc/opscode/chef-server-running.json] updated file contents /etc/opscode/chef-server-running.json
+              [2016-02-29T15:34:16-05:00] INFO: Chef Run complete in 48.539803034 seconds
+              [2016-02-29T15:34:16-05:00] INFO: Running report handlers
+            157896: |
+              [2016-02-29T15:34:23-05:00] INFO: Forking chef instance to converge...
+              [2016-02-29T15:34:23-05:00] INFO: *** Chef 12.4.1 ***
+              [2016-02-29T15:34:23-05:00] INFO: Chef-client pid: 16936
+            157901: |
+              [2016-02-29T15:34:26-05:00] INFO: Run List is [recipe[omnibus-chef-manage::default]]
+              [2016-02-29T15:34:26-05:00] INFO: Run List expands to [omnibus-chef-manage::default]
+              [2016-02-29T15:34:26-05:00] INFO: Starting Chef Run for ip-10-194-13-182.us-west-2.compute.internal
+            158091: |
+              [2016-02-29T15:35:13-05:00] INFO: service[nginx] restarted
+              [2016-02-29T15:35:13-05:00] INFO: Chef Run complete in 47.745616225 seconds
+              [2016-02-29T15:35:14-05:00] INFO: Running report handlers
+            158100: |
+              [2016-02-29T15:35:18-05:00] INFO: Forking chef instance to converge...
+              [2016-02-29T15:35:18-05:00] INFO: *** Chef 12.6.0 ***
+              [2016-02-29T15:35:18-05:00] INFO: Chef-client pid: 17311
+            158105: |
+              [2016-02-29T15:35:18-05:00] INFO: Run List is [recipe[opscode-reporting::default]]
+              [2016-02-29T15:35:18-05:00] INFO: Run List expands to [opscode-reporting::default]
+              [2016-02-29T15:35:18-05:00] INFO: Starting Chef Run for ip-10-194-13-182.us-west-2.compute.internal
+            158270: |
+              [2016-02-29T15:35:49-05:00] INFO: service[opscode-reporting] restarted
+              [2016-02-29T15:35:49-05:00] INFO: Chef Run complete in 31.032414602 seconds
+              [2016-02-29T15:35:50-05:00] INFO: Running report handlers
+            158333: |2
+
+              [2016-02-29T15:36:24-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T15:36:24-05:00] INFO: Chef-client pid: 18144
+            158338: |
+              [2016-02-29T15:36:26-05:00] INFO: Run List is [recipe[chef-marketplace::register_node]]
+              [2016-02-29T15:36:26-05:00] INFO: Run List expands to [chef-marketplace::register_node]
+              [2016-02-29T15:36:26-05:00] INFO: Starting Chef Run for ip-10-194-13-182.us-west-2.compute.internal
+            158604: |
+              [2016-02-29T15:36:31-05:00] INFO: ruby_block[register node] called
+              [2016-02-29T15:36:31-05:00] INFO: Chef Run complete in 5.494803761 seconds
+              [2016-02-29T15:36:31-05:00] INFO: Running report handlers
       ubuntu-14.04:
         result: SUCCESS
         timestamp: 2016-02-29 20:12:47 UTC
         duration: 2785.814
         builtOn: marketplace-ubuntu-14.04-tester-9b7619
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=tester/117/
-        omnibusTiming: {}
+        steps:
+          total: 2785
+          before (setup time): 700
+          chef-client private-chef::default: 755
+          chef-client chef-marketplace::default: 43
+          chef-client chef-marketplace::default 2: 24
+          chef-client chef-marketplace::upgrade: 214
+          chef-client private-chef::default 2: 170
+          chef-client omnibus-chef-manage::default: 140
+          chef-client opscode-reporting::default: 76
+          chef-client chef-marketplace::register_node: 26
+          after (cleanup time): 105
+        logExcerpts:
+          consoleText:
+            585: |2
+
+              [2016-02-29T20:24:27+00:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T20:24:27+00:00] INFO: Chef-client pid: 7501
+            590: |
+              [2016-02-29T20:24:34+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-02-29T20:24:34+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-02-29T20:24:34+00:00] INFO: Starting Chef Run for ip-10-194-10-54.us-west-2.compute.internal
+            2555: |
+              [2016-02-29T20:37:01+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-02-29T20:37:02+00:00] INFO: Chef Run complete in 747.701297017 seconds
+              [2016-02-29T20:37:03+00:00] INFO: Running report handlers
+            2562: |2
+
+              [2016-02-29T20:39:18+00:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T20:39:18+00:00] INFO: Chef-client pid: 11926
+            2567: |
+              [2016-02-29T20:39:26+00:00] INFO: Run List is [recipe[chef-marketplace::default]]
+              [2016-02-29T20:39:26+00:00] INFO: Run List expands to [chef-marketplace::default]
+              [2016-02-29T20:39:26+00:00] INFO: Starting Chef Run for ip-10-194-10-54.us-west-2.compute.internal
+            2925: |
+              [2016-02-29T20:40:01+00:00] INFO: file[/etc/chef-marketplace/chef-marketplace-running.json] mode changed to 644
+              [2016-02-29T20:40:01+00:00] INFO: Chef Run complete in 35.047855479 seconds
+              [2016-02-29T20:40:01+00:00] INFO: Running report handlers
+            3356: |2
+                    loads the role from the running json
+                  when chef marketplace has not been configured
+              \33[31mERROR: \33[0m Could not determine the Chef Marketplace role.
+              Please set the role in /etc/chef-marketplace/marketplace.rb
+              and run 'chef-marketplace-ctl reconfigure'.
+            3373: |
+              Finished in 26.57 seconds (files took 12.11 seconds to load)
+              88 examples, 0 failures, 2 pending
+            3384: |2
+
+              [2016-02-29T20:43:32+00:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T20:43:32+00:00] INFO: Chef-client pid: 12768
+            3389: |
+              [2016-02-29T20:43:38+00:00] INFO: Run List is [recipe[chef-marketplace::default]]
+              [2016-02-29T20:43:38+00:00] INFO: Run List expands to [chef-marketplace::default]
+              [2016-02-29T20:43:38+00:00] INFO: Starting Chef Run for ip-10-194-10-54.us-west-2.compute.internal
+            3447: |
+              [2016-02-29T20:43:55+00:00] INFO: Processing file[/etc/chef-marketplace/chef-marketplace-running.json] action create (chef-marketplace::default line 3)
+              [2016-02-29T20:43:56+00:00] INFO: Chef Run complete in 18.160683141 seconds
+              [2016-02-29T20:43:56+00:00] INFO: Running report handlers
+            3456: |2
+
+              [2016-02-29T20:44:11+00:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T20:44:11+00:00] INFO: Chef-client pid: 13063
+            3461: |
+              [2016-02-29T20:44:16+00:00] INFO: Run List is [recipe[chef-marketplace::upgrade]]
+              [2016-02-29T20:44:16+00:00] INFO: Run List expands to [chef-marketplace::upgrade]
+              [2016-02-29T20:44:16+00:00] INFO: Starting Chef Run for ip-10-194-10-54.us-west-2.compute.internal
+            3588: |
+              [2016-02-29T20:47:45+00:00] INFO: bash[chef-server-ctl restart] ran successfully
+              [2016-02-29T20:47:45+00:00] INFO: Chef Run complete in 208.636794428 seconds
+              [2016-02-29T20:47:45+00:00] INFO: Running report handlers
+            3595: |2
+
+              [2016-02-29T20:48:23+00:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T20:48:23+00:00] INFO: Chef-client pid: 13913
+            3600: |
+              [2016-02-29T20:48:30+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-02-29T20:48:30+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-02-29T20:48:30+00:00] INFO: Starting Chef Run for ip-10-194-10-54.us-west-2.compute.internal
+            4126: |
+              [2016-02-29T20:51:12+00:00] INFO: file[/etc/opscode/chef-server-running.json] updated file contents /etc/opscode/chef-server-running.json
+              [2016-02-29T20:51:13+00:00] INFO: Chef Run complete in 162.23648596 seconds
+              [2016-02-29T20:51:13+00:00] INFO: Running report handlers
+            4135: |
+              [2016-02-29T20:51:32+00:00] INFO: Forking chef instance to converge...
+              [2016-02-29T20:51:32+00:00] INFO: *** Chef 12.4.1 ***
+              [2016-02-29T20:51:32+00:00] INFO: Chef-client pid: 15126
+            4140: |
+              [2016-02-29T20:51:37+00:00] INFO: Run List is [recipe[omnibus-chef-manage::default]]
+              [2016-02-29T20:51:37+00:00] INFO: Run List expands to [omnibus-chef-manage::default]
+              [2016-02-29T20:51:37+00:00] INFO: Starting Chef Run for ip-10-194-10-54.us-west-2.compute.internal
+            4331: |
+              [2016-02-29T20:53:52+00:00] INFO: service[nginx] restarted
+              [2016-02-29T20:53:52+00:00] INFO: Chef Run complete in 134.970646512 seconds
+              [2016-02-29T20:53:53+00:00] INFO: Running report handlers
+            4340: |
+              [2016-02-29T20:54:07+00:00] INFO: Forking chef instance to converge...
+              [2016-02-29T20:54:07+00:00] INFO: *** Chef 12.6.0 ***
+              [2016-02-29T20:54:07+00:00] INFO: Chef-client pid: 15726
+            4345: |
+              [2016-02-29T20:54:09+00:00] INFO: Run List is [recipe[opscode-reporting::default]]
+              [2016-02-29T20:54:09+00:00] INFO: Run List expands to [opscode-reporting::default]
+              [2016-02-29T20:54:09+00:00] INFO: Starting Chef Run for ip-10-194-10-54.us-west-2.compute.internal
+            4514: |
+              [2016-02-29T20:55:23+00:00] INFO: service[opscode-reporting] restarted
+              [2016-02-29T20:55:23+00:00] INFO: Chef Run complete in 74.704822497 seconds
+              [2016-02-29T20:55:24+00:00] INFO: Running report handlers
+            4577: |2
+
+              [2016-02-29T20:57:01+00:00] INFO: *** Chef 12.8.0 ***
+              [2016-02-29T20:57:01+00:00] INFO: Chef-client pid: 16758
+            4582: |
+              [2016-02-29T20:57:06+00:00] INFO: Run List is [recipe[chef-marketplace::register_node]]
+              [2016-02-29T20:57:06+00:00] INFO: Run List expands to [chef-marketplace::register_node]
+              [2016-02-29T20:57:06+00:00] INFO: Starting Chef Run for ip-10-194-10-54.us-west-2.compute.internal
+            4848: |
+              [2016-02-29T20:57:27+00:00] INFO: ruby_block[register node] called
+              [2016-02-29T20:57:27+00:00] INFO: Chef Run complete in 20.339378893 seconds
+              [2016-02-29T20:57:27+00:00] INFO: Running report handlers
   chef-marketplace-build:
     result: SUCCESS
     timestamp: 2016-02-29 19:38:20 UTC
     duration: 2060.538
     url: http://wilson.ci.chef.co/job/chef-marketplace-build/128/
-    parameters:
-      GIT_REF: origin/master
-      APPEND_TIMESTAMP: true
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-marketplace
-      GIT_COMMIT: 83281f5171b447799615868447abf80db559eb3b
-      PROJECT: chef-marketplace
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '24'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-marketplace-trigger-git_poll
-      BUILD_USER: SCMTrigger
     runs:
       el-6:
         result: SUCCESS
@@ -143,21 +494,835 @@ stages:
         duration: 2056.507
         builtOn: marketplace-rhel-6-builder-81ed33
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-6,project=chef-marketplace,role=builder/128/
-        omnibusTiming: {}
+        steps: 2056
+        logExcerpts:
+          consoleText:
+            756: |2
+                                                  D | Vendoring yum-chef (0.2.2) to /opt/chef-marketplace/embedded/cookbooks/yum-chef
+              [Builder: chef-marketplace-cookbooks] I | Execute: `/opt/chef-marketplace/embedded/bin/berks vendor /opt/chef-marketplace/embedded/cookbooks --berksfile=./chef-marketplace/Berksfile': 11.2603s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-6/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/single-recipe.json.erb' to `/opt/chef-marketplace/embedded/cookbooks/dna.json'
+              [Builder: chef-marketplace-cookbooks] I | Render erb `single-recipe.json.erb': 0.0014s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-6/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/single-recipe.json.erb' to `/opt/chef-marketplace/embedded/cookbooks/show-config.json'
+              [Builder: chef-marketplace-cookbooks] I | Render erb `single-recipe.json.erb': 0.0007s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-6/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/solo.rb.erb' to `/opt/chef-marketplace/embedded/cookbooks/solo.rb'
+              [Builder: chef-marketplace-cookbooks] I | Render erb `solo.rb.erb': 0.0008s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-6/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/non_root_solo.rb.erb' to `/opt/chef-marketplace/embedded/cookbooks/non_root_solo.rb'
+              /home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-6/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-825096bb2186/lib/omnibus/templating.rb:59: warning: redefining constant Struct::Empty
+              [Builder: chef-marketplace-cookbooks] I | Render erb `non_root_solo.rb.erb': 0.0097s
+              [Builder: chef-marketplace-cookbooks] I | Build chef-marketplace-cookbooks: 11.2826s
+              [Builder: chef-marketplace-cookbooks] I | Finished build
+            789: |2
+                                 [Builder: runit] I | $ sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/chef-marketplace\/service\/\";/" sv.c
+                                 [Builder: runit] I | Execute: `sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/chef-marketplace\/service\/\";/" sv.c': 0.0817s
+                                 [Builder: runit] I | Environment:
+            799: |2
+                                 [Builder: runit] I | $ sed -i -e s:-static:: Makefile
+                                 [Builder: runit] I | Execute: `sed -i -e s:-static:: Makefile': 0.1101s
+                                 [Builder: runit] I | Environment:
+            1019: |2
+                                                  D | ./load utmpset unix.a byte.a
+                                 [Builder: runit] I | Execute: `gmake': 4.4592s
+                                 [Builder: runit] I | Environment:
+            1040: |2
+                                                  D | Checking utmpset...
+                                 [Builder: runit] I | Execute: `gmake check': 12.5855s
+                                 [Builder: runit] I | mkdir `/opt/chef-marketplace/embedded/bin': 0.0006s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/chpst' to `/opt/chef-marketplace/embedded/bin': 0.0006s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit' to `/opt/chef-marketplace/embedded/bin': 0.0004s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit-init' to `/opt/chef-marketplace/embedded/bin': 0.0004s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsv' to `/opt/chef-marketplace/embedded/bin': 0.001s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvchdir' to `/opt/chef-marketplace/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvdir' to `/opt/chef-marketplace/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/sv' to `/opt/chef-marketplace/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/svlogd' to `/opt/chef-marketplace/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/utmpset' to `/opt/chef-marketplace/embedded/bin': 0.0003s
+                                 [Builder: runit] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-6/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-fa5f62f05204/config/templates/runit/runsvdir-start.erb' to `/opt/chef-marketplace/embedded/bin/runsvdir-start'
+                                 [Builder: runit] I | Render erb `runsvdir-start.erb': 0.014s
+                                 [Builder: runit] I | touch `/opt/chef-marketplace/service/.gitkeep': 0.0003s
+                                 [Builder: runit] I | touch `/opt/chef-marketplace/sv/.gitkeep': 0.0003s
+                                 [Builder: runit] I | touch `/opt/chef-marketplace/init/.gitkeep': 0.0003s
+                                 [Builder: runit] I | Build runit: 17.3113s
+                                 [Builder: runit] I | Finished build
+            1106: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: ohai] I | bundle `install --without development': 41.4925s
+                                  [Builder: ohai] I | Environment:
+            1141: |2
+                                                  D |   File: ohai-8.10.0.gem
+                                  [Builder: ohai] I | gem `build ohai.gemspec': 2.5155s
+                                  [Builder: ohai] I | Environment:
+            1153: |2
+                                                  D | 1 gem installed
+                                  [Builder: ohai] I | gem `install ohai*.gem --no-ri --no-rdoc': 5.9467s
+                                  [Builder: ohai] I | Build ohai: 49.9616s
+                                  [Builder: ohai] I | Finished build
+            1185: |2
+                                                  D | 1 gem installed
+                            [Builder: appbundler] I | gem `install appbundler --version '0.5.0' --no-ri --no-rdoc': 2.6279s
+                            [Builder: appbundler] I | Build appbundler: 2.6316s
+                            [Builder: appbundler] I | Finished build
+            1204: |2
+                  [Builder: chef-marketplace-ctl] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-6/project/chef-marketplace/role/builder/config/templates/chef-marketplace-ctl/chef-marketplace-ctl.erb' to `/opt/chef-marketplace/bin/chef-marketplace-ctl'
+                  [Builder: chef-marketplace-ctl] I | Render erb `chef-marketplace-ctl.erb': 0.001s
+                  [Builder: chef-marketplace-ctl] I | sync `/var/cache/omnibus/src/chef-marketplace-ctl' to `/opt/chef-marketplace/embedded/service/chef-marketplace-ctl/': 0.0305s
+                  [Builder: chef-marketplace-ctl] I | Environment:
+            1285: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                  [Builder: chef-marketplace-ctl] I | bundle `install --without development': 51.9975s
+                  [Builder: chef-marketplace-ctl] I | copy `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-6/project/chef-marketplace/role/builder/Rakefile' to `/opt/chef-marketplace/Rakefile': 0.0007s
+                  [Builder: chef-marketplace-ctl] I | Build chef-marketplace-ctl: 52.0413s
+                  [Builder: chef-marketplace-ctl] I | Finished build
+            1379: |2
+                                                  D | Bundled gems are installed into /opt/chef-marketplace/embedded/service/gem.
+                              [Builder: reckoner] I | bundle `install --path=/opt/chef-marketplace/embedded/service/gem': 14.6032s
+                              [Builder: reckoner] I | sync `/var/cache/omnibus/src/reckoner' to `/opt/chef-marketplace/embedded/service/reckoner/': 0.0103s
+                              [Builder: reckoner] I | Build reckoner: 14.6245s
+                              [Builder: reckoner] I | Finished build
+            1410: |2
+                                                  D | Vendoring chef-marketplace (0.0.1) to /opt/chef-marketplace/embedded/server-plugin-cookbooks/chef-marketplace
+               [Builder: server-plugin-cookbooks] I | Execute: `/opt/chef-marketplace/embedded/bin/berks vendor /opt/chef-marketplace/embedded/server-plugin-cookbooks --berksfile=./chef-marketplace/Berksfile': 8.0679s
+               [Builder: server-plugin-cookbooks] I | Build server-plugin-cookbooks: 8.0693s
+               [Builder: server-plugin-cookbooks] I | Finished build
+            1519: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 51.8302s
+                                  [Builder: chef] I | Environment:
+            1587: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 10.9705s
+                                  [Builder: chef] I | Environment:
+            1613: |2
+                                                  D |   File: chef-12.8.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 7.7092s
+                                  [Builder: chef] I | Environment:
+            1625: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc': 27.185s
+                                  [Builder: chef] I | Environment:
+            1671: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 7.9651s
+                                  [Builder: chef] I | Environment:
+            1683: |2
+                                                  D | Generated binstub /opt/chef-marketplace/bin/knife => /opt/chef-marketplace/embedded/apps/chef/bin/knife
+                                  [Builder: chef] I | appbundle `chef': 3.3844s
+                                  [Builder: chef] I | Environment:
+            1689: |2
+                                                  D | Generated binstub /opt/chef-marketplace/bin/ohai => /opt/chef-marketplace/embedded/apps/ohai/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 1.172s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/docs': 0.0004s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/share/man': 0.0825s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/share/doc': 0.1966s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/share/gtk-doc': 0.0037s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 110.5549s
+                                  [Builder: chef] I | Finished build
+            1730: |2
+                                                  D | 1 gem installed
+                            [Builder: sequel-gem] I | gem `install sequel --version '4.13.0' --bindir '/opt/chef-marketplace/embedded/bin' --no-ri --no-rdoc': 3.7025s
+                            [Builder: sequel-gem] I | Build sequel-gem: 3.7054s
+                            [Builder: sequel-gem] I | Finished build
+            1755: |2
+                                                  I | dd1427893c5656600465ced2da06db76879edc0a
+                      [Builder: version-manifest] I | <Dynamic Ruby block>: 0.3171s
+                      [Builder: version-manifest] I | Build version-manifest: 0.3211s
+                      [Builder: version-manifest] I | Finished build
+            43077: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/KnownHosts/add-i.ri:
+            46344: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/load_workstation_config-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/run_application-i.ri:
+            47418: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/error-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri:
+            68603: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/datetime_format%3d-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/warn%3f-i.ri:
+            157259: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/KnownHosts/add-i.ri:
+            160178: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/str1-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/cdesc-SyntaxError.ri:
+            161789: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/load_workstation_config-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/run_application-i.ri:
+            162863: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/error-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri:
+            184055: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/datetime_format%3d-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/warn%3f-i.ri:
+            216156: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/error-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/KnownHosts/add-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/KnownHosts/known_host_hash%3f-i.ri
+            217245: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/new-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/load_workstation_config-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/run_application-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/exit%21-c.ri
+            217603: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/warn-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/error-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/Config/enable_fips_mode-c.ri
+            224667: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/datetime_format-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/datetime_format%3d-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/warn%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/Multipart/UploadedFile/content_type-i.ri
+            256417: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/error-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/KnownHosts/add-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/KnownHosts/known_host_hash%3f-i.ri
+            257390: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/str2-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/str1-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/cdesc-SyntaxError.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/EntityDecl/system_id-i.ri
+            257927: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/new-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/load_workstation_config-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/run_application-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/exit%21-c.ri
+            258285: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/warn-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/error-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/Config/enable_fips_mode-c.ri
+            265348: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/datetime_format-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/datetime_format%3d-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/warn%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/Multipart/UploadedFile/content_type-i.ri
+            274415: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-6/project/chef-marketplace/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-14.04. Publishing will be skipped for: ubuntu-14.04
+              Published 'chef-marketplace-0.0.6+20160229193820.git.8.83281f5-1.el6.x86_64.rpm' for el-6
       el-7:
         result: SUCCESS
         timestamp: 2016-02-29 19:38:20 UTC
         duration: 1433.808
         builtOn: marketplace-rhel-7-builder-272b6d
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-7,project=chef-marketplace,role=builder/128/
-        omnibusTiming: {}
+        steps: 1433
+        logExcerpts:
+          consoleText:
+            758: |2
+                                                  D | Vendoring yum-chef (0.2.2) to /opt/chef-marketplace/embedded/cookbooks/yum-chef
+              [Builder: chef-marketplace-cookbooks] I | Execute: `/opt/chef-marketplace/embedded/bin/berks vendor /opt/chef-marketplace/embedded/cookbooks --berksfile=./chef-marketplace/Berksfile': 8.2247s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/single-recipe.json.erb' to `/opt/chef-marketplace/embedded/cookbooks/dna.json'
+              [Builder: chef-marketplace-cookbooks] I | Render erb `single-recipe.json.erb': 0.0009s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/single-recipe.json.erb' to `/opt/chef-marketplace/embedded/cookbooks/show-config.json'
+              [Builder: chef-marketplace-cookbooks] I | Render erb `single-recipe.json.erb': 0.0004s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/solo.rb.erb' to `/opt/chef-marketplace/embedded/cookbooks/solo.rb'
+              [Builder: chef-marketplace-cookbooks] I | Render erb `solo.rb.erb': 0.0004s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/non_root_solo.rb.erb' to `/opt/chef-marketplace/embedded/cookbooks/non_root_solo.rb'
+              /home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-825096bb2186/lib/omnibus/templating.rb:59: warning: redefining constant Struct::Empty
+              [Builder: chef-marketplace-cookbooks] I | Render erb `non_root_solo.rb.erb': 0.0004s
+              [Builder: chef-marketplace-cookbooks] I | Build chef-marketplace-cookbooks: 8.231s
+              [Builder: chef-marketplace-cookbooks] I | Finished build
+            791: |2
+                                 [Builder: runit] I | $ sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/chef-marketplace\/service\/\";/" sv.c
+                                 [Builder: runit] I | Execute: `sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/chef-marketplace\/service\/\";/" sv.c': 0.0183s
+                                 [Builder: runit] I | Environment:
+            801: |2
+                                 [Builder: runit] I | $ sed -i -e s:-static:: Makefile
+                                 [Builder: runit] I | Execute: `sed -i -e s:-static:: Makefile': 0.0147s
+                                 [Builder: runit] I | Environment:
+            896: |2
+                                                  D | chpst.c: In function ???suidgid???:
+                                                  D | chpst.c:80:3: warning: implicit declaration of function ???setgroups??? [-Wimplicit-function-declaration]
+                                                  D |    if (setgroups(ugid.gids, ugid.gid) == -1) fatal("unable to setgroups");
+                                                  D |    ^
+                                                  D | chpst.c: In function ???main???:
+            1052: |2
+                                                  D | ./load utmpset unix.a byte.a
+                                 [Builder: runit] I | Execute: `gmake': 2.5866s
+                                 [Builder: runit] I | Environment:
+            1073: |2
+                                                  D | Checking utmpset...
+                                 [Builder: runit] I | Execute: `gmake check': 11.2928s
+                                 [Builder: runit] I | mkdir `/opt/chef-marketplace/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/chpst' to `/opt/chef-marketplace/embedded/bin': 0.0004s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit-init' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsv' to `/opt/chef-marketplace/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvchdir' to `/opt/chef-marketplace/embedded/bin': 0.0126s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvdir' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/sv' to `/opt/chef-marketplace/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/svlogd' to `/opt/chef-marketplace/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/utmpset' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                                 [Builder: runit] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-fa5f62f05204/config/templates/runit/runsvdir-start.erb' to `/opt/chef-marketplace/embedded/bin/runsvdir-start'
+                                 [Builder: runit] I | Render erb `runsvdir-start.erb': 0.0008s
+                                 [Builder: runit] I | touch `/opt/chef-marketplace/service/.gitkeep': 0.0003s
+                                 [Builder: runit] I | touch `/opt/chef-marketplace/sv/.gitkeep': 0.0002s
+                                 [Builder: runit] I | touch `/opt/chef-marketplace/init/.gitkeep': 0.0092s
+                                 [Builder: runit] I | Build runit: 13.9561s
+                                 [Builder: runit] I | Finished build
+            1139: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: ohai] I | bundle `install --without development': 35.2405s
+                                  [Builder: ohai] I | Environment:
+            1174: |2
+                                                  D |   File: ohai-8.10.0.gem
+                                  [Builder: ohai] I | gem `build ohai.gemspec': 2.0828s
+                                  [Builder: ohai] I | Environment:
+            1186: |2
+                                                  D | 1 gem installed
+                                  [Builder: ohai] I | gem `install ohai*.gem --no-ri --no-rdoc': 4.5272s
+                                  [Builder: ohai] I | Build ohai: 41.8537s
+                                  [Builder: ohai] I | Finished build
+            1218: |2
+                                                  D | 1 gem installed
+                            [Builder: appbundler] I | gem `install appbundler --version '0.5.0' --no-ri --no-rdoc': 2.0663s
+                            [Builder: appbundler] I | Build appbundler: 2.0678s
+                            [Builder: appbundler] I | Finished build
+            1237: |2
+                  [Builder: chef-marketplace-ctl] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/templates/chef-marketplace-ctl/chef-marketplace-ctl.erb' to `/opt/chef-marketplace/bin/chef-marketplace-ctl'
+                  [Builder: chef-marketplace-ctl] I | Render erb `chef-marketplace-ctl.erb': 0.0006s
+                  [Builder: chef-marketplace-ctl] I | sync `/var/cache/omnibus/src/chef-marketplace-ctl' to `/opt/chef-marketplace/embedded/service/chef-marketplace-ctl/': 0.0222s
+                  [Builder: chef-marketplace-ctl] I | Environment:
+            1318: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                  [Builder: chef-marketplace-ctl] I | bundle `install --without development': 40.7403s
+                  [Builder: chef-marketplace-ctl] I | copy `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/Rakefile' to `/opt/chef-marketplace/Rakefile': 0.0005s
+                  [Builder: chef-marketplace-ctl] I | Build chef-marketplace-ctl: 40.7671s
+                  [Builder: chef-marketplace-ctl] I | Finished build
+            1412: |2
+                                                  D | Bundled gems are installed into /opt/chef-marketplace/embedded/service/gem.
+                              [Builder: reckoner] I | bundle `install --path=/opt/chef-marketplace/embedded/service/gem': 12.1197s
+                              [Builder: reckoner] I | sync `/var/cache/omnibus/src/reckoner' to `/opt/chef-marketplace/embedded/service/reckoner/': 0.0057s
+                              [Builder: reckoner] I | Build reckoner: 12.1273s
+                              [Builder: reckoner] I | Finished build
+            1443: |2
+                                                  D | Vendoring chef-marketplace (0.0.1) to /opt/chef-marketplace/embedded/server-plugin-cookbooks/chef-marketplace
+               [Builder: server-plugin-cookbooks] I | Execute: `/opt/chef-marketplace/embedded/bin/berks vendor /opt/chef-marketplace/embedded/server-plugin-cookbooks --berksfile=./chef-marketplace/Berksfile': 5.6574s
+               [Builder: server-plugin-cookbooks] I | Build server-plugin-cookbooks: 5.6583s
+               [Builder: server-plugin-cookbooks] I | Finished build
+            1552: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 26.9573s
+                                  [Builder: chef] I | Environment:
+            1620: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 7.3319s
+                                  [Builder: chef] I | Environment:
+            1646: |2
+                                                  D |   File: chef-12.8.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 6.7536s
+                                  [Builder: chef] I | Environment:
+            1658: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc': 21.7746s
+                                  [Builder: chef] I | Environment:
+            1704: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 5.3939s
+                                  [Builder: chef] I | Environment:
+            1716: |2
+                                                  D | Generated binstub /opt/chef-marketplace/bin/knife => /opt/chef-marketplace/embedded/apps/chef/bin/knife
+                                  [Builder: chef] I | appbundle `chef': 2.4411s
+                                  [Builder: chef] I | Environment:
+            1722: |2
+                                                  D | Generated binstub /opt/chef-marketplace/bin/ohai => /opt/chef-marketplace/embedded/apps/ohai/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.9234s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/docs': 0.0002s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/share/man': 0.0385s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/share/doc': 0.1651s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/share/gtk-doc': 0.0029s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 71.807s
+                                  [Builder: chef] I | Finished build
+            1763: |2
+                                                  D | 1 gem installed
+                            [Builder: sequel-gem] I | gem `install sequel --version '4.13.0' --bindir '/opt/chef-marketplace/embedded/bin' --no-ri --no-rdoc': 4.0566s
+                            [Builder: sequel-gem] I | Build sequel-gem: 4.0577s
+                            [Builder: sequel-gem] I | Finished build
+            1788: |2
+                                                  I | dd1427893c5656600465ced2da06db76879edc0a
+                      [Builder: version-manifest] I | <Dynamic Ruby block>: 0.0783s
+                      [Builder: version-manifest] I | Build version-manifest: 0.0795s
+                      [Builder: version-manifest] I | Finished build
+            66295: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/error-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/info-i.ri:
+            75994: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/info-i.ri:
+            78172: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/exit%21-c.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/load_workstation_config-i.ri:
+            81730: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/formatter%3d-i.ri:
+            110641: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri:
+            151162: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/error-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/info-i.ri:
+            160861: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/info-i.ri:
+            163039: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/exit%21-c.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/load_workstation_config-i.ri:
+            164977: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/formatter%3d-i.ri:
+            227556: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/error-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/info-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/warn-i.ri
+            230789: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/error-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/info-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/logger-i.ri
+            231515: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/configure_ohai-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/exit%21-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/load_workstation_config-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/new-c.ri
+            232701: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/formatter%3d-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/formatter-i.ri
+            242338: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/int1-i.ri
+            256991: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/error-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/info-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/warn-i.ri
+            260224: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/error-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/info-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/logger-i.ri
+            260950: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/configure_ohai-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/exit%21-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/load_workstation_config-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/new-c.ri
+            261596: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/formatter%3d-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/formatter-i.ri
+            273777: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-14.04. Publishing will be skipped for: ubuntu-14.04
+              Published 'chef-marketplace-0.0.6+20160229193820.git.8.83281f5-1.el7.x86_64.rpm' for el-7
       ubuntu-14.04:
         result: SUCCESS
         timestamp: 2016-02-29 19:38:20 UTC
         duration: 1433.65
         builtOn: marketplace-ubuntu-14.04-builder-5dad2b
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=builder/128/
-        omnibusTiming: {}
+        steps: 1433
+        logExcerpts:
+          consoleText:
+            756: |2
+                                                  D | Vendoring yum-chef (0.2.2) to /opt/chef-marketplace/embedded/cookbooks/yum-chef
+              [Builder: chef-marketplace-cookbooks] I | Execute: `/opt/chef-marketplace/embedded/bin/berks vendor /opt/chef-marketplace/embedded/cookbooks --berksfile=./chef-marketplace/Berksfile': 8.024s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/ubuntu-14.04/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/single-recipe.json.erb' to `/opt/chef-marketplace/embedded/cookbooks/dna.json'
+              [Builder: chef-marketplace-cookbooks] I | Render erb `single-recipe.json.erb': 0.0013s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/ubuntu-14.04/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/single-recipe.json.erb' to `/opt/chef-marketplace/embedded/cookbooks/show-config.json'
+              [Builder: chef-marketplace-cookbooks] I | Render erb `single-recipe.json.erb': 0.0004s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/ubuntu-14.04/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/solo.rb.erb' to `/opt/chef-marketplace/embedded/cookbooks/solo.rb'
+              [Builder: chef-marketplace-cookbooks] I | Render erb `solo.rb.erb': 0.0005s
+              [Builder: chef-marketplace-cookbooks] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/ubuntu-14.04/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/non_root_solo.rb.erb' to `/opt/chef-marketplace/embedded/cookbooks/non_root_solo.rb'
+              /home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/ubuntu-14.04/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-825096bb2186/lib/omnibus/templating.rb:59: warning: redefining constant Struct::Empty
+              [Builder: chef-marketplace-cookbooks] I | Render erb `non_root_solo.rb.erb': 0.0005s
+              [Builder: chef-marketplace-cookbooks] I | Build chef-marketplace-cookbooks: 8.0458s
+              [Builder: chef-marketplace-cookbooks] I | Finished build
+            789: |2
+                                 [Builder: runit] I | $ sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/chef-marketplace\/service\/\";/" sv.c
+                                 [Builder: runit] I | Execute: `sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/chef-marketplace\/service\/\";/" sv.c': 0.0174s
+                                 [Builder: runit] I | Environment:
+            799: |2
+                                 [Builder: runit] I | $ sed -i -e s:-static:: Makefile
+                                 [Builder: runit] I | Execute: `sed -i -e s:-static:: Makefile': 0.0166s
+                                 [Builder: runit] I | Environment:
+            895: |2
+                                                  D | chpst.c: In function \357\277\275\357\277\275\357\277\275suidgid\357\277\275\357\277\275\357\277\275:
+                                                  D | chpst.c:80:3: warning: implicit declaration of function \357\277\275\357\277\275\357\277\275setgroups\357\277\275\357\277\275\357\277\275 [-Wimplicit-function-declaration]
+                                                  D |    if (setgroups(ugid.gids, ugid.gid) == -1) fatal("unable to setgroups");
+                                                  D |    ^
+                                                  D | chpst.c: In function \357\277\275\357\277\275\357\277\275main\357\277\275\357\277\275\357\277\275:
+            1086: |2
+                                                  D | ./load utmpset unix.a byte.a
+                                 [Builder: runit] I | Execute: `make': 13.2644s
+                                 [Builder: runit] I | Environment:
+            1106: |2
+                                                  D | Checking utmpset...
+                                 [Builder: runit] I | Execute: `make check': 13.8406s
+                                 [Builder: runit] I | mkdir `/opt/chef-marketplace/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/chpst' to `/opt/chef-marketplace/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit-init' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsv' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvchdir' to `/opt/chef-marketplace/embedded/bin': 0.0001s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvdir' to `/opt/chef-marketplace/embedded/bin': 0.0087s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/sv' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/svlogd' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/utmpset' to `/opt/chef-marketplace/embedded/bin': 0.0001s
+                                 [Builder: runit] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/ubuntu-14.04/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-fa5f62f05204/config/templates/runit/runsvdir-start.erb' to `/opt/chef-marketplace/embedded/bin/runsvdir-start'
+                                 [Builder: runit] I | Render erb `runsvdir-start.erb': 0.0008s
+                                 [Builder: runit] I | touch `/opt/chef-marketplace/service/.gitkeep': 0.0002s
+                                 [Builder: runit] I | touch `/opt/chef-marketplace/sv/.gitkeep': 0.0002s
+                                 [Builder: runit] I | touch `/opt/chef-marketplace/init/.gitkeep': 0.0001s
+                                 [Builder: runit] I | Build runit: 27.1792s
+                                 [Builder: runit] I | Finished build
+            1172: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: ohai] I | bundle `install --without development': 34.083s
+                                  [Builder: ohai] I | Environment:
+            1207: |2
+                                                  D |   File: ohai-8.10.0.gem
+                                  [Builder: ohai] I | gem `build ohai.gemspec': 2.3448s
+                                  [Builder: ohai] I | Environment:
+            1219: |2
+                                                  D | 1 gem installed
+                                  [Builder: ohai] I | gem `install ohai*.gem --no-ri --no-rdoc': 4.8038s
+                                  [Builder: ohai] I | Build ohai: 41.2346s
+                                  [Builder: ohai] I | Finished build
+            1251: |2
+                                                  D | 1 gem installed
+                            [Builder: appbundler] I | gem `install appbundler --version '0.5.0' --no-ri --no-rdoc': 2.0106s
+                            [Builder: appbundler] I | Build appbundler: 2.0119s
+                            [Builder: appbundler] I | Finished build
+            1270: |2
+                  [Builder: chef-marketplace-ctl] I | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/ubuntu-14.04/project/chef-marketplace/role/builder/config/templates/chef-marketplace-ctl/chef-marketplace-ctl.erb' to `/opt/chef-marketplace/bin/chef-marketplace-ctl'
+                  [Builder: chef-marketplace-ctl] I | Render erb `chef-marketplace-ctl.erb': 0.0011s
+                  [Builder: chef-marketplace-ctl] I | sync `/var/cache/omnibus/src/chef-marketplace-ctl' to `/opt/chef-marketplace/embedded/service/chef-marketplace-ctl/': 0.0172s
+                  [Builder: chef-marketplace-ctl] I | Environment:
+            1351: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                  [Builder: chef-marketplace-ctl] I | bundle `install --without development': 44.0849s
+                  [Builder: chef-marketplace-ctl] I | copy `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/ubuntu-14.04/project/chef-marketplace/role/builder/Rakefile' to `/opt/chef-marketplace/Rakefile': 0.0003s
+                  [Builder: chef-marketplace-ctl] I | Build chef-marketplace-ctl: 44.1076s
+                  [Builder: chef-marketplace-ctl] I | Finished build
+            1445: |2
+                                                  D | Bundled gems are installed into /opt/chef-marketplace/embedded/service/gem.
+                              [Builder: reckoner] I | bundle `install --path=/opt/chef-marketplace/embedded/service/gem': 14.3579s
+                              [Builder: reckoner] I | sync `/var/cache/omnibus/src/reckoner' to `/opt/chef-marketplace/embedded/service/reckoner/': 0.0052s
+                              [Builder: reckoner] I | Build reckoner: 14.3658s
+                              [Builder: reckoner] I | Finished build
+            1476: |2
+                                                  D | Vendoring chef-marketplace (0.0.1) to /opt/chef-marketplace/embedded/server-plugin-cookbooks/chef-marketplace
+               [Builder: server-plugin-cookbooks] I | Execute: `/opt/chef-marketplace/embedded/bin/berks vendor /opt/chef-marketplace/embedded/server-plugin-cookbooks --berksfile=./chef-marketplace/Berksfile': 5.5602s
+               [Builder: server-plugin-cookbooks] I | Build server-plugin-cookbooks: 5.5611s
+               [Builder: server-plugin-cookbooks] I | Finished build
+            1585: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 35.3525s
+                                  [Builder: chef] I | Environment:
+            1653: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 7.6408s
+                                  [Builder: chef] I | Environment:
+            1679: |2
+                                                  D |   File: chef-12.8.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 7.8597s
+                                  [Builder: chef] I | Environment:
+            1691: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc': 21.1423s
+                                  [Builder: chef] I | Environment:
+            1737: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 6.2152s
+                                  [Builder: chef] I | Environment:
+            1749: |2
+                                                  D | Generated binstub /opt/chef-marketplace/bin/chef-shell => /opt/chef-marketplace/embedded/apps/chef/bin/chef-shell
+                                  [Builder: chef] I | appbundle `chef': 1.2143s
+                                  [Builder: chef] I | Environment:
+            1755: |2
+                                                  D | Generated binstub /opt/chef-marketplace/bin/ohai => /opt/chef-marketplace/embedded/apps/ohai/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.6001s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/docs': 0.0001s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/share/man': 0.0205s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/share/doc': 0.1135s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/share/gtk-doc': 0.0108s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/chef-marketplace/embedded/info': 0.0s
+                                  [Builder: chef] I | Build chef: 80.1872s
+                                  [Builder: chef] I | Finished build
+            1796: |2
+                                                  D | 1 gem installed
+                            [Builder: sequel-gem] I | gem `install sequel --version '4.13.0' --bindir '/opt/chef-marketplace/embedded/bin' --no-ri --no-rdoc': 3.9482s
+                            [Builder: sequel-gem] I | Build sequel-gem: 3.949s
+                            [Builder: sequel-gem] I | Finished build
+            1821: |2
+                                                  I | dd1427893c5656600465ced2da06db76879edc0a
+                      [Builder: version-manifest] I | <Dynamic Ruby block>: 0.0684s
+                      [Builder: version-manifest] I | Build version-manifest: 0.0692s
+                      [Builder: version-manifest] I | Finished build
+            26932: |2
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/info-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri:
+            28342: |2
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/cdesc-SyntaxError.ri:
+            30972: |2
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/run_application-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/new-c.ri:
+            36794: |2
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/info%3f-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/unknown-i.ri:
+            36826: |2
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error%3f-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/level%3d-i.ri:
+            40480: |2
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/info-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/cdesc-Loggable.ri:
+            103554: |2
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/info-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri:
+            106270: |2
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/run_application-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/new-c.ri:
+            111012: |2
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/info%3f-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/unknown-i.ri:
+            111044: |2
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error%3f-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/level%3d-i.ri:
+            114598: |2
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/info-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri:
+                                                  I |   not a dynamic executable
+                                                  I | /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/cdesc-Loggable.ri:
+            150618: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/WorkstationConfigLoader/load-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/info-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/warn-i.ri
+            151323: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/cdesc-SyntaxError.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/CharacterData/cdesc-CharacterData.ri
+            152642: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/run-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/run_application-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/new-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/exit%21-c.ri
+            155553: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/datetime_format%3d-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/info%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/unknown-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/call-i.ri
+            155569: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/sev_threshold%3d-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/level%3d-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/cdesc-NullLogger.ri
+            157394: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/info-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/cdesc-Loggable.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/lwarn-i.ri
+            190679: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/WorkstationConfigLoader/load-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/info-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/deprecation-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/chef-config-12.7.2/ri/ChefConfig/NullLogger/warn-i.ri
+            192036: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/run-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/run_application-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/fatal%21-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/new-c.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/ohai-8.10.0/ri/Ohai/Application/exit%21-c.ri
+            194407: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/datetime_format%3d-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/info%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/unknown-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/call-i.ri
+            194423: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/sev_threshold%3d-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/error%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/level%3d-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/rack-1.6.4/ri/Rack/NullLogger/cdesc-NullLogger.ri
+            196200: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/facility-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/info-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/fatal-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/cdesc-Loggable.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/doc/net-ssh-3.0.2/ri/Net/SSH/Loggable/lwarn-i.ri
+            208292: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/ubuntu-14.04/project/chef-marketplace/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+              Published 'chef-marketplace_0.0.6+20160229193820.git.8.83281f5-1_amd64.deb' for ubuntu-14.04
   chef-marketplace-trigger-git_poll:
     result: SUCCESS
     timestamp: 2016-02-29 19:38:10 UTC
@@ -165,5 +1330,42 @@ stages:
     url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-git_poll/24/
     causes:
     - shortDescription: Started by an SCM change
-    parameters: {}
     runs: {}
+parameters:
+  APPEND_TIMESTAMP: true
+  BUILD_USER: SCMTrigger
+  DELIVERY_CHANGE: ''
+  DELIVERY_SHA: ''
+  EXPIRE_CACHE: 'false'
+  GIT_BRANCH: origin/master
+  GIT_COMMIT: 83281f5171b447799615868447abf80db559eb3b
+  GIT_REF: origin/master
+  OMNIBUS_BUILD_VERSION: 0.0.6+20160229193820.git.8.83281f5
+  PIPELINE_BUILD_JOB_NAME: chef-marketplace-build
+  PIPELINE_BUILD_JOB_NUMBER: '128'
+  PIPELINE_NAME: chef-marketplace
+  PIPELINE_RUN_FINGERPRINT: jenkins-chef-marketplace-trigger-git_poll-24/24/2016-02-29_19-38-10
+  PIPELINE_TRIGGER_BUILD_NUMBER: '24'
+  PIPELINE_TRIGGER_JOB_NAME: chef-marketplace-trigger-git_poll
+  PLATFORM_MAPPINGS_JSON: |-
+    {
+      "build_to_test": {
+        "el-6": [
+          "el-6"
+        ],
+        "el-7": [
+          "el-7"
+        ],
+        "ubuntu-14.04": [
+          "ubuntu-14.04"
+        ]
+      },
+      "test_to_build": {
+        "el-6": "el-6",
+        "el-7": "el-7",
+        "ubuntu-14.04": "ubuntu-14.04"
+      }
+    }
+  PROJECT: chef-marketplace
+  PROMOTE: 'true'
+  RELEASE_BUILD: 'false'

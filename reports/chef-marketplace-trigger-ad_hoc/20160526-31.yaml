@@ -19,34 +19,21 @@ stages:
     url: http://wilson.ci.chef.co/job/chef-marketplace-build/245/
     causes:
     - shortDescription: Aborted by jkeiser
-    parameters:
-      GIT_REF: origin/jk/licenses
-      APPEND_TIMESTAMP: true
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      EXPIRE_CACHE: false
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-marketplace
-      GIT_COMMIT: aa2b3dcc168a6a583d80e98c41731758e3a65696
-      PROJECT: chef-marketplace
-      PROMOTE: 'false'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '31'
-      ADHOC_BUILD: 'true'
-      GIT_BRANCH: origin/jk/licenses
-      PIPELINE_TRIGGER_JOB_NAME: chef-marketplace-trigger-ad_hoc
     runs:
       el-6:
         result: FAILURE
+        failureCause: network reset rubygems.org
+        failureCategory: network
         timestamp: 2016-05-26 15:40:03 UTC
         duration: 298.932
         builtOn: marketplace-rhel-6-builder-81ed33
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-6,project=chef-marketplace,role=builder/245/
-        failureCause:
-          cause: network reset rubygems.org
-          jenkinsBuildStep: Invoke XShell command
-          category: network
-          suspiciousBlocks:
-            227: |
+        failedIn:
+          jenkins: Invoke XShell command
+        steps: 298
+        logExcerpts:
+          consoleText:
+            228: |
               Installing net-sftp 2.1.2
 
               Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/net-ssh-gateway-1.2.0.gem)
@@ -57,56 +44,1302 @@ stages:
               Build step 'Invoke XShell command' marked build as failure
               Archiving artifacts
               Recording fingerprints
-        omnibusTiming: {}
       el-7:
         result: SUCCESS
         timestamp: 2016-05-26 15:40:03 UTC
         duration: 2350.278
         builtOn: marketplace-rhel-7-builder-272b6d
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-7,project=chef-marketplace,role=builder/245/
-        omnibusTiming:
-          Packaging: 701.4556
-          Health check: 34.7375
-          version-manifest: 0.2396
-          chef-marketplace-ctl: 32.0447
-          chef: 85.4807
-          biscotti: 27.7897
-          reckoner: 9.3109
-          server-plugin-cookbooks: 0.021
-          sequel-gem: 2.5367
-          runit: 15.1332
-          chef-marketplace-cookbooks: 5.3587
-          berkshelf: 119.0435
-          dep-selector-libgecode: 31.6622
-          nokogiri: 19.1415
-          libxslt: 20.0112
-          libxml2: 51.5077
-          liblzma: 36.8384
-          libarchive: 46.843
-          omnibus-ctl: 2.2926
-          appbundler: 5.93
-          ohai: 10.2183
-          chef-marketplace-gem: 266.5713
-          bundler: 1.5717
-          pg-gem: 10.2342
-          rubygems: 28.5721
-          ruby: 137.9369
-          libiconv: 33.691
-          libyaml: 10.3192
-          libffi: 10.9292
-          libtool: 14.569
-          postgresql92: 51.9323
-          libedit: 13.8795
-          ncurses: 63.3497
-          openssl: 77.071
-          makedepend: 6.2527
-          pkg-config-lite: 7.0783
-          config_guess: 0.003
-          util-macros: 1.7841
-          xproto: 7.0342
-          cacerts: 0.0079
-          zlib: 4.5524
-          preparation: 0.0052
+        steps:
+          total: 2350
+          before (setup time): 204
+          omnibus:
+            build:
+              total: 2105
+              GitCache: 1361
+              Software: 1360
+              Builder:
+                total: 1357
+                openssl: 77
+                ncurses: 64
+                libedit: 13
+                postgresql92: 52
+                libtool: 15
+                libffi: 11
+                libyaml: 11
+                libiconv: 34
+                ruby: 138
+                rubygems: 28
+                pg-gem: 10
+                chef-marketplace-gem: 267
+                ohai: 10
+                libarchive: 47
+                liblzma: 37
+                libxml2: 51
+                libxslt: 20
+                nokogiri: 20
+                dep-selector-libgecode: 31
+                berkshelf: 119
+                runit: 15
+                biscotti: 28
+                chef: 85
+                chef-marketplace-ctl: 32
+              NetFetcher: 1161
+              GitFetcher: 1344
+              Project:
+                chef-marketplace: 744
+              HealthCheck: 35
+              Packager::RPM: 702
+          after (cleanup time): 33
+        logExcerpts:
+          consoleText:
+            295: |2
+                                  [CLI] I | 2016-05-26T11:43:27-04:00 | Using config from 'omnibus.rb'
+                                  [CLI] D | 2016-05-26T11:43:27-04:00 | Detected "true" should be an object
+                                  [CLI] D | 2016-05-26T11:43:27-04:00 | Setting Config.fatal_licensing_warnings = true
+                              [Project] I | 2016-05-26T11:43:27-04:00 | Loading project `chef-marketplace' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/projects/chef-marketplace.rb'.
+                         [BuildVersion] I | 2016-05-26T11:43:27-04:00 | $ git describe --tags
+                                        I | 2016-05-26T11:43:27-04:00 | 0.0.11-5-gaa2b3dc
+                             [Software] I | 2016-05-26T11:43:27-04:00 | Loading software `preparation' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-467b5c1c08a3/config/software/preparation.rb' using overrides from chef-marketplace.
+            309: |2
+                             [Software] I | 2016-05-26T11:43:28-04:00 | Loading software `pkg-config-lite' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-467b5c1c08a3/config/software/pkg-config-lite.rb' using overrides from chef-marketplace.
+                             [Software] I | 2016-05-26T11:43:28-04:00 | Loading software `config_guess' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-467b5c1c08a3/config/software/config_guess.rb' using overrides from chef-marketplace.
+               [Software: config_guess] W | 2016-05-26T11:43:28-04:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                             [Software] I | 2016-05-26T11:43:28-04:00 | Loading software `libedit' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-467b5c1c08a3/config/software/libedit.rb' using overrides from chef-marketplace.
+                             [Software] I | 2016-05-26T11:43:28-04:00 | Loading software `ncurses' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-467b5c1c08a3/config/software/ncurses.rb' using overrides from chef-marketplace.
+            326: |2
+                             [Software] I | 2016-05-26T11:43:28-04:00 | Loading software `biscotti' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/software/biscotti.rb' using overrides from chef-marketplace.
+                             [Software] I | 2016-05-26T11:43:28-04:00 | Loading software `chef' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-467b5c1c08a3/config/software/chef.rb' using overrides from chef-marketplace.
+                       [Software: chef] W | 2016-05-26T11:43:28-04:00 | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [Software: chef] W | 2016-05-26T11:43:28-04:00 | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                             [Software] I | 2016-05-26T11:43:28-04:00 | Loading software `ohai' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-467b5c1c08a3/config/software/ohai.rb' using overrides from chef-marketplace.
+                             [Software] I | 2016-05-26T11:43:28-04:00 | Loading software `appbundler' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-467b5c1c08a3/config/software/appbundler.rb' using overrides from chef-marketplace.
+            343: |2
+                             [Software] I | 2016-05-26T11:43:28-04:00 | Loading software `version-manifest' from `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-467b5c1c08a3/config/software/version-manifest.rb' using overrides from chef-marketplace.
+              Building chef-marketplace 0.0.11+20160526154003.git.5.aa2b3dc...
+                [Software: preparation] I | 2016-05-26T11:43:28-04:00 | Resolving manifest entry for preparation
+              [NullFetcher: preparation] I | 2016-05-26T11:43:28-04:00 | Fetching `preparation' (nothing to fetch)
+                       [Software: zlib] I | 2016-05-26T11:43:28-04:00 | Resolving manifest entry for zlib
+                    [Software: cacerts] I | 2016-05-26T11:43:28-04:00 | Resolving manifest entry for cacerts
+                     [Software: xproto] I | 2016-05-26T11:43:28-04:00 | Resolving manifest entry for xproto
+                [Software: util-macros] I | 2016-05-26T11:43:28-04:00 | Resolving manifest entry for util-macros
+               [Software: config_guess] I | 2016-05-26T11:43:28-04:00 | Resolving manifest entry for config_guess
+               [Software: config_guess] W | 2016-05-26T11:43:28-04:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+               [Software: config_guess] W | 2016-05-26T11:43:28-04:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitFetcher] I | 2016-05-26T11:43:28-04:00 | $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
+                                        I | 2016-05-26T11:43:29-04:00 | dafd8e767ec87b90aac62f0fcedd11944c84b50a  refs/heads/master
+              [GitFetcher: config_guess] I | 2016-05-26T11:43:29-04:00 | $ git -c core.autocrlf=false cat-file -t dafd8e767ec87b90aac62f0fcedd11944c84b50a
+                                        I | 2016-05-26T11:43:29-04:00 | commit
+              [Software: pkg-config-lite] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for pkg-config-lite
+                 [Software: makedepend] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for makedepend
+                    [Software: openssl] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for openssl
+                    [Software: ncurses] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for ncurses
+                    [Software: libedit] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for libedit
+               [Software: postgresql92] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for postgresql92
+                    [Software: libtool] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for libtool
+                     [Software: libffi] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for libffi
+                    [Software: libyaml] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for libyaml
+                   [Software: libiconv] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for libiconv
+                       [Software: ruby] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for ruby
+                   [Software: rubygems] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for rubygems
+                [NullFetcher: rubygems] I | 2016-05-26T11:43:29-04:00 | Fetching `rubygems' (nothing to fetch)
+                     [Software: pg-gem] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for pg-gem
+                  [NullFetcher: pg-gem] I | 2016-05-26T11:43:29-04:00 | Fetching `pg-gem' (nothing to fetch)
+                    [Software: bundler] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for bundler
+                 [NullFetcher: bundler] I | 2016-05-26T11:43:29-04:00 | Fetching `bundler' (nothing to fetch)
+              [Software: chef-marketplace-gem] I | 2016-05-26T11:43:29-04:00 | Resolving manifest entry for chef-marketplace-gem
+              [PathFetcher: chef-marketplace-gem] I | 2016-05-26T11:43:29-04:00 | Digesting /var/cache/omnibus/src/chef-marketplace-gem with sha256
+            379: |
+              [PathFetcher: chef-marketplace-gem] I | 2016-05-26T11:43:30-04:00 | Digesting /var/cache/omnibus/src/chef-marketplace-gem with sha256
+                       [Software: ohai] I | 2016-05-26T11:43:30-04:00 | Resolving manifest entry for ohai
+                       [Software: ohai] W | 2016-05-26T11:43:30-04:00 | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [Software: ohai] W | 2016-05-26T11:43:30-04:00 | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitFetcher] I | 2016-05-26T11:43:30-04:00 | $ git ls-remote "https://github.com/opscode/ohai.git" "master*"
+                                        I | 2016-05-26T11:43:31-04:00 | eb75927881b10f1c60a26add31f6afe9f773330f  refs/heads/master
+                     [GitFetcher: ohai] I | 2016-05-26T11:43:31-04:00 | $ git -c core.autocrlf=false cat-file -t eb75927881b10f1c60a26add31f6afe9f773330f
+                                        I | 2016-05-26T11:43:31-04:00 | commit
+                 [Software: appbundler] I | 2016-05-26T11:43:31-04:00 | Resolving manifest entry for appbundler
+                 [Software: appbundler] W | 2016-05-26T11:43:31-04:00 | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                 [Software: appbundler] W | 2016-05-26T11:43:31-04:00 | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitFetcher] I | 2016-05-26T11:43:31-04:00 | $ git ls-remote "https://github.com/chef/appbundler.git" "master*"
+                                        I | 2016-05-26T11:43:31-04:00 | a8376ff735ec63d6f4e3cffe971223516890239c  refs/heads/master
+               [GitFetcher: appbundler] I | 2016-05-26T11:43:31-04:00 | $ git -c core.autocrlf=false cat-file -t a8376ff735ec63d6f4e3cffe971223516890239c
+                                        I | 2016-05-26T11:43:31-04:00 | commit
+                [Software: omnibus-ctl] I | 2016-05-26T11:43:31-04:00 | Resolving manifest entry for omnibus-ctl
+                           [GitFetcher] I | 2016-05-26T11:43:31-04:00 | $ git ls-remote "https://github.com/chef/omnibus-ctl.git" "0.3.6*"
+                                        I | 2016-05-26T11:43:32-04:00 | fe17ce80510a14c238c6d312384e676e0d3dba1f  refs/tags/0.3.6
+                                        I | 2016-05-26T11:43:32-04:00 | c514d1d4ecb24e30fdbd310b2dd038b2192b4fa7  refs/tags/0.3.6^{}
+              [GitFetcher: omnibus-ctl] I | 2016-05-26T11:43:32-04:00 | $ git -c core.autocrlf=false cat-file -t c514d1d4ecb24e30fdbd310b2dd038b2192b4fa7
+                                        I | 2016-05-26T11:43:32-04:00 | commit
+                 [Software: libarchive] I | 2016-05-26T11:43:32-04:00 | Resolving manifest entry for libarchive
+                    [Software: liblzma] I | 2016-05-26T11:43:32-04:00 | Resolving manifest entry for liblzma
+                    [Software: libxml2] I | 2016-05-26T11:43:32-04:00 | Resolving manifest entry for libxml2
+                    [Software: libxslt] I | 2016-05-26T11:43:32-04:00 | Resolving manifest entry for libxslt
+                   [Software: nokogiri] I | 2016-05-26T11:43:32-04:00 | Resolving manifest entry for nokogiri
+                [NullFetcher: nokogiri] I | 2016-05-26T11:43:32-04:00 | Fetching `nokogiri' (nothing to fetch)
+              [Software: dep-selector-libgecode] I | 2016-05-26T11:43:32-04:00 | Resolving manifest entry for dep-selector-libgecode
+              [NullFetcher: dep-selector-libgecode] I | 2016-05-26T11:43:32-04:00 | Fetching `dep-selector-libgecode' (nothing to fetch)
+                  [Software: berkshelf] I | 2016-05-26T11:43:32-04:00 | Resolving manifest entry for berkshelf
+                  [Software: berkshelf] W | 2016-05-26T11:43:32-04:00 | Version v4.2.3 for software berkshelf was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                  [Software: berkshelf] W | 2016-05-26T11:43:32-04:00 | Version v4.2.3 for software berkshelf was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitFetcher] I | 2016-05-26T11:43:32-04:00 | $ git ls-remote "https://github.com/berkshelf/berkshelf.git" "v4.2.3*"
+                                        I | 2016-05-26T11:43:33-04:00 | adc7095357ff0523314b5b60c1dd5ee0620222cf  refs/tags/v4.2.3
+                                        I | 2016-05-26T11:43:33-04:00 | 65764576948de68dbc795eee4a9d1026ef3dffd9  refs/tags/v4.2.3^{}
+                [GitFetcher: berkshelf] I | 2016-05-26T11:43:33-04:00 | $ git -c core.autocrlf=false cat-file -t 65764576948de68dbc795eee4a9d1026ef3dffd9
+                                        I | 2016-05-26T11:43:33-04:00 | commit
+              [Software: chef-marketplace-cookbooks] I | 2016-05-26T11:43:33-04:00 | Resolving manifest entry for chef-marketplace-cookbooks
+              [PathFetcher: chef-marketplace-cookbooks] I | 2016-05-26T11:43:33-04:00 | Digesting /var/cache/omnibus/src/chef-marketplace-cookbooks with sha256
+              [PathFetcher: chef-marketplace-cookbooks] I | 2016-05-26T11:43:33-04:00 | Digesting /home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/files/chef-marketplace-cookbooks with sha256
+                      [Software: runit] I | 2016-05-26T11:43:33-04:00 | Resolving manifest entry for runit
+                 [Software: sequel-gem] I | 2016-05-26T11:43:33-04:00 | Resolving manifest entry for sequel-gem
+              [NullFetcher: sequel-gem] I | 2016-05-26T11:43:33-04:00 | Fetching `sequel-gem' (nothing to fetch)
+              [Software: server-plugin-cookbooks] I | 2016-05-26T11:43:33-04:00 | Resolving manifest entry for server-plugin-cookbooks
+              [PathFetcher: server-plugin-cookbooks] I | 2016-05-26T11:43:33-04:00 | Digesting /var/cache/omnibus/src/server-plugin-cookbooks with sha256
+              [PathFetcher: server-plugin-cookbooks] I | 2016-05-26T11:43:33-04:00 | Digesting /home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/files/server-plugin-cookbooks with sha256
+                   [Software: reckoner] I | 2016-05-26T11:43:33-04:00 | Resolving manifest entry for reckoner
+                [PathFetcher: reckoner] I | 2016-05-26T11:43:33-04:00 | Digesting /var/cache/omnibus/src/reckoner with sha256
+            429: |2
+                [PathFetcher: reckoner] I | 2016-05-26T11:43:33-04:00 | Digesting /var/cache/omnibus/src/reckoner with sha256
+                   [Software: biscotti] I | 2016-05-26T11:43:33-04:00 | Resolving manifest entry for biscotti
+                [PathFetcher: biscotti] I | 2016-05-26T11:43:33-04:00 | Digesting /var/cache/omnibus/src/biscotti with sha256
+            434: |2
+                [PathFetcher: biscotti] I | 2016-05-26T11:43:34-04:00 | Digesting /var/cache/omnibus/src/biscotti with sha256
+                       [Software: chef] I | 2016-05-26T11:43:34-04:00 | Resolving manifest entry for chef
+                       [Software: chef] W | 2016-05-26T11:43:34-04:00 | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [Software: chef] W | 2016-05-26T11:43:34-04:00 | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitFetcher] I | 2016-05-26T11:43:34-04:00 | $ git ls-remote "https://github.com/chef/chef.git" "master*"
+                                        I | 2016-05-26T11:43:35-04:00 | 4983a764c34e4dac894fe87c3a893e4d54fa7e54  refs/heads/master
+                     [GitFetcher: chef] I | 2016-05-26T11:43:35-04:00 | $ git -c core.autocrlf=false cat-file -t 4983a764c34e4dac894fe87c3a893e4d54fa7e54
+                                        I | 2016-05-26T11:43:35-04:00 | commit
+              [Software: chef-marketplace-ctl] I | 2016-05-26T11:43:35-04:00 | Resolving manifest entry for chef-marketplace-ctl
+              [PathFetcher: chef-marketplace-ctl] I | 2016-05-26T11:43:35-04:00 | Digesting /var/cache/omnibus/src/chef-marketplace-ctl with sha256
+            446: |
+              [PathFetcher: chef-marketplace-ctl] I | 2016-05-26T11:43:35-04:00 | Digesting /var/cache/omnibus/src/chef-marketplace-ctl with sha256
+              [Software: version-manifest] I | 2016-05-26T11:43:35-04:00 | Resolving manifest entry for version-manifest
+              [NullFetcher: version-manifest] I | 2016-05-26T11:43:35-04:00 | Fetching `version-manifest' (nothing to fetch)
+                [GitCache: preparation] I | 2016-05-26T11:43:35-04:00 | Performing cache restoration
+            454: |2
+                [GitCache: preparation] I | 2016-05-26T11:43:36-04:00 | Could not find tag `preparation-a5bdb14061a08cde16f37c4761f2dc1e0a0ca246931081b60dce6c76cc3fd0d7', skipping restore
+                [Software: preparation] I | 2016-05-26T11:43:36-04:00 | Could not restore from cache
+                 [Builder: preparation] I | 2016-05-26T11:43:36-04:00 | Starting build
+                 [Builder: preparation] I | 2016-05-26T11:43:36-04:00 | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: preparation] I | 2016-05-26T11:43:36-04:00 | <Dynamic Ruby block>: 0.0001s
+                 [Builder: preparation] I | 2016-05-26T11:43:36-04:00 | touch `/opt/chef-marketplace/embedded/lib/.gitkeep': 0.0006s
+                 [Builder: preparation] I | 2016-05-26T11:43:36-04:00 | touch `/opt/chef-marketplace/embedded/bin/.gitkeep': 0.0002s
+                 [Builder: preparation] I | 2016-05-26T11:43:36-04:00 | touch `/opt/chef-marketplace/bin/.gitkeep': 0.0002s
+                 [Builder: preparation] I | 2016-05-26T11:43:36-04:00 | Build preparation: 0.0052s
+                 [Builder: preparation] I | 2016-05-26T11:43:36-04:00 | Finished build
+                [GitCache: preparation] I | 2016-05-26T11:43:36-04:00 | Performing incremental cache
+            468: |2
+                [GitCache: preparation] I | 2016-05-26T11:43:38-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "preparation-a5bdb14061a08cde16f37c4761f2dc1e0a0ca246931081b60dce6c76cc3fd0d7"
+                [Software: preparation] I | 2016-05-26T11:43:38-04:00 | Dirtied the cache
+                       [Software: zlib] I | 2016-05-26T11:43:38-04:00 | Building because `preparation' dirtied the cache
+                     [NetFetcher: zlib] I | 2016-05-26T11:43:38-04:00 | Cleaning project directory `/var/cache/omnibus/src/zlib'
+                     [NetFetcher: zlib] I | 2016-05-26T11:43:38-04:00 | Extracting `/var/cache/omnibus/cache/zlib-1.2.8.tar.gz' to `/var/cache/omnibus/src/zlib'
+                     [NetFetcher: zlib] I | 2016-05-26T11:43:38-04:00 | $ gtar zxf /var/cache/omnibus/cache/zlib-1.2.8.tar.gz -C/var/cache/omnibus/src/zlib
+                        [Builder: zlib] I | 2016-05-26T11:43:38-04:00 | Starting build
+            495: |2
+                                        D | 2016-05-26T11:43:40-04:00 | Checking for attribute(visibility) support... Yes.
+                        [Builder: zlib] I | 2016-05-26T11:43:40-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded': 1.6525s
+                        [Builder: zlib] I | 2016-05-26T11:43:40-04:00 | Environment:
+            550: |2
+                                        D | 2016-05-26T11:43:41-04:00 | gcc -I/opt/chef-marketplace/embedded/include -O2  -D_LARGEFILE64_SOURCE=1 -DHAVE_HIDDEN -o minigzip64 minigzip64.o -L. libz.a
+                        [Builder: zlib] I | 2016-05-26T11:43:41-04:00 | Execute: `gmake -j 1': 0.9996s
+                        [Builder: zlib] I | 2016-05-26T11:43:41-04:00 | Environment:
+            570: |2
+                                        D | 2016-05-26T11:43:43-04:00 | chmod 644 /opt/chef-marketplace/embedded/include/zlib.h /opt/chef-marketplace/embedded/include/zconf.h
+                        [Builder: zlib] I | 2016-05-26T11:43:43-04:00 | Execute: `gmake -j 1 install': 1.8974s
+                        [Builder: zlib] I | 2016-05-26T11:43:43-04:00 | Build zlib: 4.5524s
+                        [Builder: zlib] I | 2016-05-26T11:43:43-04:00 | Finished build
+                       [GitCache: zlib] I | 2016-05-26T11:43:43-04:00 | Performing incremental cache
+            581: |2
+                       [GitCache: zlib] I | 2016-05-26T11:43:43-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "zlib-79f0100efa840d7195a3715e63ad1663330bc3a5b1622594ce6930c3c9080d94"
+                       [Software: zlib] I | 2016-05-26T11:43:43-04:00 | Dirtied the cache
+                    [Software: cacerts] I | 2016-05-26T11:43:43-04:00 | Building because `preparation' dirtied the cache
+                  [NetFetcher: cacerts] I | 2016-05-26T11:43:43-04:00 | Cleaning project directory `/var/cache/omnibus/src/cacerts/cacerts-2016.01.20'
+                  [NetFetcher: cacerts] I | 2016-05-26T11:43:43-04:00 | `/var/cache/omnibus/cache/ca-bundle.crt' is not an archive - copying to `/var/cache/omnibus/src/cacerts/cacerts-2016.01.20'
+                     [Builder: cacerts] I | 2016-05-26T11:43:43-04:00 | Starting build
+                     [Builder: cacerts] I | 2016-05-26T11:43:43-04:00 | Cached builder checksum before build: 38b60e645d354a7fcc3c184fabf69207314be04acbde2e6996c806ee7f70a21c
+                     [Builder: cacerts] I | 2016-05-26T11:43:43-04:00 | mkdir `/opt/chef-marketplace/embedded/ssl/certs': 0.0004s
+                     [Builder: cacerts] I | 2016-05-26T11:43:43-04:00 | <Dynamic Ruby block>: 0.0031s
+                     [Builder: cacerts] I | 2016-05-26T11:43:43-04:00 | copy `/var/cache/omnibus/src/cacerts/cacerts-2016.01.20/ca-bundle.crt' to `/opt/chef-marketplace/embedded/ssl/certs/cacert.pem': 0.0004s
+                     [Builder: cacerts] I | 2016-05-26T11:43:43-04:00 | link `/opt/chef-marketplace/embedded/ssl/certs/cacert.pem' to `/opt/chef-marketplace/embedded/ssl/cert.pem': 0.0001s
+                     [Builder: cacerts] I | 2016-05-26T11:43:43-04:00 | <Dynamic Ruby block>: 0.0s
+                     [Builder: cacerts] I | 2016-05-26T11:43:43-04:00 | Build cacerts: 0.0079s
+                     [Builder: cacerts] I | 2016-05-26T11:43:43-04:00 | Finished build
+                    [GitCache: cacerts] I | 2016-05-26T11:43:43-04:00 | Performing incremental cache
+            602: |2
+                    [GitCache: cacerts] I | 2016-05-26T11:43:43-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "cacerts-39cb11ba2dfef04371469c30c35e6684d35392ea09587aad878b5bcd4f9ee3a9"
+                    [Software: cacerts] I | 2016-05-26T11:43:43-04:00 | Dirtied the cache
+                     [Software: xproto] I | 2016-05-26T11:43:43-04:00 | Building because `preparation' dirtied the cache
+                   [NetFetcher: xproto] I | 2016-05-26T11:43:43-04:00 | Cleaning project directory `/var/cache/omnibus/src/xproto'
+                   [NetFetcher: xproto] I | 2016-05-26T11:43:43-04:00 | Extracting `/var/cache/omnibus/cache/xproto-7.0.25.tar.gz' to `/var/cache/omnibus/src/xproto'
+                   [NetFetcher: xproto] I | 2016-05-26T11:43:43-04:00 | $ gtar zxf /var/cache/omnibus/cache/xproto-7.0.25.tar.gz -C/var/cache/omnibus/src/xproto
+                      [Builder: xproto] I | 2016-05-26T11:43:43-04:00 | Starting build
+            732: |2
+                                        D | 2016-05-26T11:43:50-04:00 | config.status: executing depfiles commands
+                      [Builder: xproto] I | 2016-05-26T11:43:50-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded': 6.7202s
+                      [Builder: xproto] I | 2016-05-26T11:43:50-04:00 | Environment:
+            758: |2
+                                        D | 2016-05-26T11:43:50-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/xproto/xproto-7.0.25'
+                      [Builder: xproto] I | 2016-05-26T11:43:50-04:00 | Execute: `gmake -j 1': 0.0878s
+                      [Builder: xproto] I | 2016-05-26T11:43:50-04:00 | Environment:
+            798: |2
+                                        D | 2016-05-26T11:43:50-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/xproto/xproto-7.0.25'
+                      [Builder: xproto] I | 2016-05-26T11:43:50-04:00 | Execute: `gmake -j 1 install': 0.2233s
+                      [Builder: xproto] I | 2016-05-26T11:43:50-04:00 | Build xproto: 7.0342s
+                      [Builder: xproto] I | 2016-05-26T11:43:50-04:00 | Finished build
+                     [GitCache: xproto] I | 2016-05-26T11:43:50-04:00 | Performing incremental cache
+            809: |2
+                     [GitCache: xproto] I | 2016-05-26T11:43:50-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "xproto-70a549f374804706fb2b1e78da7afc066e39965c29dd28b4ca6d8b281aa6a4f6"
+                     [Software: xproto] I | 2016-05-26T11:43:50-04:00 | Dirtied the cache
+                [Software: util-macros] I | 2016-05-26T11:43:50-04:00 | Building because `preparation' dirtied the cache
+              [NetFetcher: util-macros] I | 2016-05-26T11:43:50-04:00 | Cleaning project directory `/var/cache/omnibus/src/util-macros'
+              [NetFetcher: util-macros] I | 2016-05-26T11:43:50-04:00 | Extracting `/var/cache/omnibus/cache/util-macros-1.18.0.tar.gz' to `/var/cache/omnibus/src/util-macros'
+              [NetFetcher: util-macros] I | 2016-05-26T11:43:50-04:00 | $ gtar zxf /var/cache/omnibus/cache/util-macros-1.18.0.tar.gz -C/var/cache/omnibus/src/util-macros
+                 [Builder: util-macros] I | 2016-05-26T11:43:50-04:00 | Starting build
+            834: |2
+                                        D | 2016-05-26T11:43:52-04:00 | config.status: creating xorg-macros.m4
+                 [Builder: util-macros] I | 2016-05-26T11:43:52-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded': 1.6445s
+                 [Builder: util-macros] I | 2016-05-26T11:43:52-04:00 | Environment:
+            846: |2
+                                        D | 2016-05-26T11:43:52-04:00 | gmake: Nothing to be done for `all'.
+                 [Builder: util-macros] I | 2016-05-26T11:43:52-04:00 | Execute: `gmake -j 1': 0.0246s
+                 [Builder: util-macros] I | 2016-05-26T11:43:52-04:00 | Environment:
+            870: |2
+                                        D | 2016-05-26T11:43:52-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/util-macros/util-macros-1.18.0'
+                 [Builder: util-macros] I | 2016-05-26T11:43:52-04:00 | Execute: `gmake -j 1 install': 0.1124s
+                 [Builder: util-macros] I | 2016-05-26T11:43:52-04:00 | Build util-macros: 1.7841s
+                 [Builder: util-macros] I | 2016-05-26T11:43:52-04:00 | Finished build
+                [GitCache: util-macros] I | 2016-05-26T11:43:52-04:00 | Performing incremental cache
+            881: |2
+                [GitCache: util-macros] I | 2016-05-26T11:43:52-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "util-macros-a5e73b9fe7f2d836729042f5db7315d3b741fccd529c0a9e23934179ec3d87e3"
+                [Software: util-macros] I | 2016-05-26T11:43:52-04:00 | Dirtied the cache
+               [Software: config_guess] I | 2016-05-26T11:43:52-04:00 | Building because `preparation' dirtied the cache
+              [GitFetcher: config_guess] I | 2016-05-26T11:43:52-04:00 | Cleaning existing clone
+              [GitFetcher: config_guess] I | 2016-05-26T11:43:52-04:00 | $ git -c core.autocrlf=false checkout dafd8e767ec87b90aac62f0fcedd11944c84b50a -f -q
+              [GitFetcher: config_guess] I | 2016-05-26T11:43:52-04:00 | $ git -c core.autocrlf=false clean -fdx
+                [Builder: config_guess] I | 2016-05-26T11:43:52-04:00 | Starting build
+                [Builder: config_guess] I | 2016-05-26T11:43:52-04:00 | Cached builder checksum before build: cfca36d02145da2b2f672304886ccf141edcd271cb0b1138c71e0cee80ba73ec
+                [Builder: config_guess] I | 2016-05-26T11:43:52-04:00 | mkdir `/opt/chef-marketplace/embedded/lib/config_guess': 0.0003s
+                [Builder: config_guess] I | 2016-05-26T11:43:52-04:00 | copy `/var/cache/omnibus/src/config_guess/config_guess-master/config.guess' to `/opt/chef-marketplace/embedded/lib/config_guess/config.guess': 0.0003s
+                [Builder: config_guess] I | 2016-05-26T11:43:52-04:00 | copy `/var/cache/omnibus/src/config_guess/config_guess-master/config.sub' to `/opt/chef-marketplace/embedded/lib/config_guess/config.sub': 0.0002s
+                [Builder: config_guess] I | 2016-05-26T11:43:52-04:00 | Build config_guess: 0.003s
+                [Builder: config_guess] I | 2016-05-26T11:43:52-04:00 | Finished build
+               [GitCache: config_guess] I | 2016-05-26T11:43:52-04:00 | Performing incremental cache
+               [GitCache: config_guess] I | 2016-05-26T11:43:52-04:00 | Removing git directories
+               [GitCache: config_guess] I | 2016-05-26T11:43:52-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace add -A -f
+               [GitCache: config_guess] I | 2016-05-26T11:43:52-04:00 | Calculating tag
+               [Software: config_guess] W | 2016-05-26T11:43:52-04:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+               [Software: config_guess] W | 2016-05-26T11:43:52-04:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+               [GitCache: config_guess] I | 2016-05-26T11:43:52-04:00 | dep_list: ["preparation", "zlib", "cacerts", "xproto", "util-macros"]
+               [GitCache: config_guess] I | 2016-05-26T11:43:52-04:00 | tag: config_guess-0939b10b2c8399f16b92cd5f75193e3151bb5cfedfea36969be5d2abf22fe89f
+               [GitCache: config_guess] I | 2016-05-26T11:43:52-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace commit -q -m "Backup of config_guess-0939b10b2c8399f16b92cd5f75193e3151bb5cfedfea36969be5d2abf22fe89f"
+               [GitCache: config_guess] I | 2016-05-26T11:43:52-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "config_guess-0939b10b2c8399f16b92cd5f75193e3151bb5cfedfea36969be5d2abf22fe89f"
+               [Software: config_guess] I | 2016-05-26T11:43:52-04:00 | Dirtied the cache
+              [Software: pkg-config-lite] I | 2016-05-26T11:43:52-04:00 | Building because `preparation' dirtied the cache
+              [NetFetcher: pkg-config-lite] I | 2016-05-26T11:43:52-04:00 | Cleaning project directory `/var/cache/omnibus/src/pkg-config-lite'
+              [NetFetcher: pkg-config-lite] I | 2016-05-26T11:43:52-04:00 | Extracting `/var/cache/omnibus/cache/pkg-config-lite-0.28-1.tar.gz' to `/var/cache/omnibus/src/pkg-config-lite'
+              [NetFetcher: pkg-config-lite] I | 2016-05-26T11:43:52-04:00 | $ gtar zxf /var/cache/omnibus/cache/pkg-config-lite-0.28-1.tar.gz -C/var/cache/omnibus/src/pkg-config-lite
+              [Builder: pkg-config-lite] I | 2016-05-26T11:43:53-04:00 | Starting build
+              [Builder: pkg-config-lite] I | 2016-05-26T11:43:53-04:00 | Cached builder checksum before build: 05237c27b1afdded665a10caa13d656a6ed2c9a99bbfd461607e989d3a444800
+              [Builder: pkg-config-lite] I | 2016-05-26T11:43:53-04:00 | update_config_guess `target: . install: [:config_guess, :config_sub]': 0.0008s
+              [Builder: pkg-config-lite] I | 2016-05-26T11:43:53-04:00 | Environment:
+            1016: |2
+                                        D | 2016-05-26T11:43:59-04:00 | config.status: executing libtool commands
+              [Builder: pkg-config-lite] I | 2016-05-26T11:43:59-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --disable-host-tool --with-pc-path=/opt/chef-marketplace/embedded/bin/pkgconfig': 6.4219s
+              [Builder: pkg-config-lite] I | 2016-05-26T11:43:59-04:00 | Environment:
+            1042: |2
+                                        D | 2016-05-26T11:43:59-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/pkg-config-lite/pkg-config-lite-0.28-1'
+              [Builder: pkg-config-lite] I | 2016-05-26T11:43:59-04:00 | Execute: `gmake -j 1': 0.3581s
+              [Builder: pkg-config-lite] I | 2016-05-26T11:43:59-04:00 | Environment:
+            1078: |2
+                                        D | 2016-05-26T11:44:00-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/pkg-config-lite/pkg-config-lite-0.28-1/check'
+              [Builder: pkg-config-lite] I | 2016-05-26T11:44:00-04:00 | Execute: `gmake -j 1 install': 0.2923s
+              [Builder: pkg-config-lite] I | 2016-05-26T11:44:00-04:00 | Build pkg-config-lite: 7.0783s
+              [Builder: pkg-config-lite] I | 2016-05-26T11:44:00-04:00 | Finished build
+              [GitCache: pkg-config-lite] I | 2016-05-26T11:44:00-04:00 | Performing incremental cache
+            1089: |
+              [GitCache: pkg-config-lite] I | 2016-05-26T11:44:00-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "pkg-config-lite-dc16b9fa1bee8c27f94c239d8aa1f38afe23a9b6d41ded72a9921fa17604e65e"
+              [Software: pkg-config-lite] I | 2016-05-26T11:44:00-04:00 | Dirtied the cache
+                 [Software: makedepend] I | 2016-05-26T11:44:00-04:00 | Building because `preparation' dirtied the cache
+               [NetFetcher: makedepend] I | 2016-05-26T11:44:00-04:00 | Cleaning project directory `/var/cache/omnibus/src/makedepend'
+               [NetFetcher: makedepend] I | 2016-05-26T11:44:00-04:00 | Extracting `/var/cache/omnibus/cache/makedepend-1.0.5.tar.gz' to `/var/cache/omnibus/src/makedepend'
+               [NetFetcher: makedepend] I | 2016-05-26T11:44:00-04:00 | $ gtar zxf /var/cache/omnibus/cache/makedepend-1.0.5.tar.gz -C/var/cache/omnibus/src/makedepend
+                  [Builder: makedepend] I | 2016-05-26T11:44:00-04:00 | Starting build
+            1195: |2
+                                        D | 2016-05-26T11:44:05-04:00 | config.status: executing depfiles commands
+                  [Builder: makedepend] I | 2016-05-26T11:44:06-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded': 5.8614s
+                  [Builder: makedepend] I | 2016-05-26T11:44:06-04:00 | Environment:
+            1274: |2
+                                        D | 2016-05-26T11:44:06-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/makedepend/makedepend-1.0.5'
+                  [Builder: makedepend] I | 2016-05-26T11:44:06-04:00 | Execute: `gmake -j 1': 0.2761s
+                  [Builder: makedepend] I | 2016-05-26T11:44:06-04:00 | Environment:
+            1291: |2
+                                        D | 2016-05-26T11:44:06-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/makedepend/makedepend-1.0.5'
+                  [Builder: makedepend] I | 2016-05-26T11:44:06-04:00 | Execute: `gmake -j 1 install': 0.1122s
+                  [Builder: makedepend] I | 2016-05-26T11:44:06-04:00 | Build makedepend: 6.2527s
+                  [Builder: makedepend] I | 2016-05-26T11:44:06-04:00 | Finished build
+                 [GitCache: makedepend] I | 2016-05-26T11:44:06-04:00 | Performing incremental cache
+            1302: |2
+                 [GitCache: makedepend] I | 2016-05-26T11:44:06-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "makedepend-6a8f4fdc075647bcbb465f5ecc8ec004fb2cfb267af972bc90261c41fb1d587d"
+                 [Software: makedepend] I | 2016-05-26T11:44:06-04:00 | Dirtied the cache
+                    [Software: openssl] I | 2016-05-26T11:44:06-04:00 | Building because `preparation' dirtied the cache
+                  [NetFetcher: openssl] I | 2016-05-26T11:44:06-04:00 | Cleaning project directory `/var/cache/omnibus/src/openssl'
+                  [NetFetcher: openssl] I | 2016-05-26T11:44:06-04:00 | Extracting `/var/cache/omnibus/cache/openssl-1.0.1t.tar.gz' to `/var/cache/omnibus/src/openssl'
+                  [NetFetcher: openssl] I | 2016-05-26T11:44:06-04:00 | $ gtar zxf /var/cache/omnibus/cache/openssl-1.0.1t.tar.gz -C/var/cache/omnibus/src/openssl
+                     [Builder: openssl] I | 2016-05-26T11:44:07-04:00 | Starting build
+            1322: |2
+                                        D | 2016-05-26T11:44:07-04:00 | Hunk #4 succeeded at 602 (offset -10 lines).
+                     [Builder: openssl] I | 2016-05-26T11:44:07-04:00 | Apply patch `openssl-1.0.1f-do-not-build-docs.patch': 0.0395s
+                     [Builder: openssl] I | 2016-05-26T11:44:07-04:00 | Environment:
+            1668: |2
+                                        D | 2016-05-26T11:44:11-04:00 |   make depend
+                     [Builder: openssl] I | 2016-05-26T11:44:11-04:00 | Execute: `./config disable-gost --prefix=/opt/chef-marketplace/embedded --with-zlib-lib=/opt/chef-marketplace/embedded/lib --with-zlib-include=/opt/chef-marketplace/embedded/include no-idea no-mdc2 no-rc5 shared zlib -I/opt/chef-marketplace/embedded/include -O2 -Wl,-rpath,/opt/chef-marketplace/embedded/lib -L/opt/chef-marketplace/embedded/lib': 4.1312s
+                     [Builder: openssl] I | 2016-05-26T11:44:11-04:00 | Environment:
+            1894: |2
+                                        D | 2016-05-26T11:44:51-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/openssl/openssl-1.0.1t/tools'
+                     [Builder: openssl] I | 2016-05-26T11:44:51-04:00 | Execute: `gmake depend': 39.168s
+                     [Builder: openssl] I | 2016-05-26T11:44:51-04:00 | Environment:
+            3098: |2
+                                        D | 2016-05-26T11:45:21-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/openssl/openssl-1.0.1t/tools'
+                     [Builder: openssl] I | 2016-05-26T11:45:21-04:00 | Execute: `gmake': 30.7694s
+                     [Builder: openssl] I | 2016-05-26T11:45:21-04:00 | Environment:
+            3568: |2
+                                        D | 2016-05-26T11:45:24-04:00 | chmod 644 /opt/chef-marketplace/embedded/lib/pkgconfig/openssl.pc
+                     [Builder: openssl] I | 2016-05-26T11:45:24-04:00 | Execute: `gmake install': 2.9587s
+                     [Builder: openssl] I | 2016-05-26T11:45:24-04:00 | Build openssl: 77.071s
+                     [Builder: openssl] I | 2016-05-26T11:45:24-04:00 | Finished build
+                    [GitCache: openssl] I | 2016-05-26T11:45:24-04:00 | Performing incremental cache
+            3579: |2
+                    [GitCache: openssl] I | 2016-05-26T11:45:25-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "openssl-47e47930152d615b126ccf8bb9e63f6273499fe9a50e9b46ad8305c68f036cda"
+                    [Software: openssl] I | 2016-05-26T11:45:25-04:00 | Dirtied the cache
+                    [Software: ncurses] I | 2016-05-26T11:45:25-04:00 | Building because `preparation' dirtied the cache
+                  [NetFetcher: ncurses] I | 2016-05-26T11:45:25-04:00 | Cleaning project directory `/var/cache/omnibus/src/ncurses'
+                  [NetFetcher: ncurses] I | 2016-05-26T11:45:25-04:00 | Extracting `/var/cache/omnibus/cache/ncurses-5.9.tar.gz' to `/var/cache/omnibus/src/ncurses'
+                  [NetFetcher: ncurses] I | 2016-05-26T11:45:25-04:00 | $ gtar zxf /var/cache/omnibus/cache/ncurses-5.9.tar.gz -C/var/cache/omnibus/src/ncurses
+                     [Builder: ncurses] I | 2016-05-26T11:45:25-04:00 | Starting build
+                     [Builder: ncurses] I | 2016-05-26T11:45:25-04:00 | Cached builder checksum before build: 4b6b024bea8add4c3003cff42d14acd75c632478bc19b97c07bde5e796065e1f
+                     [Builder: ncurses] I | 2016-05-26T11:45:25-04:00 | update_config_guess `target: . install: [:config_guess, :config_sub]': 0.0007s
+                     [Builder: ncurses] I | 2016-05-26T11:45:25-04:00 | Environment:
+            3597: |2
+                                        D | 2016-05-26T11:45:25-04:00 | Hunk #1 succeeded at 437 (offset -37 lines).
+                     [Builder: ncurses] I | 2016-05-26T11:45:25-04:00 | Apply patch `ncurses-5.9-gcc-5.patch': 0.0185s
+                     [Builder: ncurses] I | 2016-05-26T11:45:26-04:00 | Environment:
+            3940: |2
+                                        D | 2016-05-26T11:45:40-04:00 |
+                     [Builder: ncurses] I | 2016-05-26T11:45:40-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --enable-overwrite --with-shared --with-termlib --without-ada --without-cxx-binding --without-debug --without-manpages': 14.1711s
+                     [Builder: ncurses] I | 2016-05-26T11:45:40-04:00 | Environment:
+            4885: |2
+                                        D | 2016-05-26T11:45:53-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/ncurses/ncurses-5.9/misc'
+                     [Builder: ncurses] I | 2016-05-26T11:45:53-04:00 | Execute: `gmake -j 1': 13.7591s
+                     [Builder: ncurses] I | 2016-05-26T11:45:53-04:00 | Environment:
+            4913: |2
+                                        D | 2016-05-26T11:45:54-04:00 | cd /opt/chef-marketplace/embedded/lib && (ln -s -f libtinfo.so.5.9 libtinfo.so.5; ln -s -f libtinfo.so.5 libtinfo.so; )
+                                        D | 2016-05-26T11:45:54-04:00 | test -z "" && /usr/sbin/ldconfig
+                                        D | 2016-05-26T11:45:54-04:00 | /usr/sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-26T11:45:54-04:00 | gmake[1]: [/opt/chef-marketplace/embedded/lib/libtinfo.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-26T11:45:54-04:00 | installing ../lib/libtinfo.a as /opt/chef-marketplace/embedded/lib/libtinfo.a
+            4931: |2
+                                        D | 2016-05-26T11:45:54-04:00 | cd /opt/chef-marketplace/embedded/lib && (ln -s -f libncurses.so.5.9 libcurses.so; )
+                                        D | 2016-05-26T11:45:54-04:00 | test -z "" && /usr/sbin/ldconfig
+                                        D | 2016-05-26T11:45:54-04:00 | /usr/sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-26T11:45:54-04:00 | gmake[1]: [/opt/chef-marketplace/embedded/lib/libncurses.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-26T11:45:54-04:00 | installing ../lib/libncurses.a as /opt/chef-marketplace/embedded/lib/libncurses.a
+            4968: |2
+                                        D | 2016-05-26T11:45:55-04:00 | cd /opt/chef-marketplace/embedded/lib && (ln -s -f libpanel.so.5.9 libpanel.so.5; ln -s -f libpanel.so.5 libpanel.so; )
+                                        D | 2016-05-26T11:45:55-04:00 | test -z "" && /usr/sbin/ldconfig
+                                        D | 2016-05-26T11:45:55-04:00 | /usr/sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-26T11:45:55-04:00 | gmake[1]: [/opt/chef-marketplace/embedded/lib/libpanel.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-26T11:45:55-04:00 | installing ../lib/libpanel.a as /opt/chef-marketplace/embedded/lib/libpanel.a
+            4988: |2
+                                        D | 2016-05-26T11:45:55-04:00 | cd /opt/chef-marketplace/embedded/lib && (ln -s -f libmenu.so.5.9 libmenu.so.5; ln -s -f libmenu.so.5 libmenu.so; )
+                                        D | 2016-05-26T11:45:55-04:00 | test -z "" && /usr/sbin/ldconfig
+                                        D | 2016-05-26T11:45:55-04:00 | /usr/sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-26T11:45:55-04:00 | gmake[1]: [/opt/chef-marketplace/embedded/lib/libmenu.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-26T11:45:55-04:00 | installing ../lib/libmenu.a as /opt/chef-marketplace/embedded/lib/libmenu.a
+            5009: |2
+                                        D | 2016-05-26T11:45:55-04:00 | cd /opt/chef-marketplace/embedded/lib && (ln -s -f libform.so.5.9 libform.so.5; ln -s -f libform.so.5 libform.so; )
+                                        D | 2016-05-26T11:45:55-04:00 | test -z "" && /usr/sbin/ldconfig
+                                        D | 2016-05-26T11:45:55-04:00 | /usr/sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-26T11:45:55-04:00 | gmake[1]: [/opt/chef-marketplace/embedded/lib/libform.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-26T11:45:55-04:00 | installing ../lib/libform.a as /opt/chef-marketplace/embedded/lib/libform.a
+            5054: |2
+                                        D | 2016-05-26T11:45:57-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/ncurses/ncurses-5.9/misc'
+                     [Builder: ncurses] I | 2016-05-26T11:45:57-04:00 | Execute: `gmake -j 1 install': 3.5611s
+                     [Builder: ncurses] I | 2016-05-26T11:45:57-04:00 | Environment:
+            5190: |2
+                                        D | 2016-05-26T11:45:57-04:00 | rm -rf lib obj_s objects
+                     [Builder: ncurses] I | 2016-05-26T11:45:57-04:00 | Execute: `gmake distclean': 0.3835s
+                     [Builder: ncurses] I | 2016-05-26T11:45:57-04:00 | Environment:
+            5547: |2
+                                        D | 2016-05-26T11:46:12-04:00 |
+                     [Builder: ncurses] I | 2016-05-26T11:46:12-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --enable-overwrite --with-shared --with-termlib --without-ada --without-cxx-binding --without-debug --without-manpages --enable-widec': 14.7067s
+                     [Builder: ncurses] I | 2016-05-26T11:46:12-04:00 | Environment:
+            6552: |2
+                                        D | 2016-05-26T11:46:25-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/ncurses/ncurses-5.9/misc'
+                     [Builder: ncurses] I | 2016-05-26T11:46:25-04:00 | Execute: `gmake -j 1': 13.1151s
+                     [Builder: ncurses] I | 2016-05-26T11:46:25-04:00 | Environment:
+            6580: |2
+                                        D | 2016-05-26T11:46:26-04:00 | cd /opt/chef-marketplace/embedded/lib && (ln -s -f libtinfow.so.5.9 libtinfow.so.5; ln -s -f libtinfow.so.5 libtinfow.so; )
+                                        D | 2016-05-26T11:46:26-04:00 | test -z "" && /usr/sbin/ldconfig
+                                        D | 2016-05-26T11:46:26-04:00 | /usr/sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-26T11:46:26-04:00 | gmake[1]: [/opt/chef-marketplace/embedded/lib/libtinfow.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-26T11:46:26-04:00 | installing ../lib/libtinfow.a as /opt/chef-marketplace/embedded/lib/libtinfow.a
+            6596: |2
+                                        D | 2016-05-26T11:46:26-04:00 | cd /opt/chef-marketplace/embedded/lib && (ln -s -f libncursesw.so.5.9 libncursesw.so.5; ln -s -f libncursesw.so.5 libncursesw.so; )
+                                        D | 2016-05-26T11:46:26-04:00 | test -z "" && /usr/sbin/ldconfig
+                                        D | 2016-05-26T11:46:26-04:00 | /usr/sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-26T11:46:26-04:00 | gmake[1]: [/opt/chef-marketplace/embedded/lib/libncursesw.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-26T11:46:26-04:00 | installing ../lib/libncursesw.a as /opt/chef-marketplace/embedded/lib/libncursesw.a
+            6631: |2
+                                        D | 2016-05-26T11:46:26-04:00 | cd /opt/chef-marketplace/embedded/lib && (ln -s -f libpanelw.so.5.9 libpanelw.so.5; ln -s -f libpanelw.so.5 libpanelw.so; )
+                                        D | 2016-05-26T11:46:26-04:00 | test -z "" && /usr/sbin/ldconfig
+                                        D | 2016-05-26T11:46:26-04:00 | /usr/sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-26T11:46:26-04:00 | gmake[1]: [/opt/chef-marketplace/embedded/lib/libpanelw.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-26T11:46:26-04:00 | installing ../lib/libpanelw.a as /opt/chef-marketplace/embedded/lib/libpanelw.a
+            6651: |2
+                                        D | 2016-05-26T11:46:27-04:00 | cd /opt/chef-marketplace/embedded/lib && (ln -s -f libmenuw.so.5.9 libmenuw.so.5; ln -s -f libmenuw.so.5 libmenuw.so; )
+                                        D | 2016-05-26T11:46:27-04:00 | test -z "" && /usr/sbin/ldconfig
+                                        D | 2016-05-26T11:46:27-04:00 | /usr/sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-26T11:46:27-04:00 | gmake[1]: [/opt/chef-marketplace/embedded/lib/libmenuw.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-26T11:46:27-04:00 | installing ../lib/libmenuw.a as /opt/chef-marketplace/embedded/lib/libmenuw.a
+            6672: |2
+                                        D | 2016-05-26T11:46:27-04:00 | cd /opt/chef-marketplace/embedded/lib && (ln -s -f libformw.so.5.9 libformw.so.5; ln -s -f libformw.so.5 libformw.so; )
+                                        D | 2016-05-26T11:46:27-04:00 | test -z "" && /usr/sbin/ldconfig
+                                        D | 2016-05-26T11:46:27-04:00 | /usr/sbin/ldconfig: Can't create temporary cache file /etc/ld.so.cache~: Permission denied
+                                        D | 2016-05-26T11:46:27-04:00 | gmake[1]: [/opt/chef-marketplace/embedded/lib/libformw.so.5.9] Error 1 (ignored)
+                                        D | 2016-05-26T11:46:27-04:00 | installing ../lib/libformw.a as /opt/chef-marketplace/embedded/lib/libformw.a
+            6716: |2
+                                        D | 2016-05-26T11:46:29-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/ncurses/ncurses-5.9/misc'
+                     [Builder: ncurses] I | 2016-05-26T11:46:29-04:00 | Execute: `gmake -j 1 install': 3.625s
+                     [Builder: ncurses] I | 2016-05-26T11:46:29-04:00 | Build ncurses: 63.3497s
+                     [Builder: ncurses] I | 2016-05-26T11:46:29-04:00 | Finished build
+                    [GitCache: ncurses] I | 2016-05-26T11:46:29-04:00 | Performing incremental cache
+            6727: |2
+                    [GitCache: ncurses] I | 2016-05-26T11:46:29-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "ncurses-1b48f2204695c9d781b4d4c63845990da2eee24256bba02799c5dd3e3e7a1e23"
+                    [Software: ncurses] I | 2016-05-26T11:46:29-04:00 | Dirtied the cache
+                    [Software: libedit] I | 2016-05-26T11:46:29-04:00 | Building because `preparation' dirtied the cache
+                  [NetFetcher: libedit] I | 2016-05-26T11:46:29-04:00 | Cleaning project directory `/var/cache/omnibus/src/libedit'
+                  [NetFetcher: libedit] I | 2016-05-26T11:46:29-04:00 | Extracting `/var/cache/omnibus/cache/libedit-20120601-3.0.tar.gz' to `/var/cache/omnibus/src/libedit'
+                  [NetFetcher: libedit] I | 2016-05-26T11:46:29-04:00 | $ gtar zxf /var/cache/omnibus/cache/libedit-20120601-3.0.tar.gz -C/var/cache/omnibus/src/libedit
+                     [Builder: libedit] I | 2016-05-26T11:46:30-04:00 | Starting build
+                     [Builder: libedit] I | 2016-05-26T11:46:30-04:00 | Cached builder checksum before build: d4855ce722007cfd3568b8349feaea057eec6410041b73e74b862631a759d26e
+                     [Builder: libedit] I | 2016-05-26T11:46:30-04:00 | update_config_guess `target: . install: [:config_guess, :config_sub]': 0.0008s
+                     [Builder: libedit] I | 2016-05-26T11:46:30-04:00 | Environment:
+            6917: |2
+                                        D | 2016-05-26T11:46:39-04:00 | config.status: executing libtool commands
+                     [Builder: libedit] I | 2016-05-26T11:46:39-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded': 9.7845s
+                     [Builder: libedit] I | 2016-05-26T11:46:39-04:00 | Environment:
+            6986: |2
+                                        D | 2016-05-26T11:46:43-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libedit/libedit-20120601-3.0'
+                     [Builder: libedit] I | 2016-05-26T11:46:43-04:00 | Execute: `gmake -j 1': 3.4008s
+                     [Builder: libedit] I | 2016-05-26T11:46:43-04:00 | Environment:
+            7086: |2
+                                        D | 2016-05-26T11:46:43-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libedit/libedit-20120601-3.0'
+                     [Builder: libedit] I | 2016-05-26T11:46:43-04:00 | Execute: `gmake -j 1 install': 0.689s
+                     [Builder: libedit] I | 2016-05-26T11:46:43-04:00 | Build libedit: 13.8795s
+                     [Builder: libedit] I | 2016-05-26T11:46:43-04:00 | Finished build
+                    [GitCache: libedit] I | 2016-05-26T11:46:43-04:00 | Performing incremental cache
+            7097: |2
+                    [GitCache: libedit] I | 2016-05-26T11:46:44-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "libedit-66dc784c11a8ddf48e76a84a137e553f81fe8a25c334808127234455f073d5c0"
+                    [Software: libedit] I | 2016-05-26T11:46:44-04:00 | Dirtied the cache
+               [Software: postgresql92] I | 2016-05-26T11:46:44-04:00 | Building because `preparation' dirtied the cache
+              [NetFetcher: postgresql92] I | 2016-05-26T11:46:44-04:00 | Cleaning project directory `/var/cache/omnibus/src/postgresql92'
+              [NetFetcher: postgresql92] I | 2016-05-26T11:46:45-04:00 | Extracting `/var/cache/omnibus/cache/postgresql-9.2.10.tar.bz2' to `/var/cache/omnibus/src/postgresql92'
+              [NetFetcher: postgresql92] I | 2016-05-26T11:46:45-04:00 | $ gtar jxf /var/cache/omnibus/cache/postgresql-9.2.10.tar.bz2 -C/var/cache/omnibus/src/postgresql92
+                [Builder: postgresql92] I | 2016-05-26T11:46:52-04:00 | Starting build
+            7473: |2
+                                        D | 2016-05-26T11:47:20-04:00 | config.status: linking src/makefiles/Makefile.linux to src/Makefile.port
+                [Builder: postgresql92] I | 2016-05-26T11:47:20-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --with-libedit-preferred --with-openssl --with-includes=/opt/chef-marketplace/embedded/include --with-libraries=/opt/chef-marketplace/embedded/lib': 27.4439s
+                [Builder: postgresql92] I | 2016-05-26T11:47:20-04:00 | Environment:
+            8938: |2
+                                        D | 2016-05-26T11:47:42-04:00 | All of PostgreSQL successfully made. Ready to install.
+                [Builder: postgresql92] I | 2016-05-26T11:47:42-04:00 | Execute: `gmake -j 1': 21.9703s
+                [Builder: postgresql92] I | 2016-05-26T11:47:42-04:00 | Environment:
+            9084: |2
+                                        D | 2016-05-26T11:47:43-04:00 | gmake: Leaving directory `/var/cache/omnibus/src/postgresql92/postgresql-9.2.10/src/bin'
+                [Builder: postgresql92] I | 2016-05-26T11:47:43-04:00 | Execute: `gmake -C src/bin install': 0.9356s
+                [Builder: postgresql92] I | 2016-05-26T11:47:43-04:00 | Environment:
+            9118: |2
+                                        D | 2016-05-26T11:47:43-04:00 | gmake: Leaving directory `/var/cache/omnibus/src/postgresql92/postgresql-9.2.10/src/include'
+                [Builder: postgresql92] I | 2016-05-26T11:47:43-04:00 | Execute: `gmake -C src/include install': 0.5495s
+                [Builder: postgresql92] I | 2016-05-26T11:47:43-04:00 | Environment:
+            9230: |2
+                                        D | 2016-05-26T11:47:44-04:00 | gmake: Leaving directory `/var/cache/omnibus/src/postgresql92/postgresql-9.2.10/src/interfaces'
+                [Builder: postgresql92] I | 2016-05-26T11:47:44-04:00 | Execute: `gmake -C src/interfaces install': 0.7437s
+                [Builder: postgresql92] I | 2016-05-26T11:47:44-04:00 | Environment:
+            9252: |2
+                                        D | 2016-05-26T11:47:44-04:00 | gmake: Leaving directory `/var/cache/omnibus/src/postgresql92/postgresql-9.2.10/doc'
+                [Builder: postgresql92] I | 2016-05-26T11:47:44-04:00 | Execute: `gmake -C doc install': 0.2833s
+                [Builder: postgresql92] I | 2016-05-26T11:47:44-04:00 | Build postgresql92: 51.9323s
+                [Builder: postgresql92] I | 2016-05-26T11:47:44-04:00 | Finished build
+               [GitCache: postgresql92] I | 2016-05-26T11:47:44-04:00 | Performing incremental cache
+            9263: |2
+               [GitCache: postgresql92] I | 2016-05-26T11:47:45-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "postgresql92-8689e52c7376bb4e6c7b1503309bc115950d9db211cf84dc10683989e498e606"
+               [Software: postgresql92] I | 2016-05-26T11:47:45-04:00 | Dirtied the cache
+                    [Software: libtool] I | 2016-05-26T11:47:45-04:00 | Building because `preparation' dirtied the cache
+                  [NetFetcher: libtool] I | 2016-05-26T11:47:45-04:00 | Cleaning project directory `/var/cache/omnibus/src/libtool'
+                  [NetFetcher: libtool] I | 2016-05-26T11:47:45-04:00 | Extracting `/var/cache/omnibus/cache/libtool-2.4.tar.gz' to `/var/cache/omnibus/src/libtool'
+                  [NetFetcher: libtool] I | 2016-05-26T11:47:45-04:00 | $ gtar zxf /var/cache/omnibus/cache/libtool-2.4.tar.gz -C/var/cache/omnibus/src/libtool
+                     [Builder: libtool] I | 2016-05-26T11:47:45-04:00 | Starting build
+                     [Builder: libtool] I | 2016-05-26T11:47:45-04:00 | Cached builder checksum before build: 44461bde825dad3ebb630104e8e24f92f4691bfaf4bdb7065db2d1dc4f06f9ae
+                     [Builder: libtool] I | 2016-05-26T11:47:45-04:00 | update_config_guess `target: . install: [:config_guess, :config_sub]': 0.0006s
+                     [Builder: libtool] I | 2016-05-26T11:47:45-04:00 | update_config_guess `target: libltdl/config install: [:config_guess, :config_sub]': 0.0004s
+                     [Builder: libtool] I | 2016-05-26T11:47:45-04:00 | Environment:
+            9483: |2
+                                        D | 2016-05-26T11:47:56-04:00 | config.status: executing libtool commands
+                     [Builder: libtool] I | 2016-05-26T11:47:56-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded': 11.334s
+                     [Builder: libtool] I | 2016-05-26T11:47:56-04:00 | Environment:
+            9560: |2
+                                        D | 2016-05-26T11:47:58-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libtool/libtool-2.4'
+                     [Builder: libtool] I | 2016-05-26T11:47:58-04:00 | Execute: `gmake': 1.8314s
+                     [Builder: libtool] I | 2016-05-26T11:47:58-04:00 | Environment:
+            9674: |2
+                                        D | 2016-05-26T11:48:00-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libtool/libtool-2.4'
+                     [Builder: libtool] I | 2016-05-26T11:48:00-04:00 | Execute: `gmake install': 1.397s
+                     [Builder: libtool] I | 2016-05-26T11:48:00-04:00 | Build libtool: 14.569s
+                     [Builder: libtool] I | 2016-05-26T11:48:00-04:00 | Finished build
+                    [GitCache: libtool] I | 2016-05-26T11:48:00-04:00 | Performing incremental cache
+            9685: |2
+                    [GitCache: libtool] I | 2016-05-26T11:48:00-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "libtool-34036a1b21d7e088ded9887e9c830fb52815a19a622f40273368df94e6e5a7df"
+                    [Software: libtool] I | 2016-05-26T11:48:00-04:00 | Dirtied the cache
+                     [Software: libffi] I | 2016-05-26T11:48:00-04:00 | Building because `preparation' dirtied the cache
+                   [NetFetcher: libffi] I | 2016-05-26T11:48:00-04:00 | Cleaning project directory `/var/cache/omnibus/src/libffi'
+                   [NetFetcher: libffi] I | 2016-05-26T11:48:00-04:00 | Extracting `/var/cache/omnibus/cache/libffi-3.2.1.tar.gz' to `/var/cache/omnibus/src/libffi'
+                   [NetFetcher: libffi] I | 2016-05-26T11:48:00-04:00 | $ gtar zxf /var/cache/omnibus/cache/libffi-3.2.1.tar.gz -C/var/cache/omnibus/src/libffi
+                      [Builder: libffi] I | 2016-05-26T11:48:00-04:00 | Starting build
+            9703: |2
+                                        D | 2016-05-26T11:48:00-04:00 | patching file configure
+                      [Builder: libffi] I | 2016-05-26T11:48:00-04:00 | Apply patch `libffi-3.2.1-disable-multi-os-directory.patch': 0.0196s
+                      [Builder: libffi] I | 2016-05-26T11:48:00-04:00 | Environment:
+            9861: |2
+                                        D | 2016-05-26T11:48:08-04:00 | config.status: executing src commands
+                      [Builder: libffi] I | 2016-05-26T11:48:09-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --disable-multi-os-directory': 8.4832s
+                      [Builder: libffi] I | 2016-05-26T11:48:09-04:00 | Environment:
+            9948: |2
+                                        D | 2016-05-26T11:48:10-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libffi/libffi-3.2.1/x86_64-unknown-linux-gnu'
+                      [Builder: libffi] I | 2016-05-26T11:48:10-04:00 | Execute: `gmake -j 1': 1.7451s
+                      [Builder: libffi] I | 2016-05-26T11:48:10-04:00 | Environment:
+            10022: |2
+                                        D | 2016-05-26T11:48:11-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libffi/libffi-3.2.1/x86_64-unknown-linux-gnu'
+                      [Builder: libffi] I | 2016-05-26T11:48:11-04:00 | Execute: `gmake -j 1 install': 0.6771s
+                      [Builder: libffi] I | 2016-05-26T11:48:11-04:00 | copy `/opt/chef-marketplace/embedded/lib/libffi-3.2.1/include/*' to `/opt/chef-marketplace/embedded/include': 0.0006s
+                      [Builder: libffi] I | 2016-05-26T11:48:11-04:00 | Build libffi: 10.9292s
+                      [Builder: libffi] I | 2016-05-26T11:48:11-04:00 | Finished build
+                     [GitCache: libffi] I | 2016-05-26T11:48:11-04:00 | Performing incremental cache
+            10034: |2
+                     [GitCache: libffi] I | 2016-05-26T11:48:11-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "libffi-bc90ea1d25c79a67c778fd7a3b2debab85543bbff7fed0da8aa5adf8e4ae8ba9"
+                     [Software: libffi] I | 2016-05-26T11:48:11-04:00 | Dirtied the cache
+                    [Software: libyaml] I | 2016-05-26T11:48:11-04:00 | Building because `preparation' dirtied the cache
+                  [NetFetcher: libyaml] I | 2016-05-26T11:48:11-04:00 | Cleaning project directory `/var/cache/omnibus/src/libyaml'
+                  [NetFetcher: libyaml] I | 2016-05-26T11:48:11-04:00 | Extracting `/var/cache/omnibus/cache/yaml-0.1.6.tar.gz' to `/var/cache/omnibus/src/libyaml'
+                  [NetFetcher: libyaml] I | 2016-05-26T11:48:11-04:00 | $ gtar zxf /var/cache/omnibus/cache/yaml-0.1.6.tar.gz -C/var/cache/omnibus/src/libyaml
+                     [Builder: libyaml] I | 2016-05-26T11:48:11-04:00 | Starting build
+                     [Builder: libyaml] I | 2016-05-26T11:48:11-04:00 | Cached builder checksum before build: 0a5d755d49209d22a970fad8cae552ba2475aaee99240f9bdcaf7dfc750fc65b
+                     [Builder: libyaml] I | 2016-05-26T11:48:11-04:00 | update_config_guess `target: config install: [:config_guess, :config_sub]': 0.0006s
+                     [Builder: libyaml] I | 2016-05-26T11:48:11-04:00 | Environment:
+            10140: |2
+                                        D | 2016-05-26T11:48:16-04:00 | config.status: executing libtool commands
+                     [Builder: libyaml] I | 2016-05-26T11:48:17-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --enable-shared': 5.5055s
+                     [Builder: libyaml] I | 2016-05-26T11:48:17-04:00 | Environment:
+            10246: |2
+                                        D | 2016-05-26T11:48:21-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libyaml/yaml-0.1.6'
+                     [Builder: libyaml] I | 2016-05-26T11:48:21-04:00 | Execute: `gmake -j 1': 4.4046s
+                     [Builder: libyaml] I | 2016-05-26T11:48:21-04:00 | Environment:
+            10321: |2
+                                        D | 2016-05-26T11:48:22-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libyaml/yaml-0.1.6/win32'
+                     [Builder: libyaml] I | 2016-05-26T11:48:22-04:00 | Execute: `gmake -j 1 install': 0.4057s
+                     [Builder: libyaml] I | 2016-05-26T11:48:22-04:00 | Build libyaml: 10.3192s
+                     [Builder: libyaml] I | 2016-05-26T11:48:22-04:00 | Finished build
+                    [GitCache: libyaml] I | 2016-05-26T11:48:22-04:00 | Performing incremental cache
+            10332: |2
+                    [GitCache: libyaml] I | 2016-05-26T11:48:22-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "libyaml-23682815cc79ceefd981cfe1f5902dcc5c59ab4807cd279abad6bbf6b1500d20"
+                    [Software: libyaml] I | 2016-05-26T11:48:22-04:00 | Dirtied the cache
+                   [Software: libiconv] I | 2016-05-26T11:48:22-04:00 | Building because `preparation' dirtied the cache
+                 [NetFetcher: libiconv] I | 2016-05-26T11:48:22-04:00 | Cleaning project directory `/var/cache/omnibus/src/libiconv'
+                 [NetFetcher: libiconv] I | 2016-05-26T11:48:22-04:00 | Extracting `/var/cache/omnibus/cache/libiconv-1.14.tar.gz' to `/var/cache/omnibus/src/libiconv'
+                 [NetFetcher: libiconv] I | 2016-05-26T11:48:22-04:00 | $ gtar zxf /var/cache/omnibus/cache/libiconv-1.14.tar.gz -C/var/cache/omnibus/src/libiconv
+                    [Builder: libiconv] I | 2016-05-26T11:48:22-04:00 | Starting build
+                    [Builder: libiconv] I | 2016-05-26T11:48:22-04:00 | Cached builder checksum before build: 09dec39f17c74f2b9f9c4c22d9936cf0daaf305045f22a81e572820020f0c5eb
+                    [Builder: libiconv] I | 2016-05-26T11:48:22-04:00 | update_config_guess `target: build-aux install: [:config_guess, :config_sub]': 0.0008s
+                    [Builder: libiconv] I | 2016-05-26T11:48:22-04:00 | update_config_guess `target: libcharset/build-aux install: [:config_guess, :config_sub]': 0.0005s
+                    [Builder: libiconv] I | 2016-05-26T11:48:22-04:00 | Environment:
+            10351: |2
+                                        D | 2016-05-26T11:48:23-04:00 | patching file srclib/stdio.in.h
+                    [Builder: libiconv] I | 2016-05-26T11:48:23-04:00 | Apply patch `libiconv-1.14_srclib_stdio.in.h-remove-gets-declarations.patch': 0.0276s
+                    [Builder: libiconv] I | 2016-05-26T11:48:23-04:00 | Environment:
+            10867: |2
+                                        D | 2016-05-26T11:48:51-04:00 | config.status: executing libtool commands
+                    [Builder: libiconv] I | 2016-05-26T11:48:52-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded': 29.113s
+                    [Builder: libiconv] I | 2016-05-26T11:48:52-04:00 | Environment:
+            11069: |2
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's/@''GNULIB_OBSTACK_PRINTF''@/0/g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's/@''GNULIB_OBSTACK_PRINTF_POSIX''@/0/g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's/@''GNULIB_PERROR''@/0/g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's/@''GNULIB_POPEN''@/0/g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's/@''GNULIB_PRINTF''@/1/g' \
+            11124: |2
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's|@''REPLACE_GETLINE''@|0|g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's|@''REPLACE_OBSTACK_PRINTF''@|0|g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's|@''REPLACE_PERROR''@|0|g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's|@''REPLACE_POPEN''@|0|g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's|@''REPLACE_PRINTF''@|0|g' \
+            11265: |2
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's/@''GNULIB_STRCASESTR''@/0/g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's/@''GNULIB_STRTOK_R''@/0/g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's/@''GNULIB_STRERROR''@/1/g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's/@''GNULIB_STRERROR_R''@/0/g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's/@''GNULIB_STRSIGNAL''@/0/g' \
+            11298: |2
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's|@''REPLACE_STRDUP''@|0|g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's|@''REPLACE_STRSTR''@|0|g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's|@''REPLACE_STRERROR''@|0|g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's|@''REPLACE_STRERROR_R''@|0|g' \
+                                        D | 2016-05-26T11:48:55-04:00 |       -e 's|@''REPLACE_STRNCAT''@|0|g' \
+            11562: |2
+                                        D | 2016-05-26T11:48:56-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libiconv/libiconv-1.14/tests'
+                    [Builder: libiconv] I | 2016-05-26T11:48:56-04:00 | Execute: `gmake -j 1': 4.2331s
+                    [Builder: libiconv] I | 2016-05-26T11:48:56-04:00 | Environment:
+            11639: |2
+                                        D | 2016-05-26T11:48:56-04:00 | /usr/bin/install -c -m 644 include/iconv.h.inst /opt/chef-marketplace/embedded/include/iconv.h
+                    [Builder: libiconv] I | 2016-05-26T11:48:56-04:00 | Execute: `gmake -j 1 install-lib libdir=/opt/chef-marketplace/embedded/lib includedir=/opt/chef-marketplace/embedded/include': 0.3098s
+                    [Builder: libiconv] I | 2016-05-26T11:48:56-04:00 | Build libiconv: 33.691s
+                    [Builder: libiconv] I | 2016-05-26T11:48:56-04:00 | Finished build
+                   [GitCache: libiconv] I | 2016-05-26T11:48:56-04:00 | Performing incremental cache
+            11650: |2
+                   [GitCache: libiconv] I | 2016-05-26T11:48:56-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "libiconv-3e4583a8b6e8da77aa63fb68cbc1a0f21fc5edffaa08ebcc93972136a7e38476"
+                   [Software: libiconv] I | 2016-05-26T11:48:56-04:00 | Dirtied the cache
+                       [Software: ruby] I | 2016-05-26T11:48:56-04:00 | Building because `preparation' dirtied the cache
+                     [NetFetcher: ruby] I | 2016-05-26T11:48:56-04:00 | Cleaning project directory `/var/cache/omnibus/src/ruby'
+                     [NetFetcher: ruby] I | 2016-05-26T11:48:57-04:00 | Extracting `/var/cache/omnibus/cache/ruby-2.2.4.tar.gz' to `/var/cache/omnibus/src/ruby'
+                     [NetFetcher: ruby] I | 2016-05-26T11:48:57-04:00 | $ gtar zxf /var/cache/omnibus/cache/ruby-2.2.4.tar.gz -C/var/cache/omnibus/src/ruby
+                        [Builder: ruby] I | 2016-05-26T11:48:59-04:00 | Starting build
+            11668: |2
+                                        D | 2016-05-26T11:48:59-04:00 | patching file lib/mkmf.rb
+                        [Builder: ruby] I | 2016-05-26T11:48:59-04:00 | Apply patch `ruby-2_1_3-no-mkmf.patch': 0.018s
+                        [Builder: ruby] I | 2016-05-26T11:48:59-04:00 | Environment:
+            11679: |2
+                                        D | 2016-05-26T11:48:59-04:00 | patching file cygwin/GNUmakefile.in
+                        [Builder: ruby] I | 2016-05-26T11:48:59-04:00 | Apply patch `ruby-take-windres-rcflags.patch': 0.0148s
+                        [Builder: ruby] I | 2016-05-26T11:48:59-04:00 | Environment:
+            12250: |2
+                                        D | 2016-05-26T11:49:45-04:00 | config.status: creating ruby-2.2.pc
+                        [Builder: ruby] I | 2016-05-26T11:49:45-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --with-out-ext=dbm,readline --enable-shared --disable-install-doc --without-gmp --without-gdbm --without-tk --disable-dtrace --with-ext=psych --with-opt-dir=/opt/chef-marketplace/embedded': 45.3939s
+                        [Builder: ruby] I | 2016-05-26T11:49:45-04:00 | Environment:
+            12496: |2
+                                        D | 2016-05-26T11:49:55-04:00 | configuring -test-/debug
+                                        D | 2016-05-26T11:49:55-04:00 | configuring -test-/exception
+                                        D | 2016-05-26T11:49:55-04:00 | configuring -test-/fatal
+                                        D | 2016-05-26T11:49:55-04:00 | configuring -test-/file
+                                        D | 2016-05-26T11:49:56-04:00 | configuring -test-/float
+            12622: |2
+                                        D | 2016-05-26T11:50:50-04:00 | linking shared-object -test-/exception.so
+                                        D | 2016-05-26T11:50:50-04:00 | gmake[2]: Leaving directory `/var/cache/omnibus/src/ruby/ruby-2.2.4/ext/-test-/exception'
+                                        D | 2016-05-26T11:50:50-04:00 | gmake[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.2.4/ext/-test-/fatal'
+                                        D | 2016-05-26T11:50:50-04:00 | compiling rb_fatal.c
+                                        D | 2016-05-26T11:50:50-04:00 | linking shared-object -test-/fatal/rb_fatal.so
+                                        D | 2016-05-26T11:50:50-04:00 | gmake[2]: Leaving directory `/var/cache/omnibus/src/ruby/ruby-2.2.4/ext/-test-/fatal'
+                                        D | 2016-05-26T11:50:50-04:00 | gmake[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.2.4/ext/-test-/file'
+                                        D | 2016-05-26T11:50:50-04:00 | compiling stat.c
+            13012: |2
+                                        D | 2016-05-26T11:51:00-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/ruby/ruby-2.2.4'
+                        [Builder: ruby] I | 2016-05-26T11:51:00-04:00 | Execute: `gmake -j 1': 75.2285s
+                        [Builder: ruby] I | 2016-05-26T11:51:00-04:00 | Environment:
+            13083: |2
+                                        D | 2016-05-26T11:51:15-04:00 | gmake[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.2.4/ext/-test-/exception'
+                                        D | 2016-05-26T11:51:15-04:00 | gmake[2]: Leaving directory `/var/cache/omnibus/src/ruby/ruby-2.2.4/ext/-test-/exception'
+                                        D | 2016-05-26T11:51:15-04:00 | gmake[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.2.4/ext/-test-/fatal'
+                                        D | 2016-05-26T11:51:15-04:00 | gmake[2]: Leaving directory `/var/cache/omnibus/src/ruby/ruby-2.2.4/ext/-test-/fatal'
+                                        D | 2016-05-26T11:51:15-04:00 | gmake[2]: Entering directory `/var/cache/omnibus/src/ruby/ruby-2.2.4/ext/-test-/file'
+                                        D | 2016-05-26T11:51:15-04:00 | gmake[2]: Leaving directory `/var/cache/omnibus/src/ruby/ruby-2.2.4/ext/-test-/file'
+            13286: |2
+                                        D | 2016-05-26T11:51:17-04:00 |                               minitest-5.4.3.gem
+                        [Builder: ruby] I | 2016-05-26T11:51:17-04:00 | Execute: `gmake -j 1 install': 17.2777s
+                        [Builder: ruby] I | 2016-05-26T11:51:17-04:00 | Build ruby: 137.9369s
+                        [Builder: ruby] I | 2016-05-26T11:51:17-04:00 | Finished build
+                       [GitCache: ruby] I | 2016-05-26T11:51:17-04:00 | Performing incremental cache
+            13297: |2
+                       [GitCache: ruby] I | 2016-05-26T11:51:19-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "ruby-c794bb146e16c68c153ab7343dcfca716d185b1a87a591cbbfac441816918c50"
+                       [Software: ruby] I | 2016-05-26T11:51:19-04:00 | Dirtied the cache
+                   [Software: rubygems] I | 2016-05-26T11:51:19-04:00 | Building because `preparation' dirtied the cache
+                    [Builder: rubygems] I | 2016-05-26T11:51:19-04:00 | Starting build
+            13676: |2
+                                        D | 2016-05-26T11:51:47-04:00 | RubyGems system software updated
+                    [Builder: rubygems] I | 2016-05-26T11:51:47-04:00 | gem `update --system ': 28.5712s
+                    [Builder: rubygems] I | 2016-05-26T11:51:47-04:00 | Build rubygems: 28.5721s
+                    [Builder: rubygems] I | 2016-05-26T11:51:47-04:00 | Finished build
+                   [GitCache: rubygems] I | 2016-05-26T11:51:47-04:00 | Performing incremental cache
+            13683: |2
+                   [GitCache: rubygems] I | 2016-05-26T11:51:48-04:00 | Calculating tag
+                   [GitCache: rubygems] I | 2016-05-26T11:51:48-04:00 | dep_list: ["preparation", "zlib", "cacerts", "xproto", "util-macros", "config_guess", "pkg-config-lite", "makedepend", "openssl", "ncurses", "libedit", "postgresql92", "libtool", "libffi", "libyaml", "libiconv", "ruby"]
+                   [Software: rubygems] W | 2016-05-26T11:51:48-04:00 | No version given! This is probably a bad thing. I am going to assume the version `0.0.0', but that is most certainly not your desired behavior. If git caching seems off, this is probably why.
+                   [GitCache: rubygems] I | 2016-05-26T11:51:48-04:00 | tag: rubygems-d077b008ce961b4296d88d4e7cb2b38c3fd970ee4e22acfb3c98780c8ab3ab71
+                   [GitCache: rubygems] I | 2016-05-26T11:51:48-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace commit -q -m "Backup of rubygems-d077b008ce961b4296d88d4e7cb2b38c3fd970ee4e22acfb3c98780c8ab3ab71"
+                   [GitCache: rubygems] I | 2016-05-26T11:51:48-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "rubygems-d077b008ce961b4296d88d4e7cb2b38c3fd970ee4e22acfb3c98780c8ab3ab71"
+                   [Software: rubygems] I | 2016-05-26T11:51:48-04:00 | Dirtied the cache
+                     [Software: pg-gem] I | 2016-05-26T11:51:48-04:00 | Building because `preparation' dirtied the cache
+                      [Builder: pg-gem] I | 2016-05-26T11:51:48-04:00 | Starting build
+            13705: |2
+                                        D | 2016-05-26T11:51:58-04:00 | 1 gem installed
+                      [Builder: pg-gem] I | 2016-05-26T11:51:58-04:00 | gem `install pg -i /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0 --version '0.18.4' --bindir '/opt/chef-marketplace/embedded/service/gem/ruby/2.2.0/bin/' --no-ri --no-rdoc -- --with-pg-config=/opt/chef-marketplace/embedded/bin/pg_config': 10.2331s
+                      [Builder: pg-gem] I | 2016-05-26T11:51:58-04:00 | Build pg-gem: 10.2342s
+                      [Builder: pg-gem] I | 2016-05-26T11:51:58-04:00 | Finished build
+                     [GitCache: pg-gem] I | 2016-05-26T11:51:58-04:00 | Performing incremental cache
+            13716: |2
+                     [GitCache: pg-gem] I | 2016-05-26T11:51:58-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "pg-gem-10bc674c17ced27558bb7b5df9728b38157d6feb847631d77949d5162ffa9c4d"
+                     [Software: pg-gem] I | 2016-05-26T11:51:58-04:00 | Dirtied the cache
+                    [Software: bundler] I | 2016-05-26T11:51:58-04:00 | Building because `preparation' dirtied the cache
+                     [Builder: bundler] I | 2016-05-26T11:51:58-04:00 | Starting build
+            13731: |2
+                                        D | 2016-05-26T11:52:00-04:00 | 1 gem installed
+                     [Builder: bundler] I | 2016-05-26T11:52:00-04:00 | gem `install bundler --no-ri --no-rdoc': 1.5707s
+                     [Builder: bundler] I | 2016-05-26T11:52:00-04:00 | Build bundler: 1.5717s
+                     [Builder: bundler] I | 2016-05-26T11:52:00-04:00 | Finished build
+                    [GitCache: bundler] I | 2016-05-26T11:52:00-04:00 | Performing incremental cache
+            13738: |2
+                    [GitCache: bundler] I | 2016-05-26T11:52:00-04:00 | Calculating tag
+                    [GitCache: bundler] I | 2016-05-26T11:52:00-04:00 | dep_list: ["preparation", "zlib", "cacerts", "xproto", "util-macros", "config_guess", "pkg-config-lite", "makedepend", "openssl", "ncurses", "libedit", "postgresql92", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "pg-gem"]
+                    [Software: bundler] W | 2016-05-26T11:52:00-04:00 | No version given! This is probably a bad thing. I am going to assume the version `0.0.0', but that is most certainly not your desired behavior. If git caching seems off, this is probably why.
+                    [GitCache: bundler] I | 2016-05-26T11:52:00-04:00 | tag: bundler-0aadc39c34942a704f562fcb63b825a2d70af4923b73ce316f748ecbe4240bcc
+                    [GitCache: bundler] I | 2016-05-26T11:52:00-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace commit -q -m "Backup of bundler-0aadc39c34942a704f562fcb63b825a2d70af4923b73ce316f748ecbe4240bcc"
+                    [GitCache: bundler] I | 2016-05-26T11:52:00-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "bundler-0aadc39c34942a704f562fcb63b825a2d70af4923b73ce316f748ecbe4240bcc"
+                    [Software: bundler] I | 2016-05-26T11:52:00-04:00 | Dirtied the cache
+              [Software: chef-marketplace-gem] I | 2016-05-26T11:52:00-04:00 | Building because `preparation' dirtied the cache
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:52:00-04:00 | Starting build
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:52:00-04:00 | Cached builder checksum before build: ab702bf75061de58ab3a52c713d09ba75ad462f07ce7eb79ed19055b5d91f1cc
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:52:00-04:00 | delete `chef-marketplace-*.gem': 0.0001s
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:52:00-04:00 | Environment:
+            13788: |2
+                                        D | 2016-05-26T11:52:01-04:00 |   File: chef-marketplace-0.0.1.gem
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:52:01-04:00 | gem `build chef-marketplace.gemspec': 0.3807s
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:52:01-04:00 | Environment:
+            13957: |2
+                                        D | 2016-05-26T11:56:06-04:00 | 51 gems installed
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:56:06-04:00 | gem `install chef-marketplace-*.gem --without development': 245.0497s
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:56:06-04:00 | Environment:
+            14022: |2
+                                        D | 2016-05-26T11:56:27-04:00 | 51 gems installed
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:56:27-04:00 | gem `install chef-marketplace-*.gem -i /opt/chef-marketplace/embedded/service/gem/ruby/2.2.0 --without development': 21.055s
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:56:27-04:00 | sync `/var/cache/omnibus/src/chef-marketplace-gem/spec' to `/opt/chef-marketplace/embedded/service/chef-marketplace-gem/spec': 0.0814s
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:56:27-04:00 | Build chef-marketplace-gem: 266.5713s
+              [Builder: chef-marketplace-gem] I | 2016-05-26T11:56:27-04:00 | Finished build
+              [GitCache: chef-marketplace-gem] I | 2016-05-26T11:56:27-04:00 | Performing incremental cache
+            14034: |
+              [GitCache: chef-marketplace-gem] I | 2016-05-26T11:56:36-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "chef-marketplace-gem-206a87b74c3c391e854280991a3df29481aa503337390a6524a1d16a51c2da73"
+              [Software: chef-marketplace-gem] I | 2016-05-26T11:56:36-04:00 | Dirtied the cache
+                       [Software: ohai] I | 2016-05-26T11:56:36-04:00 | Building because `preparation' dirtied the cache
+                     [GitFetcher: ohai] I | 2016-05-26T11:56:36-04:00 | Cleaning existing clone
+            14042: |2
+                                        I | 2016-05-26T11:56:37-04:00 | Removing ohai-8.16.0.gem
+                        [Builder: ohai] I | 2016-05-26T11:56:37-04:00 | Starting build
+            14075: |2
+                                        D | 2016-05-26T11:56:43-04:00 | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                        [Builder: ohai] I | 2016-05-26T11:56:43-04:00 | bundle `install --without development': 5.5471s
+                        [Builder: ohai] I | 2016-05-26T11:56:43-04:00 | Environment:
+            14107: |2
+                                        D | 2016-05-26T11:56:44-04:00 |   File: ohai-8.16.0.gem
+                        [Builder: ohai] I | 2016-05-26T11:56:44-04:00 | gem `build ohai.gemspec': 1.1447s
+                        [Builder: ohai] I | 2016-05-26T11:56:44-04:00 | Environment:
+            14119: |2
+                                        D | 2016-05-26T11:56:47-04:00 | 1 gem installed
+                        [Builder: ohai] I | 2016-05-26T11:56:47-04:00 | gem `install ohai*.gem --no-ri --no-rdoc': 3.5226s
+                        [Builder: ohai] I | 2016-05-26T11:56:47-04:00 | Build ohai: 10.2183s
+                        [Builder: ohai] I | 2016-05-26T11:56:47-04:00 | Finished build
+                       [GitCache: ohai] I | 2016-05-26T11:56:47-04:00 | Performing incremental cache
+                       [GitCache: ohai] I | 2016-05-26T11:56:47-04:00 | Removing git directories
+                       [GitCache: ohai] I | 2016-05-26T11:56:48-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace add -A -f
+                       [GitCache: ohai] I | 2016-05-26T11:56:49-04:00 | Calculating tag
+                       [Software: ohai] W | 2016-05-26T11:56:49-04:00 | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [Software: ohai] W | 2016-05-26T11:56:49-04:00 | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitCache: ohai] I | 2016-05-26T11:56:49-04:00 | dep_list: ["preparation", "zlib", "cacerts", "xproto", "util-macros", "config_guess", "pkg-config-lite", "makedepend", "openssl", "ncurses", "libedit", "postgresql92", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "pg-gem", "bundler", "chef-marketplace-gem"]
+                       [GitCache: ohai] I | 2016-05-26T11:56:49-04:00 | tag: ohai-1a7e136e2f92238fa40236f4922a371397cd4b379bcf76dddb8407867874073e
+                       [GitCache: ohai] I | 2016-05-26T11:56:49-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace commit -q -m "Backup of ohai-1a7e136e2f92238fa40236f4922a371397cd4b379bcf76dddb8407867874073e"
+                       [GitCache: ohai] I | 2016-05-26T11:56:49-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "ohai-1a7e136e2f92238fa40236f4922a371397cd4b379bcf76dddb8407867874073e"
+                       [Software: ohai] I | 2016-05-26T11:56:49-04:00 | Dirtied the cache
+                 [Software: appbundler] I | 2016-05-26T11:56:49-04:00 | Building because `preparation' dirtied the cache
+               [GitFetcher: appbundler] I | 2016-05-26T11:56:49-04:00 | Cleaning existing clone
+            14140: |2
+                                        I | 2016-05-26T11:56:49-04:00 | Removing appbundler-0.9.0.gem
+                  [Builder: appbundler] I | 2016-05-26T11:56:49-04:00 | Starting build
+            14160: |2
+                                        D | 2016-05-26T11:56:53-04:00 | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                  [Builder: appbundler] I | 2016-05-26T11:56:53-04:00 | bundle `install --without development': 4.0954s
+                  [Builder: appbundler] I | 2016-05-26T11:56:53-04:00 | Environment:
+            14186: |2
+                                        D | 2016-05-26T11:56:54-04:00 |   File: appbundler-0.9.0.gem
+                  [Builder: appbundler] I | 2016-05-26T11:56:54-04:00 | gem `build appbundler.gemspec': 0.4526s
+                  [Builder: appbundler] I | 2016-05-26T11:56:54-04:00 | Environment:
+            14198: |2
+                                        D | 2016-05-26T11:56:55-04:00 | 1 gem installed
+                  [Builder: appbundler] I | 2016-05-26T11:56:55-04:00 | gem `install appbundler-*.gem --no-ri --no-rdoc': 1.3783s
+                  [Builder: appbundler] I | 2016-05-26T11:56:55-04:00 | Build appbundler: 5.93s
+                  [Builder: appbundler] I | 2016-05-26T11:56:55-04:00 | Finished build
+                 [GitCache: appbundler] I | 2016-05-26T11:56:55-04:00 | Performing incremental cache
+                 [GitCache: appbundler] I | 2016-05-26T11:56:55-04:00 | Removing git directories
+                 [GitCache: appbundler] I | 2016-05-26T11:56:56-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace add -A -f
+                 [GitCache: appbundler] I | 2016-05-26T11:56:57-04:00 | Calculating tag
+                 [Software: appbundler] W | 2016-05-26T11:56:57-04:00 | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                 [Software: appbundler] W | 2016-05-26T11:56:57-04:00 | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                 [GitCache: appbundler] I | 2016-05-26T11:56:57-04:00 | dep_list: ["preparation", "zlib", "cacerts", "xproto", "util-macros", "config_guess", "pkg-config-lite", "makedepend", "openssl", "ncurses", "libedit", "postgresql92", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "pg-gem", "bundler", "chef-marketplace-gem", "ohai"]
+                 [GitCache: appbundler] I | 2016-05-26T11:56:57-04:00 | tag: appbundler-21113747bcdb8570b1a8f27aa2d5143f6badefbf9fa50c1ab7a073e19c1d4443
+                 [GitCache: appbundler] I | 2016-05-26T11:56:57-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace commit -q -m "Backup of appbundler-21113747bcdb8570b1a8f27aa2d5143f6badefbf9fa50c1ab7a073e19c1d4443"
+                 [GitCache: appbundler] I | 2016-05-26T11:56:57-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "appbundler-21113747bcdb8570b1a8f27aa2d5143f6badefbf9fa50c1ab7a073e19c1d4443"
+                 [Software: appbundler] I | 2016-05-26T11:56:57-04:00 | Dirtied the cache
+                [Software: omnibus-ctl] I | 2016-05-26T11:56:57-04:00 | Building because `preparation' dirtied the cache
+              [GitFetcher: omnibus-ctl] I | 2016-05-26T11:56:57-04:00 | Cleaning existing clone
+            14217: |2
+                                        I | 2016-05-26T11:56:57-04:00 | Removing omnibus-ctl-0.3.6.gem
+                 [Builder: omnibus-ctl] I | 2016-05-26T11:56:57-04:00 | Starting build
+                 [Builder: omnibus-ctl] I | 2016-05-26T11:56:57-04:00 | Cached builder checksum before build: 8084a234aeb0d768385fe0c72fee02d006ad219226bfb84843872c311e738225
+                 [Builder: omnibus-ctl] I | 2016-05-26T11:56:57-04:00 | delete `omnibus-ctl-*.gem': 0.0002s
+                 [Builder: omnibus-ctl] I | 2016-05-26T11:56:57-04:00 | Environment:
+            14239: |2
+                                        D | 2016-05-26T11:56:58-04:00 |   File: omnibus-ctl-0.3.6.gem
+                 [Builder: omnibus-ctl] I | 2016-05-26T11:56:58-04:00 | gem `build omnibus-ctl.gemspec': 0.3649s
+                 [Builder: omnibus-ctl] I | 2016-05-26T11:56:58-04:00 | Environment:
+            14251: |2
+                                        D | 2016-05-26T11:56:59-04:00 | 1 gem installed
+                 [Builder: omnibus-ctl] I | 2016-05-26T11:56:59-04:00 | gem `install omnibus-ctl-*.gem --no-rdoc --no-ri': 1.9224s
+                 [Builder: omnibus-ctl] I | 2016-05-26T11:56:59-04:00 | touch `/opt/chef-marketplace/embedded/service/omnibus-ctl/.gitkeep': 0.0004s
+                 [Builder: omnibus-ctl] I | 2016-05-26T11:56:59-04:00 | Build omnibus-ctl: 2.2926s
+                 [Builder: omnibus-ctl] I | 2016-05-26T11:56:59-04:00 | Finished build
+                [GitCache: omnibus-ctl] I | 2016-05-26T11:56:59-04:00 | Performing incremental cache
+            14263: |2
+                [GitCache: omnibus-ctl] I | 2016-05-26T11:57:02-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "omnibus-ctl-154cd81c1b72fba6068eb81b6e9833942062e79afbd2f18290ad524fa5a3305c"
+                [Software: omnibus-ctl] I | 2016-05-26T11:57:02-04:00 | Dirtied the cache
+                 [Software: libarchive] I | 2016-05-26T11:57:02-04:00 | Building because `preparation' dirtied the cache
+               [NetFetcher: libarchive] I | 2016-05-26T11:57:02-04:00 | Cleaning project directory `/var/cache/omnibus/src/libarchive'
+               [NetFetcher: libarchive] I | 2016-05-26T11:57:02-04:00 | Extracting `/var/cache/omnibus/cache/libarchive-3.1.2.tar.gz' to `/var/cache/omnibus/src/libarchive'
+               [NetFetcher: libarchive] I | 2016-05-26T11:57:02-04:00 | $ gtar zxf /var/cache/omnibus/cache/libarchive-3.1.2.tar.gz -C/var/cache/omnibus/src/libarchive
+                  [Builder: libarchive] I | 2016-05-26T11:57:02-04:00 | Starting build
+            14729: |2
+                                        D | 2016-05-26T11:57:38-04:00 | config.status: executing libtool commands
+                  [Builder: libarchive] I | 2016-05-26T11:57:38-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --prefix=/opt/chef-marketplace/embedded --without-lzma --without-lzo2 --without-nettle --without-xml2 --without-expat --without-bz2lib --without-iconv --without-zlib --disable-bsdtar --disable-bsdcpio --without-lzmadec --without-openssl': 35.72s
+                  [Builder: libarchive] I | 2016-05-26T11:57:38-04:00 | Environment:
+            14849: |2
+                                        D | 2016-05-26T11:57:48-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libarchive/libarchive-3.1.2'
+                  [Builder: libarchive] I | 2016-05-26T11:57:48-04:00 | Execute: `gmake': 10.0693s
+                  [Builder: libarchive] I | 2016-05-26T11:57:48-04:00 | Environment:
+            14903: |2
+                                        D | 2016-05-26T11:57:49-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libarchive/libarchive-3.1.2'
+                  [Builder: libarchive] I | 2016-05-26T11:57:49-04:00 | Execute: `gmake install': 1.0511s
+                  [Builder: libarchive] I | 2016-05-26T11:57:49-04:00 | Build libarchive: 46.843s
+                  [Builder: libarchive] I | 2016-05-26T11:57:49-04:00 | Finished build
+                 [GitCache: libarchive] I | 2016-05-26T11:57:49-04:00 | Performing incremental cache
+            14914: |2
+                 [GitCache: libarchive] I | 2016-05-26T11:57:51-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "libarchive-8b072dafa8d866ec753c54e6231526649e9d27c09b441dd824e6d55b7f5d2020"
+                 [Software: libarchive] I | 2016-05-26T11:57:51-04:00 | Dirtied the cache
+                    [Software: liblzma] I | 2016-05-26T11:57:51-04:00 | Building because `preparation' dirtied the cache
+                  [NetFetcher: liblzma] I | 2016-05-26T11:57:51-04:00 | Cleaning project directory `/var/cache/omnibus/src/liblzma'
+                  [NetFetcher: liblzma] I | 2016-05-26T11:57:51-04:00 | Extracting `/var/cache/omnibus/cache/xz-5.2.2.tar.gz' to `/var/cache/omnibus/src/liblzma'
+                  [NetFetcher: liblzma] I | 2016-05-26T11:57:51-04:00 | $ gtar zxf /var/cache/omnibus/cache/xz-5.2.2.tar.gz -C/var/cache/omnibus/src/liblzma
+                     [Builder: liblzma] I | 2016-05-26T11:57:51-04:00 | Starting build
+            15184: |2
+                                        D | 2016-05-26T11:58:03-04:00 | config.status: creating po/Makefile
+                     [Builder: liblzma] I | 2016-05-26T11:58:03-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --disable-debug --disable-dependency-tracking --disable-doc --disable-scripts': 11.8916s
+                     [Builder: liblzma] I | 2016-05-26T11:58:03-04:00 | Environment:
+            15614: |2
+                                        D | 2016-05-26T11:58:28-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/liblzma/xz-5.2.2'
+                     [Builder: liblzma] I | 2016-05-26T11:58:28-04:00 | Execute: `gmake install': 24.9447s
+                     [Builder: liblzma] I | 2016-05-26T11:58:28-04:00 | Build liblzma: 36.8384s
+                     [Builder: liblzma] I | 2016-05-26T11:58:28-04:00 | Finished build
+                    [GitCache: liblzma] I | 2016-05-26T11:58:28-04:00 | Performing incremental cache
+            15625: |2
+                    [GitCache: liblzma] I | 2016-05-26T11:58:30-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "liblzma-b66bf10b52b4974ed8b8a143f00c3d037556232d802b0c5d82098f703cea5e62"
+                    [Software: liblzma] I | 2016-05-26T11:58:30-04:00 | Dirtied the cache
+                    [Software: libxml2] I | 2016-05-26T11:58:30-04:00 | Building because `preparation' dirtied the cache
+                  [NetFetcher: libxml2] I | 2016-05-26T11:58:30-04:00 | Cleaning project directory `/var/cache/omnibus/src/libxml2'
+                  [NetFetcher: libxml2] I | 2016-05-26T11:58:31-04:00 | Extracting `/var/cache/omnibus/cache/libxml2-2.9.3.tar.gz' to `/var/cache/omnibus/src/libxml2'
+                  [NetFetcher: libxml2] I | 2016-05-26T11:58:31-04:00 | $ gtar zxf /var/cache/omnibus/cache/libxml2-2.9.3.tar.gz -C/var/cache/omnibus/src/libxml2
+                     [Builder: libxml2] I | 2016-05-26T11:58:32-04:00 | Starting build
+                     [Builder: libxml2] I | 2016-05-26T11:58:32-04:00 | Cached builder checksum before build: a6b59ee3933f28d06d3efe846dae344ac2ef53affc77d7200625a583aca0a374
+                     [Builder: libxml2] I | 2016-05-26T11:58:32-04:00 | update_config_guess `target: . install: [:config_guess, :config_sub]': 0.0009s
+                     [Builder: libxml2] I | 2016-05-26T11:58:32-04:00 | Environment:
+            15910: |2
+                                        D | 2016-05-26T11:58:45-04:00 | Done configuring
+                     [Builder: libxml2] I | 2016-05-26T11:58:45-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --with-zlib=/opt/chef-marketplace/embedded --with-iconv=/opt/chef-marketplace/embedded --without-python --without-icu': 12.894s
+                     [Builder: libxml2] I | 2016-05-26T11:58:45-04:00 | Environment:
+            15943: |2
+                                        D | 2016-05-26T11:58:47-04:00 |                  from parser.c:84:
+                                        D | 2016-05-26T11:58:47-04:00 | /opt/chef-marketplace/embedded/include/lzma/base.h:218:22: warning: comma at end of enumerator list [-Wpedantic]
+                                        D | 2016-05-26T11:58:47-04:00 |   LZMA_PROG_ERROR         = 11,
+                                        D | 2016-05-26T11:58:47-04:00 |                       ^
+                                        D | 2016-05-26T11:58:47-04:00 |   CC       tree.lo
+            15952: |2
+                                        D | 2016-05-26T11:58:48-04:00 |                  from xmlIO.c:39:
+                                        D | 2016-05-26T11:58:48-04:00 | /opt/chef-marketplace/embedded/include/lzma/base.h:218:22: warning: comma at end of enumerator list [-Wpedantic]
+                                        D | 2016-05-26T11:58:48-04:00 |   LZMA_PROG_ERROR         = 11,
+                                        D | 2016-05-26T11:58:48-04:00 |                       ^
+                                        D | 2016-05-26T11:58:48-04:00 |   CC       xmlmemory.lo
+            16179: |2
+                                        D | 2016-05-26T11:58:58-04:00 |                  from xzlib.c:38:
+                                        D | 2016-05-26T11:58:58-04:00 | /opt/chef-marketplace/embedded/include/lzma/base.h:218:22: warning: comma at end of enumerator list [-Wpedantic]
+                                        D | 2016-05-26T11:58:58-04:00 |   LZMA_PROG_ERROR         = 11,
+                                        D | 2016-05-26T11:58:58-04:00 |                       ^
+                                        D | 2016-05-26T11:58:58-04:00 |   CCLD     libxml2.la
+            16322: |2
+                                        D | 2016-05-26T11:59:22-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libxml2/libxml2-2.9.3'
+                     [Builder: libxml2] I | 2016-05-26T11:59:22-04:00 | Execute: `gmake -j 1': 37.0897s
+                     [Builder: libxml2] I | 2016-05-26T11:59:22-04:00 | Environment:
+            16468: |2
+                                        D | 2016-05-26T11:59:23-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libxml2/libxml2-2.9.3'
+                     [Builder: libxml2] I | 2016-05-26T11:59:23-04:00 | Execute: `gmake install': 1.5187s
+                     [Builder: libxml2] I | 2016-05-26T11:59:23-04:00 | Build libxml2: 51.5077s
+                     [Builder: libxml2] I | 2016-05-26T11:59:23-04:00 | Finished build
+                    [GitCache: libxml2] I | 2016-05-26T11:59:23-04:00 | Performing incremental cache
+            16479: |2
+                    [GitCache: libxml2] I | 2016-05-26T11:59:25-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "libxml2-be736df70bfc11ebd0337c1303bb3998fda8b4d1273b57365414a21316e17845"
+                    [Software: libxml2] I | 2016-05-26T11:59:25-04:00 | Dirtied the cache
+                    [Software: libxslt] I | 2016-05-26T11:59:25-04:00 | Building because `preparation' dirtied the cache
+                  [NetFetcher: libxslt] I | 2016-05-26T11:59:25-04:00 | Cleaning project directory `/var/cache/omnibus/src/libxslt'
+                  [NetFetcher: libxslt] I | 2016-05-26T11:59:26-04:00 | Extracting `/var/cache/omnibus/cache/libxslt-1.1.28.tar.gz' to `/var/cache/omnibus/src/libxslt'
+                  [NetFetcher: libxslt] I | 2016-05-26T11:59:26-04:00 | $ gtar zxf /var/cache/omnibus/cache/libxslt-1.1.28.tar.gz -C/var/cache/omnibus/src/libxslt
+                     [Builder: libxslt] I | 2016-05-26T11:59:26-04:00 | Starting build
+                     [Builder: libxslt] I | 2016-05-26T11:59:26-04:00 | Cached builder checksum before build: b4f7b8bcb3d6ba2a6de32faf5b000c2d4638415648d3ba3d7d563e17587fac80
+                     [Builder: libxslt] I | 2016-05-26T11:59:26-04:00 | update_config_guess `target: . install: [:config_guess, :config_sub]': 0.0007s
+                     [Builder: libxslt] I | 2016-05-26T11:59:26-04:00 | Environment:
+            16498: |2
+                                        D | 2016-05-26T11:59:26-04:00 | Hunk #1 succeeded at 2245 (offset -4 lines).
+                     [Builder: libxslt] I | 2016-05-26T11:59:26-04:00 | Apply patch `libxslt-cve-2015-7995.patch': 0.0174s
+                     [Builder: libxslt] I | 2016-05-26T11:59:26-04:00 | Environment:
+            16726: |2
+                                        D | 2016-05-26T11:59:39-04:00 | /usr/bin/rm: cannot remove 'libtoolT': No such file or directory
+                     [Builder: libxslt] I | 2016-05-26T11:59:39-04:00 | Execute: `./configure --prefix=/opt/chef-marketplace/embedded --with-libxml-prefix=/opt/chef-marketplace/embedded --with-libxml-include-prefix=/opt/chef-marketplace/embedded/include --with-libxml-libs-prefix=/opt/chef-marketplace/embedded/lib --without-python --without-crypto': 12.9326s
+                     [Builder: libxslt] I | 2016-05-26T11:59:39-04:00 | Environment:
+            16934: |2
+                                        D | 2016-05-26T11:59:45-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libxslt/libxslt-1.1.28'
+                     [Builder: libxslt] I | 2016-05-26T11:59:45-04:00 | Execute: `gmake -j 1': 5.2008s
+                     [Builder: libxslt] I | 2016-05-26T11:59:45-04:00 | Environment:
+            17277: |2
+                                        D | 2016-05-26T11:59:46-04:00 | gmake[1]: Leaving directory `/var/cache/omnibus/src/libxslt/libxslt-1.1.28'
+                     [Builder: libxslt] I | 2016-05-26T11:59:46-04:00 | Execute: `gmake install': 1.8547s
+                     [Builder: libxslt] I | 2016-05-26T11:59:46-04:00 | Build libxslt: 20.0112s
+                     [Builder: libxslt] I | 2016-05-26T11:59:46-04:00 | Finished build
+                    [GitCache: libxslt] I | 2016-05-26T11:59:46-04:00 | Performing incremental cache
+            17288: |2
+                    [GitCache: libxslt] I | 2016-05-26T11:59:48-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "libxslt-e51014bbb043a1526aa125015a6fc3f51c09e81a738a0e3732f82382443e16c8"
+                    [Software: libxslt] I | 2016-05-26T11:59:48-04:00 | Dirtied the cache
+                   [Software: nokogiri] I | 2016-05-26T11:59:48-04:00 | Building because `preparation' dirtied the cache
+                    [Builder: nokogiri] I | 2016-05-26T11:59:48-04:00 | Starting build
+            17312: |2
+                                        D | 2016-05-26T12:00:08-04:00 | 2 gems installed
+                    [Builder: nokogiri] I | 2016-05-26T12:00:08-04:00 | gem `install nokogiri -- --use-system-libraries --with-xml2-lib=/opt/chef-marketplace/embedded/lib --with-xml2-include=/opt/chef-marketplace/embedded/include/libxml2 --with-xslt-lib=/opt/chef-marketplace/embedded/lib --with-xslt-include=/opt/chef-marketplace/embedded/include/libxslt --with-iconv-dir=/opt/chef-marketplace/embedded --with-zlib-dir=/opt/chef-marketplace/embedded': 19.1389s
+                    [Builder: nokogiri] I | 2016-05-26T12:00:08-04:00 | delete `/opt/chef-marketplace/embedded/lib/ruby/gems/2.1.0/gems/mini_portile2-2.0.0/test': 0.0003s
+                    [Builder: nokogiri] I | 2016-05-26T12:00:08-04:00 | Build nokogiri: 19.1415s
+                    [Builder: nokogiri] I | 2016-05-26T12:00:08-04:00 | Finished build
+                   [GitCache: nokogiri] I | 2016-05-26T12:00:08-04:00 | Performing incremental cache
+            17320: |2
+                   [GitCache: nokogiri] I | 2016-05-26T12:00:09-04:00 | Calculating tag
+                   [GitCache: nokogiri] I | 2016-05-26T12:00:09-04:00 | dep_list: ["preparation", "zlib", "cacerts", "xproto", "util-macros", "config_guess", "pkg-config-lite", "makedepend", "openssl", "ncurses", "libedit", "postgresql92", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "pg-gem", "bundler", "chef-marketplace-gem", "ohai", "appbundler", "omnibus-ctl", "libarchive", "liblzma", "libxml2", "libxslt"]
+                   [Software: nokogiri] W | 2016-05-26T12:00:09-04:00 | No version given! This is probably a bad thing. I am going to assume the version `0.0.0', but that is most certainly not your desired behavior. If git caching seems off, this is probably why.
+                   [GitCache: nokogiri] I | 2016-05-26T12:00:09-04:00 | tag: nokogiri-7f52916ac0fd598164eca86823e8f57329695f3946f7d7ae1413427f46eff662
+                   [GitCache: nokogiri] I | 2016-05-26T12:00:09-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace commit -q -m "Backup of nokogiri-7f52916ac0fd598164eca86823e8f57329695f3946f7d7ae1413427f46eff662"
+                   [GitCache: nokogiri] I | 2016-05-26T12:00:10-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "nokogiri-7f52916ac0fd598164eca86823e8f57329695f3946f7d7ae1413427f46eff662"
+                   [Software: nokogiri] I | 2016-05-26T12:00:10-04:00 | Dirtied the cache
+              [Software: dep-selector-libgecode] I | 2016-05-26T12:00:10-04:00 | Building because `preparation' dirtied the cache
+              [Builder: dep-selector-libgecode] I | 2016-05-26T12:00:10-04:00 | Starting build
+            17341: |2
+                                        D | 2016-05-26T12:00:41-04:00 | 1 gem installed
+              [Builder: dep-selector-libgecode] I | 2016-05-26T12:00:41-04:00 | gem `install dep-selector-libgecode --version '1.2.0' --no-ri --no-rdoc': 31.6609s
+              [Builder: dep-selector-libgecode] I | 2016-05-26T12:00:41-04:00 | Build dep-selector-libgecode: 31.6622s
+              [Builder: dep-selector-libgecode] I | 2016-05-26T12:00:41-04:00 | Finished build
+              [GitCache: dep-selector-libgecode] I | 2016-05-26T12:00:41-04:00 | Performing incremental cache
+            17352: |
+              [GitCache: dep-selector-libgecode] I | 2016-05-26T12:00:44-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "dep-selector-libgecode-66d1720570d162f4d4de5a1875cb391ab4703567752ac3c50469740ecd73861d"
+              [Software: dep-selector-libgecode] I | 2016-05-26T12:00:44-04:00 | Dirtied the cache
+                  [Software: berkshelf] I | 2016-05-26T12:00:44-04:00 | Building because `preparation' dirtied the cache
+                [GitFetcher: berkshelf] I | 2016-05-26T12:00:44-04:00 | Cleaning existing clone
+            17359: |2
+                                        I | 2016-05-26T12:00:44-04:00 | Removing pkg/
+                   [Builder: berkshelf] I | 2016-05-26T12:00:44-04:00 | Starting build
+                   [Builder: berkshelf] I | 2016-05-26T12:00:44-04:00 | Cached builder checksum before build: 23ce497db70716d381d78121939b1435757efbd937dccaf63551e0b14b207f21
+                  [Software: berkshelf] W | 2016-05-26T12:00:44-04:00 | Version v4.2.3 for software berkshelf was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                   [Builder: berkshelf] I | 2016-05-26T12:00:44-04:00 | Version overridden from master to v4.2.3
+                   [Builder: berkshelf] I | 2016-05-26T12:00:44-04:00 | Environment:
+            17507: |2
+                                        D | 2016-05-26T12:02:35-04:00 | With aruba >= 1.0 there will be breaking changes. Make sure to read https://github.com/cucumber/aruba/blob/master/History.md for 1.0.0
+                   [Builder: berkshelf] I | 2016-05-26T12:02:36-04:00 | bundle `install --jobs 1 --without guard': 111.3286s
+                   [Builder: berkshelf] I | 2016-05-26T12:02:36-04:00 | Environment:
+            17518: |2
+                                        D | 2016-05-26T12:02:40-04:00 | berkshelf 4.2.3 built to pkg/berkshelf-4.2.3.gem.
+                   [Builder: berkshelf] I | 2016-05-26T12:02:40-04:00 | bundle `exec thor gem:build': 4.5546s
+                   [Builder: berkshelf] I | 2016-05-26T12:02:40-04:00 | Environment:
+            17530: |2
+                                        D | 2016-05-26T12:02:43-04:00 | 1 gem installed
+                   [Builder: berkshelf] I | 2016-05-26T12:02:43-04:00 | gem `install pkg/berkshelf-*.gem --no-ri --no-rdoc': 3.1571s
+                   [Builder: berkshelf] I | 2016-05-26T12:02:43-04:00 | Build berkshelf: 119.0435s
+                   [Builder: berkshelf] I | 2016-05-26T12:02:43-04:00 | Finished build
+                  [GitCache: berkshelf] I | 2016-05-26T12:02:43-04:00 | Performing incremental cache
+            17538: |2
+                  [GitCache: berkshelf] I | 2016-05-26T12:02:44-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace add -A -f
+                  [GitCache: berkshelf] I | 2016-05-26T12:02:50-04:00 | Calculating tag
+                  [Software: berkshelf] W | 2016-05-26T12:02:50-04:00 | Version v4.2.3 for software berkshelf was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                  [Software: berkshelf] W | 2016-05-26T12:02:50-04:00 | Version v4.2.3 for software berkshelf was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                  [GitCache: berkshelf] I | 2016-05-26T12:02:50-04:00 | dep_list: ["preparation", "zlib", "cacerts", "xproto", "util-macros", "config_guess", "pkg-config-lite", "makedepend", "openssl", "ncurses", "libedit", "postgresql92", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "pg-gem", "bundler", "chef-marketplace-gem", "ohai", "appbundler", "omnibus-ctl", "libarchive", "liblzma", "libxml2", "libxslt", "nokogiri", "dep-selector-libgecode"]
+                  [GitCache: berkshelf] I | 2016-05-26T12:02:50-04:00 | tag: berkshelf-ea26a1b9f6d7ba9e9f3ea5157759a2498aadb119efe15305b4e25d56a466f0af
+                  [GitCache: berkshelf] I | 2016-05-26T12:02:50-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace commit -q -m "Backup of berkshelf-ea26a1b9f6d7ba9e9f3ea5157759a2498aadb119efe15305b4e25d56a466f0af"
+                  [GitCache: berkshelf] I | 2016-05-26T12:02:51-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "berkshelf-ea26a1b9f6d7ba9e9f3ea5157759a2498aadb119efe15305b4e25d56a466f0af"
+                  [Software: berkshelf] I | 2016-05-26T12:02:51-04:00 | Dirtied the cache
+              [Software: chef-marketplace-cookbooks] I | 2016-05-26T12:02:51-04:00 | Building because `preparation' dirtied the cache
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:51-04:00 | Starting build
+            17582: |2
+                                        D | 2016-05-26T12:02:55-04:00 | Vendoring yum-centos (0.4.12) to /opt/chef-marketplace/embedded/cookbooks/yum-centos
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Execute: `/opt/chef-marketplace/embedded/bin/berks vendor /opt/chef-marketplace/embedded/cookbooks --berksfile=./chef-marketplace/Berksfile': 5.2813s
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | $ chmod -R a+r /opt/chef-marketplace/embedded/cookbooks
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Execute: `chmod -R a+r /opt/chef-marketplace/embedded/cookbooks': 0.0317s
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/single-recipe.json.erb' to `/opt/chef-marketplace/embedded/cookbooks/dna.json'
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Render erb `single-recipe.json.erb': 0.0384s
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/single-recipe.json.erb' to `/opt/chef-marketplace/embedded/cookbooks/show-config.json'
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Render erb `single-recipe.json.erb': 0.0004s
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/solo.rb.erb' to `/opt/chef-marketplace/embedded/cookbooks/solo.rb'
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Render erb `solo.rb.erb': 0.0005s
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/templates/chef-marketplace-cookbooks/non_root_solo.rb.erb' to `/opt/chef-marketplace/embedded/cookbooks/non_root_solo.rb'
+              /home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-a36e70caedce/lib/omnibus/templating.rb:59: warning: redefining constant Struct::Empty
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Render erb `non_root_solo.rb.erb': 0.0003s
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Build chef-marketplace-cookbooks: 5.3587s
+              [Builder: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Finished build
+              [GitCache: chef-marketplace-cookbooks] I | 2016-05-26T12:02:56-04:00 | Performing incremental cache
+            17604: |
+              [GitCache: chef-marketplace-cookbooks] I | 2016-05-26T12:02:59-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "chef-marketplace-cookbooks-17584f4fba431c981ab65561e970c690f2783d958de1a6ffe4927312b06586a5"
+              [Software: chef-marketplace-cookbooks] I | 2016-05-26T12:02:59-04:00 | Dirtied the cache
+                      [Software: runit] I | 2016-05-26T12:02:59-04:00 | Building because `preparation' dirtied the cache
+                    [NetFetcher: runit] I | 2016-05-26T12:02:59-04:00 | Cleaning project directory `/var/cache/omnibus/src/runit'
+                    [NetFetcher: runit] I | 2016-05-26T12:02:59-04:00 | Extracting `/var/cache/omnibus/cache/runit-2.1.1.tar.gz' to `/var/cache/omnibus/src/runit'
+                    [NetFetcher: runit] I | 2016-05-26T12:02:59-04:00 | $ gtar zxf /var/cache/omnibus/cache/runit-2.1.1.tar.gz -C/var/cache/omnibus/src/runit
+                       [Builder: runit] I | 2016-05-26T12:02:59-04:00 | Starting build
+            17620: |2
+                       [Builder: runit] I | 2016-05-26T12:02:59-04:00 | $ sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/chef-marketplace\/service\/\";/" sv.c
+                       [Builder: runit] I | 2016-05-26T12:02:59-04:00 | Execute: `sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/chef-marketplace\/service\/\";/" sv.c': 0.0245s
+                       [Builder: runit] I | 2016-05-26T12:02:59-04:00 | Environment:
+            17630: |2
+                       [Builder: runit] I | 2016-05-26T12:02:59-04:00 | $ sed -i -e s:-static:: Makefile
+                       [Builder: runit] I | 2016-05-26T12:02:59-04:00 | Execute: `sed -i -e s:-static:: Makefile': 0.0155s
+                       [Builder: runit] I | 2016-05-26T12:02:59-04:00 | Environment:
+            17725: |2
+                                        D | 2016-05-26T12:03:00-04:00 | chpst.c: In function ???suidgid???:
+                                        D | 2016-05-26T12:03:00-04:00 | chpst.c:80:3: warning: implicit declaration of function ???setgroups??? [-Wimplicit-function-declaration]
+                                        D | 2016-05-26T12:03:00-04:00 |    if (setgroups(ugid.gids, ugid.gid) == -1) fatal("unable to setgroups");
+                                        D | 2016-05-26T12:03:00-04:00 |    ^
+                                        D | 2016-05-26T12:03:00-04:00 | chpst.c: In function ???main???:
+            17881: |2
+                                        D | 2016-05-26T12:03:03-04:00 | ./load utmpset unix.a byte.a
+                       [Builder: runit] I | 2016-05-26T12:03:03-04:00 | Execute: `gmake': 3.6464s
+                       [Builder: runit] I | 2016-05-26T12:03:03-04:00 | Environment:
+            17902: |2
+                                        D | 2016-05-26T12:03:14-04:00 | Checking utmpset...
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | Execute: `gmake check': 11.4133s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | mkdir `/opt/chef-marketplace/embedded/bin': 0.0003s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | copy `/var/cache/omnibus/src/runit/admin/runit-2.1.1/src/chpst' to `/opt/chef-marketplace/embedded/bin': 0.0004s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | copy `/var/cache/omnibus/src/runit/admin/runit-2.1.1/src/runit' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | copy `/var/cache/omnibus/src/runit/admin/runit-2.1.1/src/runit-init' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | copy `/var/cache/omnibus/src/runit/admin/runit-2.1.1/src/runsv' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | copy `/var/cache/omnibus/src/runit/admin/runit-2.1.1/src/runsvchdir' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | copy `/var/cache/omnibus/src/runit/admin/runit-2.1.1/src/runsvdir' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | copy `/var/cache/omnibus/src/runit/admin/runit-2.1.1/src/sv' to `/opt/chef-marketplace/embedded/bin': 0.0002s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | copy `/var/cache/omnibus/src/runit/admin/runit-2.1.1/src/svlogd' to `/opt/chef-marketplace/embedded/bin': 0.0003s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | copy `/var/cache/omnibus/src/runit/admin/runit-2.1.1/src/utmpset' to `/opt/chef-marketplace/embedded/bin': 0.0004s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-467b5c1c08a3/config/templates/runit/runsvdir-start.erb' to `/opt/chef-marketplace/embedded/bin/runsvdir-start'
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | Render erb `runsvdir-start.erb': 0.0009s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | touch `/opt/chef-marketplace/service/.gitkeep': 0.0003s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | touch `/opt/chef-marketplace/sv/.gitkeep': 0.0002s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | touch `/opt/chef-marketplace/init/.gitkeep': 0.0003s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | Build runit: 15.1332s
+                       [Builder: runit] I | 2016-05-26T12:03:14-04:00 | Finished build
+                      [GitCache: runit] I | 2016-05-26T12:03:14-04:00 | Performing incremental cache
+            17928: |2
+                      [GitCache: runit] I | 2016-05-26T12:03:17-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "runit-3b2baf0cfe1b5de49e108e9adaca481d80484f27aade3a3249c038c192c88311"
+                      [Software: runit] I | 2016-05-26T12:03:17-04:00 | Dirtied the cache
+                 [Software: sequel-gem] I | 2016-05-26T12:03:17-04:00 | Building because `preparation' dirtied the cache
+                  [Builder: sequel-gem] I | 2016-05-26T12:03:17-04:00 | Starting build
+            17943: |2
+                                        D | 2016-05-26T12:03:19-04:00 | 1 gem installed
+                  [Builder: sequel-gem] I | 2016-05-26T12:03:19-04:00 | gem `install sequel --version '4.13.0' --bindir '/opt/chef-marketplace/embedded/bin' --no-ri --no-rdoc': 2.5355s
+                  [Builder: sequel-gem] I | 2016-05-26T12:03:19-04:00 | Build sequel-gem: 2.5367s
+                  [Builder: sequel-gem] I | 2016-05-26T12:03:19-04:00 | Finished build
+                 [GitCache: sequel-gem] I | 2016-05-26T12:03:19-04:00 | Performing incremental cache
+            17954: |2
+                 [GitCache: sequel-gem] I | 2016-05-26T12:03:22-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "sequel-gem-966b21f3fe929326760d2e9ca9f0a33e545cbe2c1484a19c09cfcfa406d6d22c"
+                 [Software: sequel-gem] I | 2016-05-26T12:03:22-04:00 | Dirtied the cache
+              [Software: server-plugin-cookbooks] I | 2016-05-26T12:03:22-04:00 | Building because `preparation' dirtied the cache
+              [Builder: server-plugin-cookbooks] I | 2016-05-26T12:03:22-04:00 | Starting build
+              [Builder: server-plugin-cookbooks] I | 2016-05-26T12:03:22-04:00 | Cached builder checksum before build: 389bf6012c5cfe95f4562cdfbe9ed9a30fee7a6af7225f39d4075ef7af7e3525
+              [Builder: server-plugin-cookbooks] I | 2016-05-26T12:03:22-04:00 | sync `/var/cache/omnibus/src/server-plugin-cookbooks' to `/opt/chef-marketplace/embedded/server-plugin-cookbooks/': 0.02s
+              [Builder: server-plugin-cookbooks] I | 2016-05-26T12:03:22-04:00 | Build server-plugin-cookbooks: 0.021s
+              [Builder: server-plugin-cookbooks] I | 2016-05-26T12:03:22-04:00 | Finished build
+              [GitCache: server-plugin-cookbooks] I | 2016-05-26T12:03:22-04:00 | Performing incremental cache
+            17969: |
+              [GitCache: server-plugin-cookbooks] I | 2016-05-26T12:03:24-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "server-plugin-cookbooks-73cea1f2dccd638fd2687bc087aa31c05d14f5bed4a018dbc0383322765e9a08"
+              [Software: server-plugin-cookbooks] I | 2016-05-26T12:03:24-04:00 | Dirtied the cache
+                   [Software: reckoner] I | 2016-05-26T12:03:24-04:00 | Building because `preparation' dirtied the cache
+                    [Builder: reckoner] I | 2016-05-26T12:03:24-04:00 | Starting build
+            18046: |2
+                                        D | 2016-05-26T12:03:33-04:00 | Bundled gems are installed into /opt/chef-marketplace/embedded/service/gem.
+                    [Builder: reckoner] I | 2016-05-26T12:03:33-04:00 | bundle `install --path=/opt/chef-marketplace/embedded/service/gem': 9.2696s
+                    [Builder: reckoner] I | 2016-05-26T12:03:33-04:00 | sync `/var/cache/omnibus/src/reckoner' to `/opt/chef-marketplace/embedded/service/reckoner/': 0.0392s
+                    [Builder: reckoner] I | 2016-05-26T12:03:33-04:00 | Build reckoner: 9.3109s
+                    [Builder: reckoner] I | 2016-05-26T12:03:33-04:00 | Finished build
+                   [GitCache: reckoner] I | 2016-05-26T12:03:33-04:00 | Performing incremental cache
+            18058: |2
+                   [GitCache: reckoner] I | 2016-05-26T12:03:36-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "reckoner-758586ce813ed1cfbcc324d98f7e655c1b60d141f994aee32f754007dc3ed7f2"
+                   [Software: reckoner] I | 2016-05-26T12:03:36-04:00 | Dirtied the cache
+                   [Software: biscotti] I | 2016-05-26T12:03:36-04:00 | Building because `preparation' dirtied the cache
+                    [Builder: biscotti] I | 2016-05-26T12:03:36-04:00 | Starting build
+            18100: |2
+                                        D | 2016-05-26T12:04:00-04:00 | Bundled gems are installed into /opt/chef-marketplace/embedded/service/gem.
+                    [Builder: biscotti] I | 2016-05-26T12:04:00-04:00 | bundle `install --path=/opt/chef-marketplace/embedded/service/gem': 24.1384s
+                    [Builder: biscotti] I | 2016-05-26T12:04:00-04:00 | mkdir `assets/biscotti': 0.0005s
+                    [Builder: biscotti] I | 2016-05-26T12:04:00-04:00 | Environment:
+            18120: |2
+                                        D | 2016-05-26T12:04:03-04:00 | Cleaning up /var/cache/omnibus/src/biscotti/asset_work_dir...
+                    [Builder: biscotti] I | 2016-05-26T12:04:03-04:00 | bundle `exec rake assets:vendor': 2.8618s
+                    [Builder: biscotti] I | 2016-05-26T12:04:04-04:00 | sync `/var/cache/omnibus/src/biscotti' to `/opt/chef-marketplace/embedded/service/biscotti/': 0.7844s
+                    [Builder: biscotti] I | 2016-05-26T12:04:04-04:00 | Build biscotti: 27.7897s
+                    [Builder: biscotti] I | 2016-05-26T12:04:04-04:00 | Finished build
+                   [GitCache: biscotti] I | 2016-05-26T12:04:04-04:00 | Performing incremental cache
+            18132: |2
+                   [GitCache: biscotti] I | 2016-05-26T12:04:07-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "biscotti-49a51da6fb189dc497fd8e9c7328438d7044351cd8dc51c0a591b88b878fae66"
+                   [Software: biscotti] I | 2016-05-26T12:04:07-04:00 | Dirtied the cache
+                       [Software: chef] I | 2016-05-26T12:04:07-04:00 | Building because `preparation' dirtied the cache
+                     [GitFetcher: chef] I | 2016-05-26T12:04:07-04:00 | Cleaning existing clone
+            18139: |2
+                                        I | 2016-05-26T12:04:08-04:00 | Removing chef-config/pkg/
+                        [Builder: chef] I | 2016-05-26T12:04:08-04:00 | Starting build
+            18286: |2
+                                        D | 2016-05-26T12:04:51-04:00 | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                        [Builder: chef] I | 2016-05-26T12:04:51-04:00 | bundle `install --without server docgen maintenance pry travis': 43.645s
+                        [Builder: chef] I | 2016-05-26T12:04:51-04:00 | Environment:
+            18364: |2
+                                        D | 2016-05-26T12:04:59-04:00 | 1 gem installed
+                        [Builder: chef] I | 2016-05-26T12:04:59-04:00 | bundle `exec rake install_components': 7.6872s
+                        [Builder: chef] I | 2016-05-26T12:04:59-04:00 | Environment:
+            18387: |2
+                                        D | 2016-05-26T12:05:05-04:00 |   File: chef-12.11.6.gem
+                        [Builder: chef] I | 2016-05-26T12:05:05-04:00 | gem `build chef.gemspec': 5.9126s
+                        [Builder: chef] I | 2016-05-26T12:05:05-04:00 | Environment:
+            20422: |2
+                                        D | 2016-05-26T12:05:26-04:00 | 1 gem installed
+                        [Builder: chef] I | 2016-05-26T12:05:26-04:00 | gem `install chef*.gem --no-ri --no-rdoc --verbose': 21.6721s
+                        [Builder: chef] I | 2016-05-26T12:05:26-04:00 | Environment:
+            20475: |2
+                                        D | 2016-05-26T12:05:32-04:00 | 1 gem installed
+                        [Builder: chef] I | 2016-05-26T12:05:32-04:00 | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 5.2255s
+                        [Builder: chef] I | 2016-05-26T12:05:32-04:00 | $ /opt/chef-marketplace/embedded/bin/appbundler '/var/cache/omnibus/src/chef/chef' '/opt/chef-marketplace/bin'
+            20482: |2
+                                        D | 2016-05-26T12:05:32-04:00 | Generated binstub /opt/chef-marketplace/bin/chef-apply => /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/gems/chef-12.11.6/bin/chef-apply
+                        [Builder: chef] I | 2016-05-26T12:05:32-04:00 | appbundle `chef': 0.575s
+                        [Builder: chef] I | 2016-05-26T12:05:32-04:00 | $ /opt/chef-marketplace/embedded/bin/appbundler '/var/cache/omnibus/src/ohai/ohai' '/opt/chef-marketplace/bin'
+                                        D | 2016-05-26T12:05:33-04:00 | Generated binstub /opt/chef-marketplace/bin/ohai => /opt/chef-marketplace/embedded/lib/ruby/gems/2.2.0/gems/ohai-8.16.0/bin/ohai
+                        [Builder: chef] I | 2016-05-26T12:05:33-04:00 | appbundle `ohai': 0.5539s
+                        [Builder: chef] I | 2016-05-26T12:05:33-04:00 | delete `/opt/chef-marketplace/embedded/docs': 0.0002s
+                        [Builder: chef] I | 2016-05-26T12:05:33-04:00 | delete `/opt/chef-marketplace/embedded/share/man': 0.0274s
+                        [Builder: chef] I | 2016-05-26T12:05:33-04:00 | delete `/opt/chef-marketplace/embedded/share/doc': 0.1521s
+                        [Builder: chef] I | 2016-05-26T12:05:33-04:00 | delete `/opt/chef-marketplace/embedded/share/gtk-doc': 0.0161s
+                        [Builder: chef] I | 2016-05-26T12:05:33-04:00 | delete `/opt/chef-marketplace/embedded/ssl/man': 0.0002s
+                        [Builder: chef] I | 2016-05-26T12:05:33-04:00 | delete `/opt/chef-marketplace/embedded/man': 0.0001s
+                        [Builder: chef] I | 2016-05-26T12:05:33-04:00 | delete `/opt/chef-marketplace/embedded/info': 0.0001s
+                        [Builder: chef] I | 2016-05-26T12:05:33-04:00 | Build chef: 85.4807s
+                        [Builder: chef] I | 2016-05-26T12:05:33-04:00 | Finished build
+                       [GitCache: chef] I | 2016-05-26T12:05:33-04:00 | Performing incremental cache
+            20500: |2
+                       [GitCache: chef] I | 2016-05-26T12:05:34-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace add -A -f
+                       [GitCache: chef] I | 2016-05-26T12:05:36-04:00 | Calculating tag
+                       [Software: chef] W | 2016-05-26T12:05:36-04:00 | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [Software: chef] W | 2016-05-26T12:05:36-04:00 | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitCache: chef] I | 2016-05-26T12:05:36-04:00 | dep_list: ["preparation", "zlib", "cacerts", "xproto", "util-macros", "config_guess", "pkg-config-lite", "makedepend", "openssl", "ncurses", "libedit", "postgresql92", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "pg-gem", "bundler", "chef-marketplace-gem", "ohai", "appbundler", "omnibus-ctl", "libarchive", "liblzma", "libxml2", "libxslt", "nokogiri", "dep-selector-libgecode", "berkshelf", "chef-marketplace-cookbooks", "runit", "sequel-gem", "server-plugin-cookbooks", "reckoner", "biscotti"]
+                       [GitCache: chef] I | 2016-05-26T12:05:36-04:00 | tag: chef-66a4c35df6664b6979503903cc2dc104abbb44b293459b51a02b920cdee94246
+                       [GitCache: chef] I | 2016-05-26T12:05:36-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace commit -q -m "Backup of chef-66a4c35df6664b6979503903cc2dc104abbb44b293459b51a02b920cdee94246"
+                       [GitCache: chef] I | 2016-05-26T12:05:37-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "chef-66a4c35df6664b6979503903cc2dc104abbb44b293459b51a02b920cdee94246"
+                       [Software: chef] I | 2016-05-26T12:05:37-04:00 | Dirtied the cache
+              [Software: chef-marketplace-ctl] I | 2016-05-26T12:05:37-04:00 | Building because `preparation' dirtied the cache
+              [Builder: chef-marketplace-ctl] I | 2016-05-26T12:05:37-04:00 | Starting build
+              [Builder: chef-marketplace-ctl] I | 2016-05-26T12:05:37-04:00 | Cached builder checksum before build: 41c2084f77b57f87d8f0e0d7dd9d3d83119ee2ba20539084b4dc9ccae3fa9dc8
+              [Builder: chef-marketplace-ctl] I | 2016-05-26T12:05:37-04:00 | Rendering `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/config/templates/chef-marketplace-ctl/chef-marketplace-ctl.erb' to `/opt/chef-marketplace/bin/chef-marketplace-ctl'
+              [Builder: chef-marketplace-ctl] I | 2016-05-26T12:05:37-04:00 | Render erb `chef-marketplace-ctl.erb': 0.0009s
+              [Builder: chef-marketplace-ctl] I | 2016-05-26T12:05:37-04:00 | sync `/var/cache/omnibus/src/chef-marketplace-ctl' to `/opt/chef-marketplace/embedded/service/chef-marketplace-ctl/': 0.0596s
+              [Builder: chef-marketplace-ctl] I | 2016-05-26T12:05:37-04:00 | Environment:
+            20597: |2
+                                        D | 2016-05-26T12:06:09-04:00 | Use `bundle show [gemname]` to see where a bundled gem is installed.
+              [Builder: chef-marketplace-ctl] I | 2016-05-26T12:06:09-04:00 | bundle `install --without development': 31.96s
+              [Builder: chef-marketplace-ctl] I | 2016-05-26T12:06:09-04:00 | copy `/home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/Rakefile' to `/opt/chef-marketplace/Rakefile': 0.0194s
+              [Builder: chef-marketplace-ctl] I | 2016-05-26T12:06:09-04:00 | Build chef-marketplace-ctl: 32.0447s
+              [Builder: chef-marketplace-ctl] I | 2016-05-26T12:06:09-04:00 | Finished build
+              [GitCache: chef-marketplace-ctl] I | 2016-05-26T12:06:09-04:00 | Performing incremental cache
+            20613: |
+              [GitCache: chef-marketplace-ctl] I | 2016-05-26T12:06:13-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "chef-marketplace-ctl-84401808e7cfd63b21222a115b98dc7f076111f449b9e2e8c75a7ebe2c713498"
+              [Software: chef-marketplace-ctl] I | 2016-05-26T12:06:13-04:00 | Dirtied the cache
+              [Software: version-manifest] I | 2016-05-26T12:06:13-04:00 | Building because `preparation' dirtied the cache
+              [Builder: version-manifest] I | 2016-05-26T12:06:13-04:00 | Starting build
+              [Builder: version-manifest] I | 2016-05-26T12:06:13-04:00 | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+               [Software: config_guess] W | 2016-05-26T12:06:13-04:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+              [GitFetcher: config_guess] I | 2016-05-26T12:06:13-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:13-04:00 | dafd8e767ec87b90aac62f0fcedd11944c84b50a
+                       [Software: ohai] W | 2016-05-26T12:06:13-04:00 | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                     [GitFetcher: ohai] I | 2016-05-26T12:06:13-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:13-04:00 | eb75927881b10f1c60a26add31f6afe9f773330f
+                 [Software: appbundler] W | 2016-05-26T12:06:13-04:00 | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+               [GitFetcher: appbundler] I | 2016-05-26T12:06:13-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:13-04:00 | a8376ff735ec63d6f4e3cffe971223516890239c
+                       [Software: chef] W | 2016-05-26T12:06:13-04:00 | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                     [GitFetcher: chef] I | 2016-05-26T12:06:13-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:13-04:00 | 4983a764c34e4dac894fe87c3a893e4d54fa7e54
+              [GitFetcher: omnibus-ctl] I | 2016-05-26T12:06:13-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:13-04:00 | c514d1d4ecb24e30fdbd310b2dd038b2192b4fa7
+                  [Software: berkshelf] W | 2016-05-26T12:06:13-04:00 | Version v4.2.3 for software berkshelf was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                [GitFetcher: berkshelf] I | 2016-05-26T12:06:13-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:13-04:00 | 65764576948de68dbc795eee4a9d1026ef3dffd9
+              [Builder: version-manifest] I | 2016-05-26T12:06:13-04:00 | <Dynamic Ruby block>: 0.2383s
+              [Builder: version-manifest] I | 2016-05-26T12:06:13-04:00 | Build version-manifest: 0.2396s
+              [Builder: version-manifest] I | 2016-05-26T12:06:13-04:00 | Finished build
+              [GitCache: version-manifest] I | 2016-05-26T12:06:13-04:00 | Performing incremental cache
+            20645: |
+              [GitCache: version-manifest] I | 2016-05-26T12:06:16-04:00 | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/chef-marketplace --work-tree=/opt/chef-marketplace tag -f "version-manifest-67220a09453678908e6dc8f0eb234ab2e7f3a081f53cdfbd9154733b54a782c5"
+              [Software: version-manifest] I | 2016-05-26T12:06:16-04:00 | Dirtied the cache
+              [Project: chef-marketplace] I | 2016-05-26T12:06:16-04:00 | Building version manifest
+                        [GitRepository] I | 2016-05-26T12:06:16-04:00 | $ git rev-parse HEAD
+                                        I | 2016-05-26T12:06:16-04:00 | aa2b3dcc168a6a583d80e98c41731758e3a65696
+               [Software: config_guess] W | 2016-05-26T12:06:16-04:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+              [GitFetcher: config_guess] I | 2016-05-26T12:06:16-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:16-04:00 | dafd8e767ec87b90aac62f0fcedd11944c84b50a
+                       [Software: ohai] W | 2016-05-26T12:06:16-04:00 | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                     [GitFetcher: ohai] I | 2016-05-26T12:06:16-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:16-04:00 | eb75927881b10f1c60a26add31f6afe9f773330f
+                 [Software: appbundler] W | 2016-05-26T12:06:16-04:00 | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+               [GitFetcher: appbundler] I | 2016-05-26T12:06:16-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:16-04:00 | a8376ff735ec63d6f4e3cffe971223516890239c
+                       [Software: chef] W | 2016-05-26T12:06:16-04:00 | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                     [GitFetcher: chef] I | 2016-05-26T12:06:16-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:16-04:00 | 4983a764c34e4dac894fe87c3a893e4d54fa7e54
+              [GitFetcher: omnibus-ctl] I | 2016-05-26T12:06:16-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:16-04:00 | c514d1d4ecb24e30fdbd310b2dd038b2192b4fa7
+                  [Software: berkshelf] W | 2016-05-26T12:06:16-04:00 | Version v4.2.3 for software berkshelf was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                [GitFetcher: berkshelf] I | 2016-05-26T12:06:16-04:00 | $ git -c core.autocrlf=false rev-parse HEAD
+                                        I | 2016-05-26T12:06:16-04:00 | 65764576948de68dbc795eee4a9d1026ef3dffd9
+               [Software: config_guess] W | 2016-05-26T12:06:16-04:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [Software: ohai] W | 2016-05-26T12:06:16-04:00 | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                 [Software: appbundler] W | 2016-05-26T12:06:16-04:00 | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [Software: chef] W | 2016-05-26T12:06:16-04:00 | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                  [Software: berkshelf] W | 2016-05-26T12:06:16-04:00 | Version v4.2.3 for software berkshelf was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Licensing] I | 2016-05-26T12:06:16-04:00 | Software 'config_guess' uses license 'GPL-3.0 (with exception)' which is not one of the standard licenses identified in https://opensource.org/licenses/alphabetical. Consider using one of the standard licenses.
+              pedump not found - windows health checks disabled
+                          [HealthCheck] I | 2016-05-26T12:06:23-04:00 | Running health on chef-marketplace
+            55709: |2
+                          [HealthCheck] D | 2016-05-26T12:06:58-04:00 | Analyzing dependencies for /opt/chef-marketplace/LICENSES/runit-COPYING
+                          [HealthCheck] I | 2016-05-26T12:06:58-04:00 | Health check time: 34.7375s
+                        [Packager::RPM] D | 2016-05-26T12:06:58-04:00 | Creating directory `/var/cache/omnibus/pkg'
+            55735: |2
+                        [Packager::RPM] D | 2016-05-26T12:18:21-04:00 | Copying `/tmp/chef-marketplace20160526-9492-1i60kvq/RPMS/x86_64/chef-marketplace-0.0.11+20160526154003.git.5.aa2b3dc-1.el7.x86_64.rpm' to `/var/cache/omnibus/pkg'
+              [Project: chef-marketplace] I | 2016-05-26T12:18:29-04:00 | Building version manifest
+                        [Packager::RPM] D | 2016-05-26T12:18:29-04:00 | Remove directory `/tmp/chef-marketplace20160526-9492-1i60kvq'
+                        [Packager::RPM] I | 2016-05-26T12:18:39-04:00 | Packaging time: 701.4556s
+                           [Compressor] I | 2016-05-26T12:18:40-04:00 | No compressor defined for `rhel'.
+              [Project: chef-marketplace] I | 2016-05-26T12:18:40-04:00 | Building version manifest
+            55849: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-marketplace-build/architecture/x86_64/platform/el-7/project/chef-marketplace/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-14.04. Publishing will be skipped for: ubuntu-14.04
+              Published 'chef-marketplace-0.0.11+20160526154003.git.5.aa2b3dc-1.el7.x86_64.rpm' for el-7
   chef-marketplace-trigger-ad_hoc:
     result: SUCCESS
     timestamp: 2016-05-26 15:39:50 UTC
@@ -116,7 +1349,19 @@ stages:
     - shortDescription: Started by user John Keiser
       userId: jkeiser
       userName: John Keiser
-    parameters:
-      GIT_REF: origin/jk/licenses
-      EXPIRE_CACHE: false
     runs: {}
+parameters:
+  ADHOC_BUILD: 'true'
+  APPEND_TIMESTAMP: true
+  DELIVERY_CHANGE: ''
+  DELIVERY_SHA: ''
+  EXPIRE_CACHE: false
+  GIT_BRANCH: origin/jk/licenses
+  GIT_COMMIT: aa2b3dcc168a6a583d80e98c41731758e3a65696
+  GIT_REF: origin/jk/licenses
+  PIPELINE_NAME: chef-marketplace
+  PIPELINE_TRIGGER_BUILD_NUMBER: '31'
+  PIPELINE_TRIGGER_JOB_NAME: chef-marketplace-trigger-ad_hoc
+  PROJECT: chef-marketplace
+  PROMOTE: 'false'
+  RELEASE_BUILD: 'false'

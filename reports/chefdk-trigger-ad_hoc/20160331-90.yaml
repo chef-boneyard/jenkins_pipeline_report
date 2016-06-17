@@ -8,45 +8,69 @@ version:
 git_ref: jk/chef-dk-gemset
 git_commit: 3ebdf456b2f48ff5fc40972fb204fd364f7dc65c
 failures:
-  'chefdk-build code - omnibus Builder: chef-dk': windows
+  'chefdk-build code - Builder: chef-dk': windows
 stages:
   chefdk-build:
     result: FAILURE
     failures:
-      'code - omnibus Builder: chef-dk': windows
+      'code - Builder: chef-dk': windows
     timestamp: 2016-03-31 15:04:26 UTC
     duration: 2661.857
     url: http://manhattan.ci.chef.co/job/chefdk-build/163/
-    parameters:
-      GIT_REF: jk/chef-dk-gemset
-      APPEND_TIMESTAMP: true
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      EXPIRE_CACHE: false
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chefdk
-      GIT_COMMIT: 3ebdf456b2f48ff5fc40972fb204fd364f7dc65c
-      PROJECT: chefdk
-      PROMOTE: 'false'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '90'
-      ADHOC_BUILD: 'true'
-      GIT_BRANCH: origin/jk/chef-dk-gemset
-      PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-ad_hoc
     runs:
       windows-2008r2-i386:
         result: FAILURE
+        failureCause: 'Builder: chef-dk'
+        failureCategory: code
         timestamp: 2016-03-31 15:04:26 UTC
         duration: 2658.53
         builtOn: chefdk-windows-2008r2-i386-builder-dcb6f4
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/163/
-        failureCause:
-          cause: 'omnibus Builder: chef-dk'
-          jenkinsBuildStep: Invoke XShell command
-          category: code
-          lastOmnibusLine: "[Builder: chef-dk] I | Build chef-dk: 2205.0196s"
-          lastOmnibusStep: 'Builder: chef-dk'
-          suspiciousBlocks:
-            10243: |2
+        failedIn:
+          jenkins: Invoke XShell command
+          omnibus: 'Builder: chef-dk'
+        steps: 2658
+        logExcerpts:
+          consoleText:
+            278: |2
+                                       [Software] I | Loading software `preparation' from `C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/preparation.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `chef-dk' from `C:/jenkins/workspace/chefdk-build/architecture/i386/platform/windows-2008r2/project/chefdk/role/builder/omnibus/config/software/chef-dk.rb' using overrides from chefdk.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libxml2' from `C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libxml2.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `zlib' from `C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/zlib.rb' using overrides from chefdk.
+            296: |2
+                                       [Software] I | Loading software `ruby-windows-devkit' from `C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/ruby-windows-devkit.rb' using overrides from chefdk.
+                  [Software: ruby-windows-devkit] I | Resolving manifest entry for ruby-windows-devkit
+                  [Software: ruby-windows-devkit] W | DEPRECATED: project_file (DSL). This is a property of the NetFetcher and will not be publically exposed in the next major release. In general, you should not be using this method in your software definitions as it is an internal implementation detail of the NetFetcher. If you disagree with this statement, you should open an issue on the Omnibus repository on GitHub an explain your use case. For now, I will return the path to the downloaded file on disk, but please rethink the problem you are trying to solve :).
+                                       [Software] I | Loading software `rubygems-customization' from `C:/jenkins/workspace/chefdk-build/architecture/i386/platform/windows-2008r2/project/chefdk/role/builder/omnibus/config/software/rubygems-customization.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `shebang-cleanup' from `C:/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/shebang-cleanup.rb' using overrides from chefdk.
+            323: |
+              [PathFetcher: chefdk-env-customization] I | Digesting C:/jenkins/workspace/chefdk-build/architecture/i386/platform/windows-2008r2/project/chefdk/role/builder/omnibus/files/chefdk-env-customization with sha256
+                              [Software: chef-dk] I | Resolving manifest entry for chef-dk
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [PathFetcher: chef-dk] I | Digesting C:/omnibus-ruby/src/chef-dk with sha256
+               [Software: rubygems-customization] I | Resolving manifest entry for rubygems-customization
+            10194: |2
+                                                  D | Could not find gem 'ffi (= 1.9.10)' in any of the gem sources listed in your
+                                                  D | Gemfile or available on this machine.
+                               [Builder: chef-dk] W | [1/3] Failed to execute command. Retrying in 10 seconds...
+                               [Builder: chef-dk] I | Environment:
+                               [Builder: chef-dk] I |   ARFLAGS="rv --target=pe-i386"
+            10210: |2
+                                                  D | Could not find gem 'ffi (= 1.9.10)' in any of the gem sources listed in your
+                                                  D | Gemfile or available on this machine.
+                               [Builder: chef-dk] W | [2/3] Failed to execute command. Retrying in 20 seconds...
+                               [Builder: chef-dk] I | Environment:
+                               [Builder: chef-dk] I |   ARFLAGS="rv --target=pe-i386"
+            10226: |2
+                                                  D | Could not find gem 'ffi (= 1.9.10)' in any of the gem sources listed in your
+                                                  D | Gemfile or available on this machine.
+                               [Builder: chef-dk] W | [3/3] Failed to execute command. Retrying in 40 seconds...
+                               [Builder: chef-dk] I | Environment:
+                               [Builder: chef-dk] I |   ARFLAGS="rv --target=pe-i386"
+            10244: |2
                                [Builder: chef-dk] I | bundle `lock --update': 73.3942s
                                [Builder: chef-dk] I | Build chef-dk: 2205.0196s
               The following shell command exited with status 7:
@@ -103,42 +127,769 @@ stages:
               Build step 'Invoke XShell command' marked build as failure
               Archiving artifacts
               Recording fingerprints
-        omnibusTiming: {}
       debian-6:
         result: SUCCESS
         timestamp: 2016-03-31 15:04:26 UTC
         duration: 890.321
         builtOn: chefdk-debian-6-builder-2ccc58
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/163/
-        omnibusTiming: {}
+        steps: 890
+        logExcerpts:
+          consoleText:
+            241: |2
+                                       [Software] I | Loading software `preparation' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/preparation.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `chef-dk' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/config/software/chef-dk.rb' using overrides from chefdk.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libxml2.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `zlib' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/zlib.rb' using overrides from chefdk.
+            259: |2
+                                       [Software] I | Loading software `libtool' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libtool.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `config_guess' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/config_guess.rb' using overrides from chefdk.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libyaml' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libyaml.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `rubygems' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/rubygems.rb' using overrides from chefdk.
+            285: |2
+                               [Software: libffi] I | Resolving manifest entry for libffi
+                         [Software: config_guess] I | Resolving manifest entry for config_guess
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
+                              [Software: openssl] I | Resolving manifest entry for openssl
+            303: |
+              [PathFetcher: rubygems-customization] I | Digesting /var/cache/omnibus/src/rubygems-customization with sha256
+                              [Software: chef-dk] I | Resolving manifest entry for chef-dk
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [PathFetcher: chef-dk] I | Digesting /var/cache/omnibus/src/chef-dk with sha256
+                [Software: openssl-customization] I | Resolving manifest entry for openssl-customization
+            461: |2
+                         [GitCache: config_guess] I | Performing cache restoration
+                         [GitCache: config_guess] I | Calculating tag
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [GitCache: config_guess] I | dep_list: ["preparation", "zlib", "libiconv", "liblzma", "libxml2", "libxslt", "libarchive", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl"]
+                         [GitCache: config_guess] I | tag: config_guess-fdf9bf08173f74faf5ff22c2a54b2a5831251348f60929e8415a285daa64b729
+            540: |2
+                              [GitCache: chef-dk] I | Performing cache restoration
+                              [GitCache: chef-dk] I | Calculating tag
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [GitCache: chef-dk] I | dep_list: ["preparation", "zlib", "libiconv", "liblzma", "libxml2", "libxslt", "libarchive", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "config_guess", "libtool", "libffi", "libyaml", "ruby", "rubygems", "bundler"]
+                              [GitCache: chef-dk] I | tag: chef-dk-95c6a8a660562aef42dc416e0e06af77e51aef1ea0d2b96d77280a98e1902fd3
+            551: |2
+                               [Builder: chef-dk] D | Creating file `/var/cache/omnibus/src/chef-dk/.bundle/config'
+                               [Builder: chef-dk] I | Set nokogiri build config: 0.0017s
+                               [Builder: chef-dk] I | Use /var/cache/omnibus/src/chef-dk/Gemfile.debian.lock if it exists: 0.0005s
+                               [Builder: chef-dk] I | Environment:
+            1091: |2
+                                                  D | >= 1.9.2 : nothing to do! Yay!
+                               [Builder: chef-dk] I | bundle `install --without=development --jobs=4 --retry=4 --verbose --frozen': 266.3675s
+                               [Builder: chef-dk] I | Environment:
+            9923: |2
+                                                  D | chef-dk (0.13.3) installed.
+                               [Builder: chef-dk] I | Reinstall git-sourced gems properly: 67.4683s
+                               [Builder: chef-dk] I | Environment:
+            10146: |2
+                               [Builder: chef-dk] D | Creating file `/var/cache/omnibus/src/chef-dk/Gemfile'
+                               [Builder: chef-dk] I | Fix Gemfile to point at properly-installed gems: 1.918s
+                               [Builder: chef-dk] I | delete `.bundle/config': 0.0004s
+                               [Builder: chef-dk] I | Environment:
+            10160: |2
+                                                  D | Writing lockfile to /var/cache/omnibus/src/chef-dk/Gemfile.lock
+                               [Builder: chef-dk] I | bundle `lock --update': 6.4891s
+                               [Builder: chef-dk] I | Environment:
+            10174: |2
+                               [Builder: chef-dk] D | Removing file `/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler'
+                               [Builder: chef-dk] I | Delete bundler git cache and git installs: 0.6583s
+                               [Builder: chef-dk] I | copy `Gemfile' to `/opt/chefdk': 0.0006s
+                               [Builder: chef-dk] I | copy `Gemfile.lock' to `/opt/chefdk': 0.0003s
+                               [Builder: chef-dk] I | mkdir `/opt/chefdk/bin': 0.0002s
+                               [Builder: chef-dk] I | Environment:
+            10200: |2
+                                                  D | Generated binstub /opt/chefdk/bin/kitchen => /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/test-kitchen-1.6.0/bin/kitchen
+                               [Builder: chef-dk] I | Execute: `/opt/chefdk/embedded/bin/appbundler /var/cache/omnibus/src/chef-dk /opt/chefdk/bin berkshelf chef chef-dk chef-vault foodcritic ohai rubocop test-kitchen': 2.0588s
+                               [Builder: chef-dk] I | Environment:
+            10260: |2
+                                                  D | 1 gem installed
+                               [Builder: chef-dk] I | gem `install ruby-shadow --no-document --verbose': 6.2609s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/docs': 0.0003s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/man': 0.0041s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/doc': 0.0358s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/gtk-doc': 0.0033s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/ssl/man': 0.0001s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/man': 0.0001s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/info': 0.0001s
+                               [Builder: chef-dk] I | Build chef-dk: 351.3255s
+                               [Builder: chef-dk] I | Finished build
+            10283: |2
+                [Builder: rubygems-customization] I | Cached builder checksum before build: 18558126e091f37c7c425fa8e73d06dd3808830be7849c4b7bbd1ecf4307c2f2
+                [Builder: rubygems-customization] I | Add Rubygems customization file: 0.1485s
+                [Builder: rubygems-customization] I | Build rubygems-customization: 0.1498s
+                [Builder: rubygems-customization] I | Finished build
+            10298: |2
+                       [Builder: shebang-cleanup] I | Cached builder checksum before build: 9c716f9abe2a90cadd07754deda55da35941ba3ca15786c2c3472bcaed766e54
+                       [Builder: shebang-cleanup] I | Update shebangs to point to embedded Ruby: 0.0074s
+                       [Builder: shebang-cleanup] I | Build shebang-cleanup: 0.0083s
+                       [Builder: shebang-cleanup] I | Finished build
+            10312: |2
+                      [Builder: version-manifest] I | Starting build
+                      [Builder: version-manifest] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitFetcher: config_guess] I | $ git -c core.autocrlf=false rev-parse HEAD
+                                                  I | 3d5db9ebe8607382d17d60faf8853c944fc5f353
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                      [Builder: version-manifest] I | <Dynamic Ruby block>: 0.0778s
+                      [Builder: version-manifest] I | Build version-manifest: 0.0786s
+                      [Builder: version-manifest] I | Finished build
+            10332: |2
+                 [Builder: openssl-customization] I | Cached builder checksum before build: a463983ed0df7d6a36b7529274506b134dd3bc2c5085cda764b98c510c214160
+                 [Builder: openssl-customization] I | Add OpenSSL customization file: 0.1578s
+                 [Builder: openssl-customization] I | Build openssl-customization: 0.1586s
+                 [Builder: openssl-customization] I | Finished build
+            10349: |2
+                     [Builder: clean-static-libs] I | Cached builder checksum before build: 81bba509d4c91fe870bfbdcc737bdf83f6bc3a457780d63520adae2b9ddeb9c7
+                     [Builder: clean-static-libs] I | Remove static libraries: 0.665s
+                     [Builder: clean-static-libs] I | Build clean-static-libs: 0.666s
+                     [Builder: clean-static-libs] I | Finished build
+            10365: |2
+                                  [GitRepository] I | $ git rev-parse HEAD
+                                                  I | 3ebdf456b2f48ff5fc40972fb204fd364f7dc65c
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitFetcher: config_guess] I | $ git -c core.autocrlf=false rev-parse HEAD
+                                                  I | 3d5db9ebe8607382d17d60faf8853c944fc5f353
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                      [Licensing] W | Project 'chefdk' does not contain licensing information.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                      [Licensing] W | Software 'config_guess' uses license 'GPL-3.0 (with exception)' which is not one of the standard licenses identified in https://opensource.org/licenses/alphabetical. Consider using one of the standard licenses.
+                                      [Licensing] W | Software 'chef-dk' does not contain licensing information.
+                                      [Licensing] W | Software 'rubygems-customization' does not contain licensing information.
+                                      [Licensing] W | Software 'shebang-cleanup' does not contain licensing information.
+                                      [Licensing] W | Software 'openssl-customization' does not contain licensing information.
+                                      [Licensing] W | Software 'clean-static-libs' does not contain licensing information.
+                                    [HealthCheck] I | Running health on chefdk
+                                    [HealthCheck] I | $ find /opt/chefdk/ -type f -regextype posix-extended ! -regex '.*(\.[ch]|\.e*rb|\.gemspec|\.gitignore|\.h*h|\.java|\.js|\.json|\.lock|\.log|\.lua|\.md|\.mkd|\.out|\.pl|\.pm|\.png|\.py[oc]*|\.r*html|\.rdoc|\.ri|\.sh|\.sql|\.toml|\.ttf|\.txt|\.xml|\.yml|Gemfile|LICENSE|README|Rakefile|VERSION)$|.*\/share\/doc\/.*|.*\/share\/postgresql\/.*|.*\/share\/terminfo\/.*|.*\/terminfo\/.*' | xargs ldd
+            35252: |
+              Publishing with glob pattern of /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/debian-6/project/chefdk/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-12.04. Publishing will be skipped for: ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform mac_os_x-10.9. Publishing will be skipped for: mac_os_x-10.9, mac_os_x-10.10, mac_os_x-10.11
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform windows-2008r2. Publishing will be skipped for: windows-2008r2, windows-2012, windows-2012r2
+              Published 'chefdk_0.13.3+20160331150426-1_amd64.deb' for debian-6
+              Published 'chefdk_0.13.3+20160331150426-1_amd64.deb' for debian-7
       el-6:
         result: SUCCESS
         timestamp: 2016-03-31 15:04:26 UTC
         duration: 1274.052
         builtOn: chefdk-rhel-6-builder-02167c
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/163/
-        omnibusTiming: {}
+        steps: 1274
+        logExcerpts:
+          consoleText:
+            241: |2
+                                       [Software] I | Loading software `preparation' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/preparation.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `chef-dk' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-6/project/chefdk/role/builder/omnibus/config/software/chef-dk.rb' using overrides from chefdk.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libxml2.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `zlib' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/zlib.rb' using overrides from chefdk.
+            259: |2
+                                       [Software] I | Loading software `libtool' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libtool.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `config_guess' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/config_guess.rb' using overrides from chefdk.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libyaml' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libyaml.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `rubygems' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-6/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/rubygems.rb' using overrides from chefdk.
+            286: |2
+                               [Software: libffi] I | Resolving manifest entry for libffi
+                         [Software: config_guess] I | Resolving manifest entry for config_guess
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
+                              [Software: libyaml] I | Resolving manifest entry for libyaml
+            295: |2
+                           [NullFetcher: bundler] I | Fetching `bundler' (nothing to fetch)
+                              [Software: chef-dk] I | Resolving manifest entry for chef-dk
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [PathFetcher: chef-dk] I | Digesting /var/cache/omnibus/src/chef-dk with sha256
+               [Software: rubygems-customization] I | Resolving manifest entry for rubygems-customization
+            461: |2
+                         [GitCache: config_guess] I | Performing cache restoration
+                         [GitCache: config_guess] I | Calculating tag
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [GitCache: config_guess] I | dep_list: ["preparation", "zlib", "libiconv", "liblzma", "libxml2", "libxslt", "libarchive", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl"]
+                         [GitCache: config_guess] I | tag: config_guess-8a18ae102c446c36399d6b679c85b9e88c8e0cd698c1e363f076dc8c3c0578a7
+            540: |2
+                              [GitCache: chef-dk] I | Performing cache restoration
+                              [GitCache: chef-dk] I | Calculating tag
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [GitCache: chef-dk] I | dep_list: ["preparation", "zlib", "libiconv", "liblzma", "libxml2", "libxslt", "libarchive", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "config_guess", "libtool", "libffi", "libyaml", "ruby", "rubygems", "bundler"]
+                              [GitCache: chef-dk] I | tag: chef-dk-ae6b1a5921cb88305fab2908286d07c44392ae0bd66109b144879769a4f72b2e
+            551: |2
+                               [Builder: chef-dk] D | Creating file `/var/cache/omnibus/src/chef-dk/.bundle/config'
+                               [Builder: chef-dk] I | Set nokogiri build config: 0.0112s
+                               [Builder: chef-dk] I | Use /var/cache/omnibus/src/chef-dk/Gemfile.redhat.lock if it exists: 0.0001s
+                               [Builder: chef-dk] I | Environment:
+            1091: |2
+                                                  D | >= 1.9.2 : nothing to do! Yay!
+                               [Builder: chef-dk] I | bundle `install --without=development --jobs=4 --retry=4 --verbose --frozen': 446.862s
+                               [Builder: chef-dk] I | Environment:
+            9923: |2
+                                                  D | chef-dk (0.13.3) installed.
+                               [Builder: chef-dk] I | Reinstall git-sourced gems properly: 81.537s
+                               [Builder: chef-dk] I | Environment:
+            10146: |2
+                               [Builder: chef-dk] D | Creating file `/var/cache/omnibus/src/chef-dk/Gemfile'
+                               [Builder: chef-dk] I | Fix Gemfile to point at properly-installed gems: 2.3037s
+                               [Builder: chef-dk] I | delete `.bundle/config': 0.0004s
+                               [Builder: chef-dk] I | Environment:
+            10160: |2
+                                                  D | Writing lockfile to /var/cache/omnibus/src/chef-dk/Gemfile.lock
+                               [Builder: chef-dk] I | bundle `lock --update': 7.3921s
+                               [Builder: chef-dk] I | Environment:
+            10174: |2
+                               [Builder: chef-dk] D | Removing file `/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler'
+                               [Builder: chef-dk] I | Delete bundler git cache and git installs: 0.746s
+                               [Builder: chef-dk] I | copy `Gemfile' to `/opt/chefdk': 0.0007s
+                               [Builder: chef-dk] I | copy `Gemfile.lock' to `/opt/chefdk': 0.0003s
+                               [Builder: chef-dk] I | mkdir `/opt/chefdk/bin': 0.0002s
+                               [Builder: chef-dk] I | Environment:
+            10200: |2
+                                                  D | Generated binstub /opt/chefdk/bin/kitchen => /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/test-kitchen-1.6.0/bin/kitchen
+                               [Builder: chef-dk] I | Execute: `/opt/chefdk/embedded/bin/appbundler /var/cache/omnibus/src/chef-dk /opt/chefdk/bin berkshelf chef chef-dk chef-vault foodcritic ohai rubocop test-kitchen': 2.1349s
+                               [Builder: chef-dk] I | Environment:
+            10260: |2
+                                                  D | 1 gem installed
+                               [Builder: chef-dk] I | gem `install ruby-shadow --no-document --verbose': 7.6093s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/docs': 0.0003s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/man': 0.0044s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/doc': 0.0428s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/gtk-doc': 0.004s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/ssl/man': 0.0002s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/man': 0.0001s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/info': 0.0001s
+                               [Builder: chef-dk] I | Build chef-dk: 548.6958s
+                               [Builder: chef-dk] I | Finished build
+            10283: |2
+                [Builder: rubygems-customization] I | Cached builder checksum before build: 18558126e091f37c7c425fa8e73d06dd3808830be7849c4b7bbd1ecf4307c2f2
+                [Builder: rubygems-customization] I | Add Rubygems customization file: 0.1638s
+                [Builder: rubygems-customization] I | Build rubygems-customization: 0.1657s
+                [Builder: rubygems-customization] I | Finished build
+            10298: |2
+                       [Builder: shebang-cleanup] I | Cached builder checksum before build: 9c716f9abe2a90cadd07754deda55da35941ba3ca15786c2c3472bcaed766e54
+                       [Builder: shebang-cleanup] I | Update shebangs to point to embedded Ruby: 0.0188s
+                       [Builder: shebang-cleanup] I | Build shebang-cleanup: 0.0198s
+                       [Builder: shebang-cleanup] I | Finished build
+            10312: |2
+                      [Builder: version-manifest] I | Starting build
+                      [Builder: version-manifest] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitFetcher: config_guess] I | $ git -c core.autocrlf=false rev-parse HEAD
+                                                  I | 3d5db9ebe8607382d17d60faf8853c944fc5f353
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                      [Builder: version-manifest] I | <Dynamic Ruby block>: 0.078s
+                      [Builder: version-manifest] I | Build version-manifest: 0.0789s
+                      [Builder: version-manifest] I | Finished build
+            10332: |2
+                 [Builder: openssl-customization] I | Cached builder checksum before build: a463983ed0df7d6a36b7529274506b134dd3bc2c5085cda764b98c510c214160
+                 [Builder: openssl-customization] I | Add OpenSSL customization file: 0.1827s
+                 [Builder: openssl-customization] I | Build openssl-customization: 0.1837s
+                 [Builder: openssl-customization] I | Finished build
+            10349: |2
+                     [Builder: clean-static-libs] I | Cached builder checksum before build: 81bba509d4c91fe870bfbdcc737bdf83f6bc3a457780d63520adae2b9ddeb9c7
+                     [Builder: clean-static-libs] I | Remove static libraries: 0.9784s
+                     [Builder: clean-static-libs] I | Build clean-static-libs: 0.9801s
+                     [Builder: clean-static-libs] I | Finished build
+            10365: |2
+                                  [GitRepository] I | $ git rev-parse HEAD
+                                                  I | 3ebdf456b2f48ff5fc40972fb204fd364f7dc65c
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitFetcher: config_guess] I | $ git -c core.autocrlf=false rev-parse HEAD
+                                                  I | 3d5db9ebe8607382d17d60faf8853c944fc5f353
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                      [Licensing] W | Project 'chefdk' does not contain licensing information.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                      [Licensing] W | Software 'config_guess' uses license 'GPL-3.0 (with exception)' which is not one of the standard licenses identified in https://opensource.org/licenses/alphabetical. Consider using one of the standard licenses.
+                                      [Licensing] W | Software 'chef-dk' does not contain licensing information.
+                                      [Licensing] W | Software 'rubygems-customization' does not contain licensing information.
+                                      [Licensing] W | Software 'shebang-cleanup' does not contain licensing information.
+                                      [Licensing] W | Software 'openssl-customization' does not contain licensing information.
+                                      [Licensing] W | Software 'clean-static-libs' does not contain licensing information.
+                                    [HealthCheck] I | Running health on chefdk
+                                    [HealthCheck] I | $ find /opt/chefdk/ -type f -regextype posix-extended ! -regex '.*(\.[ch]|\.e*rb|\.gemspec|\.gitignore|\.h*h|\.java|\.js|\.json|\.lock|\.log|\.lua|\.md|\.mkd|\.out|\.pl|\.pm|\.png|\.py[oc]*|\.r*html|\.rdoc|\.ri|\.sh|\.sql|\.toml|\.ttf|\.txt|\.xml|\.yml|Gemfile|LICENSE|README|Rakefile|VERSION)$|.*\/share\/doc\/.*|.*\/share\/postgresql\/.*|.*\/share\/terminfo\/.*|.*\/terminfo\/.*' | xargs ldd
+            39811: |
+              Publishing with glob pattern of /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-6/project/chefdk/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform debian-6. Publishing will be skipped for: debian-6, debian-7, debian-8
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-12.04. Publishing will be skipped for: ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform mac_os_x-10.9. Publishing will be skipped for: mac_os_x-10.9, mac_os_x-10.10, mac_os_x-10.11
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform windows-2008r2. Publishing will be skipped for: windows-2008r2, windows-2012, windows-2012r2
+              Published 'chefdk-0.13.3+20160331150426-1.el6.x86_64.rpm' for el-6
       el-7:
         result: SUCCESS
         timestamp: 2016-03-31 15:04:26 UTC
         duration: 787.217
         builtOn: chefdk-rhel-7-builder-b67c93
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/163/
-        omnibusTiming: {}
+        steps: 787
+        logExcerpts:
+          consoleText:
+            243: |2
+                                       [Software] I | Loading software `preparation' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-7/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/preparation.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `chef-dk' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-7/project/chefdk/role/builder/omnibus/config/software/chef-dk.rb' using overrides from chefdk.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-7/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libxml2.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `zlib' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-7/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/zlib.rb' using overrides from chefdk.
+            261: |2
+                                       [Software] I | Loading software `libtool' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-7/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libtool.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `config_guess' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-7/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/config_guess.rb' using overrides from chefdk.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libyaml' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-7/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libyaml.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `rubygems' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-7/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/rubygems.rb' using overrides from chefdk.
+            286: |2
+                      [Software: pkg-config-lite] I | Resolving manifest entry for pkg-config-lite
+                         [Software: config_guess] I | Resolving manifest entry for config_guess
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
+                              [Software: libtool] I | Resolving manifest entry for libtool
+            297: |2
+                           [NullFetcher: bundler] I | Fetching `bundler' (nothing to fetch)
+                              [Software: chef-dk] I | Resolving manifest entry for chef-dk
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [PathFetcher: chef-dk] I | Digesting /var/cache/omnibus/src/chef-dk with sha256
+               [Software: rubygems-customization] I | Resolving manifest entry for rubygems-customization
+            463: |2
+                         [GitCache: config_guess] I | Performing cache restoration
+                         [GitCache: config_guess] I | Calculating tag
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [GitCache: config_guess] I | dep_list: ["preparation", "zlib", "libiconv", "liblzma", "libxml2", "libxslt", "libarchive", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl"]
+                         [GitCache: config_guess] I | tag: config_guess-8a18ae102c446c36399d6b679c85b9e88c8e0cd698c1e363f076dc8c3c0578a7
+            542: |2
+                              [GitCache: chef-dk] I | Performing cache restoration
+                              [GitCache: chef-dk] I | Calculating tag
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [GitCache: chef-dk] I | dep_list: ["preparation", "zlib", "libiconv", "liblzma", "libxml2", "libxslt", "libarchive", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "config_guess", "libtool", "libffi", "libyaml", "ruby", "rubygems", "bundler"]
+                              [GitCache: chef-dk] I | tag: chef-dk-386945144cfb1e03abd606900ebce6222a9a582bdbaede701e8257e7a4757927
+            553: |2
+                               [Builder: chef-dk] D | Creating file `/var/cache/omnibus/src/chef-dk/.bundle/config'
+                               [Builder: chef-dk] I | Set nokogiri build config: 0.0004s
+                               [Builder: chef-dk] I | Use /var/cache/omnibus/src/chef-dk/Gemfile.redhat.lock if it exists: 0.0s
+                               [Builder: chef-dk] I | Environment:
+            1093: |2
+                                                  D | >= 1.9.2 : nothing to do! Yay!
+                               [Builder: chef-dk] I | bundle `install --without=development --jobs=4 --retry=4 --verbose --frozen': 200.4732s
+                               [Builder: chef-dk] I | Environment:
+            9925: |2
+                                                  D | chef-dk (0.13.3) installed.
+                               [Builder: chef-dk] I | Reinstall git-sourced gems properly: 56.3947s
+                               [Builder: chef-dk] I | Environment:
+            10148: |2
+                               [Builder: chef-dk] D | Creating file `/var/cache/omnibus/src/chef-dk/Gemfile'
+                               [Builder: chef-dk] I | Fix Gemfile to point at properly-installed gems: 1.3853s
+                               [Builder: chef-dk] I | delete `.bundle/config': 0.0002s
+                               [Builder: chef-dk] I | Environment:
+            10162: |2
+                                                  D | Writing lockfile to /var/cache/omnibus/src/chef-dk/Gemfile.lock
+                               [Builder: chef-dk] I | bundle `lock --update': 4.9778s
+                               [Builder: chef-dk] I | Environment:
+            10176: |2
+                               [Builder: chef-dk] D | Removing file `/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler'
+                               [Builder: chef-dk] I | Delete bundler git cache and git installs: 0.4651s
+                               [Builder: chef-dk] I | copy `Gemfile' to `/opt/chefdk': 0.0004s
+                               [Builder: chef-dk] I | copy `Gemfile.lock' to `/opt/chefdk': 0.0002s
+                               [Builder: chef-dk] I | mkdir `/opt/chefdk/bin': 0.0001s
+                               [Builder: chef-dk] I | Environment:
+            10202: |2
+                                                  D | Generated binstub /opt/chefdk/bin/kitchen => /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/test-kitchen-1.6.0/bin/kitchen
+                               [Builder: chef-dk] I | Execute: `/opt/chefdk/embedded/bin/appbundler /var/cache/omnibus/src/chef-dk /opt/chefdk/bin berkshelf chef chef-dk chef-vault foodcritic ohai rubocop test-kitchen': 1.5568s
+                               [Builder: chef-dk] I | Environment:
+            10262: |2
+                                                  D | 1 gem installed
+                               [Builder: chef-dk] I | gem `install ruby-shadow --no-document --verbose': 5.3754s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/docs': 0.0001s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/man': 0.0031s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/doc': 0.026s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/gtk-doc': 0.003s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/ssl/man': 0.0001s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/man': 0.0001s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/info': 0.0001s
+                               [Builder: chef-dk] I | Build chef-dk: 270.6752s
+                               [Builder: chef-dk] I | Finished build
+            10285: |2
+                [Builder: rubygems-customization] I | Cached builder checksum before build: 18558126e091f37c7c425fa8e73d06dd3808830be7849c4b7bbd1ecf4307c2f2
+                [Builder: rubygems-customization] I | Add Rubygems customization file: 0.0975s
+                [Builder: rubygems-customization] I | Build rubygems-customization: 0.0982s
+                [Builder: rubygems-customization] I | Finished build
+            10300: |2
+                       [Builder: shebang-cleanup] I | Cached builder checksum before build: 9c716f9abe2a90cadd07754deda55da35941ba3ca15786c2c3472bcaed766e54
+                       [Builder: shebang-cleanup] I | Update shebangs to point to embedded Ruby: 0.0055s
+                       [Builder: shebang-cleanup] I | Build shebang-cleanup: 0.0064s
+                       [Builder: shebang-cleanup] I | Finished build
+            10314: |2
+                      [Builder: version-manifest] I | Starting build
+                      [Builder: version-manifest] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitFetcher: config_guess] I | $ git -c core.autocrlf=false rev-parse HEAD
+                                                  I | 3d5db9ebe8607382d17d60faf8853c944fc5f353
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                      [Builder: version-manifest] I | <Dynamic Ruby block>: 0.0159s
+                      [Builder: version-manifest] I | Build version-manifest: 0.0175s
+                      [Builder: version-manifest] I | Finished build
+            10334: |2
+                 [Builder: openssl-customization] I | Cached builder checksum before build: a463983ed0df7d6a36b7529274506b134dd3bc2c5085cda764b98c510c214160
+                 [Builder: openssl-customization] I | Add OpenSSL customization file: 0.0929s
+                 [Builder: openssl-customization] I | Build openssl-customization: 0.0975s
+                 [Builder: openssl-customization] I | Finished build
+            10351: |2
+                     [Builder: clean-static-libs] I | Cached builder checksum before build: 81bba509d4c91fe870bfbdcc737bdf83f6bc3a457780d63520adae2b9ddeb9c7
+                     [Builder: clean-static-libs] I | Remove static libraries: 0.2785s
+                     [Builder: clean-static-libs] I | Build clean-static-libs: 0.2796s
+                     [Builder: clean-static-libs] I | Finished build
+            10367: |2
+                                  [GitRepository] I | $ git rev-parse HEAD
+                                                  I | 3ebdf456b2f48ff5fc40972fb204fd364f7dc65c
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitFetcher: config_guess] I | $ git -c core.autocrlf=false rev-parse HEAD
+                                                  I | 3d5db9ebe8607382d17d60faf8853c944fc5f353
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                      [Licensing] W | Project 'chefdk' does not contain licensing information.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                      [Licensing] W | Software 'config_guess' uses license 'GPL-3.0 (with exception)' which is not one of the standard licenses identified in https://opensource.org/licenses/alphabetical. Consider using one of the standard licenses.
+                                      [Licensing] W | Software 'chef-dk' does not contain licensing information.
+                                      [Licensing] W | Software 'rubygems-customization' does not contain licensing information.
+                                      [Licensing] W | Software 'shebang-cleanup' does not contain licensing information.
+                                      [Licensing] W | Software 'openssl-customization' does not contain licensing information.
+                                      [Licensing] W | Software 'clean-static-libs' does not contain licensing information.
+                                    [HealthCheck] I | Running health on chefdk
+                                    [HealthCheck] I | $ find /opt/chefdk/ -type f -regextype posix-extended ! -regex '.*(\.[ch]|\.e*rb|\.gemspec|\.gitignore|\.h*h|\.java|\.js|\.json|\.lock|\.log|\.lua|\.md|\.mkd|\.out|\.pl|\.pm|\.png|\.py[oc]*|\.r*html|\.rdoc|\.ri|\.sh|\.sql|\.toml|\.ttf|\.txt|\.xml|\.yml|Gemfile|LICENSE|README|Rakefile|VERSION)$|.*\/share\/doc\/.*|.*\/share\/postgresql\/.*|.*\/share\/terminfo\/.*|.*\/terminfo\/.*' | xargs ldd
+            38534: |
+              Publishing with glob pattern of /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-7/project/chefdk/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform debian-6. Publishing will be skipped for: debian-6, debian-7, debian-8
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-12.04. Publishing will be skipped for: ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform mac_os_x-10.9. Publishing will be skipped for: mac_os_x-10.9, mac_os_x-10.10, mac_os_x-10.11
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform windows-2008r2. Publishing will be skipped for: windows-2008r2, windows-2012, windows-2012r2
+              Published 'chefdk-0.13.3+20160331150426-1.el7.x86_64.rpm' for el-7
       mac_os_x-10.9:
         result: SUCCESS
         timestamp: 2016-03-31 15:04:26 UTC
         duration: 645.497
         builtOn: chefdk-mac_os_x-10.9-builder-d736d1
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/163/
-        omnibusTiming: {}
+        steps: 645
+        logExcerpts:
+          consoleText:
+            245: |2
+                                       [Software] I | Loading software `preparation' from `/Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/preparation.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `chef-dk' from `/Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/config/software/chef-dk.rb' using overrides from chefdk.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libxml2' from `/Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libxml2.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `zlib' from `/Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/zlib.rb' using overrides from chefdk.
+            263: |2
+                                       [Software] I | Loading software `libtool' from `/Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libtool.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `config_guess' from `/Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/config_guess.rb' using overrides from chefdk.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libyaml' from `/Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libyaml.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `rubygems' from `/Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/rubygems.rb' using overrides from chefdk.
+            288: |2
+                              [Software: openssl] I | Resolving manifest entry for openssl
+                         [Software: config_guess] I | Resolving manifest entry for config_guess
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
+                              [Software: libtool] I | Resolving manifest entry for libtool
+            299: |2
+                           [NullFetcher: bundler] I | Fetching `bundler' (nothing to fetch)
+                              [Software: chef-dk] I | Resolving manifest entry for chef-dk
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [PathFetcher: chef-dk] I | Digesting /var/cache/omnibus/src/chef-dk with sha256
+               [Software: rubygems-customization] I | Resolving manifest entry for rubygems-customization
+            465: |2
+                         [GitCache: config_guess] I | Performing cache restoration
+                         [GitCache: config_guess] I | Calculating tag
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [GitCache: config_guess] I | dep_list: ["preparation", "zlib", "libiconv", "liblzma", "libxml2", "libxslt", "libarchive", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl"]
+                         [GitCache: config_guess] I | tag: config_guess-2418bd560ae3d64a60e2ec6be14b4fe201bdea278e8ff8235884a8d1722e53b1
+            544: |2
+                              [GitCache: chef-dk] I | Performing cache restoration
+                              [GitCache: chef-dk] I | Calculating tag
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [GitCache: chef-dk] I | dep_list: ["preparation", "zlib", "libiconv", "liblzma", "libxml2", "libxslt", "libarchive", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "config_guess", "libtool", "libffi", "libyaml", "ruby", "rubygems", "bundler"]
+                              [GitCache: chef-dk] I | tag: chef-dk-4969811df538a6d1b51f6cd1492f336385a7398b37bd557de5ac84bf2066002c
+            555: |2
+                               [Builder: chef-dk] D | Creating file `/var/cache/omnibus/src/chef-dk/.bundle/config'
+                               [Builder: chef-dk] I | Set nokogiri build config: 0.0011s
+                               [Builder: chef-dk] I | Use /var/cache/omnibus/src/chef-dk/Gemfile.mac_os_x.lock if it exists: 0.0001s
+                               [Builder: chef-dk] I | Environment:
+            1095: |2
+                                                  D | >= 1.9.2 : nothing to do! Yay!
+                               [Builder: chef-dk] I | bundle `install --without=development --jobs=4 --retry=4 --verbose --frozen': 297.7507s
+                               [Builder: chef-dk] I | Environment:
+            9927: |2
+                                                  D | chef-dk (0.13.3) installed.
+                               [Builder: chef-dk] I | Reinstall git-sourced gems properly: 32.9991s
+                               [Builder: chef-dk] I | Environment:
+            10150: |2
+                               [Builder: chef-dk] D | Creating file `/var/cache/omnibus/src/chef-dk/Gemfile'
+                               [Builder: chef-dk] I | Fix Gemfile to point at properly-installed gems: 0.9537s
+                               [Builder: chef-dk] I | delete `.bundle/config': 0.0003s
+                               [Builder: chef-dk] I | Environment:
+            10164: |2
+                                                  D | Writing lockfile to /private/var/cache/omnibus/src/chef-dk/Gemfile.lock
+                               [Builder: chef-dk] I | bundle `lock --update': 2.3663s
+                               [Builder: chef-dk] I | Environment:
+            10178: |2
+                               [Builder: chef-dk] D | Removing file `/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler'
+                               [Builder: chef-dk] I | Delete bundler git cache and git installs: 0.2557s
+                               [Builder: chef-dk] I | copy `Gemfile' to `/opt/chefdk': 0.0006s
+                               [Builder: chef-dk] I | copy `Gemfile.lock' to `/opt/chefdk': 0.0004s
+                               [Builder: chef-dk] I | mkdir `/opt/chefdk/bin': 0.0001s
+                               [Builder: chef-dk] I | Environment:
+            10204: |2
+                                                  D | Generated binstub /opt/chefdk/bin/kitchen => /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/test-kitchen-1.6.0/bin/kitchen
+                               [Builder: chef-dk] I | Execute: `/opt/chefdk/embedded/bin/appbundler /var/cache/omnibus/src/chef-dk /opt/chefdk/bin berkshelf chef chef-dk chef-vault foodcritic ohai rubocop test-kitchen': 0.7412s
+                               [Builder: chef-dk] I | Environment:
+            10264: |2
+                                                  D | 1 gem installed
+                               [Builder: chef-dk] I | gem `install ruby-shadow --no-document --verbose': 2.4983s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/docs': 0.0002s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/man': 0.0042s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/doc': 0.0163s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/gtk-doc': 0.0028s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/ssl/man': 0.0001s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/man': 0.0001s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/info': 0.0001s
+                               [Builder: chef-dk] I | Build chef-dk: 337.6144s
+                               [Builder: chef-dk] I | Finished build
+            10287: |2
+                [Builder: rubygems-customization] I | Cached builder checksum before build: 18558126e091f37c7c425fa8e73d06dd3808830be7849c4b7bbd1ecf4307c2f2
+                [Builder: rubygems-customization] I | Add Rubygems customization file: 0.0701s
+                [Builder: rubygems-customization] I | Build rubygems-customization: 0.0716s
+                [Builder: rubygems-customization] I | Finished build
+            10302: |2
+                       [Builder: shebang-cleanup] I | Cached builder checksum before build: 9c716f9abe2a90cadd07754deda55da35941ba3ca15786c2c3472bcaed766e54
+                       [Builder: shebang-cleanup] I | Update shebangs to point to embedded Ruby: 0.0288s
+                       [Builder: shebang-cleanup] I | Build shebang-cleanup: 0.0297s
+                       [Builder: shebang-cleanup] I | Finished build
+            10316: |2
+                      [Builder: version-manifest] I | Starting build
+                      [Builder: version-manifest] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitFetcher: config_guess] I | $ git -c core.autocrlf=false rev-parse HEAD
+                                                  I | 3d5db9ebe8607382d17d60faf8853c944fc5f353
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                      [Builder: version-manifest] I | <Dynamic Ruby block>: 0.0085s
+                      [Builder: version-manifest] I | Build version-manifest: 0.0104s
+                      [Builder: version-manifest] I | Finished build
+            10336: |2
+                 [Builder: openssl-customization] I | Cached builder checksum before build: a463983ed0df7d6a36b7529274506b134dd3bc2c5085cda764b98c510c214160
+                 [Builder: openssl-customization] I | Add OpenSSL customization file: 0.0766s
+                 [Builder: openssl-customization] I | Build openssl-customization: 0.0789s
+                 [Builder: openssl-customization] I | Finished build
+            10353: |2
+                     [Builder: clean-static-libs] I | Cached builder checksum before build: 81bba509d4c91fe870bfbdcc737bdf83f6bc3a457780d63520adae2b9ddeb9c7
+                     [Builder: clean-static-libs] I | Remove static libraries: 0.5538s
+                     [Builder: clean-static-libs] I | Build clean-static-libs: 0.561s
+                     [Builder: clean-static-libs] I | Finished build
+            10369: |2
+                                  [GitRepository] I | $ git rev-parse HEAD
+                                                  I | 3ebdf456b2f48ff5fc40972fb204fd364f7dc65c
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitFetcher: config_guess] I | $ git -c core.autocrlf=false rev-parse HEAD
+                                                  I | 3d5db9ebe8607382d17d60faf8853c944fc5f353
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                      [Licensing] W | Project 'chefdk' does not contain licensing information.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                      [Licensing] W | Software 'config_guess' uses license 'GPL-3.0 (with exception)' which is not one of the standard licenses identified in https://opensource.org/licenses/alphabetical. Consider using one of the standard licenses.
+                                      [Licensing] W | Software 'chef-dk' does not contain licensing information.
+                                      [Licensing] W | Software 'rubygems-customization' does not contain licensing information.
+                                      [Licensing] W | Software 'shebang-cleanup' does not contain licensing information.
+                                      [Licensing] W | Software 'openssl-customization' does not contain licensing information.
+                                      [Licensing] W | Software 'clean-static-libs' does not contain licensing information.
+                                    [HealthCheck] I | Running health on chefdk
+                                    [HealthCheck] I | $ find /opt/chefdk/ -type f | egrep '.(dylib|bundle)$' | xargs otool -L
+            15417: |
+              Publishing with glob pattern of /Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform debian-6. Publishing will be skipped for: debian-6, debian-7, debian-8
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-12.04. Publishing will be skipped for: ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform windows-2008r2. Publishing will be skipped for: windows-2008r2, windows-2012, windows-2012r2
+              Published 'chefdk-0.13.3+20160331150426-1.dmg' for mac_os_x-10.9
+              Published 'chefdk-0.13.3+20160331150426-1.dmg' for mac_os_x-10.10
       ubuntu-12.04:
         result: SUCCESS
         timestamp: 2016-03-31 15:04:26 UTC
         duration: 818.566
         builtOn: chefdk-ubuntu-12.04-builder-efc2e0
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/163/
-        omnibusTiming: {}
+        steps: 818
+        logExcerpts:
+          consoleText:
+            240: |2
+                                       [Software] I | Loading software `preparation' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/ubuntu-12.04/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/preparation.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `chef-dk' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/ubuntu-12.04/project/chefdk/role/builder/omnibus/config/software/chef-dk.rb' using overrides from chefdk.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/ubuntu-12.04/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libxml2.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `zlib' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/ubuntu-12.04/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/zlib.rb' using overrides from chefdk.
+            258: |2
+                                       [Software] I | Loading software `libtool' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/ubuntu-12.04/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libtool.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `config_guess' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/ubuntu-12.04/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/config_guess.rb' using overrides from chefdk.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `libyaml' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/ubuntu-12.04/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/libyaml.rb' using overrides from chefdk.
+                                       [Software] I | Loading software `rubygems' from `/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/ubuntu-12.04/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-e8124b356fed/config/software/rubygems.rb' using overrides from chefdk.
+            285: |2
+                      [Software: pkg-config-lite] I | Resolving manifest entry for pkg-config-lite
+                              [Software: libtool] I | Resolving manifest entry for libtool
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "http://git.savannah.gnu.org/r/config.git" "master*"
+                              [Software: libyaml] I | Resolving manifest entry for libyaml
+            294: |2
+                           [NullFetcher: bundler] I | Fetching `bundler' (nothing to fetch)
+                              [Software: chef-dk] I | Resolving manifest entry for chef-dk
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [PathFetcher: chef-dk] I | Digesting /var/cache/omnibus/src/chef-dk with sha256
+               [Software: rubygems-customization] I | Resolving manifest entry for rubygems-customization
+            460: |2
+                         [GitCache: config_guess] I | Performing cache restoration
+                         [GitCache: config_guess] I | Calculating tag
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [GitCache: config_guess] I | dep_list: ["preparation", "zlib", "libiconv", "liblzma", "libxml2", "libxslt", "libarchive", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl"]
+                         [GitCache: config_guess] I | tag: config_guess-fdf9bf08173f74faf5ff22c2a54b2a5831251348f60929e8415a285daa64b729
+            539: |2
+                              [GitCache: chef-dk] I | Performing cache restoration
+                              [GitCache: chef-dk] I | Calculating tag
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [GitCache: chef-dk] I | dep_list: ["preparation", "zlib", "libiconv", "liblzma", "libxml2", "libxslt", "libarchive", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "config_guess", "libtool", "libffi", "libyaml", "ruby", "rubygems", "bundler"]
+                              [GitCache: chef-dk] I | tag: chef-dk-3a4d465f0227d9d146c16b24c6fe7c4a6642c86cc389964e62147a3daacf1bd6
+            550: |2
+                               [Builder: chef-dk] D | Creating file `/var/cache/omnibus/src/chef-dk/.bundle/config'
+                               [Builder: chef-dk] I | Set nokogiri build config: 0.0004s
+                               [Builder: chef-dk] I | Use /var/cache/omnibus/src/chef-dk/Gemfile.ubuntu.lock if it exists: 0.0s
+                               [Builder: chef-dk] I | Environment:
+            1090: |2
+                                                  D | >= 1.9.2 : nothing to do! Yay!
+                               [Builder: chef-dk] I | bundle `install --without=development --jobs=4 --retry=4 --verbose --frozen': 216.3882s
+                               [Builder: chef-dk] I | Environment:
+            9922: |2
+                                                  D | chef-dk (0.13.3) installed.
+                               [Builder: chef-dk] I | Reinstall git-sourced gems properly: 62.9666s
+                               [Builder: chef-dk] I | Environment:
+            10145: |2
+                               [Builder: chef-dk] D | Creating file `/var/cache/omnibus/src/chef-dk/Gemfile'
+                               [Builder: chef-dk] I | Fix Gemfile to point at properly-installed gems: 1.5728s
+                               [Builder: chef-dk] I | delete `.bundle/config': 0.0002s
+                               [Builder: chef-dk] I | Environment:
+            10159: |2
+                                                  D | Writing lockfile to /var/cache/omnibus/src/chef-dk/Gemfile.lock
+                               [Builder: chef-dk] I | bundle `lock --update': 5.9843s
+                               [Builder: chef-dk] I | Environment:
+            10173: |2
+                               [Builder: chef-dk] D | Removing file `/opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler'
+                               [Builder: chef-dk] I | Delete bundler git cache and git installs: 0.5554s
+                               [Builder: chef-dk] I | copy `Gemfile' to `/opt/chefdk': 0.0003s
+                               [Builder: chef-dk] I | copy `Gemfile.lock' to `/opt/chefdk': 0.0002s
+                               [Builder: chef-dk] I | mkdir `/opt/chefdk/bin': 0.0001s
+                               [Builder: chef-dk] I | Environment:
+            10199: |2
+                                                  D | Generated binstub /opt/chefdk/bin/kitchen => /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/test-kitchen-1.6.0/bin/kitchen
+                               [Builder: chef-dk] I | Execute: `/opt/chefdk/embedded/bin/appbundler /var/cache/omnibus/src/chef-dk /opt/chefdk/bin berkshelf chef chef-dk chef-vault foodcritic ohai rubocop test-kitchen': 1.7821s
+                               [Builder: chef-dk] I | Environment:
+            10259: |2
+                                                  D | 1 gem installed
+                               [Builder: chef-dk] I | gem `install ruby-shadow --no-document --verbose': 5.2444s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/docs': 0.0002s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/man': 0.0039s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/doc': 0.0544s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/share/gtk-doc': 0.0116s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/ssl/man': 0.0001s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/man': 0.0006s
+                               [Builder: chef-dk] I | delete `/opt/chefdk/embedded/info': 0.0001s
+                               [Builder: chef-dk] I | Build chef-dk: 294.5908s
+                               [Builder: chef-dk] I | Finished build
+            10282: |2
+                [Builder: rubygems-customization] I | Cached builder checksum before build: 18558126e091f37c7c425fa8e73d06dd3808830be7849c4b7bbd1ecf4307c2f2
+                [Builder: rubygems-customization] I | Add Rubygems customization file: 0.0901s
+                [Builder: rubygems-customization] I | Build rubygems-customization: 0.091s
+                [Builder: rubygems-customization] I | Finished build
+            10297: |2
+                       [Builder: shebang-cleanup] I | Cached builder checksum before build: 9c716f9abe2a90cadd07754deda55da35941ba3ca15786c2c3472bcaed766e54
+                       [Builder: shebang-cleanup] I | Update shebangs to point to embedded Ruby: 0.0045s
+                       [Builder: shebang-cleanup] I | Build shebang-cleanup: 0.0053s
+                       [Builder: shebang-cleanup] I | Finished build
+            10311: |2
+                      [Builder: version-manifest] I | Starting build
+                      [Builder: version-manifest] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitFetcher: config_guess] I | $ git -c core.autocrlf=false rev-parse HEAD
+                                                  I | 3d5db9ebe8607382d17d60faf8853c944fc5f353
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                      [Builder: version-manifest] I | <Dynamic Ruby block>: 0.0157s
+                      [Builder: version-manifest] I | Build version-manifest: 0.017s
+                      [Builder: version-manifest] I | Finished build
+            10331: |2
+                 [Builder: openssl-customization] I | Cached builder checksum before build: a463983ed0df7d6a36b7529274506b134dd3bc2c5085cda764b98c510c214160
+                 [Builder: openssl-customization] I | Add OpenSSL customization file: 0.0831s
+                 [Builder: openssl-customization] I | Build openssl-customization: 0.0837s
+                 [Builder: openssl-customization] I | Finished build
+            10348: |2
+                     [Builder: clean-static-libs] I | Cached builder checksum before build: 81bba509d4c91fe870bfbdcc737bdf83f6bc3a457780d63520adae2b9ddeb9c7
+                     [Builder: clean-static-libs] I | Remove static libraries: 0.3909s
+                     [Builder: clean-static-libs] I | Build clean-static-libs: 0.3923s
+                     [Builder: clean-static-libs] I | Finished build
+            10364: |2
+                                  [GitRepository] I | $ git rev-parse HEAD
+                                                  I | 3ebdf456b2f48ff5fc40972fb204fd364f7dc65c
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                       [GitFetcher: config_guess] I | $ git -c core.autocrlf=false rev-parse HEAD
+                                                  I | 3d5db9ebe8607382d17d60faf8853c944fc5f353
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                      [Licensing] W | Project 'chefdk' does not contain licensing information.
+                         [Software: config_guess] W | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: chef-dk] W | Version local_source for software chef-dk was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                      [Licensing] W | Software 'config_guess' uses license 'GPL-3.0 (with exception)' which is not one of the standard licenses identified in https://opensource.org/licenses/alphabetical. Consider using one of the standard licenses.
+                                      [Licensing] W | Software 'chef-dk' does not contain licensing information.
+                                      [Licensing] W | Software 'rubygems-customization' does not contain licensing information.
+                                      [Licensing] W | Software 'shebang-cleanup' does not contain licensing information.
+                                      [Licensing] W | Software 'openssl-customization' does not contain licensing information.
+                                      [Licensing] W | Software 'clean-static-libs' does not contain licensing information.
+                                    [HealthCheck] I | Running health on chefdk
+                                    [HealthCheck] I | $ find /opt/chefdk/ -type f -regextype posix-extended ! -regex '.*(\.[ch]|\.e*rb|\.gemspec|\.gitignore|\.h*h|\.java|\.js|\.json|\.lock|\.log|\.lua|\.md|\.mkd|\.out|\.pl|\.pm|\.png|\.py[oc]*|\.r*html|\.rdoc|\.ri|\.sh|\.sql|\.toml|\.ttf|\.txt|\.xml|\.yml|Gemfile|LICENSE|README|Rakefile|VERSION)$|.*\/share\/doc\/.*|.*\/share\/postgresql\/.*|.*\/share\/terminfo\/.*|.*\/terminfo\/.*' | xargs ldd
+            35087: |
+              Publishing with glob pattern of /home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/ubuntu-12.04/project/chefdk/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform debian-6. Publishing will be skipped for: debian-6, debian-7, debian-8
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform mac_os_x-10.9. Publishing will be skipped for: mac_os_x-10.9, mac_os_x-10.10, mac_os_x-10.11
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform windows-2008r2. Publishing will be skipped for: windows-2008r2, windows-2012, windows-2012r2
+              Published 'chefdk_0.13.3+20160331150426-1_amd64.deb' for ubuntu-12.04
+              Published 'chefdk_0.13.3+20160331150426-1_amd64.deb' for ubuntu-14.04
   chefdk-trigger-ad_hoc:
     result: SUCCESS
     timestamp: 2016-03-31 15:04:07 UTC
@@ -148,7 +899,19 @@ stages:
     - shortDescription: Started by user John Keiser
       userId: jkeiser
       userName: John Keiser
-    parameters:
-      GIT_REF: jk/chef-dk-gemset
-      EXPIRE_CACHE: false
     runs: {}
+parameters:
+  ADHOC_BUILD: 'true'
+  APPEND_TIMESTAMP: true
+  DELIVERY_CHANGE: ''
+  DELIVERY_SHA: ''
+  EXPIRE_CACHE: false
+  GIT_BRANCH: origin/jk/chef-dk-gemset
+  GIT_COMMIT: 3ebdf456b2f48ff5fc40972fb204fd364f7dc65c
+  GIT_REF: jk/chef-dk-gemset
+  PIPELINE_NAME: chefdk
+  PIPELINE_TRIGGER_BUILD_NUMBER: '90'
+  PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-ad_hoc
+  PROJECT: chefdk
+  PROMOTE: 'false'
+  RELEASE_BUILD: 'false'

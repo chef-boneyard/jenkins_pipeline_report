@@ -19,21 +19,6 @@ stages:
     url: http://manhattan.ci.chef.co/job/chefdk-build/501/
     causes:
     - shortDescription: Aborted by mwrock
-    parameters:
-      GIT_REF: intermediate/cd/FLOW-369
-      APPEND_TIMESTAMP: true
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      EXPIRE_CACHE: false
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chefdk
-      GIT_COMMIT: 8c6e0cfa63aa69e27aca3f890e112deb41d221ea
-      PROJECT: chefdk
-      PROMOTE: 'false'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '352'
-      ADHOC_BUILD: 'true'
-      GIT_BRANCH: origin/intermediate/cd/FLOW-369
-      PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-ad_hoc
     runs:
       el-7:
         result: FAILURE
@@ -41,48 +26,51 @@ stages:
         duration: 12.248
         builtOn: chefdk-rhel-7-builder-b67c93
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/501/
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousBlocks:
-            200: |
+        failedIn:
+          jenkins: Invoke XShell command
+        steps: 12
+        logExcerpts:
+          consoleText:
+            201: |
               You have deleted from the Gemfile:
               * source: https://github.com/chef/omnibus-software.git (at praj/fixing_license)
               Build step 'Invoke XShell command' marked build as failure
               Archiving artifacts
               Recording fingerprints
-        omnibusTiming: {}
       mac_os_x-10.9:
         result: FAILURE
         timestamp: 2016-05-26 22:18:42 UTC
         duration: 7.389
         builtOn: chefdk-mac_os_x-10.9-builder-d736d1
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/501/
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousBlocks:
-            202: |
+        failedIn:
+          jenkins: Invoke XShell command
+        steps: 7
+        logExcerpts:
+          consoleText:
+            203: |
               * source: https://github.com/chef/omnibus-software.git (at
               praj/fixing_license@ac517c5)
               Build step 'Invoke XShell command' marked build as failure
               Archiving artifacts
               Recording fingerprints
-        omnibusTiming: {}
       ubuntu-12.04:
         result: FAILURE
         timestamp: 2016-05-26 22:18:42 UTC
         duration: 8.057
         builtOn: chefdk-ubuntu-12.04-builder-efc2e0
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/501/
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousBlocks:
-            198: |
+        failedIn:
+          jenkins: Invoke XShell command
+        steps: 8
+        logExcerpts:
+          consoleText:
+            199: |
               You have deleted from the Gemfile:
               * source: https://github.com/chef/omnibus-software.git (at praj/fixing_license)
               Build step 'Invoke XShell command' marked build as failure
               Archiving artifacts
               Recording fingerprints
-        omnibusTiming: {}
   chefdk-trigger-ad_hoc:
     result: SUCCESS
     timestamp: 2016-05-26 22:18:32 UTC
@@ -92,7 +80,19 @@ stages:
     - shortDescription: Started by user Matt Wrock
       userId: mwrock
       userName: Matt Wrock
-    parameters:
-      GIT_REF: intermediate/cd/FLOW-369
-      EXPIRE_CACHE: false
     runs: {}
+parameters:
+  ADHOC_BUILD: 'true'
+  APPEND_TIMESTAMP: true
+  DELIVERY_CHANGE: ''
+  DELIVERY_SHA: ''
+  EXPIRE_CACHE: false
+  GIT_BRANCH: origin/intermediate/cd/FLOW-369
+  GIT_COMMIT: 8c6e0cfa63aa69e27aca3f890e112deb41d221ea
+  GIT_REF: intermediate/cd/FLOW-369
+  PIPELINE_NAME: chefdk
+  PIPELINE_TRIGGER_BUILD_NUMBER: '352'
+  PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-ad_hoc
+  PROJECT: chefdk
+  PROMOTE: 'false'
+  RELEASE_BUILD: 'false'

@@ -4,7 +4,7 @@ timestamp: 2016-03-03 23:40:10 UTC
 duration: 4083.732
 url: http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll/66/
 version: 12.4.2+20160303234025
-git_ref: 
+git_ref: origin/master
 git_commit: 7b0c896f4be845783c56da464fd5b26bc860c2ff
 stages:
   chef-server-12-promote:
@@ -12,104 +12,12 @@ stages:
     timestamp: 2016-03-04 00:48:24 UTC
     duration: 7.596
     url: http://wilson.ci.chef.co/job/chef-server-12-promote/78/
-    parameters:
-      OMNIBUS_BUILD_VERSION: 12.4.2+20160303234025
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      GIT_REF: origin/master
-      APPEND_TIMESTAMP: true
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-server-12
-      GIT_COMMIT: 7b0c896f4be845783c56da464fd5b26bc860c2ff
-      PROJECT: chef-server
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '66'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
-      BUILD_USER: SCMTrigger
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "ubuntu-10.04": [
-              "ubuntu-10.04",
-              "ubuntu-12.04",
-              "ubuntu-14.04"
-            ],
-            "el-5": [
-              "el-5"
-            ],
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ]
-          },
-          "test_to_build": {
-            "ubuntu-10.04": "ubuntu-10.04",
-            "ubuntu-12.04": "ubuntu-10.04",
-            "ubuntu-14.04": "ubuntu-10.04",
-            "el-5": "el-5",
-            "el-6": "el-6",
-            "el-7": "el-7"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '150'
-      PIPELINE_BUILD_JOB_NAME: chef-server-12-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-git_poll-66/66/2016-03-03_23-40-10
     runs: {}
   chef-server-12-test:
     result: SUCCESS
     timestamp: 2016-03-04 00:02:11 UTC
     duration: 2766.469
     url: http://wilson.ci.chef.co/job/chef-server-12-test/121/
-    parameters:
-      OMNIBUS_BUILD_VERSION: 12.4.2+20160303234025
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      GIT_REF: origin/master
-      APPEND_TIMESTAMP: true
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-server-12
-      GIT_COMMIT: 7b0c896f4be845783c56da464fd5b26bc860c2ff
-      PROJECT: chef-server
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '66'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
-      BUILD_USER: SCMTrigger
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "ubuntu-10.04": [
-              "ubuntu-10.04",
-              "ubuntu-12.04",
-              "ubuntu-14.04"
-            ],
-            "el-5": [
-              "el-5"
-            ],
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ]
-          },
-          "test_to_build": {
-            "ubuntu-10.04": "ubuntu-10.04",
-            "ubuntu-12.04": "ubuntu-10.04",
-            "ubuntu-14.04": "ubuntu-10.04",
-            "el-5": "el-5",
-            "el-6": "el-6",
-            "el-7": "el-7"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '150'
-      PIPELINE_BUILD_JOB_NAME: chef-server-12-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-git_poll-66/66/2016-03-03_23-40-10
     runs:
       el-5:
         result: SUCCESS
@@ -117,62 +25,241 @@ stages:
         duration: 2665.662
         builtOn: chef-server-rhel-5-tester-4e6602
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-5,project=chef-server,role=tester/121/
-        omnibusTiming: {}
+        steps:
+          total: 2665
+          before (setup time): 310
+          chef-client private-chef::default: 218
+          pedant: 1999
+          after (cleanup time): 12
+        logExcerpts:
+          consoleText:
+            365: |2
+
+              [2016-03-03T19:07:21-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-03-03T19:07:21-05:00] INFO: Chef-client pid: 27243
+            370: |
+              [2016-03-03T19:07:22-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-03-03T19:07:22-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-03-03T19:07:22-05:00] INFO: Starting Chef Run for ip-10-194-15-112.us-west-2.compute.internal
+            2352: |
+              [2016-03-03T19:10:59-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-03-03T19:10:59-05:00] INFO: Chef Run complete in 216.61276 seconds
+              [2016-03-03T19:10:59-05:00] INFO: Running report handlers
+            2381: |2
+
+              Starting Pedant Run: 2016-03-04 00:13:05 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            11069: |2
+
+              Finished in 33 minutes 19 seconds (files took 7.09 seconds to load)
+              4105 examples, 0 failures, 98 pending
       el-6:
         result: SUCCESS
         timestamp: 2016-03-04 00:02:11 UTC
         duration: 2765.715
         builtOn: chef-server-rhel-6-tester-8151c8
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-6,project=chef-server,role=tester/121/
-        omnibusTiming: {}
+        steps:
+          total: 2765
+          chef-client private-chef::default: 374
+          pedant: 2116
+          after (cleanup time): 149
+        logExcerpts:
+          consoleText:
+            359: |2
+
+              [2016-03-03T19:02:10-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-03-03T19:02:10-05:00] INFO: Chef-client pid: 15763
+            364: |
+              [2016-03-03T19:02:13-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-03-03T19:02:13-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-03-03T19:02:13-05:00] INFO: Starting Chef Run for ip-10-194-9-233.us-west-2.compute.internal
+            2335: |
+              [2016-03-03T19:08:23-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-03-03T19:08:24-05:00] INFO: Chef Run complete in 370.187062155 seconds
+              [2016-03-03T19:08:24-05:00] INFO: Running report handlers
+            2364: |2
+
+              Starting Pedant Run: 2016-03-04 00:10:31 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            11052: |2
+
+              Finished in 35 minutes 16 seconds (files took 8.82 seconds to load)
+              4105 examples, 0 failures, 98 pending
       el-7:
         result: SUCCESS
         timestamp: 2016-03-04 00:02:11 UTC
         duration: 2201.753
         builtOn: chef-server-rhel-7-tester-d586ce
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-7,project=chef-server,role=tester/121/
-        omnibusTiming: {}
+        steps:
+          total: 2201
+          before (setup time): 175
+          chef-client private-chef::default: 256
+          pedant: 1620
+          after (cleanup time): 22
+        logExcerpts:
+          consoleText:
+            53536: |
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/int1-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/file-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/domain-i.ri: remove failed: No such file or directory
+            62675: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception: remove failed: No such file or directory
+            63624: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/MYMETA.json: remove failed: No such file or directory
+            64007: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Dir/Base.pm: remove failed: No such file or directory
+            67824: |
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/typemap: remove failed: No such file or directory
+            77020: |2
+
+              [2016-03-03T19:05:06-05:00] INFO: *** Chef 12.8.0 ***
+              [2016-03-03T19:05:06-05:00] INFO: Chef-client pid: 22470
+            77025: |
+              [2016-03-03T19:05:08-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-03-03T19:05:08-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-03-03T19:05:08-05:00] INFO: Starting Chef Run for ip-10-194-10-226.us-west-2.compute.internal
+            78981: |
+              [2016-03-03T19:09:22-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-03-03T19:09:22-05:00] INFO: Chef Run complete in 253.613228303 seconds
+              [2016-03-03T19:09:22-05:00] INFO: Running report handlers
+            79010: |2
+
+              Starting Pedant Run: 2016-03-04 00:11:30 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            87698: |2
+
+              Finished in 27 minutes 0 seconds (files took 6.5 seconds to load)
+              4105 examples, 0 failures, 98 pending
       ubuntu-10.04:
         result: SUCCESS
         timestamp: 2016-03-04 00:02:11 UTC
         duration: 2388.178
         builtOn: chef-server-ubuntu-10.04-tester-f80d1f
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=tester/121/
-        omnibusTiming: {}
+        steps:
+          total: 2388
+          before (setup time): 142
+          chef-client private-chef::default: 180
+          pedant: 1919
+          after (cleanup time): 21
+        logExcerpts:
+          consoleText:
+            393: |2
+
+              [2016-03-04T00:04:33+00:00] INFO: *** Chef 12.8.0 ***
+              [2016-03-04T00:04:33+00:00] INFO: Chef-client pid: 30710
+            398: |
+              [2016-03-04T00:04:39+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-03-04T00:04:39+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-03-04T00:04:39+00:00] INFO: Starting Chef Run for ip-10-194-13-26.us-west-2.compute.internal
+            2361: |
+              [2016-03-04T00:07:32+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-03-04T00:07:33+00:00] INFO: Chef Run complete in 173.313475092 seconds
+              [2016-03-04T00:07:33+00:00] INFO: Running report handlers
+            2390: |2
+
+              Starting Pedant Run: 2016-03-04 00:09:39 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            11078: |2
+
+              Finished in 31 minutes 59 seconds (files took 8.05 seconds to load)
+              4105 examples, 0 failures, 98 pending
       ubuntu-12.04:
         result: SUCCESS
         timestamp: 2016-03-04 00:02:11 UTC
         duration: 2586.306
         builtOn: chef-server-ubuntu-12.04-tester-28c735
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-server,role=tester/121/
-        omnibusTiming: {}
+        steps:
+          total: 2586
+          before (setup time): 160
+          chef-client private-chef::default: 368
+          pedant: 1910
+          after (cleanup time): 22
+        logExcerpts:
+          consoleText:
+            390: |2
+
+              [2016-03-04T00:04:51+00:00] INFO: *** Chef 12.8.0 ***
+              [2016-03-04T00:04:51+00:00] INFO: Chef-client pid: 14824
+            395: |
+              [2016-03-04T00:04:52+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-03-04T00:04:52+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-03-04T00:04:52+00:00] INFO: Starting Chef Run for ip-10-194-11-179.us-west-2.compute.internal
+            2358: |
+              [2016-03-04T00:10:59+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-03-04T00:10:59+00:00] INFO: Chef Run complete in 366.845338115 seconds
+              [2016-03-04T00:10:59+00:00] INFO: Running report handlers
+            2387: |2
+
+              Starting Pedant Run: 2016-03-04 00:13:05 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            11075: |2
+
+              Finished in 31 minutes 50 seconds (files took 7.94 seconds to load)
+              4105 examples, 0 failures, 98 pending
       ubuntu-14.04:
         result: SUCCESS
         timestamp: 2016-03-04 00:02:11 UTC
         duration: 2344.975
         builtOn: chef-server-ubuntu-14.04-tester-69fc04
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-server,role=tester/121/
-        omnibusTiming: {}
+        steps:
+          total: 2344
+          before (setup time): 125
+          chef-client private-chef::default: 185
+          pedant: 1889
+          after (cleanup time): 18
+        logExcerpts:
+          consoleText:
+            411: |2
+
+              [2016-03-04T00:04:16+00:00] INFO: *** Chef 12.8.0 ***
+              [2016-03-04T00:04:16+00:00] INFO: Chef-client pid: 11019
+            416: |
+              [2016-03-04T00:04:18+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-03-04T00:04:18+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-03-04T00:04:18+00:00] INFO: Starting Chef Run for ip-10-194-13-226.us-west-2.compute.internal
+            2379: |
+              [2016-03-04T00:07:20+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-03-04T00:07:21+00:00] INFO: Chef Run complete in 182.256330549 seconds
+              [2016-03-04T00:07:21+00:00] INFO: Running report handlers
+            2408: |2
+
+              Starting Pedant Run: 2016-03-04 00:09:28 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            11096: |2
+
+              Finished in 31 minutes 29 seconds (files took 7.97 seconds to load)
+              4105 examples, 0 failures, 98 pending
   chef-server-12-build:
     result: SUCCESS
     timestamp: 2016-03-03 23:40:25 UTC
     duration: 1300.716
     url: http://wilson.ci.chef.co/job/chef-server-12-build/150/
-    parameters:
-      GIT_REF: origin/master
-      APPEND_TIMESTAMP: true
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-server-12
-      GIT_COMMIT: 7b0c896f4be845783c56da464fd5b26bc860c2ff
-      PROJECT: chef-server
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '66'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
-      BUILD_USER: SCMTrigger
     runs:
       el-5:
         result: SUCCESS
@@ -180,28 +267,946 @@ stages:
         duration: 1289.832
         builtOn: chef-server-rhel-5-builder-dd11b6
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/150/
-        omnibusTiming: {}
+        steps: 1289
+        logExcerpts:
+          consoleText:
+            289: |2
+                                       [Software] I | Loading software `rest-client-gem' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/config/software/rest-client-gem.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `ctl-man' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/config/software/ctl-man.rb' using overrides from chef-server.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `openresty' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/openresty.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `pcre' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/pcre.rb' using overrides from chef-server.
+            304: |2
+                                       [Software] I | Loading software `opscode-solr4' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/config/software/opscode-solr4.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `server-jre' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/server-jre.rb' using overrides from chef-server.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `opscode-expander' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/config/software/opscode-expander.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `pg-gem' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/pg-gem.rb' using overrides from chef-server.
+            333: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/berkshelf2.rb' using overrides from chef-server.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/nokogiri.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/libxml2.rb' using overrides from chef-server.
+            340: |2
+                                       [Software] I | Loading software `chef-ha-plugin-config' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/config/software/chef-ha-plugin-config.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `chef' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/chef.rb' using overrides from chef-server.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `ohai' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/ohai.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `appbundler' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/appbundler.rb' using overrides from chef-server.
+            381: |2
+                               [Software: erlang] I | Resolving manifest entry for erlang
+                           [Software: server-jre] I | Resolving manifest entry for server-jre
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                                  I | 44654b47da9b853064ce1c1baf53188aca089404  refs/tags/0.4.2
+                                                  I | e75976be857b62af71ea807062fe38e39effd226  refs/tags/0.4.2^{}
+            390: |2
+                            [NullFetcher: pg-gem] I | Fetching `pg-gem' (nothing to fetch)
+                            [Software: knife-opc] I | Resolving manifest entry for knife-opc
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "git://github.com/opscode/knife-opc.git" "master*"
+                                 [Software: popt] I | Resolving manifest entry for popt
+            415: |2
+                        [NullFetcher: berkshelf2] I | Fetching `berkshelf2' (nothing to fetch)
+                                 [Software: ohai] I | Resolving manifest entry for ohai
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/opscode/ohai.git" "master*"
+                           [Software: appbundler] I | Resolving manifest entry for appbundler
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/chef/appbundler.git" "master*"
+                 [Software: private-chef-scripts] I | Resolving manifest entry for private-chef-scripts
+              [PathFetcher: private-chef-scripts] I | Digesting /var/cache/omnibus/src/private-chef-scripts with sha256
+              [PathFetcher: private-chef-scripts] I | Digesting /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/files/private-chef-scripts with sha256
+                              [Software: ctl-man] I | Resolving manifest entry for ctl-man
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: redis-gem] I | Resolving manifest entry for redis-gem
+                         [NullFetcher: redis-gem] I | Fetching `redis-gem' (nothing to fetch)
+            480: |
+              [NullFetcher: chef-ha-plugin-config] I | Fetching `chef-ha-plugin-config' (nothing to fetch)
+                                 [Software: chef] I | Resolving manifest entry for chef
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/chef/chef.git" "master*"
+                                                  I | 0b835a0a92509c5d9ad4123d320024da0005dac3  refs/heads/master
+                               [GitFetcher: chef] I | $ git cat-file -t 0b835a0a92509c5d9ad4123d320024da0005dac3
+                                                  I | fatal: git cat-file: could not get object info
+                               [GitFetcher: chef] D | unable to determine presence of commit 0b835a0a92509c5d9ad4123d320024da0005dac3
+                               [GitFetcher: chef] I | Fetching from `https://github.com/chef/chef.git'
+            791: |2
+                           [GitCache: server-jre] I | Performing cache restoration
+                           [GitCache: server-jre] I | Calculating tag
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitCache: server-jre] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang"]
+                           [GitCache: server-jre] I | tag: server-jre-d9ef58df0d725acde58065b7ef93fb4b9bedf0e36eb2f399676e106281ddd20d
+            815: |2
+                            [GitCache: knife-opc] I | Performing cache restoration
+                            [GitCache: knife-opc] I | Calculating tag
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [GitCache: knife-opc] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem"]
+                            [GitCache: knife-opc] I | tag: knife-opc-606fd6814851668eae3f4ff0f54a952b479b31c69a2238f65a37451c0a7c065c
+            972: |2
+                             [GitCache: nokogiri] I | Calculating tag
+                             [GitCache: nokogiri] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt"]
+                             [Software: nokogiri] W | No version given! This is probably a bad thing. I am going to assume the version `0.0.0', but that is most certainly not your desired behavior. If git caching seems off, this is probably why.
+                             [GitCache: nokogiri] I | tag: nokogiri-a0ed12a27977cb4bf960e64c7db735f09687e5c46c9ace3d0a20f169ee9e3d7d
+                             [GitCache: nokogiri] I | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/opscode --work-tree=/opt/opscode tag -l "nokogiri-a0ed12a27977cb4bf960e64c7db735f09687e5c46c9ace3d0a20f169ee9e3d7d"
+            994: |2
+                                 [GitCache: ohai] I | Performing cache restoration
+                                 [GitCache: ohai] I | Calculating tag
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [GitCache: ohai] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2"]
+                                 [GitCache: ohai] I | tag: ohai-d82595965e6fbd7cdd5fa5914b6b9068307f6a5c8d88d4ecc1c1b06a074f00f8
+            1007: |2
+                           [GitCache: appbundler] I | Performing cache restoration
+                           [GitCache: appbundler] I | Calculating tag
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitCache: appbundler] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai"]
+                           [GitCache: appbundler] I | tag: appbundler-80c53dfdf09141fc4152e660c64685b43711d9204ba2b5be0233070a67cae821
+            1031: |2
+                              [GitCache: ctl-man] I | Performing cache restoration
+                              [GitCache: ctl-man] I | Calculating tag
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [GitCache: ctl-man] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai", "appbundler", "private-chef-scripts"]
+                              [GitCache: ctl-man] I | tag: ctl-man-83f74f54b915879ec707569354b8dd0f4c989b67577eeced571a4d447aa19a71
+            1272: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.5866s
+                [Builder: private-chef-cookbooks] I | Environment:
+            1291: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 4.138s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0008s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 5.7545s
+                [Builder: private-chef-cookbooks] I | Finished build
+            1304: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0002s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0018s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            1430: |2
+                                                  D | Install hooks by running `overcommit --install` in your Git repository
+                                  [Builder: chef] I | bundle `install --without server docgen maintenance travis': 37.933s
+                                  [Builder: chef] I | Environment:
+            1504: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 4.8109s
+                                  [Builder: chef] I | Environment:
+            1530: |2
+                                                  D |   File: chef-12.8.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 3.1948s
+                                  [Builder: chef] I | Environment:
+            3477: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem --no-ri --no-rdoc --verbose': 8.1271s
+                                  [Builder: chef] I | Environment:
+            3524: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 2.6913s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/chef/chef' '/opt/opscode/bin'
+            3531: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.8.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 0.2548s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/ohai/ohai' '/opt/opscode/bin'
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.11.0/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.2867s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0002s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.0666s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0125s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0024s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0008s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 57.3981s
+                                  [Builder: chef] I | Finished build
+            3551: |2
+                                 [GitCache: chef] I | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/opscode --work-tree=/opt/opscode add -A -f
+                                 [GitCache: chef] I | Calculating tag
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [GitCache: chef] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai", "appbundler", "private-chef-scripts", "ctl-man", "redis-gem", "openresty-lpeg", "runit", "chef_backup-gem", "rabbitmq", "redis", "opscode-solr4", "opscode-expander", "gpg-key", "keepalived", "bookshelf", "oc_bifrost", "oc_id", "logrotate", "partybus", "opscode-chef-mover", "oc_erchef", "oc-chef-pedant", "private-chef-upgrades", "private-chef-cookbooks", "chef-ha-plugin-config"]
+                                 [GitCache: chef] I | tag: chef-f7eebe5255ea436d4ce92b5465ab80f62322b20886313ce701071ad9c59578fc
+            3563: |2
+                        [GitFetcher: omnibus-ctl] I | $ git rev-parse HEAD
+                                                  I | e75976be857b62af71ea807062fe38e39effd226
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                          [GitFetcher: knife-opc] I | $ git rev-parse HEAD
+                                                  I | 0b8fa0faedbd136d3f9a2a02efcbdc64004978d0
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                               [GitFetcher: ohai] I | $ git rev-parse HEAD
+                                                  I | 8352f67de678a77fc02322e22bb9b1aa7620925c
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [GitFetcher: appbundler] I | $ git rev-parse HEAD
+                                                  I | 959b9037389049ad966951c2b9dac36b88bcaa9a
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                               [GitFetcher: chef] I | $ git rev-parse HEAD
+                                                  I | 0b835a0a92509c5d9ad4123d320024da0005dac3
+            10040: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/warning%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/str3-i.ri:
+            94861: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Tutorial.pod'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Folder.pm:
+            96423: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Config-GitLike-1.16/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/IO-Pager-0.36/MYMETA.json:
+            98492: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Simple/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/NoWarnings/.packlist:
+            103956: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/bigint.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/Class/Struct.pm:
+            130635: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/EntityDecl/external_id-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/warning%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/str3-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri
+            163990: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/More.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Tutorial.pod
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Folder.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/UseAllModules.pm
+            164513: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Config-GitLike-1.16/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Config-GitLike-1.16/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/IO-Pager-0.36/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/IO-Pager-0.36/install.json
+            165278: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Dir/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Simple/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/NoWarnings/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Harness/.packlist
+            167148: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Devel/InnerPackage.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/bigint.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Class/Struct.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/sigtrap.pm
+            176246: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-10.04. Publishing will be skipped for: ubuntu-10.04, ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+              Published 'chef-server-core-12.4.2+20160303234025-1.el5.x86_64.rpm' for el-5
       el-6:
         result: SUCCESS
         timestamp: 2016-03-03 23:40:25 UTC
         duration: 1023.356
         builtOn: chef-server-rhel-6-builder-f4b641
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/150/
-        omnibusTiming: {}
+        steps: 1023
+        logExcerpts:
+          consoleText:
+            286: |2
+                                       [Software] I | Loading software `rest-client-gem' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/config/software/rest-client-gem.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `ctl-man' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/config/software/ctl-man.rb' using overrides from chef-server.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `openresty' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/openresty.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `pcre' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/pcre.rb' using overrides from chef-server.
+            301: |2
+                                       [Software] I | Loading software `opscode-solr4' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/config/software/opscode-solr4.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `server-jre' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/server-jre.rb' using overrides from chef-server.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `opscode-expander' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/config/software/opscode-expander.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `pg-gem' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/pg-gem.rb' using overrides from chef-server.
+            330: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/berkshelf2.rb' using overrides from chef-server.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/nokogiri.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/libxml2.rb' using overrides from chef-server.
+            337: |2
+                                       [Software] I | Loading software `chef-ha-plugin-config' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/config/software/chef-ha-plugin-config.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `chef' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/chef.rb' using overrides from chef-server.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `ohai' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/ohai.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `appbundler' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/appbundler.rb' using overrides from chef-server.
+            378: |2
+                               [Software: erlang] I | Resolving manifest entry for erlang
+                           [Software: server-jre] I | Resolving manifest entry for server-jre
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                                  I | 44654b47da9b853064ce1c1baf53188aca089404  refs/tags/0.4.2
+                                                  I | e75976be857b62af71ea807062fe38e39effd226  refs/tags/0.4.2^{}
+            387: |2
+                            [NullFetcher: pg-gem] I | Fetching `pg-gem' (nothing to fetch)
+                            [Software: knife-opc] I | Resolving manifest entry for knife-opc
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "git://github.com/opscode/knife-opc.git" "master*"
+                                 [Software: popt] I | Resolving manifest entry for popt
+            412: |2
+                        [NullFetcher: berkshelf2] I | Fetching `berkshelf2' (nothing to fetch)
+                                 [Software: ohai] I | Resolving manifest entry for ohai
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/opscode/ohai.git" "master*"
+                           [Software: appbundler] I | Resolving manifest entry for appbundler
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/chef/appbundler.git" "master*"
+                 [Software: private-chef-scripts] I | Resolving manifest entry for private-chef-scripts
+              [PathFetcher: private-chef-scripts] I | Digesting /var/cache/omnibus/src/private-chef-scripts with sha256
+              [PathFetcher: private-chef-scripts] I | Digesting /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/files/private-chef-scripts with sha256
+                              [Software: ctl-man] I | Resolving manifest entry for ctl-man
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: redis-gem] I | Resolving manifest entry for redis-gem
+                         [NullFetcher: redis-gem] I | Fetching `redis-gem' (nothing to fetch)
+            476: |
+              [NullFetcher: chef-ha-plugin-config] I | Fetching `chef-ha-plugin-config' (nothing to fetch)
+                                 [Software: chef] I | Resolving manifest entry for chef
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/chef/chef.git" "master*"
+              [PathFetcher: private-chef-cookbooks] I | Digesting /var/cache/omnibus/src/private-chef-cookbooks with sha256
+                                                  I | 0b835a0a92509c5d9ad4123d320024da0005dac3  refs/heads/master
+                               [GitFetcher: chef] I | $ git cat-file -t 0b835a0a92509c5d9ad4123d320024da0005dac3
+                                                  I | fatal: git cat-file: could not get object info
+                               [GitFetcher: chef] D | unable to determine presence of commit 0b835a0a92509c5d9ad4123d320024da0005dac3
+                               [GitFetcher: chef] I | Fetching from `https://github.com/chef/chef.git'
+            788: |2
+                           [GitCache: server-jre] I | Performing cache restoration
+                           [GitCache: server-jre] I | Calculating tag
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitCache: server-jre] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang"]
+                           [GitCache: server-jre] I | tag: server-jre-8b39a917fa9926f99be038479c2b372b1822a912744b39dde1213616b7d8625e
+            812: |2
+                            [GitCache: knife-opc] I | Performing cache restoration
+                            [GitCache: knife-opc] I | Calculating tag
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [GitCache: knife-opc] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem"]
+                            [GitCache: knife-opc] I | tag: knife-opc-d337e9ecc8d6226a5764c0f609f420439006a4fddb890536181f8184589c667e
+            969: |2
+                             [GitCache: nokogiri] I | Calculating tag
+                             [GitCache: nokogiri] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt"]
+                             [Software: nokogiri] W | No version given! This is probably a bad thing. I am going to assume the version `0.0.0', but that is most certainly not your desired behavior. If git caching seems off, this is probably why.
+                             [GitCache: nokogiri] I | tag: nokogiri-63070bef8ada84a57478877a81c6a5a66f0b697742fa11b46805a93df5ad837e
+                             [GitCache: nokogiri] I | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/opscode --work-tree=/opt/opscode tag -l "nokogiri-63070bef8ada84a57478877a81c6a5a66f0b697742fa11b46805a93df5ad837e"
+            991: |2
+                                 [GitCache: ohai] I | Performing cache restoration
+                                 [GitCache: ohai] I | Calculating tag
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [GitCache: ohai] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2"]
+                                 [GitCache: ohai] I | tag: ohai-855d49e624111761372a3f224e1a901f23fe9a6358ae792feb69ae90e4bb0e41
+            1004: |2
+                           [GitCache: appbundler] I | Performing cache restoration
+                           [GitCache: appbundler] I | Calculating tag
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitCache: appbundler] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai"]
+                           [GitCache: appbundler] I | tag: appbundler-0185c8ae57fde04915cf48d4a0f654505af5db52ad2498fff65174564f82b2b3
+            1028: |2
+                              [GitCache: ctl-man] I | Performing cache restoration
+                              [GitCache: ctl-man] I | Calculating tag
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [GitCache: ctl-man] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai", "appbundler", "private-chef-scripts"]
+                              [GitCache: ctl-man] I | tag: ctl-man-fe5522112cb917841548b9c4d9ac9d13caa629d47313fef7127381d57ca1edad
+            1269: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.3922s
+                [Builder: private-chef-cookbooks] I | Environment:
+            1288: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 5.9154s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0009s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 7.3287s
+                [Builder: private-chef-cookbooks] I | Finished build
+            1301: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0003s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0018s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            1427: |2
+                                                  D | Install hooks by running `overcommit --install` in your Git repository
+                                  [Builder: chef] I | bundle `install --without server docgen maintenance travis': 46.7001s
+                                  [Builder: chef] I | Environment:
+            1501: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 5.3011s
+                                  [Builder: chef] I | Environment:
+            1527: |2
+                                                  D |   File: chef-12.8.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 4.9476s
+                                  [Builder: chef] I | Environment:
+            3474: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem --no-ri --no-rdoc --verbose': 8.0578s
+                                  [Builder: chef] I | Environment:
+            3521: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 3.1551s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/chef/chef' '/opt/opscode/bin'
+            3528: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.8.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 0.2875s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/ohai/ohai' '/opt/opscode/bin'
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.11.0/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.3766s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0004s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.1264s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0185s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0043s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0014s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 68.9965s
+                                  [Builder: chef] I | Finished build
+            3548: |2
+                                 [GitCache: chef] I | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/opscode --work-tree=/opt/opscode add -A -f
+                                 [GitCache: chef] I | Calculating tag
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [GitCache: chef] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai", "appbundler", "private-chef-scripts", "ctl-man", "redis-gem", "openresty-lpeg", "runit", "chef_backup-gem", "rabbitmq", "redis", "opscode-solr4", "opscode-expander", "gpg-key", "keepalived", "bookshelf", "oc_bifrost", "oc_id", "logrotate", "partybus", "opscode-chef-mover", "oc_erchef", "oc-chef-pedant", "private-chef-upgrades", "private-chef-cookbooks", "chef-ha-plugin-config"]
+                                 [GitCache: chef] I | tag: chef-5486d58a9655f39f01ce62d5d3655c12cbfdf709e3f86d9dc867bb798857b1ca
+            3560: |2
+                        [GitFetcher: omnibus-ctl] I | $ git rev-parse HEAD
+                                                  I | e75976be857b62af71ea807062fe38e39effd226
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                          [GitFetcher: knife-opc] I | $ git rev-parse HEAD
+                                                  I | 0b8fa0faedbd136d3f9a2a02efcbdc64004978d0
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                               [GitFetcher: ohai] I | $ git rev-parse HEAD
+                                                  I | 8352f67de678a77fc02322e22bb9b1aa7620925c
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [GitFetcher: appbundler] I | $ git rev-parse HEAD
+                                                  I | 959b9037389049ad966951c2b9dac36b88bcaa9a
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                               [GitFetcher: chef] I | $ git rev-parse HEAD
+                                                  I | 0b835a0a92509c5d9ad4123d320024da0005dac3
+            82942: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-10.04. Publishing will be skipped for: ubuntu-10.04, ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-5. Publishing will be skipped for: el-5
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+              Published 'chef-server-core-12.4.2+20160303234025-1.el6.x86_64.rpm' for el-6
       el-7:
         result: SUCCESS
         timestamp: 2016-03-03 23:40:25 UTC
         duration: 1115.805
         builtOn: chef-server-rhel-7-builder-1d11c3
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-7,project=chef-server,role=builder/150/
-        omnibusTiming: {}
+        steps: 1115
+        logExcerpts:
+          consoleText:
+            288: |2
+                                       [Software] I | Loading software `rest-client-gem' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/config/software/rest-client-gem.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `ctl-man' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/config/software/ctl-man.rb' using overrides from chef-server.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `openresty' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/openresty.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `pcre' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/pcre.rb' using overrides from chef-server.
+            303: |2
+                                       [Software] I | Loading software `opscode-solr4' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/config/software/opscode-solr4.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `server-jre' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/server-jre.rb' using overrides from chef-server.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `opscode-expander' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/config/software/opscode-expander.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `pg-gem' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/pg-gem.rb' using overrides from chef-server.
+            332: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/berkshelf2.rb' using overrides from chef-server.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/nokogiri.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/libxml2.rb' using overrides from chef-server.
+            339: |2
+                                       [Software] I | Loading software `chef-ha-plugin-config' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/config/software/chef-ha-plugin-config.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `chef' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/chef.rb' using overrides from chef-server.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `ohai' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/ohai.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `appbundler' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/appbundler.rb' using overrides from chef-server.
+            380: |2
+                               [Software: erlang] I | Resolving manifest entry for erlang
+                           [Software: server-jre] I | Resolving manifest entry for server-jre
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                               [Software: pg-gem] I | Resolving manifest entry for pg-gem
+                            [NullFetcher: pg-gem] I | Fetching `pg-gem' (nothing to fetch)
+                            [Software: knife-opc] I | Resolving manifest entry for knife-opc
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "git://github.com/opscode/knife-opc.git" "master*"
+                                 [Software: popt] I | Resolving manifest entry for popt
+            413: |2
+                        [NullFetcher: berkshelf2] I | Fetching `berkshelf2' (nothing to fetch)
+                                 [Software: ohai] I | Resolving manifest entry for ohai
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/opscode/ohai.git" "master*"
+                                                  I | commit
+                           [Software: appbundler] I | Resolving manifest entry for appbundler
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/chef/appbundler.git" "master*"
+                 [Software: private-chef-scripts] I | Resolving manifest entry for private-chef-scripts
+              [PathFetcher: private-chef-scripts] I | Digesting /var/cache/omnibus/src/private-chef-scripts with sha256
+              [PathFetcher: private-chef-scripts] I | Digesting /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/files/private-chef-scripts with sha256
+                              [Software: ctl-man] I | Resolving manifest entry for ctl-man
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: redis-gem] I | Resolving manifest entry for redis-gem
+                         [NullFetcher: redis-gem] I | Fetching `redis-gem' (nothing to fetch)
+            478: |
+              [NullFetcher: chef-ha-plugin-config] I | Fetching `chef-ha-plugin-config' (nothing to fetch)
+                                 [Software: chef] I | Resolving manifest entry for chef
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/chef/chef.git" "master*"
+                         [PathFetcher: oc_erchef] I | Digesting /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/files/../../src/oc_erchef with sha256
+                                                  I | 0b835a0a92509c5d9ad4123d320024da0005dac3  refs/heads/master
+                               [GitFetcher: chef] I | $ git cat-file -t 0b835a0a92509c5d9ad4123d320024da0005dac3
+                                                  I | fatal: git cat-file: could not get object info
+                               [GitFetcher: chef] D | unable to determine presence of commit 0b835a0a92509c5d9ad4123d320024da0005dac3
+                               [GitFetcher: chef] I | Fetching from `https://github.com/chef/chef.git'
+            790: |2
+                           [GitCache: server-jre] I | Performing cache restoration
+                           [GitCache: server-jre] I | Calculating tag
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitCache: server-jre] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang"]
+                           [GitCache: server-jre] I | tag: server-jre-83fd8c98ffd108c1398be14c7afc0d05f67f5dcd1be7d71e1aa006d364afc6c4
+            814: |2
+                            [GitCache: knife-opc] I | Performing cache restoration
+                            [GitCache: knife-opc] I | Calculating tag
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [GitCache: knife-opc] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem"]
+                            [GitCache: knife-opc] I | tag: knife-opc-62f5fc9e91e60018c4cb89c9acdd1d8ba1aca05e37a9cb57263ec74244389cea
+            971: |2
+                             [GitCache: nokogiri] I | Calculating tag
+                             [GitCache: nokogiri] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt"]
+                             [Software: nokogiri] W | No version given! This is probably a bad thing. I am going to assume the version `0.0.0', but that is most certainly not your desired behavior. If git caching seems off, this is probably why.
+                             [GitCache: nokogiri] I | tag: nokogiri-80056dec39cbebdf2fcbadb7abc0deb2e363c0c40741b1686cd760427b1c3e1f
+                             [GitCache: nokogiri] I | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/opscode --work-tree=/opt/opscode tag -l "nokogiri-80056dec39cbebdf2fcbadb7abc0deb2e363c0c40741b1686cd760427b1c3e1f"
+            993: |2
+                                 [GitCache: ohai] I | Performing cache restoration
+                                 [GitCache: ohai] I | Calculating tag
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [GitCache: ohai] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2"]
+                                 [GitCache: ohai] I | tag: ohai-78a3a37e9d6532355876b17f69e606fe47383b886ebe5041b77b0326e83b9487
+            1006: |2
+                           [GitCache: appbundler] I | Performing cache restoration
+                           [GitCache: appbundler] I | Calculating tag
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitCache: appbundler] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai"]
+                           [GitCache: appbundler] I | tag: appbundler-1053d123158855eb1cea2fcf4954f4bd60614681c050fb995c9da7ba84a41766
+            1030: |2
+                              [GitCache: ctl-man] I | Performing cache restoration
+                              [GitCache: ctl-man] I | Calculating tag
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [GitCache: ctl-man] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai", "appbundler", "private-chef-scripts"]
+                              [GitCache: ctl-man] I | tag: ctl-man-09adc1af8c4c08fbd7555a63e3e48470ed4394f1e8ac8c886481296c824af9e8
+            1271: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.804s
+                [Builder: private-chef-cookbooks] I | Environment:
+            1290: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 4.8518s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0006s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 6.6823s
+                [Builder: private-chef-cookbooks] I | Finished build
+            1303: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0001s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0008s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            1429: |2
+                                                  D | Install hooks by running `overcommit --install` in your Git repository
+                                  [Builder: chef] I | bundle `install --without server docgen maintenance travis': 37.386s
+                                  [Builder: chef] I | Environment:
+            1503: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 3.8596s
+                                  [Builder: chef] I | Environment:
+            1529: |2
+                                                  D |   File: chef-12.8.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 4.1877s
+                                  [Builder: chef] I | Environment:
+            3476: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem --no-ri --no-rdoc --verbose': 6.6515s
+                                  [Builder: chef] I | Environment:
+            3523: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 2.2147s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/chef/chef' '/opt/opscode/bin'
+            3530: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.8.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 0.199s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/ohai/ohai' '/opt/opscode/bin'
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.11.0/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.2237s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.0951s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0165s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0034s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0009s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 54.8511s
+                                  [Builder: chef] I | Finished build
+            3550: |2
+                                 [GitCache: chef] I | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/opscode --work-tree=/opt/opscode add -A -f
+                                 [GitCache: chef] I | Calculating tag
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [GitCache: chef] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai", "appbundler", "private-chef-scripts", "ctl-man", "redis-gem", "openresty-lpeg", "runit", "chef_backup-gem", "rabbitmq", "redis", "opscode-solr4", "opscode-expander", "gpg-key", "keepalived", "bookshelf", "oc_bifrost", "oc_id", "logrotate", "partybus", "opscode-chef-mover", "oc_erchef", "oc-chef-pedant", "private-chef-upgrades", "private-chef-cookbooks", "chef-ha-plugin-config"]
+                                 [GitCache: chef] I | tag: chef-d247ac97b7a97976c5606891dbafec98b85fe09bf13f843934861d7b3df02dbc
+            3562: |2
+                        [GitFetcher: omnibus-ctl] I | $ git rev-parse HEAD
+                                                  I | e75976be857b62af71ea807062fe38e39effd226
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                          [GitFetcher: knife-opc] I | $ git rev-parse HEAD
+                                                  I | 0b8fa0faedbd136d3f9a2a02efcbdc64004978d0
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                               [GitFetcher: ohai] I | $ git rev-parse HEAD
+                                                  I | 8352f67de678a77fc02322e22bb9b1aa7620925c
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [GitFetcher: appbundler] I | $ git rev-parse HEAD
+                                                  I | 959b9037389049ad966951c2b9dac36b88bcaa9a
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                               [GitFetcher: chef] I | $ git rev-parse HEAD
+                                                  I | 0b835a0a92509c5d9ad4123d320024da0005dac3
+            51958: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/file-i.ri:
+            74714: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm:
+            80912: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json:
+            81412: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist:
+            87729: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm:
+            168519: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/domain-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/file-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/int1-i.ri
+            176572: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/typemap
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/File/CheckTree.pm
+            178976: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/install.json
+            179239: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Dir/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/Contents/.packlist
+            181378: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Dir/Base.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File/Contents.pm
+            204446: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-10.04. Publishing will be skipped for: ubuntu-10.04, ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-5. Publishing will be skipped for: el-5
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+              Published 'chef-server-core-12.4.2+20160303234025-1.el7.x86_64.rpm' for el-7
       ubuntu-10.04:
         result: SUCCESS
         timestamp: 2016-03-03 23:40:25 UTC
         duration: 943.334
         builtOn: chef-server-ubuntu-10.04-builder-6f743f
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=builder/150/
-        omnibusTiming: {}
+        steps: 943
+        logExcerpts:
+          consoleText:
+            285: |2
+                                       [Software] I | Loading software `rest-client-gem' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/config/software/rest-client-gem.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `ctl-man' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/config/software/ctl-man.rb' using overrides from chef-server.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `openresty' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/openresty.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `pcre' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/pcre.rb' using overrides from chef-server.
+            300: |2
+                                       [Software] I | Loading software `opscode-solr4' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/config/software/opscode-solr4.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `server-jre' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/server-jre.rb' using overrides from chef-server.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `opscode-expander' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/config/software/opscode-expander.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `pg-gem' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/pg-gem.rb' using overrides from chef-server.
+            329: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/berkshelf2.rb' using overrides from chef-server.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/nokogiri.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/libxml2.rb' using overrides from chef-server.
+            336: |2
+                                       [Software] I | Loading software `chef-ha-plugin-config' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/config/software/chef-ha-plugin-config.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `chef' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/chef.rb' using overrides from chef-server.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                       [Software] I | Loading software `ohai' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/ohai.rb' using overrides from chef-server.
+                                       [Software] I | Loading software `appbundler' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-18d954a46771/config/software/appbundler.rb' using overrides from chef-server.
+            377: |2
+                               [Software: erlang] I | Resolving manifest entry for erlang
+                           [Software: server-jre] I | Resolving manifest entry for server-jre
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                               [Software: pg-gem] I | Resolving manifest entry for pg-gem
+                            [NullFetcher: pg-gem] I | Fetching `pg-gem' (nothing to fetch)
+                            [Software: knife-opc] I | Resolving manifest entry for knife-opc
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "git://github.com/opscode/knife-opc.git" "master*"
+                                                  I | 44654b47da9b853064ce1c1baf53188aca089404  refs/tags/0.4.2
+            411: |2
+                        [NullFetcher: berkshelf2] I | Fetching `berkshelf2' (nothing to fetch)
+                                 [Software: ohai] I | Resolving manifest entry for ohai
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/opscode/ohai.git" "master*"
+                           [Software: appbundler] I | Resolving manifest entry for appbundler
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/chef/appbundler.git" "master*"
+                 [Software: private-chef-scripts] I | Resolving manifest entry for private-chef-scripts
+              [PathFetcher: private-chef-scripts] I | Digesting /var/cache/omnibus/src/private-chef-scripts with sha256
+              [PathFetcher: private-chef-scripts] I | Digesting /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/files/private-chef-scripts with sha256
+                              [Software: ctl-man] I | Resolving manifest entry for ctl-man
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: redis-gem] I | Resolving manifest entry for redis-gem
+                         [NullFetcher: redis-gem] I | Fetching `redis-gem' (nothing to fetch)
+            476: |
+              [NullFetcher: chef-ha-plugin-config] I | Fetching `chef-ha-plugin-config' (nothing to fetch)
+                                 [Software: chef] I | Resolving manifest entry for chef
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                     [GitFetcher] I | $ git ls-remote "https://github.com/chef/chef.git" "master*"
+                                                  I | 0b835a0a92509c5d9ad4123d320024da0005dac3  refs/heads/master
+                               [GitFetcher: chef] I | $ git cat-file -t 0b835a0a92509c5d9ad4123d320024da0005dac3
+                                                  I | fatal: git cat-file: could not get object info
+                               [GitFetcher: chef] D | unable to determine presence of commit 0b835a0a92509c5d9ad4123d320024da0005dac3
+                               [GitFetcher: chef] I | Fetching from `https://github.com/chef/chef.git'
+            787: |2
+                           [GitCache: server-jre] I | Performing cache restoration
+                           [GitCache: server-jre] I | Calculating tag
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitCache: server-jre] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang"]
+                           [GitCache: server-jre] I | tag: server-jre-d5da303cbadbc3a28b357c2f637a8d4f3df31ed49ef56bd042966b7314cb38ba
+            811: |2
+                            [GitCache: knife-opc] I | Performing cache restoration
+                            [GitCache: knife-opc] I | Calculating tag
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [GitCache: knife-opc] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem"]
+                            [GitCache: knife-opc] I | tag: knife-opc-34e4869755e891105ca68d46ff145fe3ebf34753c85ff6c6cf9a6f0fa5d033d6
+            968: |2
+                             [GitCache: nokogiri] I | Calculating tag
+                             [GitCache: nokogiri] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt"]
+                             [Software: nokogiri] W | No version given! This is probably a bad thing. I am going to assume the version `0.0.0', but that is most certainly not your desired behavior. If git caching seems off, this is probably why.
+                             [GitCache: nokogiri] I | tag: nokogiri-f7394b5bd6b6825e9bffa11cee1d3f0fc2d9ac0799fb202fe624ef95f6b6a3f8
+                             [GitCache: nokogiri] I | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/opscode --work-tree=/opt/opscode tag -l "nokogiri-f7394b5bd6b6825e9bffa11cee1d3f0fc2d9ac0799fb202fe624ef95f6b6a3f8"
+            990: |2
+                                 [GitCache: ohai] I | Performing cache restoration
+                                 [GitCache: ohai] I | Calculating tag
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [GitCache: ohai] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2"]
+                                 [GitCache: ohai] I | tag: ohai-f906c82fa3c6a75b15d6c157f522a6fb5cb34a9443a5bd7bffa7a34b127f8e7f
+            1003: |2
+                           [GitCache: appbundler] I | Performing cache restoration
+                           [GitCache: appbundler] I | Calculating tag
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [GitCache: appbundler] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai"]
+                           [GitCache: appbundler] I | tag: appbundler-6e2d51e7c7e63f733bbac6dadfb8aec9ee263b06505e7e67c6b31e6d668dcde4
+            1027: |2
+                              [GitCache: ctl-man] I | Performing cache restoration
+                              [GitCache: ctl-man] I | Calculating tag
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                              [GitCache: ctl-man] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai", "appbundler", "private-chef-scripts"]
+                              [GitCache: ctl-man] I | tag: ctl-man-53e6397291e5b331bcab4da217510765cc67cd18ef1015b8fccff591b848bf9e
+            1268: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.1288s
+                [Builder: private-chef-cookbooks] I | Environment:
+            1287: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 6.243s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0005s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 7.3916s
+                [Builder: private-chef-cookbooks] I | Finished build
+            1300: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0003s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0015s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            1426: |2
+                                                  D | Install hooks by running `overcommit --install` in your Git repository
+                                  [Builder: chef] I | bundle `install --without server docgen maintenance travis': 38.2595s
+                                  [Builder: chef] I | Environment:
+            1500: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 5.2065s
+                                  [Builder: chef] I | Environment:
+            1526: |2
+                                                  D |   File: chef-12.8.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 2.9486s
+                                  [Builder: chef] I | Environment:
+            3473: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem --no-ri --no-rdoc --verbose': 7.4222s
+                                  [Builder: chef] I | Environment:
+            3520: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 2.9562s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/chef/chef' '/opt/opscode/bin'
+            3527: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.8.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 0.264s
+                                  [Builder: chef] I | $ /opt/opscode/embedded/bin/appbundler '/var/cache/omnibus/src/ohai/ohai' '/opt/opscode/bin'
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.11.0/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.3061s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0003s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.0826s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0241s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0033s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0007s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 57.4919s
+                                  [Builder: chef] I | Finished build
+            3547: |2
+                                 [GitCache: chef] I | $ git -c core.autocrlf=false --git-dir=/var/cache/omnibus/cache/git_cache/opt/opscode --work-tree=/opt/opscode add -A -f
+                                 [GitCache: chef] I | Calculating tag
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                                 [GitCache: chef] I | dep_list: ["preparation", "ncurses", "libedit", "zlib", "cacerts", "xproto", "util-macros", "pkg-config-lite", "makedepend", "openssl", "libtool", "libffi", "libyaml", "libiconv", "ruby", "rubygems", "highline-gem", "sequel-gem", "bundler", "omnibus-ctl", "rest-client", "private-chef-ctl", "pcre", "openresty", "libossp-uuid", "postgresql92", "erlang", "server-jre", "pg-gem", "knife-opc", "popt", "perl", "cpanminus", "sqitch", "bzip2", "python", "nodejs", "knife-ec-backup", "gecode", "perl_pg_driver", "liblzma", "libxml2", "libxslt", "nokogiri", "berkshelf2", "ohai", "appbundler", "private-chef-scripts", "ctl-man", "redis-gem", "openresty-lpeg", "runit", "chef_backup-gem", "rabbitmq", "redis", "opscode-solr4", "opscode-expander", "gpg-key", "keepalived", "bookshelf", "oc_bifrost", "oc_id", "logrotate", "partybus", "opscode-chef-mover", "oc_erchef", "oc-chef-pedant", "private-chef-upgrades", "private-chef-cookbooks", "chef-ha-plugin-config"]
+                                 [GitCache: chef] I | tag: chef-4b69413b7cbd88ac09edbb151863f4f847a45a931bd6992d94e8d43f72bad609
+            3559: |2
+                        [GitFetcher: omnibus-ctl] I | $ git rev-parse HEAD
+                                                  I | e75976be857b62af71ea807062fe38e39effd226
+                              [Software: ctl-man] W | Version 7b25fa4de4d6663dafe2cbe853ada29eee67a6a6 for software ctl-man was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                           [Software: server-jre] W | Version 8u74 for software server-jre was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                            [Software: knife-opc] W | Version master for software knife-opc was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                          [GitFetcher: knife-opc] I | $ git rev-parse HEAD
+                                                  I | 0b8fa0faedbd136d3f9a2a02efcbdc64004978d0
+                                 [Software: ohai] W | Version master for software ohai was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                               [GitFetcher: ohai] I | $ git rev-parse HEAD
+                                                  I | 8352f67de678a77fc02322e22bb9b1aa7620925c
+                           [Software: appbundler] W | Version master for software appbundler was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                         [GitFetcher: appbundler] I | $ git rev-parse HEAD
+                                                  I | 959b9037389049ad966951c2b9dac36b88bcaa9a
+                                 [Software: chef] W | Version master for software chef was not parseable. Comparison methods such as #satisfies? will not be available for this version.
+                               [GitFetcher: chef] I | $ git rev-parse HEAD
+                                                  I | 0b835a0a92509c5d9ad4123d320024da0005dac3
+            72381: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-5. Publishing will be skipped for: el-5
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+              Published 'chef-server-core_12.4.2+20160303234025-1_amd64.deb' for ubuntu-10.04
+              Published 'chef-server-core_12.4.2+20160303234025-1_amd64.deb' for ubuntu-12.04
   chef-server-12-trigger-git_poll:
     result: SUCCESS
     timestamp: 2016-03-03 23:40:10 UTC
@@ -209,5 +1214,50 @@ stages:
     url: http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll/66/
     causes:
     - shortDescription: Started by an SCM change
-    parameters: {}
     runs: {}
+parameters:
+  APPEND_TIMESTAMP: true
+  BUILD_USER: SCMTrigger
+  DELIVERY_CHANGE: ''
+  DELIVERY_SHA: ''
+  EXPIRE_CACHE: 'false'
+  GIT_BRANCH: origin/master
+  GIT_COMMIT: 7b0c896f4be845783c56da464fd5b26bc860c2ff
+  GIT_REF: origin/master
+  OMNIBUS_BUILD_VERSION: 12.4.2+20160303234025
+  PIPELINE_BUILD_JOB_NAME: chef-server-12-build
+  PIPELINE_BUILD_JOB_NUMBER: '150'
+  PIPELINE_NAME: chef-server-12
+  PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-git_poll-66/66/2016-03-03_23-40-10
+  PIPELINE_TRIGGER_BUILD_NUMBER: '66'
+  PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
+  PLATFORM_MAPPINGS_JSON: |-
+    {
+      "build_to_test": {
+        "ubuntu-10.04": [
+          "ubuntu-10.04",
+          "ubuntu-12.04",
+          "ubuntu-14.04"
+        ],
+        "el-5": [
+          "el-5"
+        ],
+        "el-6": [
+          "el-6"
+        ],
+        "el-7": [
+          "el-7"
+        ]
+      },
+      "test_to_build": {
+        "ubuntu-10.04": "ubuntu-10.04",
+        "ubuntu-12.04": "ubuntu-10.04",
+        "ubuntu-14.04": "ubuntu-10.04",
+        "el-5": "el-5",
+        "el-6": "el-6",
+        "el-7": "el-7"
+      }
+    }
+  PROJECT: chef-server
+  PROMOTE: 'true'
+  RELEASE_BUILD: 'false'

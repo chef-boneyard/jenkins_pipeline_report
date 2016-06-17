@@ -19,21 +19,6 @@ stages:
     url: http://manhattan.ci.chef.co/job/chefdk-build/494/
     causes:
     - shortDescription: Aborted by tylercloke
-    parameters:
-      GIT_REF: UW-31/delivery-cli-1.8.0-compatibility
-      APPEND_TIMESTAMP: true
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      EXPIRE_CACHE: false
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chefdk
-      GIT_COMMIT: 4434338add82192ee19123aed44fcc74f6587a83
-      PROJECT: chefdk
-      PROMOTE: 'false'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '344'
-      ADHOC_BUILD: 'true'
-      GIT_BRANCH: origin/UW-31/delivery-cli-1.8.0-compatibility
-      PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-ad_hoc
     runs:
       el-7:
         result: FAILURE
@@ -41,44 +26,46 @@ stages:
         duration: 27.067
         builtOn: chefdk-rhel-7-builder-b67c93
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/494/
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousBlocks:
-            194: |
+        failedIn:
+          jenkins: Invoke XShell command
+        steps: 27
+        logExcerpts:
+          consoleText:
+            195: |
               Fetching https://github.com/chef/omnibus.git
               Fetching https://github.com/chef/omnibus-software.git
               fatal: Could not parse object '833a71fb1d24cbe18ead54cd1d93b2c2575fb25f'.
               Git error: command `git reset --hard 833a71fb1d24cbe18ead54cd1d93b2c2575fb25f`
               in directory
-            201: |
+            202: |
               If this error persists you could try removing the cache directory
               '/home/jenkins/workspace/chefdk-build/architecture/x86_64/platform/el-7/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/cache/bundler/git/omnibus-software-338444b7bc50110d52bb35857ad8f946482db0ef'
               Build step 'Invoke XShell command' marked build as failure
               Archiving artifacts
               Recording fingerprints
-        omnibusTiming: {}
       mac_os_x-10.9:
         result: FAILURE
         timestamp: 2016-05-25 21:47:49 UTC
         duration: 20.873
         builtOn: chefdk-mac_os_x-10.9-builder-d736d1
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/494/
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousBlocks:
-            196: |
+        failedIn:
+          jenkins: Invoke XShell command
+        steps: 20
+        logExcerpts:
+          consoleText:
+            197: |
               Fetching https://github.com/chef/omnibus.git
               Fetching https://github.com/chef/omnibus-software.git
               fatal: Could not parse object '833a71fb1d24cbe18ead54cd1d93b2c2575fb25f'.
               Git error: command `git reset --hard 833a71fb1d24cbe18ead54cd1d93b2c2575fb25f`
               in directory
-            203: |
+            204: |
               If this error persists you could try removing the cache directory
               '/Users/jenkins/workspace/chefdk-build/architecture/x86_64/platform/mac_os_x-10.9/project/chefdk/role/builder/omnibus/vendor/bundle/ruby/2.1.0/cache/bundler/git/omnibus-software-338444b7bc50110d52bb35857ad8f946482db0ef'
               Build step 'Invoke XShell command' marked build as failure
               Archiving artifacts
               Recording fingerprints
-        omnibusTiming: {}
   chefdk-trigger-ad_hoc:
     result: SUCCESS
     timestamp: 2016-05-25 21:47:37 UTC
@@ -88,7 +75,19 @@ stages:
     - shortDescription: Started by user Tyler Cloke
       userId: tylercloke
       userName: Tyler Cloke
-    parameters:
-      GIT_REF: UW-31/delivery-cli-1.8.0-compatibility
-      EXPIRE_CACHE: false
     runs: {}
+parameters:
+  ADHOC_BUILD: 'true'
+  APPEND_TIMESTAMP: true
+  DELIVERY_CHANGE: ''
+  DELIVERY_SHA: ''
+  EXPIRE_CACHE: false
+  GIT_BRANCH: origin/UW-31/delivery-cli-1.8.0-compatibility
+  GIT_COMMIT: 4434338add82192ee19123aed44fcc74f6587a83
+  GIT_REF: UW-31/delivery-cli-1.8.0-compatibility
+  PIPELINE_NAME: chefdk
+  PIPELINE_TRIGGER_BUILD_NUMBER: '344'
+  PIPELINE_TRIGGER_JOB_NAME: chefdk-trigger-ad_hoc
+  PROJECT: chefdk
+  PROMOTE: 'false'
+  RELEASE_BUILD: 'false'

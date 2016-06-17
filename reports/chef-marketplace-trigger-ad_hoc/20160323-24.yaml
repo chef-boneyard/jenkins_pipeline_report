@@ -17,34 +17,21 @@ stages:
     timestamp: 2016-03-23 20:58:06 UTC
     duration: 1169.089
     url: http://wilson.ci.chef.co/job/chef-marketplace-build/167/
-    parameters:
-      GIT_REF: ryan/chefstyle
-      APPEND_TIMESTAMP: true
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      EXPIRE_CACHE: false
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-marketplace
-      GIT_COMMIT: a856fabea99dfdfc173c11948ad7227c18bc04c4
-      PROJECT: chef-marketplace
-      PROMOTE: 'false'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '24'
-      ADHOC_BUILD: 'true'
-      GIT_BRANCH: origin/ryan/chefstyle
-      PIPELINE_TRIGGER_JOB_NAME: chef-marketplace-trigger-ad_hoc
     runs:
       el-6:
         result: FAILURE
+        failureCause: network reset rubygems.org
+        failureCategory: network
         timestamp: 2016-03-23 20:58:06 UTC
         duration: 1158.015
         builtOn: marketplace-rhel-6-builder-81ed33
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-6,project=chef-marketplace,role=builder/167/
-        failureCause:
-          cause: network reset rubygems.org
-          jenkinsBuildStep: Invoke XShell command
-          category: network
-          suspiciousBlocks:
-            194: |
+        failedIn:
+          jenkins: Invoke XShell command
+        steps: 1158
+        logExcerpts:
+          consoleText:
+            195: |
               Installing rspec-support 3.4.1
 
               Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/rspec-core-3.4.3.gem)
@@ -54,19 +41,20 @@ stages:
               Build step 'Invoke XShell command' marked build as failure
               Archiving artifacts
               Recording fingerprints
-        omnibusTiming: {}
       el-7:
         result: FAILURE
+        failureCause: network reset rubygems.org
+        failureCategory: network
         timestamp: 2016-03-23 20:58:06 UTC
         duration: 1132.009
         builtOn: marketplace-rhel-7-builder-272b6d
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-7,project=chef-marketplace,role=builder/167/
-        failureCause:
-          cause: network reset rubygems.org
-          jenkinsBuildStep: Invoke XShell command
-          category: network
-          suspiciousBlocks:
-            178: |
+        failedIn:
+          jenkins: Invoke XShell command
+        steps: 1132
+        logExcerpts:
+          consoleText:
+            179: |
               Installing buff-extensions 1.0.0
 
               Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/hashie-3.4.3.gem)
@@ -75,31 +63,31 @@ stages:
               Build step 'Invoke XShell command' marked build as failure
               Archiving artifacts
               Recording fingerprints
-        omnibusTiming: {}
       ubuntu-14.04:
         result: FAILURE
+        failureCause: network reset rubygems.org
+        failureCategory: network
         timestamp: 2016-03-23 20:58:06 UTC
         duration: 1165.956
         builtOn: marketplace-ubuntu-14.04-builder-5dad2b
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=builder/167/
-        failureCause:
-          cause: network reset rubygems.org
-          jenkinsBuildStep: Invoke XShell command
-          category: network
-          suspiciousBlocks:
-            189: |
+        failedIn:
+          jenkins: Invoke XShell command
+        steps: 1165
+        logExcerpts:
+          consoleText:
+            190: |
               Installing builder 3.2.2
 
               Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/libyajl2-1.2.0.gem)
               Installing rack 1.6.4
               Installing uuidtools 2.1.5
-            233: |
+            234: |
               continue.
               Make sure that `gem install libyajl2 -v '1.2.0'` succeeds before bundling.
               Build step 'Invoke XShell command' marked build as failure
               Archiving artifacts
               Recording fingerprints
-        omnibusTiming: {}
   chef-marketplace-trigger-ad_hoc:
     result: SUCCESS
     timestamp: 2016-03-23 20:57:56 UTC
@@ -109,10 +97,22 @@ stages:
     - shortDescription: Started by user Ryan Cragun
       userId: ryancragun
       userName: Ryan Cragun
-    parameters:
-      GIT_REF: ryan/chefstyle
-      EXPIRE_CACHE: false
     retries:
     - 26
     - 25
     runs: {}
+parameters:
+  ADHOC_BUILD: 'true'
+  APPEND_TIMESTAMP: true
+  DELIVERY_CHANGE: ''
+  DELIVERY_SHA: ''
+  EXPIRE_CACHE: false
+  GIT_BRANCH: origin/ryan/chefstyle
+  GIT_COMMIT: a856fabea99dfdfc173c11948ad7227c18bc04c4
+  GIT_REF: ryan/chefstyle
+  PIPELINE_NAME: chef-marketplace
+  PIPELINE_TRIGGER_BUILD_NUMBER: '24'
+  PIPELINE_TRIGGER_JOB_NAME: chef-marketplace-trigger-ad_hoc
+  PROJECT: chef-marketplace
+  PROMOTE: 'false'
+  RELEASE_BUILD: 'false'

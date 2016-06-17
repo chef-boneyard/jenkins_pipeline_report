@@ -4,7 +4,7 @@ timestamp: 2016-01-25 17:10:10 UTC
 duration: 5743.036
 url: http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll/25/
 version: 12.3.1+20160125171025
-git_ref: 
+git_ref: origin/master
 git_commit: a59371d7ea245bb7ead22bcb0012c4954b9f2b76
 failures:
   chef-server-12-test unknown - unknown: ubuntu-12.04
@@ -16,51 +16,6 @@ stages:
     timestamp: 2016-01-25 17:56:07 UTC
     duration: 2998.899
     url: http://wilson.ci.chef.co/job/chef-server-12-test/60/
-    parameters:
-      OMNIBUS_BUILD_VERSION: 12.3.1+20160125171025
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      GIT_REF: origin/master
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-server-12
-      GIT_COMMIT: a59371d7ea245bb7ead22bcb0012c4954b9f2b76
-      PROJECT: chef-server
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '25'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
-      BUILD_USER: SCMTrigger
-      PLATFORM_MAPPINGS_JSON: |-
-        {
-          "build_to_test": {
-            "ubuntu-10.04": [
-              "ubuntu-10.04",
-              "ubuntu-12.04",
-              "ubuntu-14.04"
-            ],
-            "el-5": [
-              "el-5"
-            ],
-            "el-6": [
-              "el-6"
-            ],
-            "el-7": [
-              "el-7"
-            ]
-          },
-          "test_to_build": {
-            "ubuntu-10.04": "ubuntu-10.04",
-            "ubuntu-12.04": "ubuntu-10.04",
-            "ubuntu-14.04": "ubuntu-10.04",
-            "el-5": "el-5",
-            "el-6": "el-6",
-            "el-7": "el-7"
-          }
-        }
-      PIPELINE_BUILD_JOB_NUMBER: '61'
-      PIPELINE_BUILD_JOB_NAME: chef-server-12-build
-      PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-git_poll-25/25/2016-01-25_17-10-10
     runs:
       ubuntu-12.04:
         result: FAILURE
@@ -68,72 +23,235 @@ stages:
         duration: 2852.331
         builtOn: chef-server-ubuntu-12.04-tester-5b0c0e
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-server,role=tester/60/
-        failureCause:
-          jenkinsBuildStep: Invoke XShell command
-          suspiciousBlocks:
-            10903: |
+        failedIn:
+          jenkins: Invoke XShell command
+        steps:
+          total: 2852
+          before (setup time): 315
+          chef-client private-chef::default: 208
+          after (cleanup time): 2203
+        logExcerpts:
+          consoleText:
+            394: |2
+
+              [2016-01-25T18:01:22+00:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T18:01:22+00:00] INFO: Chef-client pid: 5899
+            399: |
+              [2016-01-25T18:01:24+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T18:01:24+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T18:01:24+00:00] INFO: Starting Chef Run for ip-10-194-12-222.us-west-2.compute.internal
+            2365: |
+              [2016-01-25T18:04:50+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T18:04:50+00:00] INFO: Chef Run complete in 205.875494013 seconds
+              [2016-01-25T18:04:50+00:00] INFO: Running report handlers
+            2399: |2
+
+              Starting Pedant Run: 2016-01-25 18:06:56 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            10904: |
               Randomized with seed 5823
 
               Build step 'Invoke XShell command' marked build as failure
               Performing Post build task...
               Match found for : : True
-        failureReason:
-          jenkinsBuildStep: Invoke XShell command
-        omnibusTiming: {}
       el-5:
         result: SUCCESS
         timestamp: 2016-01-25 17:56:07 UTC
         duration: 2903.509
         builtOn: chef-server-rhel-5-tester-4e6602
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-5,project=chef-server,role=tester/60/
-        omnibusTiming: {}
+        steps:
+          total: 2903
+          before (setup time): 307
+          chef-client private-chef::default: 303
+          after (cleanup time): 2167
+        logExcerpts:
+          consoleText:
+            379: |2
+
+              [2016-01-25T13:01:14-05:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T13:01:14-05:00] INFO: Chef-client pid: 5823
+            384: |
+              [2016-01-25T13:01:17-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T13:01:17-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T13:01:17-05:00] INFO: Starting Chef Run for ip-10-194-15-112.us-west-2.compute.internal
+            2358: |
+              [2016-01-25T13:06:17-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T13:06:17-05:00] INFO: Chef Run complete in 299.994766 seconds
+              [2016-01-25T13:06:17-05:00] INFO: Running report handlers
+            2392: |2
+
+              Starting Pedant Run: 2016-01-25 18:08:23 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            10837: |
+              Finished in 35 minutes 53 seconds
+              4074 examples, 0 failures, 98 pending
       el-6:
         result: SUCCESS
         timestamp: 2016-01-25 17:56:07 UTC
         duration: 2998.527
         builtOn: chef-server-rhel-6-tester-8151c8
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-6,project=chef-server,role=tester/60/
-        omnibusTiming: {}
+        steps:
+          total: 2998
+          before (setup time): 115
+          chef-client private-chef::default: 253
+          after (cleanup time): 2502
+        logExcerpts:
+          consoleText:
+            366: |2
+
+              [2016-01-25T12:58:02-05:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T12:58:02-05:00] INFO: Chef-client pid: 18530
+            371: |
+              [2016-01-25T12:58:09-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T12:58:09-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T12:58:09-05:00] INFO: Starting Chef Run for ip-10-194-9-233.us-west-2.compute.internal
+            2337: |
+              [2016-01-25T13:02:14-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T13:02:15-05:00] INFO: Chef Run complete in 245.783286462 seconds
+              [2016-01-25T13:02:15-05:00] INFO: Running report handlers
+            2371: |2
+
+              Starting Pedant Run: 2016-01-25 18:04:23 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            10819: |
+              Finished in 40 minutes 8 seconds
+              4074 examples, 0 failures, 98 pending
       el-7:
         result: SUCCESS
         timestamp: 2016-01-25 17:56:07 UTC
         duration: 2454.88
         builtOn: chef-server-rhel-7-tester-d586ce
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-7,project=chef-server,role=tester/60/
-        omnibusTiming: {}
+        steps:
+          total: 2454
+          before (setup time): 213
+          chef-client private-chef::default: 298
+          after (cleanup time): 1816
+        logExcerpts:
+          consoleText:
+            50942: |
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/int1-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri: remove failed: No such file or directory
+            59967: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception: remove failed: No such file or directory
+            60910: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/MYMETA.json: remove failed: No such file or directory
+            61289: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Dir/Base.pm: remove failed: No such file or directory
+            65104: |
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/typemap: remove failed: No such file or directory
+            77164: |2
+
+              [2016-01-25T12:59:40-05:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T12:59:40-05:00] INFO: Chef-client pid: 16064
+            77169: |
+              [2016-01-25T12:59:45-05:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T12:59:45-05:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T12:59:45-05:00] INFO: Starting Chef Run for ip-10-194-10-226.us-west-2.compute.internal
+            79120: |
+              [2016-01-25T13:04:38-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T13:04:38-05:00] INFO: Chef Run complete in 292.798880688 seconds
+              [2016-01-25T13:04:38-05:00] INFO: Running report handlers
+            79154: |2
+
+              Starting Pedant Run: 2016-01-25 18:06:45 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            87604: |
+              Finished in 29 minutes 55 seconds
+              4074 examples, 0 failures, 98 pending
       ubuntu-10.04:
         result: SUCCESS
         timestamp: 2016-01-25 17:56:07 UTC
         duration: 2585.427
         builtOn: chef-server-ubuntu-10.04-tester-f80d1f
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=tester/60/
-        omnibusTiming: {}
+        steps:
+          total: 2585
+          before (setup time): 159
+          chef-client private-chef::default: 167
+          after (cleanup time): 2132
+        logExcerpts:
+          consoleText:
+            393: |2
+
+              [2016-01-25T17:58:46+00:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T17:58:46+00:00] INFO: Chef-client pid: 9178
+            398: |
+              [2016-01-25T17:58:50+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T17:58:50+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T17:58:50+00:00] INFO: Starting Chef Run for ip-10-194-13-26.us-west-2.compute.internal
+            2356: |
+              [2016-01-25T18:01:33+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T18:01:33+00:00] INFO: Chef Run complete in 163.681790841 seconds
+              [2016-01-25T18:01:34+00:00] INFO: Running report handlers
+            2390: |2
+
+              Starting Pedant Run: 2016-01-25 18:03:40 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            10840: |
+              Finished in 35 minutes 1 second
+              4074 examples, 0 failures, 98 pending
       ubuntu-14.04:
         result: SUCCESS
         timestamp: 2016-01-25 17:56:07 UTC
         duration: 2534.255
         builtOn: chef-server-ubuntu-14.04-tester-69fc04
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-server,role=tester/60/
-        omnibusTiming: {}
+        steps:
+          total: 2534
+          before (setup time): 148
+          chef-client private-chef::default: 201
+          after (cleanup time): 2059
+        logExcerpts:
+          consoleText:
+            420: |2
+
+              [2016-01-25T17:58:35+00:00] INFO: *** Chef 12.6.0 ***
+              [2016-01-25T17:58:35+00:00] INFO: Chef-client pid: 25170
+            425: |
+              [2016-01-25T17:58:38+00:00] INFO: Run List is [recipe[private-chef::default]]
+              [2016-01-25T17:58:38+00:00] INFO: Run List expands to [private-chef::default]
+              [2016-01-25T17:58:38+00:00] INFO: Starting Chef Run for ip-10-194-13-226.us-west-2.compute.internal
+            2383: |
+              [2016-01-25T18:01:56+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-01-25T18:01:56+00:00] INFO: Chef Run complete in 198.420017774 seconds
+              [2016-01-25T18:01:56+00:00] INFO: Running report handlers
+            2417: |2
+
+              Starting Pedant Run: 2016-01-25 18:04:02 UTC
+               _______  _______  _______  _______  _______  ______   _______
+            10867: |
+              Finished in 33 minutes 58 seconds
+              4074 examples, 0 failures, 98 pending
   chef-server-12-build:
     result: SUCCESS
     timestamp: 2016-01-25 17:10:25 UTC
     duration: 2735.18
     url: http://wilson.ci.chef.co/job/chef-server-12-build/61/
-    parameters:
-      GIT_REF: origin/master
-      DELIVERY_CHANGE: ''
-      DELIVERY_SHA: ''
-      EXPIRE_CACHE: 'false'
-      RELEASE_BUILD: 'false'
-      PIPELINE_NAME: chef-server-12
-      GIT_COMMIT: a59371d7ea245bb7ead22bcb0012c4954b9f2b76
-      PROJECT: chef-server
-      PROMOTE: 'true'
-      PIPELINE_TRIGGER_BUILD_NUMBER: '25'
-      GIT_BRANCH: origin/master
-      PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
-      BUILD_USER: SCMTrigger
     runs:
       el-5:
         result: SUCCESS
@@ -141,28 +259,1293 @@ stages:
         duration: 2725.421
         builtOn: chef-server-rhel-5-builder-dd11b6
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/61/
-        omnibusTiming: {}
+        steps: 2725
+        logExcerpts:
+          consoleText:
+            329: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb'.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/berkshelf2.rb'.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/nokogiri.rb'.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/libxml2.rb'.
+            1057: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: ohai] I | bundle `install --without development': 30.224s
+                                  [Builder: ohai] I | Environment:
+            1089: |2
+                                                  D |   File: ohai-8.8.1.gem
+                                  [Builder: ohai] I | gem `build ohai.gemspec': 1.2229s
+                                  [Builder: ohai] I | Environment:
+            1102: |2
+                                                  D | 2 gems installed
+                                  [Builder: ohai] I | gem `install ohai*.gem --no-ri --no-rdoc': 3.8384s
+                                  [Builder: ohai] I | Build ohai: 35.3223s
+                                  [Builder: ohai] I | Finished build
+            1127: |2
+                                                  D | 1 gem installed
+                            [Builder: appbundler] I | gem `install appbundler --version '0.6.0' --no-ri --no-rdoc': 2.2782s
+                            [Builder: appbundler] I | Build appbundler: 2.2803s
+                            [Builder: appbundler] I | Finished build
+            1145: |2
+                  [Builder: private-chef-scripts] I | Cached builder checksum before build: 4714491ff4847f441df3d3173bdfe89b143358da404e469b536b9d79783ed278
+                  [Builder: private-chef-scripts] I | copy `/var/cache/omnibus/src/private-chef-scripts/*' to `/opt/opscode/bin': 0.0017s
+                  [Builder: private-chef-scripts] I | Build private-chef-scripts: 0.0034s
+                  [Builder: private-chef-scripts] I | Finished build
+            1162: |2
+                               [Builder: ctl-man] I | Cached builder checksum before build: ab7b867a721fc403f46340ff002d891be279c57a2646e3b412b4bc1a4e8735c3
+                               [Builder: ctl-man] I | mkdir `/opt/opscode/embedded/man/man8': 0.0003s
+                               [Builder: ctl-man] I | copy `/var/cache/omnibus/src/ctl-man/chef-server-ctl.8' to `/opt/opscode/embedded/man/man8/': 0.0003s
+                               [Builder: ctl-man] I | Build ctl-man: 0.004s
+                               [Builder: ctl-man] I | Finished build
+            1189: |2
+                                                  D | 1 gem installed
+                             [Builder: redis-gem] I | gem `install redis --version '3.1.0' --bindir '/opt/opscode/embedded/bin' --no-ri --no-rdoc': 2.0539s
+                             [Builder: redis-gem] I | Build redis-gem: 2.056s
+                             [Builder: redis-gem] I | Finished build
+            1226: |2
+                                                  D | make[1]: Leaving directory `/var/cache/omnibus/src/lpeg-0.12'
+                        [Builder: openresty-lpeg] I | Execute: `gmake LUADIR=/opt/opscode/embedded/luajit/include/luajit-2.1': 0.3617s
+                        [Builder: openresty-lpeg] I | Environment:
+            1236: |2
+                        [Builder: openresty-lpeg] I | $ install -p -m 0755 lpeg.so /opt/opscode/embedded/lualib
+                        [Builder: openresty-lpeg] I | Execute: `install -p -m 0755 lpeg.so /opt/opscode/embedded/lualib': 0.1059s
+                        [Builder: openresty-lpeg] I | Build openresty-lpeg: 0.4723s
+                        [Builder: openresty-lpeg] I | Finished build
+            1263: |2
+                                 [Builder: runit] I | $ sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/opscode\/service\/\";/" sv.c
+                                 [Builder: runit] I | Execute: `sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/opscode\/service\/\";/" sv.c': 0.0352s
+                                 [Builder: runit] I | Environment:
+            1273: |2
+                                 [Builder: runit] I | $ sed -i -e s:-static:: Makefile
+                                 [Builder: runit] I | Execute: `sed -i -e s:-static:: Makefile': 0.0367s
+                                 [Builder: runit] I | Environment:
+            1488: |2
+                                                  D | ./load utmpset unix.a byte.a
+                                 [Builder: runit] I | Execute: `gmake': 6.7329s
+                                 [Builder: runit] I | Environment:
+            1509: |2
+                                                  D | Checking utmpset...
+                                 [Builder: runit] I | Execute: `gmake check': 11.339s
+                                 [Builder: runit] I | mkdir `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/chpst' to `/opt/opscode/embedded/bin': 0.0005s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit' to `/opt/opscode/embedded/bin': 0.0004s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit-init' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsv' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvchdir' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvdir' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/sv' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/svlogd' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/utmpset' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | Rendering `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/templates/runit/runsvdir-start.erb' to `/opt/opscode/embedded/bin/runsvdir-start'
+                                 [Builder: runit] I | Render erb `runsvdir-start.erb': 0.001s
+                                 [Builder: runit] I | touch `/opt/opscode/service/.gitkeep': 0.0003s
+                                 [Builder: runit] I | touch `/opt/opscode/sv/.gitkeep': 0.0002s
+                                 [Builder: runit] I | touch `/opt/opscode/init/.gitkeep': 0.0002s
+                                 [Builder: runit] I | Build runit: 18.1964s
+                                 [Builder: runit] I | Finished build
+            1565: |2
+                                                  D | 24 gems installed
+                       [Builder: chef_backup-gem] I | gem `install chef_backup -n /opt/opscode/embedded/bin --no-rdoc --no-ri -v 0.0.1.dev.4': 10.8614s
+                       [Builder: chef_backup-gem] I | Build chef_backup-gem: 10.8687s
+                       [Builder: chef_backup-gem] I | Finished build
+            1584: |2
+                              [Builder: rabbitmq] I | Version overridden from 2.7.1 to 3.3.4
+                              [Builder: rabbitmq] I | mkdir `/opt/opscode/embedded/service/rabbitmq': 0.0005s
+                              [Builder: rabbitmq] I | sync `/var/cache/omnibus/src/rabbitmq_server-3.3.4/' to `/opt/opscode/embedded/service/rabbitmq/': 0.1716s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmqctl' to `/opt/opscode/embedded/bin/rabbitmqctl': 0.0002s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-env' to `/opt/opscode/embedded/bin/rabbitmq-env': 0.0001s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-server' to `/opt/opscode/embedded/bin/rabbitmq-server': 0.0001s
+                              [Builder: rabbitmq] I | Build rabbitmq: 0.1809s
+                              [Builder: rabbitmq] I | Finished build
+            1959: |2
+                                                  D | gmake[1]: Leaving directory `/var/cache/omnibus/src/redis-3.0.4/src'
+                                 [Builder: redis] I | Execute: `gmake -j 3': 13.5878s
+                                 [Builder: redis] I | Environment:
+            1982: |2
+                                                  D | gmake[1]: Leaving directory `/var/cache/omnibus/src/redis-3.0.4/src'
+                                 [Builder: redis] I | Execute: `gmake install': 0.5507s
+                                 [Builder: redis] I | Build redis: 14.1421s
+                                 [Builder: redis] I | Finished build
+            2000: |2
+                         [Builder: opscode-solr4] I | Cached builder checksum before build: e4bdfcce9b7f1d029943f6c96f28423d906bf832f439110f9d4838375f8e81f7
+                         [Builder: opscode-solr4] I | sync `licenses/' to `/opt/opscode/embedded/service/opscode-solr4/licenses/': 0.1905s
+                         [Builder: opscode-solr4] I | copy `LICENSE.txt' to `/opt/opscode/embedded/service/opscode-solr4/': 0.0003s
+                         [Builder: opscode-solr4] I | copy `NOTICE.txt' to `/opt/opscode/embedded/service/opscode-solr4/': 0.0002s
+                         [Builder: opscode-solr4] I | sync `example/' to `/opt/opscode/embedded/service/opscode-solr4/jetty/': 0.4303s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/example*': 0.0193s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/multicore': 0.0007s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/solr': 0.0047s
+                         [Builder: opscode-solr4] I | Build opscode-solr4: 0.6523s
+                         [Builder: opscode-solr4] I | Finished build
+            2060: |2
+                                                  D | **************************************************
+                      [Builder: opscode-expander] I | bundle `install --path=/opt/opscode/embedded/service/gem': 30.1129s
+                      [Builder: opscode-expander] I | sync `/var/cache/omnibus/src/opscode-expander' to `/opt/opscode/embedded/service/opscode-expander/': 0.0424s
+                      [Builder: opscode-expander] I | Build opscode-expander: 30.1578s
+                      [Builder: opscode-expander] I | Finished build
+            2078: |2
+                               [Builder: gpg-key] I | Cached builder checksum before build: 9ba5da704f5e1b9db4854953dba35e9d3baf5f1c8be6e5ccee4fc79fe065b42d
+                               [Builder: gpg-key] I | mkdir `/opt/opscode/embedded/keys': 0.0002s
+                               [Builder: gpg-key] I | copy `/var/cache/omnibus/src/gpg-key/packages-chef-io-public.key' to `/opt/opscode/embedded/keys/packages-chef-io-public.key': 0.0003s
+                               [Builder: gpg-key] I | Build gpg-key: 0.0033s
+                               [Builder: gpg-key] I | Finished build
+            2099: |2
+                                                  D | patching file keepalived/vrrp/vrrp_ipaddress.c
+                            [Builder: keepalived] I | Apply patch `keepalived-1.2.9_opscode_centos_5.patch': 0.0473s
+                            [Builder: keepalived] I | Environment:
+            2205: |2
+                                                  D | Use Debug flags          : No
+                            [Builder: keepalived] I | Execute: `./configure --prefix=/opt/opscode/embedded --disable-iconv': 4.6298s
+                            [Builder: keepalived] I | Environment:
+            2306: |2
+                                                  D | Make complete
+                            [Builder: keepalived] I | Execute: `gmake -j 3': 1.0789s
+                            [Builder: keepalived] I | Environment:
+            2340: |2
+                                                  D | gmake[1]: Leaving directory `/var/cache/omnibus/src/keepalived-1.2.9/genhash'
+                            [Builder: keepalived] I | Execute: `gmake install': 0.9027s
+                            [Builder: keepalived] I | Build keepalived: 6.6654s
+                            [Builder: keepalived] I | Finished build
+            2463: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                             [Builder: bookshelf] I | Execute: `gmake omnibus': 53.1336s
+                             [Builder: bookshelf] I | sync `/var/cache/omnibus/src/bookshelf/_build/default/rel/bookshelf/' to `/opt/opscode/embedded/service/bookshelf/': 1.4389s
+                             [Builder: bookshelf] I | delete `/opt/opscode/embedded/service/bookshelf/log': 0.0001s
+                             [Builder: bookshelf] I | Build bookshelf: 54.5755s
+                             [Builder: bookshelf] I | Finished build
+            2592: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                            [Builder: oc_bifrost] I | Execute: `gmake omnibus': 49.2416s
+                            [Builder: oc_bifrost] I | sync `/var/cache/omnibus/src/oc_bifrost/_build/default/rel/oc_bifrost/' to `/opt/opscode/embedded/service/oc_bifrost/': 1.8172s
+                            [Builder: oc_bifrost] I | sync `/var/cache/omnibus/src/oc_bifrost/schema' to `/opt/opscode/embedded/service/oc_bifrost/db/': 0.0505s
+                            [Builder: oc_bifrost] I | delete `/opt/opscode/embedded/service/oc_bifrost/log': 0.0001s
+                            [Builder: oc_bifrost] I | Build oc_bifrost: 51.1136s
+                            [Builder: oc_bifrost] I | Finished build
+            2728: |2
+                                                  D |     Compass is charityware. If you love it, please donate on our behalf at http://umdf.org/compass Thanks!
+                                 [Builder: oc_id] I | bundle `install --path=/opt/opscode/embedded/service/gem --without development test doc': 144.564s
+                                 [Builder: oc_id] I | Environment:
+            3114: |2
+                                                  D | I, [2016-01-25T12:34:14.426841 #7917]  INFO -- : Writing /var/cache/omnibus/src/oc-id/public/id/assets/source/icons/svg/icon-workflow_workstation-70e3d4cbef0aa4b447b2c372e197fbe8.svg
+                                 [Builder: oc_id] I | bundle `exec rake assets:precompile': 13.4831s
+                                 [Builder: oc_id] I | sync `/var/cache/omnibus/src/oc-id' to `/opt/opscode/embedded/service/oc_id/': 0.4226s
+                                 [Builder: oc_id] I | Build oc_id: 158.4731s
+                                 [Builder: oc_id] I | Finished build
+            3139: |2
+                                                  D | patching file Makefile
+                             [Builder: logrotate] I | Apply patch `logrotate_basedir_override.patch': 0.0197s
+                             [Builder: logrotate] I | Environment:
+            3161: |2
+                                                  D | cc -g -Wl,-rpath,/opt/opscode/embedded/lib -L/opt/opscode/embedded/lib   logrotate.o log.o config.o basenames.o -lpopt  -o logrotate
+                             [Builder: logrotate] I | Execute: `gmake -j 3': 0.2583s
+                             [Builder: logrotate] I | Environment:
+            3183: |2
+                                                  D |   fi; fi
+                             [Builder: logrotate] I | Execute: `gmake install': 0.3017s
+                             [Builder: logrotate] I | Build logrotate: 0.5856s
+                             [Builder: logrotate] I | Finished build
+            3218: |2
+                                                  D | Bundled gems are installed into /opt/opscode/embedded/service/gem.
+                              [Builder: partybus] I | bundle `install --path=/opt/opscode/embedded/service/gem --without mysql': 8.1326s
+                              [Builder: partybus] I | sync `/var/cache/omnibus/src/partybus' to `/opt/opscode/embedded/service/partybus': 0.0226s
+                              [Builder: partybus] I | Build partybus: 8.1606s
+                              [Builder: partybus] I | Finished build
+            3556: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                    [Builder: opscode-chef-mover] I | Execute: `gmake omnibus': 133.2615s
+                    [Builder: opscode-chef-mover] I | sync `/var/cache/omnibus/src/opscode-chef-mover/_build/default/rel/mover/' to `/opt/opscode/embedded/service/opscode-chef-mover/': 5.4889s
+                    [Builder: opscode-chef-mover] I | delete `/opt/opscode/embedded/service/opscode-chef-mover/log': 0.0003s
+                    [Builder: opscode-chef-mover] I | mkdir `/opt/opscode/embedded/service/opscode-chef-mover/scripts': 0.0001s
+                    [Builder: opscode-chef-mover] I | copy `scripts/migrate' to `/opt/opscode/embedded/service/opscode-chef-mover/scripts/': 0.0006s
+                    [Builder: opscode-chef-mover] I | copy `scripts/check_logs.rb' to `/opt/opscode/embedded/service/opscode-chef-mover/scripts/': 0.0002s
+                    [Builder: opscode-chef-mover] I | $ chmod ugo+x /opt/opscode/embedded/service/opscode-chef-mover/scripts/*
+                    [Builder: opscode-chef-mover] I | Execute: `chmod ugo+x /opt/opscode/embedded/service/opscode-chef-mover/scripts/*': 0.0296s
+                    [Builder: opscode-chef-mover] I | Build opscode-chef-mover: 138.7872s
+                    [Builder: opscode-chef-mover] I | Finished build
+            3838: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                             [Builder: oc_erchef] I | Execute: `gmake omnibus': 127.4005s
+                             [Builder: oc_erchef] I | sync `/var/cache/omnibus/src/oc_erchef/_build/default/rel/oc_erchef/' to `/opt/opscode/embedded/service/opscode-erchef/': 5.43s
+                             [Builder: oc_erchef] I | delete `/opt/opscode/embedded/service/opscode-erchef/log': 0.0004s
+                             [Builder: oc_erchef] I | Build oc_erchef: 132.8346s
+                             [Builder: oc_erchef] I | Finished build
+            3910: |2
+                                                  D | >= 1.9.2 : nothing to do! Yay!
+                        [Builder: oc-chef-pedant] I | bundle `install --path=/opt/opscode/embedded/service/gem': 20.9799s
+                        [Builder: oc-chef-pedant] I | $ mkdir -p /opt/opscode/embedded/service/oc-chef-pedant
+                        [Builder: oc-chef-pedant] I | Execute: `mkdir -p /opt/opscode/embedded/service/oc-chef-pedant': 0.0224s
+                        [Builder: oc-chef-pedant] I | sync `/var/cache/omnibus/src/oc-chef-pedant' to `/opt/opscode/embedded/service/oc-chef-pedant/': 0.1528s
+                        [Builder: oc-chef-pedant] I | Build oc-chef-pedant: 21.1593s
+                        [Builder: oc-chef-pedant] I | Finished build
+            3933: |2
+                 [Builder: private-chef-upgrades] I | Cached builder checksum before build: 24bdb75b0dbd65d200b17c1e22732322f3fd7e4ba2c933eef4508cd2877398ac
+                 [Builder: private-chef-upgrades] I | sync `/var/cache/omnibus/src/private-chef-upgrades' to `/opt/opscode/embedded/upgrades/': 0.0187s
+                 [Builder: private-chef-upgrades] I | Build private-chef-upgrades: 0.0196s
+                 [Builder: private-chef-upgrades] I | Finished build
+            3962: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.8921s
+                [Builder: private-chef-cookbooks] I | Environment:
+            3981: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 4.4302s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0008s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 6.3284s
+                [Builder: private-chef-cookbooks] I | Finished build
+            3997: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0002s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0022s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            4110: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 25.7561s
+                                  [Builder: chef] I | Environment:
+            4178: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 4.2747s
+                                  [Builder: chef] I | Environment:
+            4204: |2
+                                                  D |   File: chef-12.6.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 4.1506s
+                                  [Builder: chef] I | Environment:
+            6075: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc --verbose': 12.5069s
+                                  [Builder: chef] I | Environment:
+            6122: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 2.7192s
+                                  [Builder: chef] I | Environment:
+            6132: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 2.6309s
+                                  [Builder: chef] I | Environment:
+            6138: |2
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.8.1/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.4983s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0004s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.071s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0155s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0026s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0008s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 52.6532s
+                                  [Builder: chef] I | Finished build
+            12204: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/warning%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/str3-i.ri:
+            90058: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Tutorial.pod'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Folder.pm:
+            91626: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Config-GitLike-1.16/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/ExtUtils-InstallPaths-0.011/MYMETA.json:
+            93682: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Simple/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/NoWarnings/.packlist:
+            99135: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/bigint.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/Class/Struct.pm:
+            126603: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/EntityDecl/external_id-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/warning%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/str3-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri
+            157405: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/More.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Tutorial.pod
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Folder.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/UseAllModules.pm
+            157930: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Config-GitLike-1.16/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Config-GitLike-1.16/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/ExtUtils-InstallPaths-0.011/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/ExtUtils-InstallPaths-0.011/install.json
+            158691: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Dir/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Simple/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/NoWarnings/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Harness/.packlist
+            160561: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Devel/InnerPackage.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/bigint.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Class/Struct.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/sigtrap.pm
+            170062: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-5/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-10.04. Publishing will be skipped for: ubuntu-10.04, ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+              Published 'chef-server-core-12.3.1+20160125171025-1.el5.x86_64.rpm' for el-5
       el-6:
         result: SUCCESS
         timestamp: 2016-01-25 17:10:25 UTC
         duration: 2476.352
         builtOn: chef-server-rhel-6-builder-f4b641
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/61/
-        omnibusTiming: {}
+        steps: 2476
+        logExcerpts:
+          consoleText:
+            326: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb'.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/berkshelf2.rb'.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/nokogiri.rb'.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/libxml2.rb'.
+            1054: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: ohai] I | bundle `install --without development': 35.7653s
+                                  [Builder: ohai] I | Environment:
+            1086: |2
+                                                  D |   File: ohai-8.8.1.gem
+                                  [Builder: ohai] I | gem `build ohai.gemspec': 1.3725s
+                                  [Builder: ohai] I | Environment:
+            1099: |2
+                                                  D | 2 gems installed
+                                  [Builder: ohai] I | gem `install ohai*.gem --no-ri --no-rdoc': 3.743s
+                                  [Builder: ohai] I | Build ohai: 41.0717s
+                                  [Builder: ohai] I | Finished build
+            1124: |2
+                                                  D | 1 gem installed
+                            [Builder: appbundler] I | gem `install appbundler --version '0.6.0' --no-ri --no-rdoc': 1.9639s
+                            [Builder: appbundler] I | Build appbundler: 1.9663s
+                            [Builder: appbundler] I | Finished build
+            1142: |2
+                  [Builder: private-chef-scripts] I | Cached builder checksum before build: 4714491ff4847f441df3d3173bdfe89b143358da404e469b536b9d79783ed278
+                  [Builder: private-chef-scripts] I | copy `/var/cache/omnibus/src/private-chef-scripts/*' to `/opt/opscode/bin': 0.0009s
+                  [Builder: private-chef-scripts] I | Build private-chef-scripts: 0.003s
+                  [Builder: private-chef-scripts] I | Finished build
+            1159: |2
+                               [Builder: ctl-man] I | Cached builder checksum before build: ab7b867a721fc403f46340ff002d891be279c57a2646e3b412b4bc1a4e8735c3
+                               [Builder: ctl-man] I | mkdir `/opt/opscode/embedded/man/man8': 0.0004s
+                               [Builder: ctl-man] I | copy `/var/cache/omnibus/src/ctl-man/chef-server-ctl.8' to `/opt/opscode/embedded/man/man8/': 0.0004s
+                               [Builder: ctl-man] I | Build ctl-man: 0.0055s
+                               [Builder: ctl-man] I | Finished build
+            1186: |2
+                                                  D | 1 gem installed
+                             [Builder: redis-gem] I | gem `install redis --version '3.1.0' --bindir '/opt/opscode/embedded/bin' --no-ri --no-rdoc': 2.0348s
+                             [Builder: redis-gem] I | Build redis-gem: 2.0375s
+                             [Builder: redis-gem] I | Finished build
+            1223: |2
+                                                  D | make[1]: Leaving directory `/var/cache/omnibus/src/lpeg-0.12'
+                        [Builder: openresty-lpeg] I | Execute: `gmake LUADIR=/opt/opscode/embedded/luajit/include/luajit-2.1': 0.3506s
+                        [Builder: openresty-lpeg] I | Environment:
+            1233: |2
+                        [Builder: openresty-lpeg] I | $ install -p -m 0755 lpeg.so /opt/opscode/embedded/lualib
+                        [Builder: openresty-lpeg] I | Execute: `install -p -m 0755 lpeg.so /opt/opscode/embedded/lualib': 0.206s
+                        [Builder: openresty-lpeg] I | Build openresty-lpeg: 0.5611s
+                        [Builder: openresty-lpeg] I | Finished build
+            1260: |2
+                                 [Builder: runit] I | $ sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/opscode\/service\/\";/" sv.c
+                                 [Builder: runit] I | Execute: `sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/opscode\/service\/\";/" sv.c': 0.0691s
+                                 [Builder: runit] I | Environment:
+            1270: |2
+                                 [Builder: runit] I | $ sed -i -e s:-static:: Makefile
+                                 [Builder: runit] I | Execute: `sed -i -e s:-static:: Makefile': 0.0618s
+                                 [Builder: runit] I | Environment:
+            1490: |2
+                                                  D | ./load utmpset unix.a byte.a
+                                 [Builder: runit] I | Execute: `gmake': 5.9943s
+                                 [Builder: runit] I | Environment:
+            1511: |2
+                                                  D | Checking utmpset...
+                                 [Builder: runit] I | Execute: `gmake check': 11.5642s
+                                 [Builder: runit] I | mkdir `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/chpst' to `/opt/opscode/embedded/bin': 0.0008s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit-init' to `/opt/opscode/embedded/bin': 0.0007s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsv' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvchdir' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvdir' to `/opt/opscode/embedded/bin': 0.0004s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/sv' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/svlogd' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/utmpset' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | Rendering `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/templates/runit/runsvdir-start.erb' to `/opt/opscode/embedded/bin/runsvdir-start'
+                                 [Builder: runit] I | Render erb `runsvdir-start.erb': 0.0294s
+                                 [Builder: runit] I | touch `/opt/opscode/service/.gitkeep': 0.0005s
+                                 [Builder: runit] I | touch `/opt/opscode/sv/.gitkeep': 0.0004s
+                                 [Builder: runit] I | touch `/opt/opscode/init/.gitkeep': 0.0002s
+                                 [Builder: runit] I | Build runit: 17.7744s
+                                 [Builder: runit] I | Finished build
+            1567: |2
+                                                  D | 24 gems installed
+                       [Builder: chef_backup-gem] I | gem `install chef_backup -n /opt/opscode/embedded/bin --no-rdoc --no-ri -v 0.0.1.dev.4': 8.9591s
+                       [Builder: chef_backup-gem] I | Build chef_backup-gem: 8.9624s
+                       [Builder: chef_backup-gem] I | Finished build
+            1586: |2
+                              [Builder: rabbitmq] I | Version overridden from 2.7.1 to 3.3.4
+                              [Builder: rabbitmq] I | mkdir `/opt/opscode/embedded/service/rabbitmq': 0.0004s
+                              [Builder: rabbitmq] I | sync `/var/cache/omnibus/src/rabbitmq_server-3.3.4/' to `/opt/opscode/embedded/service/rabbitmq/': 0.2489s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmqctl' to `/opt/opscode/embedded/bin/rabbitmqctl': 0.0003s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-env' to `/opt/opscode/embedded/bin/rabbitmq-env': 0.0001s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-server' to `/opt/opscode/embedded/bin/rabbitmq-server': 0.0001s
+                              [Builder: rabbitmq] I | Build rabbitmq: 0.2579s
+                              [Builder: rabbitmq] I | Finished build
+            1967: |2
+                                                  D | gmake[1]: Leaving directory `/var/cache/omnibus/src/redis-3.0.4/src'
+                                 [Builder: redis] I | Execute: `gmake -j 3': 18.3556s
+                                 [Builder: redis] I | Environment:
+            1990: |2
+                                                  D | gmake[1]: Leaving directory `/var/cache/omnibus/src/redis-3.0.4/src'
+                                 [Builder: redis] I | Execute: `gmake install': 0.2103s
+                                 [Builder: redis] I | Build redis: 18.5685s
+                                 [Builder: redis] I | Finished build
+            2008: |2
+                         [Builder: opscode-solr4] I | Cached builder checksum before build: e4bdfcce9b7f1d029943f6c96f28423d906bf832f439110f9d4838375f8e81f7
+                         [Builder: opscode-solr4] I | sync `licenses/' to `/opt/opscode/embedded/service/opscode-solr4/licenses/': 0.2645s
+                         [Builder: opscode-solr4] I | copy `LICENSE.txt' to `/opt/opscode/embedded/service/opscode-solr4/': 0.0004s
+                         [Builder: opscode-solr4] I | copy `NOTICE.txt' to `/opt/opscode/embedded/service/opscode-solr4/': 0.0003s
+                         [Builder: opscode-solr4] I | sync `example/' to `/opt/opscode/embedded/service/opscode-solr4/jetty/': 2.0307s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/example*': 0.026s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/multicore': 0.0015s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/solr': 0.0056s
+                         [Builder: opscode-solr4] I | Build opscode-solr4: 2.3373s
+                         [Builder: opscode-solr4] I | Finished build
+            2068: |2
+                                                  D | **************************************************
+                      [Builder: opscode-expander] I | bundle `install --path=/opt/opscode/embedded/service/gem': 35.9187s
+                      [Builder: opscode-expander] I | sync `/var/cache/omnibus/src/opscode-expander' to `/opt/opscode/embedded/service/opscode-expander/': 0.0484s
+                      [Builder: opscode-expander] I | Build opscode-expander: 35.9701s
+                      [Builder: opscode-expander] I | Finished build
+            2086: |2
+                               [Builder: gpg-key] I | Cached builder checksum before build: 9ba5da704f5e1b9db4854953dba35e9d3baf5f1c8be6e5ccee4fc79fe065b42d
+                               [Builder: gpg-key] I | mkdir `/opt/opscode/embedded/keys': 0.0009s
+                               [Builder: gpg-key] I | copy `/var/cache/omnibus/src/gpg-key/packages-chef-io-public.key' to `/opt/opscode/embedded/keys/packages-chef-io-public.key': 0.0005s
+                               [Builder: gpg-key] I | Build gpg-key: 0.0049s
+                               [Builder: gpg-key] I | Finished build
+            2107: |2
+                                                  D | patching file keepalived/vrrp/vrrp_ipaddress.c
+                            [Builder: keepalived] I | Apply patch `keepalived-1.2.9_opscode_centos_5.patch': 0.1111s
+                            [Builder: keepalived] I | Environment:
+            2213: |2
+                                                  D | Use Debug flags          : No
+                            [Builder: keepalived] I | Execute: `./configure --prefix=/opt/opscode/embedded --disable-iconv': 5.0765s
+                            [Builder: keepalived] I | Environment:
+            2313: |2
+                                                  D | Make complete
+                            [Builder: keepalived] I | Execute: `gmake -j 3': 2.637s
+                            [Builder: keepalived] I | Environment:
+            2347: |2
+                                                  D | gmake[1]: Leaving directory `/var/cache/omnibus/src/keepalived-1.2.9/genhash'
+                            [Builder: keepalived] I | Execute: `gmake install': 0.2038s
+                            [Builder: keepalived] I | Build keepalived: 8.0345s
+                            [Builder: keepalived] I | Finished build
+            2470: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                             [Builder: bookshelf] I | Execute: `gmake omnibus': 55.512s
+                             [Builder: bookshelf] I | sync `/var/cache/omnibus/src/bookshelf/_build/default/rel/bookshelf/' to `/opt/opscode/embedded/service/bookshelf/': 1.6794s
+                             [Builder: bookshelf] I | delete `/opt/opscode/embedded/service/bookshelf/log': 0.0002s
+                             [Builder: bookshelf] I | Build bookshelf: 57.1953s
+                             [Builder: bookshelf] I | Finished build
+            2599: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                            [Builder: oc_bifrost] I | Execute: `gmake omnibus': 49.4923s
+                            [Builder: oc_bifrost] I | sync `/var/cache/omnibus/src/oc_bifrost/_build/default/rel/oc_bifrost/' to `/opt/opscode/embedded/service/oc_bifrost/': 1.8935s
+                            [Builder: oc_bifrost] I | sync `/var/cache/omnibus/src/oc_bifrost/schema' to `/opt/opscode/embedded/service/oc_bifrost/db/': 0.0554s
+                            [Builder: oc_bifrost] I | delete `/opt/opscode/embedded/service/oc_bifrost/log': 0.0002s
+                            [Builder: oc_bifrost] I | Build oc_bifrost: 51.4451s
+                            [Builder: oc_bifrost] I | Finished build
+            2735: |2
+                                                  D |     Compass is charityware. If you love it, please donate on our behalf at http://umdf.org/compass Thanks!
+                                 [Builder: oc_id] I | bundle `install --path=/opt/opscode/embedded/service/gem --without development test doc': 162.3359s
+                                 [Builder: oc_id] I | Environment:
+            3121: |2
+                                                  D | I, [2016-01-25T12:34:16.383351 #25838]  INFO -- : Writing /var/cache/omnibus/src/oc-id/public/id/assets/source/icons/svg/icon-workflow_workstation-70e3d4cbef0aa4b447b2c372e197fbe8.svg
+                                 [Builder: oc_id] I | bundle `exec rake assets:precompile': 16.5008s
+                                 [Builder: oc_id] I | sync `/var/cache/omnibus/src/oc-id' to `/opt/opscode/embedded/service/oc_id/': 0.6296s
+                                 [Builder: oc_id] I | Build oc_id: 179.4725s
+                                 [Builder: oc_id] I | Finished build
+            3146: |2
+                                                  D | patching file Makefile
+                             [Builder: logrotate] I | Apply patch `logrotate_basedir_override.patch': 0.0633s
+                             [Builder: logrotate] I | Environment:
+            3168: |2
+                                                  D | cc -g -Wl,-rpath,/opt/opscode/embedded/lib -L/opt/opscode/embedded/lib   logrotate.o log.o config.o basenames.o -lpopt  -o logrotate
+                             [Builder: logrotate] I | Execute: `gmake -j 3': 0.2836s
+                             [Builder: logrotate] I | Environment:
+            3190: |2
+                                                  D |   fi; fi
+                             [Builder: logrotate] I | Execute: `gmake install': 0.139s
+                             [Builder: logrotate] I | Build logrotate: 0.493s
+                             [Builder: logrotate] I | Finished build
+            3225: |2
+                                                  D | Bundled gems are installed into /opt/opscode/embedded/service/gem.
+                              [Builder: partybus] I | bundle `install --path=/opt/opscode/embedded/service/gem --without mysql': 12.9426s
+                              [Builder: partybus] I | sync `/var/cache/omnibus/src/partybus' to `/opt/opscode/embedded/service/partybus': 0.028s
+                              [Builder: partybus] I | Build partybus: 12.9742s
+                              [Builder: partybus] I | Finished build
+            3563: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                    [Builder: opscode-chef-mover] I | Execute: `gmake omnibus': 130.8687s
+                    [Builder: opscode-chef-mover] I | sync `/var/cache/omnibus/src/opscode-chef-mover/_build/default/rel/mover/' to `/opt/opscode/embedded/service/opscode-chef-mover/': 5.6653s
+                    [Builder: opscode-chef-mover] I | delete `/opt/opscode/embedded/service/opscode-chef-mover/log': 0.0009s
+                    [Builder: opscode-chef-mover] I | mkdir `/opt/opscode/embedded/service/opscode-chef-mover/scripts': 0.0002s
+                    [Builder: opscode-chef-mover] I | copy `scripts/migrate' to `/opt/opscode/embedded/service/opscode-chef-mover/scripts/': 0.0005s
+                    [Builder: opscode-chef-mover] I | copy `scripts/check_logs.rb' to `/opt/opscode/embedded/service/opscode-chef-mover/scripts/': 0.0004s
+                    [Builder: opscode-chef-mover] I | $ chmod ugo+x /opt/opscode/embedded/service/opscode-chef-mover/scripts/*
+                    [Builder: opscode-chef-mover] I | Execute: `chmod ugo+x /opt/opscode/embedded/service/opscode-chef-mover/scripts/*': 0.0609s
+                    [Builder: opscode-chef-mover] I | Build opscode-chef-mover: 136.6049s
+                    [Builder: opscode-chef-mover] I | Finished build
+            3845: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                             [Builder: oc_erchef] I | Execute: `gmake omnibus': 132.0857s
+                             [Builder: oc_erchef] I | sync `/var/cache/omnibus/src/oc_erchef/_build/default/rel/oc_erchef/' to `/opt/opscode/embedded/service/opscode-erchef/': 5.762s
+                             [Builder: oc_erchef] I | delete `/opt/opscode/embedded/service/opscode-erchef/log': 0.0012s
+                             [Builder: oc_erchef] I | Build oc_erchef: 137.8577s
+                             [Builder: oc_erchef] I | Finished build
+            3917: |2
+                                                  D | >= 1.9.2 : nothing to do! Yay!
+                        [Builder: oc-chef-pedant] I | bundle `install --path=/opt/opscode/embedded/service/gem': 14.0452s
+                        [Builder: oc-chef-pedant] I | $ mkdir -p /opt/opscode/embedded/service/oc-chef-pedant
+                        [Builder: oc-chef-pedant] I | Execute: `mkdir -p /opt/opscode/embedded/service/oc-chef-pedant': 0.0579s
+                        [Builder: oc-chef-pedant] I | sync `/var/cache/omnibus/src/oc-chef-pedant' to `/opt/opscode/embedded/service/oc-chef-pedant/': 0.201s
+                        [Builder: oc-chef-pedant] I | Build oc-chef-pedant: 14.3098s
+                        [Builder: oc-chef-pedant] I | Finished build
+            3940: |2
+                 [Builder: private-chef-upgrades] I | Cached builder checksum before build: 24bdb75b0dbd65d200b17c1e22732322f3fd7e4ba2c933eef4508cd2877398ac
+                 [Builder: private-chef-upgrades] I | sync `/var/cache/omnibus/src/private-chef-upgrades' to `/opt/opscode/embedded/upgrades/': 0.0264s
+                 [Builder: private-chef-upgrades] I | Build private-chef-upgrades: 0.0283s
+                 [Builder: private-chef-upgrades] I | Finished build
+            3969: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.2974s
+                [Builder: private-chef-cookbooks] I | Environment:
+            3988: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 9.1942s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0014s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 10.5001s
+                [Builder: private-chef-cookbooks] I | Finished build
+            4004: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0005s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0032s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            4117: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 27.9498s
+                                  [Builder: chef] I | Environment:
+            4185: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 4.8775s
+                                  [Builder: chef] I | Environment:
+            4211: |2
+                                                  D |   File: chef-12.6.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 4.2488s
+                                  [Builder: chef] I | Environment:
+            6082: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc --verbose': 10.889s
+                                  [Builder: chef] I | Environment:
+            6129: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 3.3347s
+                                  [Builder: chef] I | Environment:
+            6139: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 3.6851s
+                                  [Builder: chef] I | Environment:
+            6145: |2
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.8.1/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.9638s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0003s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.0942s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0208s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0036s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0009s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 56.0975s
+                                  [Builder: chef] I | Finished build
+            93127: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-6/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-10.04. Publishing will be skipped for: ubuntu-10.04, ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-5. Publishing will be skipped for: el-5
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+              Published 'chef-server-core-12.3.1+20160125171025-1.el6.x86_64.rpm' for el-6
       el-7:
         result: SUCCESS
         timestamp: 2016-01-25 17:10:25 UTC
         duration: 2422.37
         builtOn: chef-server-rhel-7-builder-1d11c3
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-7,project=chef-server,role=builder/61/
-        omnibusTiming: {}
+        steps: 2422
+        logExcerpts:
+          consoleText:
+            328: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb'.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/berkshelf2.rb'.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/nokogiri.rb'.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/libxml2.rb'.
+            1056: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: ohai] I | bundle `install --without development': 36.4134s
+                                  [Builder: ohai] I | Environment:
+            1088: |2
+                                                  D |   File: ohai-8.8.1.gem
+                                  [Builder: ohai] I | gem `build ohai.gemspec': 1.4511s
+                                  [Builder: ohai] I | Environment:
+            1101: |2
+                                                  D | 2 gems installed
+                                  [Builder: ohai] I | gem `install ohai*.gem --no-ri --no-rdoc': 5.2372s
+                                  [Builder: ohai] I | Build ohai: 43.1368s
+                                  [Builder: ohai] I | Finished build
+            1126: |2
+                                                  D | 1 gem installed
+                            [Builder: appbundler] I | gem `install appbundler --version '0.6.0' --no-ri --no-rdoc': 4.5399s
+                            [Builder: appbundler] I | Build appbundler: 4.5414s
+                            [Builder: appbundler] I | Finished build
+            1144: |2
+                  [Builder: private-chef-scripts] I | Cached builder checksum before build: 4714491ff4847f441df3d3173bdfe89b143358da404e469b536b9d79783ed278
+                  [Builder: private-chef-scripts] I | copy `/var/cache/omnibus/src/private-chef-scripts/*' to `/opt/opscode/bin': 0.0006s
+                  [Builder: private-chef-scripts] I | Build private-chef-scripts: 0.0021s
+                  [Builder: private-chef-scripts] I | Finished build
+            1161: |2
+                               [Builder: ctl-man] I | Cached builder checksum before build: ab7b867a721fc403f46340ff002d891be279c57a2646e3b412b4bc1a4e8735c3
+                               [Builder: ctl-man] I | mkdir `/opt/opscode/embedded/man/man8': 0.0002s
+                               [Builder: ctl-man] I | copy `/var/cache/omnibus/src/ctl-man/chef-server-ctl.8' to `/opt/opscode/embedded/man/man8/': 0.0004s
+                               [Builder: ctl-man] I | Build ctl-man: 0.003s
+                               [Builder: ctl-man] I | Finished build
+            1188: |2
+                                                  D | 1 gem installed
+                             [Builder: redis-gem] I | gem `install redis --version '3.1.0' --bindir '/opt/opscode/embedded/bin' --no-ri --no-rdoc': 2.0123s
+                             [Builder: redis-gem] I | Build redis-gem: 2.0134s
+                             [Builder: redis-gem] I | Finished build
+            1225: |2
+                                                  D | make[1]: Leaving directory `/var/cache/omnibus/src/lpeg-0.12'
+                        [Builder: openresty-lpeg] I | Execute: `gmake LUADIR=/opt/opscode/embedded/luajit/include/luajit-2.1': 0.6592s
+                        [Builder: openresty-lpeg] I | Environment:
+            1235: |2
+                        [Builder: openresty-lpeg] I | $ install -p -m 0755 lpeg.so /opt/opscode/embedded/lualib
+                        [Builder: openresty-lpeg] I | Execute: `install -p -m 0755 lpeg.so /opt/opscode/embedded/lualib': 0.031s
+                        [Builder: openresty-lpeg] I | Build openresty-lpeg: 0.6937s
+                        [Builder: openresty-lpeg] I | Finished build
+            1262: |2
+                                 [Builder: runit] I | $ sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/opscode\/service\/\";/" sv.c
+                                 [Builder: runit] I | Execute: `sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/opscode\/service\/\";/" sv.c': 0.0388s
+                                 [Builder: runit] I | Environment:
+            1272: |2
+                                 [Builder: runit] I | $ sed -i -e s:-static:: Makefile
+                                 [Builder: runit] I | Execute: `sed -i -e s:-static:: Makefile': 0.015s
+                                 [Builder: runit] I | Environment:
+            1367: |2
+                                                  D | chpst.c: In function ???suidgid???:
+                                                  D | chpst.c:80:3: warning: implicit declaration of function ???setgroups??? [-Wimplicit-function-declaration]
+                                                  D |    if (setgroups(ugid.gids, ugid.gid) == -1) fatal("unable to setgroups");
+                                                  D |    ^
+                                                  D | chpst.c: In function ???main???:
+            1523: |2
+                                                  D | ./load utmpset unix.a byte.a
+                                 [Builder: runit] I | Execute: `gmake': 3.7196s
+                                 [Builder: runit] I | Environment:
+            1544: |2
+                                                  D | Checking utmpset...
+                                 [Builder: runit] I | Execute: `gmake check': 11.1657s
+                                 [Builder: runit] I | mkdir `/opt/opscode/embedded/bin': 0.0001s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/chpst' to `/opt/opscode/embedded/bin': 0.0004s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit-init' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsv' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvchdir' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvdir' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/sv' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/svlogd' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/utmpset' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | Rendering `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/templates/runit/runsvdir-start.erb' to `/opt/opscode/embedded/bin/runsvdir-start'
+                                 [Builder: runit] I | Render erb `runsvdir-start.erb': 0.0162s
+                                 [Builder: runit] I | touch `/opt/opscode/service/.gitkeep': 0.0003s
+                                 [Builder: runit] I | touch `/opt/opscode/sv/.gitkeep': 0.0002s
+                                 [Builder: runit] I | touch `/opt/opscode/init/.gitkeep': 0.0002s
+                                 [Builder: runit] I | Build runit: 14.9754s
+                                 [Builder: runit] I | Finished build
+            1600: |2
+                                                  D | 24 gems installed
+                       [Builder: chef_backup-gem] I | gem `install chef_backup -n /opt/opscode/embedded/bin --no-rdoc --no-ri -v 0.0.1.dev.4': 9.4535s
+                       [Builder: chef_backup-gem] I | Build chef_backup-gem: 9.4547s
+                       [Builder: chef_backup-gem] I | Finished build
+            1619: |2
+                              [Builder: rabbitmq] I | Version overridden from 2.7.1 to 3.3.4
+                              [Builder: rabbitmq] I | mkdir `/opt/opscode/embedded/service/rabbitmq': 0.0002s
+                              [Builder: rabbitmq] I | sync `/var/cache/omnibus/src/rabbitmq_server-3.3.4/' to `/opt/opscode/embedded/service/rabbitmq/': 0.1509s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmqctl' to `/opt/opscode/embedded/bin/rabbitmqctl': 0.0002s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-env' to `/opt/opscode/embedded/bin/rabbitmq-env': 0.0001s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-server' to `/opt/opscode/embedded/bin/rabbitmq-server': 0.0002s
+                              [Builder: rabbitmq] I | Build rabbitmq: 0.1559s
+                              [Builder: rabbitmq] I | Finished build
+            1982: |2
+                                                  D | gmake[1]: Leaving directory `/var/cache/omnibus/src/redis-3.0.4/src'
+                                 [Builder: redis] I | Execute: `gmake -j 3': 7.4283s
+                                 [Builder: redis] I | Environment:
+            2005: |2
+                                                  D | gmake[1]: Leaving directory `/var/cache/omnibus/src/redis-3.0.4/src'
+                                 [Builder: redis] I | Execute: `gmake install': 0.0892s
+                                 [Builder: redis] I | Build redis: 7.5199s
+                                 [Builder: redis] I | Finished build
+            2023: |2
+                         [Builder: opscode-solr4] I | Cached builder checksum before build: e4bdfcce9b7f1d029943f6c96f28423d906bf832f439110f9d4838375f8e81f7
+                         [Builder: opscode-solr4] I | sync `licenses/' to `/opt/opscode/embedded/service/opscode-solr4/licenses/': 0.2439s
+                         [Builder: opscode-solr4] I | copy `LICENSE.txt' to `/opt/opscode/embedded/service/opscode-solr4/': 0.0005s
+                         [Builder: opscode-solr4] I | copy `NOTICE.txt' to `/opt/opscode/embedded/service/opscode-solr4/': 0.0137s
+                         [Builder: opscode-solr4] I | sync `example/' to `/opt/opscode/embedded/service/opscode-solr4/jetty/': 0.4481s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/example*': 0.021s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/multicore': 0.0009s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/solr': 0.0067s
+                         [Builder: opscode-solr4] I | Build opscode-solr4: 0.7407s
+                         [Builder: opscode-solr4] I | Finished build
+            2083: |2
+                                                  D | **************************************************
+                      [Builder: opscode-expander] I | bundle `install --path=/opt/opscode/embedded/service/gem': 14.9339s
+                      [Builder: opscode-expander] I | sync `/var/cache/omnibus/src/opscode-expander' to `/opt/opscode/embedded/service/opscode-expander/': 0.0318s
+                      [Builder: opscode-expander] I | Build opscode-expander: 14.9674s
+                      [Builder: opscode-expander] I | Finished build
+            2101: |2
+                               [Builder: gpg-key] I | Cached builder checksum before build: 9ba5da704f5e1b9db4854953dba35e9d3baf5f1c8be6e5ccee4fc79fe065b42d
+                               [Builder: gpg-key] I | mkdir `/opt/opscode/embedded/keys': 0.0002s
+                               [Builder: gpg-key] I | copy `/var/cache/omnibus/src/gpg-key/packages-chef-io-public.key' to `/opt/opscode/embedded/keys/packages-chef-io-public.key': 0.0002s
+                               [Builder: gpg-key] I | Build gpg-key: 0.0025s
+                               [Builder: gpg-key] I | Finished build
+            2122: |2
+                                                  D | patching file keepalived/vrrp/vrrp_ipaddress.c
+                            [Builder: keepalived] I | Apply patch `keepalived-1.2.9_opscode_centos_5.patch': 0.1088s
+                            [Builder: keepalived] I | Environment:
+            2228: |2
+                                                  D | Use Debug flags          : No
+                            [Builder: keepalived] I | Execute: `./configure --prefix=/opt/opscode/embedded --disable-iconv': 2.5887s
+                            [Builder: keepalived] I | Environment:
+            2328: |2
+                                                  D | Make complete
+                            [Builder: keepalived] I | Execute: `gmake -j 3': 1.4152s
+                            [Builder: keepalived] I | Environment:
+            2362: |2
+                                                  D | gmake[1]: Leaving directory `/var/cache/omnibus/src/keepalived-1.2.9/genhash'
+                            [Builder: keepalived] I | Execute: `gmake install': 0.0871s
+                            [Builder: keepalived] I | Build keepalived: 4.2036s
+                            [Builder: keepalived] I | Finished build
+            2485: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                             [Builder: bookshelf] I | Execute: `gmake omnibus': 59.019s
+                             [Builder: bookshelf] I | sync `/var/cache/omnibus/src/bookshelf/_build/default/rel/bookshelf/' to `/opt/opscode/embedded/service/bookshelf/': 1.8187s
+                             [Builder: bookshelf] I | delete `/opt/opscode/embedded/service/bookshelf/log': 0.0002s
+                             [Builder: bookshelf] I | Build bookshelf: 60.8406s
+                             [Builder: bookshelf] I | Finished build
+            2614: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                            [Builder: oc_bifrost] I | Execute: `gmake omnibus': 61.6105s
+                            [Builder: oc_bifrost] I | sync `/var/cache/omnibus/src/oc_bifrost/_build/default/rel/oc_bifrost/' to `/opt/opscode/embedded/service/oc_bifrost/': 1.8458s
+                            [Builder: oc_bifrost] I | sync `/var/cache/omnibus/src/oc_bifrost/schema' to `/opt/opscode/embedded/service/oc_bifrost/db/': 0.0854s
+                            [Builder: oc_bifrost] I | delete `/opt/opscode/embedded/service/oc_bifrost/log': 0.0002s
+                            [Builder: oc_bifrost] I | Build oc_bifrost: 63.5457s
+                            [Builder: oc_bifrost] I | Finished build
+            2750: |2
+                                                  D |     Compass is charityware. If you love it, please donate on our behalf at http://umdf.org/compass Thanks!
+                                 [Builder: oc_id] I | bundle `install --path=/opt/opscode/embedded/service/gem --without development test doc': 126.1923s
+                                 [Builder: oc_id] I | Environment:
+            3136: |2
+                                                  D | I, [2016-01-25T12:29:19.917798 #24235]  INFO -- : Writing /var/cache/omnibus/src/oc-id/public/id/assets/source/icons/svg/icon-workflow_workstation-70e3d4cbef0aa4b447b2c372e197fbe8.svg
+                                 [Builder: oc_id] I | bundle `exec rake assets:precompile': 13.3559s
+                                 [Builder: oc_id] I | sync `/var/cache/omnibus/src/oc-id' to `/opt/opscode/embedded/service/oc_id/': 0.5614s
+                                 [Builder: oc_id] I | Build oc_id: 140.1123s
+                                 [Builder: oc_id] I | Finished build
+            3161: |2
+                                                  D | patching file Makefile
+                             [Builder: logrotate] I | Apply patch `logrotate_basedir_override.patch': 0.0149s
+                             [Builder: logrotate] I | Environment:
+            3183: |2
+                                                  D | cc -g -Wl,-rpath,/opt/opscode/embedded/lib -L/opt/opscode/embedded/lib   logrotate.o log.o config.o basenames.o -lpopt  -o logrotate
+                             [Builder: logrotate] I | Execute: `gmake -j 3': 0.5581s
+                             [Builder: logrotate] I | Environment:
+            3205: |2
+                                                  D | fi; fi
+                             [Builder: logrotate] I | Execute: `gmake install': 0.0488s
+                             [Builder: logrotate] I | Build logrotate: 0.6251s
+                             [Builder: logrotate] I | Finished build
+            3240: |2
+                                                  D | Bundled gems are installed into /opt/opscode/embedded/service/gem.
+                              [Builder: partybus] I | bundle `install --path=/opt/opscode/embedded/service/gem --without mysql': 7.9731s
+                              [Builder: partybus] I | sync `/var/cache/omnibus/src/partybus' to `/opt/opscode/embedded/service/partybus': 0.016s
+                              [Builder: partybus] I | Build partybus: 7.9915s
+                              [Builder: partybus] I | Finished build
+            3578: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                    [Builder: opscode-chef-mover] I | Execute: `gmake omnibus': 140.2687s
+                    [Builder: opscode-chef-mover] I | sync `/var/cache/omnibus/src/opscode-chef-mover/_build/default/rel/mover/' to `/opt/opscode/embedded/service/opscode-chef-mover/': 5.2037s
+                    [Builder: opscode-chef-mover] I | delete `/opt/opscode/embedded/service/opscode-chef-mover/log': 0.0007s
+                    [Builder: opscode-chef-mover] I | mkdir `/opt/opscode/embedded/service/opscode-chef-mover/scripts': 0.0002s
+                    [Builder: opscode-chef-mover] I | copy `scripts/migrate' to `/opt/opscode/embedded/service/opscode-chef-mover/scripts/': 0.1387s
+                    [Builder: opscode-chef-mover] I | copy `scripts/check_logs.rb' to `/opt/opscode/embedded/service/opscode-chef-mover/scripts/': 0.0003s
+                    [Builder: opscode-chef-mover] I | $ chmod ugo+x /opt/opscode/embedded/service/opscode-chef-mover/scripts/*
+                    [Builder: opscode-chef-mover] I | Execute: `chmod ugo+x /opt/opscode/embedded/service/opscode-chef-mover/scripts/*': 0.019s
+                    [Builder: opscode-chef-mover] I | Build opscode-chef-mover: 145.6366s
+                    [Builder: opscode-chef-mover] I | Finished build
+            3860: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                             [Builder: oc_erchef] I | Execute: `gmake omnibus': 113.519s
+                             [Builder: oc_erchef] I | sync `/var/cache/omnibus/src/oc_erchef/_build/default/rel/oc_erchef/' to `/opt/opscode/embedded/service/opscode-erchef/': 4.6932s
+                             [Builder: oc_erchef] I | delete `/opt/opscode/embedded/service/opscode-erchef/log': 0.0006s
+                             [Builder: oc_erchef] I | Build oc_erchef: 118.2152s
+                             [Builder: oc_erchef] I | Finished build
+            3932: |2
+                                                  D | >= 1.9.2 : nothing to do! Yay!
+                        [Builder: oc-chef-pedant] I | bundle `install --path=/opt/opscode/embedded/service/gem': 12.2416s
+                        [Builder: oc-chef-pedant] I | $ mkdir -p /opt/opscode/embedded/service/oc-chef-pedant
+                        [Builder: oc-chef-pedant] I | Execute: `mkdir -p /opt/opscode/embedded/service/oc-chef-pedant': 0.0255s
+                        [Builder: oc-chef-pedant] I | sync `/var/cache/omnibus/src/oc-chef-pedant' to `/opt/opscode/embedded/service/oc-chef-pedant/': 0.1163s
+                        [Builder: oc-chef-pedant] I | Build oc-chef-pedant: 12.3863s
+                        [Builder: oc-chef-pedant] I | Finished build
+            3955: |2
+                 [Builder: private-chef-upgrades] I | Cached builder checksum before build: 24bdb75b0dbd65d200b17c1e22732322f3fd7e4ba2c933eef4508cd2877398ac
+                 [Builder: private-chef-upgrades] I | sync `/var/cache/omnibus/src/private-chef-upgrades' to `/opt/opscode/embedded/upgrades/': 0.0187s
+                 [Builder: private-chef-upgrades] I | Build private-chef-upgrades: 0.0195s
+                 [Builder: private-chef-upgrades] I | Finished build
+            3984: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.1865s
+                [Builder: private-chef-cookbooks] I | Environment:
+            4003: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 8.4237s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0008s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 9.6139s
+                [Builder: private-chef-cookbooks] I | Finished build
+            4019: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0002s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0011s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            4132: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 25.5821s
+                                  [Builder: chef] I | Environment:
+            4200: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 3.9645s
+                                  [Builder: chef] I | Environment:
+            4226: |2
+                                                  D |   File: chef-12.6.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 5.5716s
+                                  [Builder: chef] I | Environment:
+            6097: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc --verbose': 10.2991s
+                                  [Builder: chef] I | Environment:
+            6144: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 2.3586s
+                                  [Builder: chef] I | Environment:
+            6154: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 2.9548s
+                                  [Builder: chef] I | Environment:
+            6160: |2
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.8.1/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 1.6093s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.6213s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.2763s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0163s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0268s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 53.2958s
+                                  [Builder: chef] I | Finished build
+            47356: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri:
+            69939: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm:
+            76129: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json:
+            76620: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist:
+            82933: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm:
+            152553: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/int1-i.ri
+            160544: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/typemap
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/5.18.1/File/CheckTree.pm
+            162946: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/install.json
+            163206: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Dir/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/Contents/.packlist
+            165344: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Dir/Base.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File/Contents.pm
+            185377: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/el-7/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform ubuntu-10.04. Publishing will be skipped for: ubuntu-10.04, ubuntu-12.04, ubuntu-14.04
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-5. Publishing will be skipped for: el-5
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+              Published 'chef-server-core-12.3.1+20160125171025-1.el7.x86_64.rpm' for el-7
       ubuntu-10.04:
         result: SUCCESS
         timestamp: 2016-01-25 17:10:25 UTC
         duration: 1652.276
         builtOn: chef-server-ubuntu-10.04-builder-6f743f
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=builder/61/
-        omnibusTiming: {}
+        steps: 1652
+        logExcerpts:
+          consoleText:
+            326: |2
+                                       [Software] I | Loading software `private-chef-cookbooks' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/config/software/private-chef-cookbooks.rb'.
+                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/berkshelf2.rb'.
+                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
+                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/nokogiri.rb'.
+                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/software/libxml2.rb'.
+            1054: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: ohai] I | bundle `install --without development': 26.3391s
+                                  [Builder: ohai] I | Environment:
+            1086: |2
+                                                  D |   File: ohai-8.8.1.gem
+                                  [Builder: ohai] I | gem `build ohai.gemspec': 1.1781s
+                                  [Builder: ohai] I | Environment:
+            1099: |2
+                                                  D | 2 gems installed
+                                  [Builder: ohai] I | gem `install ohai*.gem --no-ri --no-rdoc': 2.9176s
+                                  [Builder: ohai] I | Build ohai: 30.4408s
+                                  [Builder: ohai] I | Finished build
+            1124: |2
+                                                  D | 1 gem installed
+                            [Builder: appbundler] I | gem `install appbundler --version '0.6.0' --no-ri --no-rdoc': 1.4981s
+                            [Builder: appbundler] I | Build appbundler: 1.5003s
+                            [Builder: appbundler] I | Finished build
+            1142: |2
+                  [Builder: private-chef-scripts] I | Cached builder checksum before build: 4714491ff4847f441df3d3173bdfe89b143358da404e469b536b9d79783ed278
+                  [Builder: private-chef-scripts] I | copy `/var/cache/omnibus/src/private-chef-scripts/*' to `/opt/opscode/bin': 0.0007s
+                  [Builder: private-chef-scripts] I | Build private-chef-scripts: 0.0022s
+                  [Builder: private-chef-scripts] I | Finished build
+            1159: |2
+                               [Builder: ctl-man] I | Cached builder checksum before build: ab7b867a721fc403f46340ff002d891be279c57a2646e3b412b4bc1a4e8735c3
+                               [Builder: ctl-man] I | mkdir `/opt/opscode/embedded/man/man8': 0.0005s
+                               [Builder: ctl-man] I | copy `/var/cache/omnibus/src/ctl-man/chef-server-ctl.8' to `/opt/opscode/embedded/man/man8/': 0.0004s
+                               [Builder: ctl-man] I | Build ctl-man: 0.0042s
+                               [Builder: ctl-man] I | Finished build
+            1186: |2
+                                                  D | 1 gem installed
+                             [Builder: redis-gem] I | gem `install redis --version '3.1.0' --bindir '/opt/opscode/embedded/bin' --no-ri --no-rdoc': 1.1435s
+                             [Builder: redis-gem] I | Build redis-gem: 1.1453s
+                             [Builder: redis-gem] I | Finished build
+            1222: |2
+                                                  D | make[1]: Leaving directory `/var/cache/omnibus/src/lpeg-0.12'
+                        [Builder: openresty-lpeg] I | Execute: `make LUADIR=/opt/opscode/embedded/luajit/include/luajit-2.1': 0.6285s
+                        [Builder: openresty-lpeg] I | Environment:
+            1232: |2
+                        [Builder: openresty-lpeg] I | $ install -p -m 0755 lpeg.so /opt/opscode/embedded/lualib
+                        [Builder: openresty-lpeg] I | Execute: `install -p -m 0755 lpeg.so /opt/opscode/embedded/lualib': 0.0481s
+                        [Builder: openresty-lpeg] I | Build openresty-lpeg: 0.6804s
+                        [Builder: openresty-lpeg] I | Finished build
+            1259: |2
+                                 [Builder: runit] I | $ sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/opscode\/service\/\";/" sv.c
+                                 [Builder: runit] I | Execute: `sed -i -e "s/^char\ \*varservice\ \=\"\/service\/\";$/char\ \*varservice\ \=\"\/opt\/opscode\/service\/\";/" sv.c': 0.0316s
+                                 [Builder: runit] I | Environment:
+            1269: |2
+                                 [Builder: runit] I | $ sed -i -e s:-static:: Makefile
+                                 [Builder: runit] I | Execute: `sed -i -e s:-static:: Makefile': 0.0481s
+                                 [Builder: runit] I | Environment:
+            1505: |2
+                                                  D | ./load utmpset unix.a byte.a
+                                 [Builder: runit] I | Execute: `make': 4.8941s
+                                 [Builder: runit] I | Environment:
+            1525: |2
+                                                  D | Checking utmpset...
+                                 [Builder: runit] I | Execute: `make check': 11.2967s
+                                 [Builder: runit] I | mkdir `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/chpst' to `/opt/opscode/embedded/bin': 0.0004s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runit-init' to `/opt/opscode/embedded/bin': 0.0003s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsv' to `/opt/opscode/embedded/bin': 0.0004s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvchdir' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/runsvdir' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/sv' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/svlogd' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | copy `/var/cache/omnibus/src/admin/runit-2.1.1/src/utmpset' to `/opt/opscode/embedded/bin': 0.0002s
+                                 [Builder: runit] I | Rendering `/home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/omnibus/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-47dc798aeac6/config/templates/runit/runsvdir-start.erb' to `/opt/opscode/embedded/bin/runsvdir-start'
+                                 [Builder: runit] I | Render erb `runsvdir-start.erb': 0.0012s
+                                 [Builder: runit] I | touch `/opt/opscode/service/.gitkeep': 0.0002s
+                                 [Builder: runit] I | touch `/opt/opscode/sv/.gitkeep': 0.0002s
+                                 [Builder: runit] I | touch `/opt/opscode/init/.gitkeep': 0.0001s
+                                 [Builder: runit] I | Build runit: 16.3114s
+                                 [Builder: runit] I | Finished build
+            1581: |2
+                                                  D | 24 gems installed
+                       [Builder: chef_backup-gem] I | gem `install chef_backup -n /opt/opscode/embedded/bin --no-rdoc --no-ri -v 0.0.1.dev.4': 7.0081s
+                       [Builder: chef_backup-gem] I | Build chef_backup-gem: 7.0101s
+                       [Builder: chef_backup-gem] I | Finished build
+            1600: |2
+                              [Builder: rabbitmq] I | Version overridden from 2.7.1 to 3.3.4
+                              [Builder: rabbitmq] I | mkdir `/opt/opscode/embedded/service/rabbitmq': 0.0003s
+                              [Builder: rabbitmq] I | sync `/var/cache/omnibus/src/rabbitmq_server-3.3.4/' to `/opt/opscode/embedded/service/rabbitmq/': 0.1631s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmqctl' to `/opt/opscode/embedded/bin/rabbitmqctl': 0.0005s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-env' to `/opt/opscode/embedded/bin/rabbitmq-env': 0.0001s
+                              [Builder: rabbitmq] I | link `/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-server' to `/opt/opscode/embedded/bin/rabbitmq-server': 0.0001s
+                              [Builder: rabbitmq] I | Build rabbitmq: 0.1698s
+                              [Builder: rabbitmq] I | Finished build
+            1980: |2
+                                                  D | make[1]: Leaving directory `/var/cache/omnibus/src/redis-3.0.4/src'
+                                 [Builder: redis] I | Execute: `make -j 3': 8.0149s
+                                 [Builder: redis] I | Environment:
+            2002: |2
+                                                  D | make[1]: Leaving directory `/var/cache/omnibus/src/redis-3.0.4/src'
+                                 [Builder: redis] I | Execute: `make install': 0.1022s
+                                 [Builder: redis] I | Build redis: 8.1203s
+                                 [Builder: redis] I | Finished build
+            2020: |2
+                         [Builder: opscode-solr4] I | Cached builder checksum before build: e4bdfcce9b7f1d029943f6c96f28423d906bf832f439110f9d4838375f8e81f7
+                         [Builder: opscode-solr4] I | sync `licenses/' to `/opt/opscode/embedded/service/opscode-solr4/licenses/': 0.1848s
+                         [Builder: opscode-solr4] I | copy `LICENSE.txt' to `/opt/opscode/embedded/service/opscode-solr4/': 0.0003s
+                         [Builder: opscode-solr4] I | copy `NOTICE.txt' to `/opt/opscode/embedded/service/opscode-solr4/': 0.0002s
+                         [Builder: opscode-solr4] I | sync `example/' to `/opt/opscode/embedded/service/opscode-solr4/jetty/': 0.3738s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/example*': 0.0207s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/multicore': 0.0007s
+                         [Builder: opscode-solr4] I | delete `/opt/opscode/embedded/service/opscode-solr4/jetty/solr': 0.0042s
+                         [Builder: opscode-solr4] I | Build opscode-solr4: 0.5933s
+                         [Builder: opscode-solr4] I | Finished build
+            2080: |2
+                                                  D | **************************************************
+                      [Builder: opscode-expander] I | bundle `install --path=/opt/opscode/embedded/service/gem': 24.4082s
+                      [Builder: opscode-expander] I | sync `/var/cache/omnibus/src/opscode-expander' to `/opt/opscode/embedded/service/opscode-expander/': 0.0404s
+                      [Builder: opscode-expander] I | Build opscode-expander: 24.4512s
+                      [Builder: opscode-expander] I | Finished build
+            2098: |2
+                               [Builder: gpg-key] I | Cached builder checksum before build: 9ba5da704f5e1b9db4854953dba35e9d3baf5f1c8be6e5ccee4fc79fe065b42d
+                               [Builder: gpg-key] I | mkdir `/opt/opscode/embedded/keys': 0.0003s
+                               [Builder: gpg-key] I | copy `/var/cache/omnibus/src/gpg-key/packages-chef-io-public.key' to `/opt/opscode/embedded/keys/packages-chef-io-public.key': 0.0004s
+                               [Builder: gpg-key] I | Build gpg-key: 0.0081s
+                               [Builder: gpg-key] I | Finished build
+            2119: |2
+                                                  D | patching file keepalived/vrrp/vrrp_ipaddress.c
+                            [Builder: keepalived] I | Apply patch `keepalived-1.2.9_opscode_centos_5.patch': 0.0782s
+                            [Builder: keepalived] I | Environment:
+            2225: |2
+                                                  D | Use Debug flags          : No
+                            [Builder: keepalived] I | Execute: `./configure --prefix=/opt/opscode/embedded --disable-iconv': 3.2776s
+                            [Builder: keepalived] I | Environment:
+            2325: |2
+                                                  D | Make complete
+                            [Builder: keepalived] I | Execute: `make -j 3': 1.0987s
+                            [Builder: keepalived] I | Environment:
+            2358: |2
+                                                  D | make[1]: Leaving directory `/var/cache/omnibus/src/keepalived-1.2.9/genhash'
+                            [Builder: keepalived] I | Execute: `make install': 0.0788s
+                            [Builder: keepalived] I | Build keepalived: 4.5402s
+                            [Builder: keepalived] I | Finished build
+            2480: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                             [Builder: bookshelf] I | Execute: `make omnibus': 46.8619s
+                             [Builder: bookshelf] I | sync `/var/cache/omnibus/src/bookshelf/_build/default/rel/bookshelf/' to `/opt/opscode/embedded/service/bookshelf/': 1.4521s
+                             [Builder: bookshelf] I | delete `/opt/opscode/embedded/service/bookshelf/log': 0.0002s
+                             [Builder: bookshelf] I | Build bookshelf: 48.3172s
+                             [Builder: bookshelf] I | Finished build
+            2608: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                            [Builder: oc_bifrost] I | Execute: `make omnibus': 47.4154s
+                            [Builder: oc_bifrost] I | sync `/var/cache/omnibus/src/oc_bifrost/_build/default/rel/oc_bifrost/' to `/opt/opscode/embedded/service/oc_bifrost/': 1.5203s
+                            [Builder: oc_bifrost] I | sync `/var/cache/omnibus/src/oc_bifrost/schema' to `/opt/opscode/embedded/service/oc_bifrost/db/': 0.0663s
+                            [Builder: oc_bifrost] I | delete `/opt/opscode/embedded/service/oc_bifrost/log': 0.0002s
+                            [Builder: oc_bifrost] I | Build oc_bifrost: 49.0062s
+                            [Builder: oc_bifrost] I | Finished build
+            2744: |2
+                                                  D |     Compass is charityware. If you love it, please donate on our behalf at http://umdf.org/compass Thanks!
+                                 [Builder: oc_id] I | bundle `install --path=/opt/opscode/embedded/service/gem --without development test doc': 138.4967s
+                                 [Builder: oc_id] I | Environment:
+            3130: |2
+                                                  D | I, [2016-01-25T17:22:38.211820 #1374]  INFO -- : Writing /var/cache/omnibus/src/oc-id/public/id/assets/source/icons/svg/icon-workflow_workstation-70e3d4cbef0aa4b447b2c372e197fbe8.svg
+                                 [Builder: oc_id] I | bundle `exec rake assets:precompile': 14.3811s
+                                 [Builder: oc_id] I | sync `/var/cache/omnibus/src/oc-id' to `/opt/opscode/embedded/service/oc_id/': 0.4329s
+                                 [Builder: oc_id] I | Build oc_id: 153.3135s
+                                 [Builder: oc_id] I | Finished build
+            3155: |2
+                                                  D | patching file Makefile
+                             [Builder: logrotate] I | Apply patch `logrotate_basedir_override.patch': 0.0296s
+                             [Builder: logrotate] I | Environment:
+            3176: |2
+                                                  D | cc -g -Wl,-rpath,/opt/opscode/embedded/lib -L/opt/opscode/embedded/lib   logrotate.o log.o config.o basenames.o -lpopt  -o logrotate
+                             [Builder: logrotate] I | Execute: `make -j 3': 0.1781s
+                             [Builder: logrotate] I | Environment:
+            3197: |2
+                                                  D |   fi; fi
+                             [Builder: logrotate] I | Execute: `make install': 0.0683s
+                             [Builder: logrotate] I | Build logrotate: 0.2818s
+                             [Builder: logrotate] I | Finished build
+            3232: |2
+                                                  D | Bundled gems are installed into /opt/opscode/embedded/service/gem.
+                              [Builder: partybus] I | bundle `install --path=/opt/opscode/embedded/service/gem --without mysql': 8.9101s
+                              [Builder: partybus] I | sync `/var/cache/omnibus/src/partybus' to `/opt/opscode/embedded/service/partybus': 0.0231s
+                              [Builder: partybus] I | Build partybus: 8.9357s
+                              [Builder: partybus] I | Finished build
+            3569: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                    [Builder: opscode-chef-mover] I | Execute: `make omnibus': 131.5449s
+                    [Builder: opscode-chef-mover] I | sync `/var/cache/omnibus/src/opscode-chef-mover/_build/default/rel/mover/' to `/opt/opscode/embedded/service/opscode-chef-mover/': 5.0873s
+                    [Builder: opscode-chef-mover] I | delete `/opt/opscode/embedded/service/opscode-chef-mover/log': 0.0006s
+                    [Builder: opscode-chef-mover] I | mkdir `/opt/opscode/embedded/service/opscode-chef-mover/scripts': 0.0001s
+                    [Builder: opscode-chef-mover] I | copy `scripts/migrate' to `/opt/opscode/embedded/service/opscode-chef-mover/scripts/': 0.0604s
+                    [Builder: opscode-chef-mover] I | copy `scripts/check_logs.rb' to `/opt/opscode/embedded/service/opscode-chef-mover/scripts/': 0.0003s
+                    [Builder: opscode-chef-mover] I | $ chmod ugo+x /opt/opscode/embedded/service/opscode-chef-mover/scripts/*
+                    [Builder: opscode-chef-mover] I | Execute: `chmod ugo+x /opt/opscode/embedded/service/opscode-chef-mover/scripts/*': 0.0419s
+                    [Builder: opscode-chef-mover] I | Build opscode-chef-mover: 136.7426s
+                    [Builder: opscode-chef-mover] I | Finished build
+            3850: |2
+                                                  D | \33[0m\33[0;32m===> release successfully created!
+                             [Builder: oc_erchef] I | Execute: `make omnibus': 137.5154s
+                             [Builder: oc_erchef] I | sync `/var/cache/omnibus/src/oc_erchef/_build/default/rel/oc_erchef/' to `/opt/opscode/embedded/service/opscode-erchef/': 5.2247s
+                             [Builder: oc_erchef] I | delete `/opt/opscode/embedded/service/opscode-erchef/log': 0.0008s
+                             [Builder: oc_erchef] I | Build oc_erchef: 142.744s
+                             [Builder: oc_erchef] I | Finished build
+            3922: |2
+                                                  D | >= 1.9.2 : nothing to do! Yay!
+                        [Builder: oc-chef-pedant] I | bundle `install --path=/opt/opscode/embedded/service/gem': 16.1361s
+                        [Builder: oc-chef-pedant] I | $ mkdir -p /opt/opscode/embedded/service/oc-chef-pedant
+                        [Builder: oc-chef-pedant] I | Execute: `mkdir -p /opt/opscode/embedded/service/oc-chef-pedant': 0.0483s
+                        [Builder: oc-chef-pedant] I | sync `/var/cache/omnibus/src/oc-chef-pedant' to `/opt/opscode/embedded/service/oc-chef-pedant/': 0.1337s
+                        [Builder: oc-chef-pedant] I | Build oc-chef-pedant: 16.3224s
+                        [Builder: oc-chef-pedant] I | Finished build
+            3945: |2
+                 [Builder: private-chef-upgrades] I | Cached builder checksum before build: 24bdb75b0dbd65d200b17c1e22732322f3fd7e4ba2c933eef4508cd2877398ac
+                 [Builder: private-chef-upgrades] I | sync `/var/cache/omnibus/src/private-chef-upgrades' to `/opt/opscode/embedded/upgrades/': 0.019s
+                 [Builder: private-chef-upgrades] I | Build private-chef-upgrades: 0.0199s
+                 [Builder: private-chef-upgrades] I | Finished build
+            3974: |2
+                                                  D | 1 gem installed
+                [Builder: private-chef-cookbooks] I | gem `install uuidtools  -v 2.1.3 --no-rdoc --no-ri': 1.1114s
+                [Builder: private-chef-cookbooks] I | Environment:
+            3993: |2
+                                                  D | Using packagecloud (0.0.18)
+                [Builder: private-chef-cookbooks] I | Execute: `berks install --path=/opt/opscode/embedded/cookbooks': 8.188s
+                [Builder: private-chef-cookbooks] I | <Dynamic Ruby block>: 0.0007s
+                [Builder: private-chef-cookbooks] I | Build private-chef-cookbooks: 9.3046s
+                [Builder: private-chef-cookbooks] I | Finished build
+            4009: |2
+                 [Builder: chef-ha-plugin-config] I | Cached builder checksum before build: 2791faa48a03f3fe6e6b7283fd538d6bcdc9ec7235211dc02d0d6a04af3870bd
+                 [Builder: chef-ha-plugin-config] I | <Dynamic Ruby block>: 0.0003s
+                 [Builder: chef-ha-plugin-config] I | Build chef-ha-plugin-config: 0.0023s
+                 [Builder: chef-ha-plugin-config] I | Finished build
+            4122: |2
+                                                  D | Use `bundle show [gemname]` to see where a bundled gem is installed.
+                                  [Builder: chef] I | bundle `install --without server docgen': 24.2989s
+                                  [Builder: chef] I | Environment:
+            4190: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | bundle `exec rake install_components': 4.3788s
+                                  [Builder: chef] I | Environment:
+            4216: |2
+                                                  D |   File: chef-12.6.0.gem
+                                  [Builder: chef] I | gem `build chef.gemspec': 3.9287s
+                                  [Builder: chef] I | Environment:
+            6087: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install chef*.gem  --no-ri --no-rdoc --verbose': 11.3784s
+                                  [Builder: chef] I | Environment:
+            6134: |2
+                                                  D | 1 gem installed
+                                  [Builder: chef] I | gem `install ruby-shadow --version '>= 0.0.0' --no-ri --no-rdoc --verbose': 3.1293s
+                                  [Builder: chef] I | Environment:
+            6144: |2
+                                                  D | Generated binstub /opt/opscode/bin/chef-apply => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/bin/chef-apply
+                                  [Builder: chef] I | appbundle `chef': 2.4486s
+                                  [Builder: chef] I | Environment:
+            6150: |2
+                                                  D | Generated binstub /opt/opscode/bin/ohai => /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.8.1/bin/ohai
+                                  [Builder: chef] I | appbundle `ohai': 0.5283s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/docs': 0.0005s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/man': 0.0819s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/doc': 0.0161s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/share/gtk-doc': 0.0031s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/ssl/man': 0.0001s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/man': 0.0008s
+                                  [Builder: chef] I | delete `/opt/opscode/embedded/info': 0.0001s
+                                  [Builder: chef] I | Build chef: 50.2137s
+                                  [Builder: chef] I | Finished build
+            77224: |
+              Publishing with glob pattern of /home/jenkins/workspace/chef-server-12-build/architecture/x86_64/platform/ubuntu-10.04/project/chef-server/role/builder/**/pkg/*.{bff,deb,dmg,msi,rpm,solaris,amd64.sh,i386.sh}
+
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-5. Publishing will be skipped for: el-5
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-6. Publishing will be skipped for: el-6
+                           [ArtifactoryPublisher] W | Could not locate a package for build platform el-7. Publishing will be skipped for: el-7
+              Published 'chef-server-core_12.3.1+20160125171025-1_amd64.deb' for ubuntu-10.04
+              Published 'chef-server-core_12.3.1+20160125171025-1_amd64.deb' for ubuntu-12.04
   chef-server-12-trigger-git_poll:
     result: SUCCESS
     timestamp: 2016-01-25 17:10:10 UTC
@@ -170,5 +1553,49 @@ stages:
     url: http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll/25/
     causes:
     - shortDescription: Started by an SCM change
-    parameters: {}
     runs: {}
+parameters:
+  BUILD_USER: SCMTrigger
+  DELIVERY_CHANGE: ''
+  DELIVERY_SHA: ''
+  EXPIRE_CACHE: 'false'
+  GIT_BRANCH: origin/master
+  GIT_COMMIT: a59371d7ea245bb7ead22bcb0012c4954b9f2b76
+  GIT_REF: origin/master
+  OMNIBUS_BUILD_VERSION: 12.3.1+20160125171025
+  PIPELINE_BUILD_JOB_NAME: chef-server-12-build
+  PIPELINE_BUILD_JOB_NUMBER: '61'
+  PIPELINE_NAME: chef-server-12
+  PIPELINE_RUN_FINGERPRINT: jenkins-chef-server-12-trigger-git_poll-25/25/2016-01-25_17-10-10
+  PIPELINE_TRIGGER_BUILD_NUMBER: '25'
+  PIPELINE_TRIGGER_JOB_NAME: chef-server-12-trigger-git_poll
+  PLATFORM_MAPPINGS_JSON: |-
+    {
+      "build_to_test": {
+        "ubuntu-10.04": [
+          "ubuntu-10.04",
+          "ubuntu-12.04",
+          "ubuntu-14.04"
+        ],
+        "el-5": [
+          "el-5"
+        ],
+        "el-6": [
+          "el-6"
+        ],
+        "el-7": [
+          "el-7"
+        ]
+      },
+      "test_to_build": {
+        "ubuntu-10.04": "ubuntu-10.04",
+        "ubuntu-12.04": "ubuntu-10.04",
+        "ubuntu-14.04": "ubuntu-10.04",
+        "el-5": "el-5",
+        "el-6": "el-6",
+        "el-7": "el-7"
+      }
+    }
+  PROJECT: chef-server
+  PROMOTE: 'true'
+  RELEASE_BUILD: 'false'
