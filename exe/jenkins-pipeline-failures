@@ -37,21 +37,23 @@ def report_summary(builds)
         failure = failure.split(" ", 2)[1]
         category, cause = failure.split(" - ", 2)
         [ category, cause ]
-      end
+      end.group_by { |category, cause| category }
     elsif failed?(build)
-      failures = [ [ "unknown", "unrecorded" ] ]
+      failures = { "unknown" => [ [ "unknown", "unrecorded" ] ] }
     else
-      failures = []
+      failures = {}
     end
 
-    failures.each do |category, cause|
+    failures.each do |category, causes|
       failure_types[category] ||= {
         count: 0,
         causes: {}
       }
       failure_types[category][:count] += 1
-      failure_types[category][:causes][cause] ||= 0
-      failure_types[category][:causes][cause] += 1
+      causes.each do |category, cause|
+        failure_types[category][:causes][cause] ||= 0
+        failure_types[category][:causes][cause] += 1
+      end
     end
   end
 
