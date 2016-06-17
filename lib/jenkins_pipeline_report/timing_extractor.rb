@@ -4,7 +4,7 @@ require_relative "timing_extractor/step"
 module JenkinsPipelineReport
   class TimingExtractor
     def self.extract(configuration, run, force: false)
-      return if run["steps"] && run["acceptanceTiming"] && !run["changedThisTime"] && !force
+      return if run["steps"] && !run["changedThisTime"] && !force
       return unless run["logExcerpts"] && run["logExcerpts"]["consoleText"]
 
       self.new(configuration, run).extract

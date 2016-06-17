@@ -156,6 +156,7 @@ module JenkinsPipelineReport
           failed_in ||= {}
           failed_in["chef verify"] ||= []
           failed_in["chef verify"] |= [ $1 ]
+          failed_in["chef verify"].sort!
         end
 
         # jenkins failure
