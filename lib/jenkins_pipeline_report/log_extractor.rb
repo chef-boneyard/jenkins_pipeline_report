@@ -66,9 +66,12 @@ module JenkinsPipelineReport
 
         # More specific lines
         case line
+        when /\bERROR\b/
+          blocks.mark(index-context, index+context) unless line =~ /(grep|echo) "ERROR 404"/
+
         when /The --deployment flag requires a/,
              /EACCES/,
-             /(?!(grep|echo) ")ERROR\b/,
+             /\bERROR\b/,
              /\bFATAL\b/i,
              /Errno::ECONNRESET/,
              /Permission denied/i,
