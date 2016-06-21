@@ -46,7 +46,7 @@ module JenkinsPipelineReport
     attr_reader :last_step
     attr_reader :current_index
 
-    def update_step(*path, time: time)
+    def update_step(*path, time:)
       last_step.update(time: time) if last_step && last_step.open?
       @last_step = steps.update(*path, time: time, index: current_index)
     end

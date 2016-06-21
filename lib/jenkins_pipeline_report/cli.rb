@@ -3,11 +3,12 @@ require "uri"
 require "pathname"
 require_relative "summary_cache"
 require_relative "cli_query"
+require_relative "jenkins/cache"
 
 module JenkinsPipelineReport
   module Cli
     def self.options
-      @options ||= {}
+      @options ||= { identity_file: "~/.ssh/id_rsa" }
     end
 
     def self.logger
@@ -16,6 +17,10 @@ module JenkinsPipelineReport
         logger.level = Logger::DEBUG
         logger
       end
+    end
+
+    def self.jenkins_cache
+      @jenkins_cache ||= Jenkins::Cache.new("cache", identity_file: options[:identity_file])
     end
 
     def self.summary_cache(job_url)
@@ -57,6 +62,9 @@ module JenkinsPipelineReport
 
         opts.on("-l=LEVEL", "--log-level=LEVEL", "Log level (debug,info,warn,error,fatal).") do |v|
           logger.level = Logger.const_get(v.upcase)
+        end
+        opts.on("--identity-file=FILE", "Identity file to talk to Jenkins. Default: ~/.ssh/id_rsa") do |v|
+          options[:identity_file] = "~/.ssh/id_rsa"
         end
         opts.on("--where KEY=VALUE", "Only pick builds with KEY (a.b.c) equal to value") do |v|
           if options[:where]
