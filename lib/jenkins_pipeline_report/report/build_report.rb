@@ -17,7 +17,7 @@ module JenkinsPipelineReport
         @report ||= read_cache
         if @report
           # Regenerate the report if it's in progress.
-          if @report["result"] == "IN PROGRESS"
+          if @report["result"] == "IN PROGRESS" || !report_has_all_stages?
             @report = write_cache(generate_report)
           end
         end
@@ -50,7 +50,7 @@ module JenkinsPipelineReport
 
       def report_has_all_stages?
         report_stage_urls = report["stages"].map { |name, stage| stage["url"] }.sort
-        stage_urls = stages.map { |stage| stage.url }.sort
+        stage_urls = stages.map { |stage| stage.build.url }.sort
         report_stage_urls == stage_urls
       end
 
