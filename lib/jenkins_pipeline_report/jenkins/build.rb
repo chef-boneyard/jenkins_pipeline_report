@@ -134,7 +134,6 @@ module JenkinsPipelineReport
           # Find the predecessor(s) to this job and ask for our retries from there;
           # it's entirely possible all our retries are downstream of that.
           if result.add?(self)
-            puts "Added #{path}. Downstreams: #{downstreams.map { |b| b.path }.join(",")}"
             downstreams.each do |downstream|
               downstream.retries(result) if downstream.job == job
             end
@@ -173,7 +172,6 @@ module JenkinsPipelineReport
             result |= @parents
           else
 
-            puts "    Parents: #{path}. Upstreams: #{upstreams.map { |b| b.path }.join(",")}"
             upstreams.each do |upstream|
               if upstream.job == job
                 upstream.parents(result)
