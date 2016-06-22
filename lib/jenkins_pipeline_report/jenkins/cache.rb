@@ -27,7 +27,7 @@ module JenkinsPipelineReport
       #
       # Create a new Jenkins multi-server cache.
       #
-      # @param cache_path [String] Path to a cache directory under which Jenkins
+      # @param cache_directory [String] Path to a cache directory under which Jenkins
       #   data is cached, to get
       # @param client_options [Hash] Hash of client options to `JenkinsAPI::Client`, including
       #   `identity_file`, a link to a private key used on the Jenkins server.
@@ -37,15 +37,32 @@ module JenkinsPipelineReport
         @client_options = client_options
         @servers = {}
         @pipelines = {}
+        load_servers
       end
 
       #
-      # Get a list of servers that have been cached here.
+      # Get a list of servers that have been cached or referenced.
       #
-      # @return [Hash<String,Server>] A list of the servers being cached, from
-      #   the server URL to Server.
+      # @return [Hash<String,Server>] A list of the servers being referenced or
+      #   cached.
       #
       attr_reader :servers
+
+      #
+      # Get the Jenkins object at the given URL.
+      #
+      # @return [Server, Job, Build] The Jenkins object at the given URL.
+      #
+      def jenkins_object(url)
+        path = URI(url).path
+        if path == "" || path == "/"
+          server(url)
+        elsif File.basename(path) =~ /^\d+$/
+          build(url)
+        else
+          job(url)
+        end
+      end
 
       #
       # Get the server
@@ -89,10 +106,25 @@ module JenkinsPipelineReport
       end
 
       #
+      # Get all builds on all known servers.
+      #
+      def builds
+        servers.flat_map { |server| server.builds }
+      end
+
+      #
+      # Refresh (or load) all Jenkins data for all servers.
+      #
+      def refresh
+        servers.each { |server| server.refresh }
+      end
+
+      #
       # Make a Jenkins API call to the given URL and return the result.
       #
-      def get(url, query=nil, json: true)
-        server(url).get(URI(url).path, query)
+      # @api private
+      def fetch(url, query=nil, json: true)
+        server(url).fetch(URI(url).path, query)
       end
 
       #
@@ -106,6 +138,7 @@ module JenkinsPipelineReport
       # @param json [Boolean] Whether the data is JSON or raw (like consoleText). Defaults to `true`.
       # @return [String] The absolute filename of the data on disk.
       #
+      # @api private
       def cache_filename(url, json)
         uri = URI(url)
         filename = File.join(uri.host, uri.path)
@@ -123,6 +156,7 @@ module JenkinsPipelineReport
       # @param json [Boolean] Whether the data is JSON or raw (like consoleText). Defaults to `true`.
       # @return [Hash,String] The decoded JSON or raw data at the URL, or `nil` if none was found.
       #
+      # @api private
       def read_cache(url, json: true)
         filename = cache_filename(url, json)
         if File.exist?(filename)
@@ -142,6 +176,7 @@ module JenkinsPipelineReport
       # @param data [Hash,String] The data to write (JSON hash or raw data).
       # @param json [Boolean] Whether the data is JSON or raw (like consoleText). Defaults to `true`.
       #
+      # @api private
       def write_cache(url, data, json: true)
         filename = cache_filename(url, json)
         Cli.logger.info("Writing cache #{filename}")
@@ -152,6 +187,21 @@ module JenkinsPipelineReport
           IO.binwrite(filename, data)
         end
       end
+
+      private
+
+      # Load in the list of servers from cache
+      def load_servers
+        if File.directory?(cache_directory)
+          Dir.entries(cache_directory) do |server_json|
+            next if server_json.directory?
+            next unless server_json.end_with?(".json")
+            url = JSON.parse(IO.read(server_json))["url"]
+            server(url)
+          end
+        end
+      end
+
     end
   end
 end

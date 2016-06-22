@@ -1,9 +1,9 @@
 require "optparse"
 require "uri"
 require "pathname"
-require_relative "summary_cache"
-require_relative "cli_query"
+require_relative "cli/query"
 require_relative "jenkins/cache"
+require_relative "report/cache"
 
 module JenkinsPipelineReport
   module Cli
@@ -19,44 +19,41 @@ module JenkinsPipelineReport
       end
     end
 
+    def self.report_cache
+      @reports ||= Report::Cache.new(options[:reports_directory])
+    end
+
     def self.jenkins_cache
-      @jenkins_cache ||= Jenkins::Cache.new("cache", identity_file: options[:identity_file])
+      @jenkins_cache ||= Jenkins::Cache.new(options[:cache_directory], identity_file: options[:identity_file])
     end
 
-    def self.summary_cache(job_url)
-      SummaryCache.new("reports", logger: logger, job_url: job_url)
-    end
+    def self.builds(*args, refresh_jenkins: true)
+      args.flat_map do |arg|
+        arg = jenkins_cache.jenkins_object(arg) if arg.is_a?(String)
 
-    def self.parse_url(url)
-      parts = URI(url).path.split("/")
-      raise "#{url} is not a job URL!" unless parts.size >= 3 && parts[1] == "job"
-      job_url = URI(url)
-      job_url.path = File.join(*parts[0..2])
-      if parts.size > 3
-        build_number = parts[3].to_i
-      end
-      [ job_url, build_number ]
-    end
-
-    def self.builds(url)
-      job_url, build_number = parse_url(url)
-      summary_cache(job_url).builds(
-        build_number,
-        local: options[:local],
-        force_refresh_runs: options[:force_refresh_runs],
-        force_refresh_logs: options[:force_refresh_logs],
-        force_reprocess_logs: options[:force_reprocess_logs],
-        force_resummarize: options[:force_resummarize]
-      ) do |build|
-        if options[:where]
-          options[:where] === build
-        else
-          true
+        if refresh_jenkins
+          arg.refresh(pipeline: true)
         end
+
+        case arg
+        when Jenkins::Build
+          triggers = [ report_cache.report(build.trigger) ]
+        else
+          triggers = arg.builds.select { |build| build.upstreams.empty? }
+        end
+        triggers.map { |trigger| report_cache.report(trigger) }
       end
     end
 
-    def self.parse_options()
+    def self.jenkins_args
+      if ARGV.any?
+        ARGV.map { |arg| jenkins_cache.jenkins_object(url) }
+      else
+        [ jenkins_cache ]
+      end
+    end
+
+    def self.parse_options
       OptionParser.new do |opts|
         yield opts
 
@@ -68,9 +65,9 @@ module JenkinsPipelineReport
         end
         opts.on("--where KEY=VALUE", "Only pick builds with KEY (a.b.c) equal to value") do |v|
           if options[:where]
-            options[:where] = CliQuery.and(options[:where], CliQuery.parse(v))
+            options[:where] = Cli::Query.and(options[:where], Cli::Query.parse(v))
           else
-            options[:where] = CliQuery.parse(v)
+            options[:where] = Cli::Query.parse(v)
           end
         end
         opts.on("--[no-]local", "Whether to get the list of builds locally (default: false).") do |v|
@@ -91,11 +88,20 @@ module JenkinsPipelineReport
         opts.on("--[no-]force-resummarize", "Whether to recalculate all failure summaries regardless of whether they've been calculated before (default: false).") do |v|
           options[:force_recalculate] = v
         end
+        opts.on("--cache-directory=PATH", "The cache directory for Jenkins data. Defaults to <reports directory>/.jenkins_cache.") do |v|
+          options[:cache_directory] = v
+        end
+        opts.on("--reports-directory=PATH", "The reports directory Defaults to ./reports.") do |v|
+          options[:reports_directory] = v
+        end
       end.parse!
       # Default these to force
       %w{force_refresh_runs force_refresh_logs force_reprocess_logs}.each do |key|
         options[key.to_sym] = options[:force] if options[:force] && !options.has_key?(key.to_sym)
       end
+      # Default cache-directory to cache
+      options[:reports_directory] ||= "reports"
+      options[:cache_directory] ||= File.join(options[:reports_directory], ".jenkins_cache")
     end
   end
 end

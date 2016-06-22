@@ -71,7 +71,17 @@ module JenkinsPipelineReport
       # @return [Numeric] The duration of this build, in seconds.
       #
       def duration
-        duration_to_seconds(data("duration").to_f)
+        duration = data("duration")
+        duration_to_seconds(duration.to_f) if duration
+      end
+
+      #
+      # The end time of the build.
+      #
+      # @return [DateTime] The end time of this build (timestamp+duration), or `nil` if it has no duration.
+      #
+      def end_timestamp
+        timestamp + duration if duration
       end
 
       #
@@ -241,18 +251,13 @@ module JenkinsPipelineReport
       #
       # Get the console text for this build.
       #
-      # This value is only cached if the build is complete; otherwise, it is
-      # retrieved every time. It is not cached in memory, only on disk.
+      # This value is not cached.
       #
       # @return [String] The console text for this build.
       #
       def console_text
         console_text_path = File.join(path, "consoleText")
-        if in_progress?
-          server.get(path, json: false)
-        else
-          server.cache_get(path, nil, json: false)
-        end
+        server.fetch(path, json: false)
       end
 
       #
@@ -269,17 +274,13 @@ module JenkinsPipelineReport
       #
       # Get an artifact of this build as binary data.
       #
-      # These are cached (on disk, not in memory).
+      # These are not cached.
       #
       # @return [String] The binary blob representing this artifact.
       #
       def artifact(relativePath)
         console_text_path = File.join(path, "artifacts", relativePath)
-        server.cache_get(path, nil, json: false)
-      end
-
-      def refresh
-        load_data(force: true)
+        server.fetch(path, json: false)
       end
 
       #
@@ -314,7 +315,7 @@ module JenkinsPipelineReport
             job.build_data(number)[field] || data[field]
           end
         else
-          @data || load || refresh
+          @data || load || fetch
         end
       end
 
@@ -336,19 +337,26 @@ module JenkinsPipelineReport
       end
 
       #
-      # Load or reload the job data from Jenkins
+      # Load or reload the job data from Jenkins.
       #
-      def refresh
-        new_data = cache.get(url, "tree=#{BUILD_FIELDS}")
-        timestamp = @data && @data["timestamp"]
-        timestamp ||= job.build_data(number)["timestamp"]
-        if timestamp && timestamp != new_data["timestamp"]
-          raise "Build #{url} has changed timestamps! Old: #{timestamp}, new: #{new_data[timestamp]}. Perhaps the queue was deleted and recreated?"
+      # To refresh processes and downstreams, you must refresh
+      # the parent job and its downstreams and active configurations.
+      #
+      def refresh(pipeline: false, recursive: true)
+        # Make sure and load so we know the last result ...
+        load unless @data
+        # If we have never fetched, or if our last known result was in progress,
+        # we need to fetch.
+        if !@data || result.nil?
+          fetch
         end
-        @data = new_data
-        add_to_upstreams
-        cache.write_cache(url, @data)
-        @data
+        if pipeline
+          job.refresh(recursive: false, pipeline: true)
+          if recursive
+            # runs.each { |build| build.refresh(recursive: false) }
+            # processes.each { |build| build.refresh(recursive: false) }
+          end
+        end
       end
 
       #
@@ -402,12 +410,25 @@ module JenkinsPipelineReport
 
       # 1462900986044 is "time since 1970 in milliseconds"
       def timestamp_to_datetime(timestamp)
-        Time.at(timestamp.to_f / 1000.0).utc.to_s
+        Time.at(timestamp.to_f / 1000.0).utc
       end
 
       # 13759911 is duration in milliseconds
-      def duration_to_time(duration)
+      def duration_to_seconds(duration)
         duration.to_f / 1000.0
+      end
+
+      def fetch
+        new_data = cache.fetch(url, "tree=#{BUILD_FIELDS}")
+        timestamp = @data && @data["timestamp"]
+        timestamp ||= job.build_data(number)["timestamp"]
+        if timestamp && timestamp != new_data["timestamp"]
+          raise "Build #{url} has changed timestamps! Old: #{timestamp}, new: #{new_data[timestamp]}. Perhaps the queue was deleted and recreated?"
+        end
+        @data = new_data
+        add_to_upstreams
+        cache.write_cache(url, @data)
+        @data
       end
     end
   end

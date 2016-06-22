@@ -82,6 +82,47 @@ module JenkinsPipelineReport
       end
 
       #
+      # Get the parent job if this is not directly under the root.
+      #
+      # @return [Job,nil] The parent job, or nil if there is no parent.
+      #
+      def parent
+        path = Pathname(path)
+        while true
+          parent = path.dirname
+          return if parent == path
+          if parent == "/job"
+            return server.job(path.to_s)
+          end
+          path = parent
+        end
+      end
+
+      #
+      # Get the type of job.
+      #
+      # @return [Symbol] The type of Job:
+      #   - `:run` if this is a matrix job of its `parent`.
+      #   - `:process` if this is a process job from a `parent`.
+      #   - `:top_level` if this is a top level job.
+      #
+      def type
+        @type ||= begin
+          if parent
+            if parent.active_configurations.include?(self)
+              :run
+            elsif parent.processes.include?(self)
+              :process
+            else
+              raise "Unknown job type for #{url}! Doesn't seem to be a matrix or process job of #{parent.url} ..."
+            end
+          else
+            :top_level
+          end
+        end
+      end
+
+      #
       # Parameters for this job.
       #
       # @return [Hash<String>] Parameters for this job, each of which has
@@ -234,7 +275,7 @@ module JenkinsPipelineReport
             server.job_data(url)[field] || data[field]
           end
         else
-          @data || load || refresh
+          @data || load || refresh(recursive: false)
         end
       end
 
@@ -248,16 +289,25 @@ module JenkinsPipelineReport
       end
 
       #
-      # Load or reload the job data from Jenkins
+      # Load or reload the job data from Jenkins.
       #
-      def refresh
-        new_data = cache.get(url, "tree=#{JOB_FIELDS}")
-        if @data && new_data["nextBuildNumber"] < @data["nextBuildNumber"]
-          raise "Job #{url} has been deleted and recreated! nextBuildNumber was #{old_value["nextBuildNumber"]}, is now #{new_value["nextBuildNumber"]}"
+      # @param recursive [Boolean] `true` to refresh each build, `false` to just
+      #   refresh the job and its *list* of builds. as well as any matrix jobs
+      #   and processes. Downstreams and upstreams will not be refreshed.
+      #
+      def refresh(recursive: true, pipeline: false)
+        fetch
+        if recursive
+          # Since we're refreshing active configurations directly after, we don't
+          # bother with recursive refresh of builds. More efficient to grab the
+          # whole job at once.
+          builds.each { |build| build.refresh(recursive: false) }
+          if pipeline
+            all_downstreams.each { |job| job.refresh(recursive: false) }
+            # active_configurations.each { |job| job.refresh }
+            # processes.each { |job| job.refresh }
+          end
         end
-        @data = new_data
-        builds.each { |build| build.add_to_upstreams }
-        cache.write_cache(url, @data)
         @data
       end
 
@@ -273,6 +323,16 @@ module JenkinsPipelineReport
 
       def cache
         server.cache
+      end
+
+      def fetch
+        new_data = cache.fetch(url, "tree=#{JOB_FIELDS}")
+        if @data && new_data["nextBuildNumber"] < @data["nextBuildNumber"]
+          raise "Job #{url} has been deleted and recreated! nextBuildNumber was #{old_value["nextBuildNumber"]}, is now #{new_value["nextBuildNumber"]}"
+        end
+        @data = new_data
+        cache.write_cache(url, @data)
+        builds.each { |build| build.add_to_upstreams }
       end
     end
   end

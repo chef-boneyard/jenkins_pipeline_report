@@ -1,3 +1,2 @@
 require_relative "jenkins_pipeline_report/version"
 require_relative "jenkins_pipeline_report/cli"
-require_relative "jenkins_pipeline_report/summary_cache"

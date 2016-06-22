@@ -44,7 +44,7 @@ module JenkinsPipelineReport
       attr_reader :client_options
 
       #
-      # Get top-level jobs on the server (no processes or active configurations).
+      # Get top-level jobs on the server (no processes or matrix build jobs).
       #
       # @return [Hash<String, Job>] A list of all jobs on the server, from their
       #   path (`/job/my-job/`) to the Job object.
@@ -69,39 +69,14 @@ module JenkinsPipelineReport
         @jobs[path] ||= Job.new(self, path)
       end
 
-      # @api private
-      def job_data(url)
-        # Grab the build data for a particular build from allBuilds. Used to make
-        # certain immutable build data quick to load and to link up processes and
-        # downstreams without having to load all the builds.
-        data["jobs"].find { |data| data["url"] == url }
-      end
-
-      SERVER_FIELDS = "jobs[url,upstreamJobs[url],downstreamJobs[url]]".freeze
-
       #
-      # Get data about the server.
+      # Get all top-level builds on the server.
       #
-      # @return [Hash] Build data from the server.
+      # @return [Array<Build>] All Builds from all Jobs on the server. Does not
+      #  include processes or matrix builds (only top level Jobs).
       #
-      def data
-        @data || load || refresh
-      end
-
-      #
-      # Load the Jenkins server data from cache
-      #
-      def load
-        @data = cache.read_cache(url)
-      end
-
-      #
-      # Load or reload the Jenkins server data from Jenkins
-      #
-      def refresh
-        @data = get("", "tree=#{SERVER_FIELDS}")
-        cache.write_cache(url, @data)
-        @data
+      def builds
+        jobs.flat_map { |job| job.builds }
       end
 
       #
@@ -120,6 +95,41 @@ module JenkinsPipelineReport
         job(job_path).build(build_number)
       end
 
+      SERVER_FIELDS = "jobs[url,upstreamJobs[url],downstreamJobs[url]]".freeze
+
+      #
+      # Get data about the server.
+      #
+      # @return [Hash] Build data from the server.
+      #
+      def data
+        @data || load || refresh(recursive: false)
+      end
+
+      #
+      # Load the Jenkins server data from cache
+      #
+      def load
+        @data = cache.read_cache(url)
+      end
+
+      #
+      # Load (or reload) the Jenkins server data from Jenkins
+      #
+      # @param recursive [Boolean] Whether to refresh each job or just the list
+      #   of jobs.
+      #
+      def refresh(recursive: true)
+        @data = fetch("", "tree=#{SERVER_FIELDS}")
+        # It doesn't technically store the URL, but we need to remember it.
+        @data["url"] = url
+        cache.write_cache(url, @data)
+        if recursive
+          jobs.each { |job| job.refresh }
+        end
+        @data
+      end
+
       #
       # Get data from the cache or Jenkins server.
       #
@@ -128,7 +138,7 @@ module JenkinsPipelineReport
       # @param args [Array] Arguments to pass verbatim to client.
       # @return [Hash,Array] The parsed response.
       #
-      def get(path, query=nil, json: true)
+      def fetch(path, query=nil, json: true)
         Cli.logger.info "GET #{File.join(url, path)}"
         Cli.logger.debug "Query: #{query}" if query
         path = File.join(URI(url).path, path)
@@ -137,6 +147,19 @@ module JenkinsPipelineReport
         else
           client.api_get_request(path, query, nil, true).body
         end
+      end
+
+      #
+      # Grab the build data for a particular build from allBuilds. Used to make
+      # certain immutable build data like timestamp, upstreams and downstreams
+      # quick to load without having to fetch or read in the actual build
+      # information.
+      #
+      # @api private
+      # @see JOB_BUILD_FIELDS
+      #
+      def job_data(url)
+        data["jobs"].find { |data| data["url"] == url }
       end
 
       private
