@@ -3,7 +3,7 @@ require "uri"
 require "pathname"
 require_relative "cli/query"
 require_relative "jenkins/cache"
-require_relative "report/cache"
+require_relative "report/report_cache"
 
 module JenkinsPipelineReport
   module Cli
@@ -20,7 +20,7 @@ module JenkinsPipelineReport
     end
 
     def self.report_cache
-      @reports ||= Report::Cache.new(options[:reports_directory])
+      @reports ||= Report::ReportCache.new(options[:reports_directory])
     end
 
     def self.jenkins_cache
@@ -37,7 +37,7 @@ module JenkinsPipelineReport
 
         case arg
         when Jenkins::Build
-          triggers = [ report_cache.report(build.trigger) ]
+          triggers = arg.triggers
         else
           triggers = arg.builds.select { |build| build.upstreams.empty? }
         end

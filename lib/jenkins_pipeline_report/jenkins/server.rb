@@ -95,7 +95,15 @@ module JenkinsPipelineReport
         job(job_path).build(build_number)
       end
 
-      SERVER_FIELDS = "jobs[url,upstreamJobs[url],downstreamJobs[url]]".freeze
+      #
+      # The list of fields to get for the server.
+      #
+      SERVER_FIELDS = "url,jobs[url,upstreamJobs[url],downstreamJobs[url]]".freeze
+
+      #
+      # Whether to cache servers on disk.
+      #
+      CACHE_SERVERS = true
 
       #
       # Get data about the server.
@@ -110,7 +118,9 @@ module JenkinsPipelineReport
       # Load the Jenkins server data from cache
       #
       def load
-        @data = cache.read_cache(url)
+        if CACHE_SERVERS
+          @data = cache.read_cache(url)
+        end
       end
 
       #
@@ -122,8 +132,10 @@ module JenkinsPipelineReport
       def refresh(recursive: true)
         @data = fetch("", "tree=#{SERVER_FIELDS}")
         # It doesn't technically store the URL, but we need to remember it.
-        @data["url"] = url
-        cache.write_cache(url, @data)
+        @data["url"] ||= url
+        if CACHE_SERVERS
+          cache.write_cache(url, @data)
+        end
         if recursive
           jobs.each { |job| job.refresh }
         end

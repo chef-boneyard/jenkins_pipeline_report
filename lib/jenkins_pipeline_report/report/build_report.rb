@@ -1,9 +1,9 @@
 require "pathname"
-require_relative "stage"
+require_relative "stage_report"
 
 module JenkinsPipelineReport
   module Report
-    class Build
+    class BuildReport
       attr_reader :report_cache
       attr_reader :trigger
 
@@ -37,10 +37,11 @@ module JenkinsPipelineReport
         return nil if duration.nil?
         minutes, seconds = duration.divmod(60)
         hours, minutes = minutes.divmod(60)
+        seconds = seconds.to_i
         result = ""
-        result << "#{hours}h" if hours
-        result << "#{minutes}m" if minutes
-        result << "#{seconds}s" if seconds
+        result << "#{hours}h" if hours > 0
+        result << "#{minutes}m" if minutes > 0
+        result << "#{seconds}s" if seconds > 0
         result = "0s" if result == ""
         result
       end
@@ -59,11 +60,14 @@ module JenkinsPipelineReport
           "result" => generate_result,
           "url" => trigger.url,
           "timestamp" => format_datetime(trigger.timestamp),
-          "duration" => generate_duration,
+          "duration" => format_duration(generate_duration),
+          "active_duration" => format_duration(generate_active_duration),
+          "queue_delays" => format_duration(generate_queue_delays),
+          "retry_delays" => format_duration(generate_retry_delays),
           "triggered_by" => generate_triggered_by,
           "parameters" => trigger.parameters,
           "change" => generate_change,
-          "stages" => generate_stages
+          "stages" => generate_stages,
         }
         report.reject! { |key,value| value.nil? }
         report
@@ -86,7 +90,7 @@ module JenkinsPipelineReport
 
       def generate_duration
         stage_end_times = stages.map { |stage| stage.build.end_timestamp }.compact
-        format_duration(stage_end_times.max - trigger.timestamp)
+        stage_end_times.max - trigger.timestamp
       end
 
       #
@@ -95,7 +99,7 @@ module JenkinsPipelineReport
       # @return [Array<Stage>] List of build stage reports.
       #
       def stages
-        @stages ||= trigger.stages.map { |stage| Stage.new(self, stage) }
+        @stages ||= calculate_stages(trigger)
       end
 
       #
@@ -110,6 +114,7 @@ module JenkinsPipelineReport
             end
           end
         end
+        nil
       end
 
       #
@@ -133,6 +138,7 @@ module JenkinsPipelineReport
           # elsewhere.
           when "FAILURE"
             result = "FAILURE" unless !%w{SUCCESS FAILURE}.include?(stage.build.result)
+
           else
             # More specific result like ABORTED
             result = stage.build.result
@@ -156,6 +162,33 @@ module JenkinsPipelineReport
         change
       end
 
+      def generate_queue_delays
+        sum = 0
+        stages.each do |stage|
+          delay = stage.generate_queue_delay
+          sum += delay if delay
+        end
+        return sum unless sum == 0
+      end
+
+      def generate_retry_delays
+        sum = 0
+        stages.each do |stage|
+          delay = stage.generate_retry_delay
+          sum += delay if delay
+        end
+        return sum unless sum == 0
+      end
+
+      def generate_active_duration
+        sum = 0
+        stages.each do |stage|
+          duration = stage.generate_active_duration
+          sum += duration if duration
+        end
+        sum
+      end
+
       #
       # Cache operations
       #
@@ -169,6 +202,16 @@ module JenkinsPipelineReport
 
       def write_cache(value)
         report_cache.write_cache(trigger.url, value)
+      end
+
+      def calculate_stages(build)
+        retries = build.retries
+        stage = StageReport.new(self, retries)
+        next_stages = {}
+        stage.build.downstreams.each do |downstream|
+          next_stages[downstream.job] ||= calculate_stages(downstream)
+        end
+        [ stage, *next_stages.values.flatten(1) ].uniq
       end
     end
   end

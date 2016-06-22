@@ -1,4 +1,4 @@
-require_relative "build"
+require_relative "build_report"
 
 module JenkinsPipelineReport
   module Report
@@ -8,7 +8,7 @@ module JenkinsPipelineReport
     #
     # Directories look like `reports/my.jenkins.com/job/job-name/1.yaml`.
     #
-    class Cache
+    class ReportCache
       #
       # The path where reports will be generated.
       #
@@ -29,7 +29,7 @@ module JenkinsPipelineReport
       # Get the report for the given build.
       #
       def report(build)
-        Report::Build.new(self, build)
+        BuildReport.new(self, build)
       end
 
       def delete_cache(url)

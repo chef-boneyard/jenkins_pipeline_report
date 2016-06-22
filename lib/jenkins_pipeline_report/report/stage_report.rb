@@ -13,7 +13,7 @@ module JenkinsPipelineReport
     # - http://my.jenkins.com/job/second-stage/23
     # etc.
     #
-    class Stage
+    class StageReport
       #
       # The parent build report.
       #
@@ -22,11 +22,11 @@ module JenkinsPipelineReport
       attr_reader :build_report
 
       #
-      # The Jenkins build most recently run for this stage.
+      # The retries involved in this build stage, from oldest to newest.
       #
-      # @return [Jenkins::Build] The Jenkins build for this stage.
+      # @return [Array<Jenkins::Build>] The retries involved in this build stage.
       #
-      attr_reader :build
+      attr_reader :retries
 
       #
       # Create a new stage report generator.
@@ -34,9 +34,19 @@ module JenkinsPipelineReport
       # @param build_report [Report::Build] The parent build report.
       # @param build [Jenkins::Build] The Jenkins build for this stage.
       #
-      def initialize(build_report, build)
+      def initialize(build_report, retries)
         @build_report = build_report
+        @retries = retries
         @build = build
+      end
+
+      #
+      # The Jenkins build most recently run for this stage.
+      #
+      # @return [Jenkins::Build] The Jenkins build for this stage.
+      #
+      def build
+        retries.last
       end
 
       #
@@ -49,8 +59,11 @@ module JenkinsPipelineReport
         report = {
           "result" => build.result || "IN PROGRESS",
           "url" => build.url,
-          "duration" => build_report.format_duration(build.duration),
-          "delay" => build_report.format_duration(generate_delay),
+          "active_duration" => build_report.format_duration(generate_active_duration),
+          "retries" => generate_retries,
+          "queue_delay" => build_report.format_duration(generate_queue_delay),
+          "retry_delay" => build_report.format_duration(generate_retry_delay),
+          "duration" => build_report.format_duration(generate_duration),
           # TODO runs and processes
           # TODO failures, failure types, aggregation
           # TODO log excerpts
@@ -64,29 +77,44 @@ module JenkinsPipelineReport
         @console_text_lines ||= build.console_text.lines
       end
 
-      def generate_change
-        result = {
-          "version" => build.parameters["OMNIBUS_BUILD_VERSION"],
-          "git_ref" => build.parameters["GIT_REF"],
-          "delivery_change" => build.parameters["DELIVERY_CHANGE"],
-          "delivery_sha" => build.parameters["DELIVERY_SHA"],
-          "git_commit" => build.parameters["GIT_COMMIT"],
-        }
-        result.reject! { |key,value| value.nil? || value.empty? }
-      end
-
       def stage_path
         # Get rid of "job" from the top of the path. Generally the result will
         # just be `name`, but sometimes it'll be a multipath, so it pays to be
         # correct.
-        Pathname(build.job.path).relative_path_from(Pathname("/job"))
+        Pathname(build.job.path).relative_path_from(Pathname("/job")).to_s
+      end
+
+      def generate_change
+        result = {
+          "version" => build.parameters["OMNIBUS_BUILD_VERSION"],
+          "git_commit" => build.parameters["GIT_COMMIT"],
+        }
+        result.reject! { |key,value| value.nil? || value.empty? }
+        result
+      end
+
+      def generate_duration
+        build.end_timestamp - retries.first.timestamp if build.end_timestamp
+      end
+
+      def generate_active_duration
+        build.duration
+      end
+
+      def generate_queue_delay
+        previous_stage_end = retries.first.upstreams.map { |upstream| upstream.end_timestamp }.compact.max
+        return retries.first.timestamp - previous_stage_end if previous_stage_end
+      end
+
+      def generate_retry_delay
+        result = build.timestamp - retries.first.timestamp
+        return result unless result == 0
       end
 
       private
 
-      def generate_delay
-        upstream_end = build.upstreams.map { |upstream| upstream.end_timestamp }.compact.max
-        build.timestamp - upstream_end if upstream_end
+      def generate_retries
+        return retries.size - 1 if retries.size > 1
       end
 
       def process_logs(report)

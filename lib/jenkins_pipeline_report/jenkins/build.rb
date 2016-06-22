@@ -129,49 +129,85 @@ module JenkinsPipelineReport
       #
       # @return [Array<Build>] The retries for this build.
       #
-      def retries
-        results = [ self ]
-        downstreams.each do |downstream|
-          results |= downstream.retries if downstream.job == job
+      def retries(result=nil)
+        if result
+          # Find the predecessor(s) to this job and ask for our retries from there;
+          # it's entirely possible all our retries are downstream of that.
+          if result.add?(self)
+            puts "Added #{path}. Downstreams: #{downstreams.map { |b| b.path }.join(",")}"
+            downstreams.each do |downstream|
+              downstream.retries(result) if downstream.job == job
+            end
+          end
+
+        else
+          # This is the initial call to retries. Find our parents and look at
+          # their downstreams to find retries.
+          result = Set.new
+
+          parents = self.parents
+          if parents.any?
+            # If we have parents, look for our retries there.
+            parents.each do |parent|
+              parent.downstreams.each do |downstream|
+                downstream.retries(result) if downstream.job == job
+              end
+            end
+          else
+            # We have no parents; we are the only one who has our retries.
+            retries(result)
+          end
         end
-        results
+
+        result.to_a.sort_by { |build| build.number }
       end
 
       #
-      # The "stages" of this build: the latest retry of each build job, along
-      # with their successors (downstreams).
+      # The build(s) that triggered this set of retries.
       #
-      # @return [Array<Build>] The stages this build has gone through, with
-      #   retries deduped (one build per job).
+      # @return [Build] The parent builds of this build, or empty if none.
       #
-      def stages
-        stages = [ retries.last ]
-        next_stages = {}
-        downstreams.each do |downstream|
-          next_stages[job] = downstream
+      def parents(result=nil)
+        if result
+          if @parents
+            result |= @parents
+          else
+
+            puts "    Parents: #{path}. Upstreams: #{upstreams.map { |b| b.path }.join(",")}"
+            upstreams.each do |upstream|
+              if upstream.job == job
+                upstream.parents(result)
+              else
+                result.add(upstream)
+              end
+            end
+
+            result.to_a
+          end
+        else
+          @parents ||= parents(Set.new)
         end
-        next_stages.each do |job, downstream|
-          stages |= downstream.stages
-        end
-        stages
       end
 
       #
       # Get the triggers for this build (ultimate upstreams).
       #
+      # @return [Array<Build>] The triggers for this build.
+      #
       def triggers
         @triggers ||= begin
-          result = upstreams.flat_map { |upstream| upstream.triggers }.uniq
-          if result.empty?
+          if upstreams.any?
+            upstreams.flat_map { |upstream| upstream.triggers }.uniq
+          else
             [ self ]
           end
         end
       end
 
       #
-      # Get the upstream build of this build.
+      # Get the upstream builds of this build.
       #
-      # @return [Build] The build that kicked this build off.
+      # @return [Array<Build>] The build(s) that caused this build to start.
       # @see #downstreams
       #
       def upstreams
@@ -256,8 +292,17 @@ module JenkinsPipelineReport
       # @return [String] The console text for this build.
       #
       def console_text
-        console_text_path = File.join(path, "consoleText")
-        server.fetch(path, json: false)
+        path = File.join(self.path, "consoleText")
+        if CACHE_CONSOLE_TEXT
+          console_text = server.read_cache(path, json: false)
+        end
+        unless console_text
+          console_text = server.fetch(path, json: false)
+          if CACHE_CONSOLE_TEXT
+            server.write_cache(path, console_text, json: false)
+          end
+        end
+        console_text
       end
 
       #
@@ -279,8 +324,17 @@ module JenkinsPipelineReport
       # @return [String] The binary blob representing this artifact.
       #
       def artifact(relativePath)
-        console_text_path = File.join(path, "artifacts", relativePath)
-        server.fetch(path, json: false)
+        path = File.join(self.path, "artifacts", relativePath)
+        if CACHE_ARTIFACTS
+          artifact = server.read_cache(path, json: false)
+        end
+        unless artifact
+          artifact = server.fetch(path, json: false)
+          if CACHE_ARTIFACTS
+            server.write_cache(path, artifact, json: false)
+          end
+        end
+        artifact
       end
 
       #
@@ -294,6 +348,21 @@ module JenkinsPipelineReport
         artifacts[relativePath] failCount skipCount totalCount
         runs[url]
       }.join(",").freeze
+
+      #
+      # Whether to cache builds.
+      #
+      CACHE_BUILDS = false
+
+      #
+      # Whether to cache console text.
+      #
+      CACHE_CONSOLE_TEXT = false
+
+      #
+      # Whether to cache artifacts.
+      #
+      CACHE_ARTIFACTS = false
 
       #
       # The build JSON data.
@@ -332,8 +401,10 @@ module JenkinsPipelineReport
       # Load the job data from cache
       #
       def load
-        @data = cache.read_cache(url)
-        add_to_upstreams if @data
+        if CACHE_BUILDS
+          @data = cache.read_cache(url)
+          add_to_upstreams if @data
+        end
       end
 
       #
@@ -427,7 +498,9 @@ module JenkinsPipelineReport
         end
         @data = new_data
         add_to_upstreams
-        cache.write_cache(url, @data)
+        if CACHE_BUILDS
+          cache.write_cache(url, @data)
+        end
         @data
       end
     end

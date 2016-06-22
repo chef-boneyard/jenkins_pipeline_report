@@ -1,5 +1,6 @@
 require "set"
 require_relative "build"
+require_relative "../exceptions"
 
 module JenkinsPipelineReport
   module Jenkins
@@ -234,17 +235,18 @@ module JenkinsPipelineReport
         result
       end
 
-      #
-      # The list of fields that will be retrieved in Job.data.
-      #
-      # @return [String] The list of fields that will be in Job.data.
-      #
       JOB_BUILD_FIELDS = %w{
         number
         timestamp
         actions[causes[upstreamUrl,upstreamBuild]]
         target[url]
       }.join(",").freeze
+
+      #
+      # The list of fields that will be retrieved in Job.data.
+      #
+      # @return [String] The list of fields that will be in Job.data.
+      #
       JOB_FIELDS = %W{
         name url nextBuildNumber
         upstreamProjects[name] downstreamProjects[name]
@@ -253,6 +255,11 @@ module JenkinsPipelineReport
         property[parameterDefinitions[*[*]]]
         allBuilds[#{JOB_BUILD_FIELDS}]
       }.join(",").freeze
+
+      #
+      # Whether to cache jobs on disk.
+      #
+      CACHE_JOBS = true
 
       #
       # The job JSON data.
@@ -283,8 +290,10 @@ module JenkinsPipelineReport
       # Load the job data from cache
       #
       def load
-        @data = cache.read_cache(url)
-        builds.each { |build| build.add_to_upstreams } if @data
+        if CACHE_JOBS
+          @data = cache.read_cache(url)
+          builds.each { |build| build.add_to_upstreams } if @data
+        end
         @data
       end
 
@@ -302,11 +311,11 @@ module JenkinsPipelineReport
           # bother with recursive refresh of builds. More efficient to grab the
           # whole job at once.
           builds.each { |build| build.refresh(recursive: false) }
-          if pipeline
-            all_downstreams.each { |job| job.refresh(recursive: false) }
-            # active_configurations.each { |job| job.refresh }
-            # processes.each { |job| job.refresh }
-          end
+        end
+        if pipeline
+          all_downstreams.each { |job| job.refresh(recursive: false) }
+          # active_configurations.each { |job| job.refresh }
+          # processes.each { |job| job.refresh }
         end
         @data
       end
@@ -326,12 +335,30 @@ module JenkinsPipelineReport
       end
 
       def fetch
-        new_data = cache.fetch(url, "tree=#{JOB_FIELDS}")
-        if @data && new_data["nextBuildNumber"] < @data["nextBuildNumber"]
-          raise "Job #{url} has been deleted and recreated! nextBuildNumber was #{old_value["nextBuildNumber"]}, is now #{new_value["nextBuildNumber"]}"
+        # First we load, so we can check for job recreation.
+        load
+
+        # Fetch the new job data.
+        fetched = cache.fetch(url, "tree=#{JOB_FIELDS}")
+
+        # Verify the queue hasn't jumped by looking at a build
+        if @data
+          old_build = @data["allBuilds"].first
+          fetched_build = fetched["allBuilds"].find { |build| build["number"] == old_build["number"] }
+          if old_build && old_build != fetched_build
+            raise JobRecreatedError, "Job #{url} has been deleted and recreated! First build used to be #{old_build}, is now #{fetched_build}!"
+          end
         end
-        @data = new_data
-        cache.write_cache(url, @data)
+
+        # Set data to fetched data
+        @data = fetched
+
+        # Write to cache if needed
+        if CACHE_JOBS
+          cache.write_cache(url, @data)
+        end
+
+        # Link build's upstreams and target
         builds.each { |build| build.add_to_upstreams }
       end
     end
