@@ -55,7 +55,7 @@ module JenkinsPipelineReport
       end
 
       def generate_report
-        Cli.logger.debug("Generating build report for #{trigger.url} ...")
+        Cli.logger.info("Generating build report for #{trigger.url} ...")
         report = {
           "result" => generate_result,
           "url" => trigger.url,

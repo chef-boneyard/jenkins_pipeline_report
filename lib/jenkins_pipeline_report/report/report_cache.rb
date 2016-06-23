@@ -43,14 +43,14 @@ module JenkinsPipelineReport
       def read_cache(url)
         path = report_path(url)
         if File.exist?(path)
-          Cli.logger.info("Reading #{path} ...")
+          Cli.logger.debug("Reading #{path} ...")
           Psych.load_file(path)
         end
       end
 
       def write_cache(url, value)
         path = report_path(url)
-        Cli.logger.info("Writing #{path} ...")
+        Cli.logger.debug("Writing #{path} ...")
         FileUtils.mkdir_p(File.dirname(path))
         IO.write(path, Psych.dump(value))
       end

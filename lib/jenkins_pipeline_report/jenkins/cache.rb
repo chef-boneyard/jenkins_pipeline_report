@@ -162,7 +162,7 @@ module JenkinsPipelineReport
       def read_cache(url, json: true)
         filename = cache_filename(url, json)
         if File.exist?(filename)
-          Cli.logger.info("Reading cache #{filename}")
+          Cli.logger.debug("Reading cache #{filename}")
           if json
             JSON.parse(IO.read(filename))
           else
@@ -181,7 +181,7 @@ module JenkinsPipelineReport
       # @api private
       def write_cache(url, data, json: true)
         filename = cache_filename(url, json)
-        Cli.logger.info("Writing cache #{filename}")
+        Cli.logger.debug("Writing cache #{filename}")
         FileUtils.mkdir_p(File.dirname(filename))
         if json
           IO.write(filename, JSON.dump(data))
