@@ -309,7 +309,7 @@ module JenkinsPipelineReport
       # @param pipeline [Boolean] Whether to refresh all jobs in the pipelines.
       #   Defaults to `false`.
       #
-      def refresh(recursive: true, pipeline: false, invalidate: false)
+      def refresh(recursive: false, pipeline: false, invalidate: false)
         if invalidate && !CACHE_JOBS
           @data = nil
         else

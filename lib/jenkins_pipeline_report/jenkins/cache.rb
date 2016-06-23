@@ -115,9 +115,9 @@ module JenkinsPipelineReport
       #
       # Refresh (or load) all Jenkins data for all servers.
       #
-      def refresh(recursive: true, pipeline: false, invalidate: false)
-        if recursive
-          servers.each { |server| server.refresh(recursive: recursive, pipeline: false, invalidate: invalidate) }
+      def refresh(recursive: false, pipeline: false, invalidate: false)
+        if recursive || pipeline
+          servers.each { |server| server.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
         end
       end
 
