@@ -18,7 +18,8 @@ module JenkinsPipelineReport
       end
 
       def generate_queue_delay
-        retries.first.timestamp - stage_report.build.timestamp
+        queue_delay = retries.first.timestamp - stage_report.build.timestamp
+        queue_delay unless queue_delay < 10
       end
     end
   end

@@ -12,12 +12,21 @@ module JenkinsPipelineReport
       end
 
       def extract(context: 2)
+        # This is only for failures
+        return if stage.build.result == "SUCCESS"
+
         blocks = BlockMarker.new
         last_line = nil
         lines.each_with_index do |line,index|
           case line
           when /\bERROR\b/
-            blocks.mark(index-context, index+context) unless line =~ /(grep|echo) "ERROR 404"/
+            case line
+            when /(grep|echo) "ERROR 404"/,
+                 /ERROR: Failed to post audit report to server/
+              # Skip the above annoying lines
+            else
+              blocks.mark(index-context, index+context)
+            end
 
           when /The --deployment flag requires a/,
                /EACCES/,
@@ -146,28 +155,6 @@ module JenkinsPipelineReport
             end_index = skip_until(end_index+1) { |line| line.chomp == "" }
 
             blocks.mark(index-context, end_index+context)
-
-          # success lines (omnibus timing, test timing ...). Don't bother with
-          # context; it's not a failure thing.
-          when /^\s*\[([^\]]+)\] . \| .*:\s+(\d+(\.\d+)?)s$/,
-               /^CHEF-ACCEPTANCE::\[[^\]]+\]\s+\|(.+)\|\s*$/,
-               # Chef:
-               # [2016-06-15T16:00:52-04:00] INFO: *** Chef 12.12.2 ***
-               # [2016-06-15T16:00:55-04:00] INFO: Run List expands to [private-chef::default]
-               # [2016-06-15T16:06:37-04:00] INFO: Chef Run complete in 341.141512 seconds
-               /^\[(\d+-\d+-\d+T\d+:\d+:\d+[+-]\d+:\d+)\] INFO: \*\*\* Chef \S+ \*\*\*$/,
-               /^\[(\d+-\d+-\d+T\d+:\d+:\d+[+-]\d+:\d+)\] INFO: Run List expands to \[(.+)\]/,
-               /^\[(\d+-\d+-\d+T\d+:\d+:\d+[+-]\d+:\d+)\] INFO: Chef Run complete in \S+ seconds/,
-
-               # Pedant:
-               # Starting Pedant Run: 2016-06-15 20:08:45 UTC
-               # Finished in 37 minutes 7 seconds (files took 7.53 seconds to load)
-               # 4173 examples, 0 failures, 98 pending
-               /^Starting Pedant Run: (.+)/,
-               /^Finished in (\S+) minutes (\S+) seconds \(files took \S+ seconds to load\)/,
-               /^(\d+) examples, (\d+) failures, (\d+) pending$/
-
-            blocks.mark(index-1, index+1)
 
           end
         end

@@ -144,26 +144,31 @@ module JenkinsPipelineReport
             first_child_start = children.map { |n,c| c.start_time }.min
 
             if start_time != first_child_start
-              before = (first_child_start - start_time).to_i
+              before = (first_child_start - start_time)
               result["before (setup time)"] = before unless before.abs < 10
             end
 
             children.each do |key, child|
               value = child.step_timing
-              result[key] = value unless (value.is_a?(Fixnum) && value < 10) || value == {}
+              result[key] = value unless (value.is_a?(Numeric) && value < 10) || value == {}
             end
 
             last_child_end = children.map { |n,c| c.end_time }.max
             if end_time != last_child_end
-              after = (end_time - last_child_end).to_i
+              after = (end_time - last_child_end)
               result["after (cleanup time)"] = after unless after.abs < 10
             end
           end
 
           if result.empty?
-            result = BuildReport.format_duration(duration)
+            result = duration
           elsif duration > 10 && result.size > 1
-            result = { "total" => BuildReport.format_duration(duration) }.merge(result)
+            result = { "total" => duration }.merge(result)
+          end
+          if result.is_a?(Hash)
+            result.each do |key, value|
+              result[key] = BuildReport.format_duration(value) if value.is_a?(Numeric)
+            end
           end
           result
         end

@@ -59,11 +59,11 @@ module JenkinsPipelineReport
         report = {
           "result" => build.result || "IN PROGRESS",
           "url" => build.url,
+          "duration" => build_report.format_duration(generate_duration),
           "active_duration" => build_report.format_duration(generate_active_duration),
           "retries" => generate_retries,
-          "queue_delay" => build_report.format_duration(generate_queue_delay),
           "retry_delay" => build_report.format_duration(generate_retry_delay),
-          "duration" => build_report.format_duration(generate_duration),
+          "queue_delay" => build_report.format_duration(generate_queue_delay),
           "runs" => generate_run_reports,
           # TODO runs and processes
           # TODO failures, failure types, aggregation
@@ -139,7 +139,7 @@ module JenkinsPipelineReport
       end
 
       def generate_active_duration
-        build.duration
+        build.duration unless retries.size == 1
       end
 
       def generate_queue_delay
@@ -155,7 +155,7 @@ module JenkinsPipelineReport
             end
           end
         end
-        queue_delay
+        queue_delay unless queue_delay && queue_delay < 10
       end
 
       def generate_retry_delay
@@ -176,10 +176,13 @@ module JenkinsPipelineReport
       end
 
       def process_logs(report)
-        LogExtractor.new(self, report).extract
-        AcceptanceExtractor.new(self, report).extract
-        TimingExtractor.new(self, report).extract
-        FailureExtractor.new(self, report).extract
+        # We don't process logs until builds complete
+        unless build.result.nil?
+          LogExtractor.new(self, report).extract
+          AcceptanceExtractor.new(self, report).extract
+          TimingExtractor.new(self, report).extract
+          FailureExtractor.new(self, report).extract
+        end
       end
 
     end

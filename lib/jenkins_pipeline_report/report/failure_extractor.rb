@@ -17,7 +17,7 @@ module JenkinsPipelineReport
       private
 
       def extract_cause
-        return if stage.build.result.nil? || stage.build.result == "SUCCESS"
+        return if stage.build.result == "SUCCESS"
 
         # If it failed but its result was something other than failure (such as
         # "aborted"), use that as the cause. For example, "aborted"

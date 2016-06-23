@@ -89,8 +89,12 @@ module JenkinsPipelineReport
         steps.close
 
         # Print the result in nice simple format
-        report["steps"] = steps.step_timing
-        report.delete("steps") if steps.is_a?(String)
+        step_timing = steps.step_timing
+        # If step timing is a duration, it's going to be the same as the full
+        # duration. Ignore it.
+        unless step_timing.is_a?(Numeric)
+          report["steps"] = step_timing
+        end
       end
 
       def found_omnibus_line(description, time)

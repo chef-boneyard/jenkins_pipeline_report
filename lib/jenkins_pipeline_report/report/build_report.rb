@@ -43,10 +43,14 @@ module JenkinsPipelineReport
 
       def self.format_duration(duration)
         return nil if duration.nil?
+        if duration < 0
+          duration = duration.abs
+          negative = true
+        end
         minutes, seconds = duration.divmod(60)
         hours, minutes = minutes.divmod(60)
         seconds = seconds.to_i
-        result = ""
+        result = negative ? "-" : ""
         result << "#{hours}h" if hours > 0
         result << "#{minutes}m" if minutes > 0
         result << "#{seconds}s" if seconds > 0

@@ -9,6 +9,17 @@ module JenkinsPipelineReport
         @report = report
       end
 
+      def parse_duration(duration)
+        return nil unless duration
+        seconds, minutes, hours = duration.split(":").reverse
+        hours = hours ? hours.to_f : 0
+        minutes = minutes ? minutes.to_f : 0
+        seconds = seconds ? seconds.to_f : 0
+        minutes += hours*60
+        seconds += minutes*60
+        seconds
+      end
+
       def extract
         # chef-acceptance timing
         acceptance_timing = []
@@ -16,8 +27,9 @@ module JenkinsPipelineReport
         chef_acceptance_results.each do |results|
           acceptance_run = {}
           results.each do |result|
+            duration = parse_duration(result["duration"])
             acceptance_run[result["suite"]] ||= {}
-            acceptance_run[result["suite"]][result["command"]] = result["duration"]
+            acceptance_run[result["suite"]][result["command"]] = BuildReport.format_duration(duration)
             if result["error"] == "Y" && result["command"] != "Total"
               failures << result
             end
@@ -61,11 +73,13 @@ module JenkinsPipelineReport
               result = []
             end
           else
-            yield result if result
+            yield result if result && result.any?
             # We're not in a result block anymore, so clear out field names and result
             field_names = nil
+            result = nil
           end
         end
+        yield result if result
       end
     end
   end
