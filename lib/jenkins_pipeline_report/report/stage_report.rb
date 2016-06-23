@@ -85,10 +85,20 @@ module JenkinsPipelineReport
       end
 
       def generate_change
+        scm = build.job.data["scm"]
+        if scm && scm["userRemoteConfigs"]
+          github_urls = scm["userRemoteConfigs"].map { |remote| remote["url"] }
+          if github_urls.size <= 1
+            github_urls = github_urls.first
+          end
+        end
         result = {
-          "version" => build.parameters["OMNIBUS_BUILD_VERSION"],
+          "git_remote" => github_urls,
           "git_commit" => build.parameters["GIT_COMMIT"],
+          "project" => build.parameters["PROJECT"],
+          "version" => build.parameters["OMNIBUS_BUILD_VERSION"],
         }
+
         result.reject! { |key,value| value.nil? || value == "" }
         result
       end

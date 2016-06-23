@@ -253,6 +253,7 @@ module JenkinsPipelineReport
         activeConfigurations[url]
         actions[processes[url]]
         property[parameterDefinitions[*[*]]]
+        scm[userRemoteConfigs[url]]
         allBuilds[#{JOB_BUILD_FIELDS}]
       }.join(",").freeze
 
