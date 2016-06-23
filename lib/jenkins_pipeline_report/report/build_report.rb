@@ -12,14 +12,14 @@ module JenkinsPipelineReport
         @trigger = trigger
       end
 
-      def refresh_report
+      def analyze_successful_logs?
+        report_cache.analyze_successful_logs?
+      end
+
+      def refresh
         # See if we already have the report or not.
-        @report ||= read_cache
-        if @report
-          # Regenerate the report if it's in progress.
-          if @report["result"] == "IN PROGRESS" || !report_has_all_stages?
-            @report = write_cache(generate_report)
-          end
+        if needs_update?
+          @report = write_cache(generate_report)
         end
         # `report` will generate the report if we don't have it.
         report
@@ -27,6 +27,21 @@ module JenkinsPipelineReport
 
       def report
         @report ||= read_cache || write_cache(generate_report)
+      end
+
+      def report?
+        @report ||= read_cache
+      end
+
+      def needs_update?
+        report = report?
+        return true unless report
+        return true if report["result"] == "IN PROGRESS"
+        return true if analyze_successful_logs? && report["successful_logs_analyzed"] == false
+        # Handle build retries
+        return true unless report_has_all_stages?(report)
+        return true unless stage_reports.any? { |stage| stage.needs_update? }
+        # TODO if runs are retries or processes happen, regenerate
       end
 
       def format_duration(duration)
@@ -60,9 +75,9 @@ module JenkinsPipelineReport
 
       private
 
-      def report_has_all_stages?
+      def report_has_all_stages?(report)
         report_stage_urls = report["stages"].map { |name, stage| stage["url"] }.sort
-        stage_urls = stages.map { |stage| stage.build.url }.sort
+        stage_urls = stage_reports.map { |stage| stage.build.url }.sort
         report_stage_urls == stage_urls
       end
 
@@ -73,35 +88,29 @@ module JenkinsPipelineReport
           "url" => trigger.url,
           "timestamp" => format_datetime(trigger.timestamp),
           "duration" => format_duration(generate_duration),
+          "triggered_by" => trigger.triggered_by.id,
           "active_duration" => format_duration(generate_active_duration),
           "queue_delays" => format_duration(generate_queue_delays),
           "retry_delays" => format_duration(generate_retry_delays),
-          "triggered_by" => generate_triggered_by,
           "parameters" => trigger.parameters,
           "change" => generate_change,
           "stages" => generate_stage_reports,
         }
+        report["successful_logs_analyzed"] = false unless analyze_successful_logs?
         report.reject! { |key,value| value.nil? }
         report
       end
 
       def generate_stage_reports
         result = {}
-        stages.reverse_each do |stage|
-          # Don't regenereate completed stages
-          existing_stage = @data["stages"][stage.stage_path] if @data && @data["stages"]
-          if existing_stage && existing_stage["result"] != "IN PROGRESS"
-            Cli.logger.debug("- Kept build report for #{stage.build.url} ...")
-            result[stage.stage_path] = existing_stage
-          else
-            result[stage.stage_path] = stage.generate_report
-          end
+        stage_reports.reverse_each do |stage|
+          result[stage.stage_path] = stage.refresh
         end
         result
       end
 
       def generate_duration
-        stage_end_times = stages.map { |stage| stage.build.end_timestamp }.compact
+        stage_end_times = stage_reports.map { |stage| stage.build.end_timestamp }.compact
         stage_end_times.max - trigger.timestamp
       end
 
@@ -110,23 +119,8 @@ module JenkinsPipelineReport
       #
       # @return [Array<Stage>] List of build stage reports.
       #
-      def stages
-        @stages ||= calculate_stages(trigger)
-      end
-
-      #
-      # User who started the job
-      #
-      def generate_triggered_by
-        if trigger.data["actions"]
-          trigger.data["actions"].each do |action|
-            next unless action["causes"]
-            action["causes"].each do |cause|
-              return cause["userId"] if cause["userId"]
-            end
-          end
-        end
-        nil
+      def stage_reports
+        @stage_reports ||= calculate_stages(trigger)
       end
 
       #
@@ -137,7 +131,7 @@ module JenkinsPipelineReport
       #
       def generate_result
         result = "SUCCESS"
-        stages.each do |stage|
+        stage_reports.each do |stage|
           case stage.build.result
           # If it's IN PROGRESS, then no other status overrides that.
           when nil
@@ -164,7 +158,7 @@ module JenkinsPipelineReport
       #
       def generate_change
         change = {}
-        stages.map do |stage|
+        stage_reports.map do |stage|
           change.merge!(stage.generate_change) do |key, old_value, new_value|
             if old_value != new_value
               raise "More than one #{key} found in stages! One build had #{key}=#{old_value}, another had #{key}=#{new_value}"
@@ -177,7 +171,7 @@ module JenkinsPipelineReport
 
       def generate_queue_delays
         sum = 0
-        stages.each do |stage|
+        stage_reports.each do |stage|
           delay = stage.generate_queue_delay
           sum += delay if delay
         end
@@ -186,7 +180,7 @@ module JenkinsPipelineReport
 
       def generate_retry_delays
         sum = 0
-        stages.each do |stage|
+        stage_reports.each do |stage|
           delay = stage.generate_retry_delay
           sum += delay if delay
         end
@@ -195,8 +189,8 @@ module JenkinsPipelineReport
 
       def generate_active_duration
         sum = 0
-        stages.each do |stage|
-          duration = stage.generate_active_duration
+        stage_reports.each do |stage|
+          duration = stage.build.duration
           sum += duration if duration
         end
         sum

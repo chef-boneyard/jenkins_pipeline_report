@@ -20,19 +20,36 @@ module JenkinsPipelineReport
     end
 
     def self.report_cache
-      @reports ||= Report::ReportCache.new(options[:reports_directory])
+      @reports ||= Report::ReportCache.new(
+        reports_directory: options[:reports_directory],
+        analyze_successful_logs: options[:analyze_successful_logs]
+      )
     end
 
     def self.jenkins_cache
-      @jenkins_cache ||= Jenkins::Cache.new(options[:cache_directory], identity_file: options[:identity_file])
+      @jenkins_cache ||= Jenkins::Cache.new(
+        cache_directory: options[:cache_directory],
+        client_options: { identity_file: options[:identity_file] }
+      )
     end
 
     def self.builds(*args, refresh_jenkins: true)
+      # Anything we pull on now will fetch rather than load locally
+      jenkins_cache.invalidate if refresh_jenkins
+
       args.flat_map do |arg|
         arg = jenkins_cache.jenkins_object(arg) if arg.is_a?(String)
 
         if refresh_jenkins
-          arg.refresh(pipeline: true, invalidate: true)
+          case arg
+          when Jenkins::Build
+            # We need to refresh the downstream list of jobs to look for new
+            # stages and retries; hitting the downstreams will do that.
+            arg.job.all_downstreams.each { |job| job.builds }
+          when Jenkins::Job
+            # We need to refresh the list of jobs
+            arg.all_downstreams.each { |job| job.builds }
+          end
         end
 
         case arg
@@ -43,6 +60,28 @@ module JenkinsPipelineReport
         end
         triggers.map { |trigger| report_cache.report(trigger) }
       end
+    end
+
+    def self.invalidate_jenkins_object(arg)
+      case arg
+      when Array
+        arg.each { |obj| invalidate_jenkins_object(obj) }
+      when Cache
+        arg.servers.each { |obj| invalidate_jenkins_object(obj) }
+      when Server
+        arg.invalidate
+        arg.jobs.each { |obj| invalidate_jenkins_object(obj) }
+      when Job
+        arg.invalidate
+        invalidate_jenkins_object(arg.downstreams)
+        invalidate_jenkins_object(arg.active_configurations)
+        invalidate_jenkins_object(arg.processes)
+        invalidate_jenkins_object(arg.builds)
+      when Build
+        arg.invalidate
+        invalidate_jenkins_object(arg.runs)
+      end
+      arg.refresh(recursive: true, pipeline: true, invalidate: true)
     end
 
     def self.jenkins_args
@@ -70,38 +109,19 @@ module JenkinsPipelineReport
             options[:where] = Cli::Query.parse(v)
           end
         end
-        opts.on("--[no-]local", "Whether to get the list of builds locally (default: false).") do |v|
-          options[:local] = v
+        opts.on("--[no-]analyze-successful-logs", "Whether to analyze the logs of successful runs (default: false).") do |v|
+          options[:analyze_successful_logs] = v
         end
-        opts.on("--[no-]force", "Whether to refresh all data regardless of whether they've been fetched before (default: false).") do |v|
-          options[:force] = v
-        end
-        opts.on("--[no-]force-refresh-runs", "Whether to refresh run data for all runs regardless of whether they've been fetched before (default: false).") do |v|
-          options[:force_refresh_runs] = v
-        end
-        opts.on("--[no-]force-refresh-logs", "Whether to re-download logs for all runs (default: false).") do |v|
-          options[:force_refresh_logs] = v
-        end
-        opts.on("--[no-]force-reprocess-logs", "Whether to reprocess old logs for things like omnibus timing (default: false).") do |v|
-          options[:force_reprocess_logs] = v ? v : nil
-        end
-        opts.on("--[no-]force-resummarize", "Whether to recalculate all failure summaries regardless of whether they've been calculated before (default: false).") do |v|
-          options[:force_recalculate] = v
-        end
-        opts.on("--cache-directory=PATH", "The cache directory for Jenkins data. Defaults to <reports directory>/.jenkins_cache.") do |v|
+        opts.on("--cache-directory=PATH", "The cache directory for Jenkins data. Defaults to ./.jenkins_cache.") do |v|
           options[:cache_directory] = v
         end
         opts.on("--reports-directory=PATH", "The reports directory Defaults to ./reports.") do |v|
           options[:reports_directory] = v
         end
       end.parse!
-      # Default these to force
-      %w{force_refresh_runs force_refresh_logs force_reprocess_logs}.each do |key|
-        options[key.to_sym] = options[:force] if options[:force] && !options.has_key?(key.to_sym)
-      end
       # Default cache-directory to cache
       options[:reports_directory] ||= "reports"
-      options[:cache_directory] ||= File.join(options[:reports_directory], ".jenkins_cache")
+      options[:cache_directory] ||= ".jenkins_cache"
     end
   end
 end

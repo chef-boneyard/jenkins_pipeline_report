@@ -17,12 +17,23 @@ module JenkinsPipelineReport
       attr_reader :reports_directory
 
       #
+      # Whether to analyze the logs of successful builds.
+      #
+      # @return [Boolean] Whether to analyze the logs of successful builds.
+      #
+      def analyze_successful_logs?
+        @analyze_successful_logs
+      end
+
+      #
       # Create a new report generator cache.
       #
       # @param reports_directory [String] The path to the reports directory.
+      # @param analyze_successful_logs [Boolean] Whether to analyze logs of successful builds.
       #
-      def initialize(reports_directory)
+      def initialize(reports_directory: nil, analyze_successful_logs: false)
         @reports_directory = reports_directory
+        @analyze_successful_logs
       end
 
       #

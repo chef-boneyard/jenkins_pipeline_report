@@ -1,10 +1,13 @@
 require "set"
+require_relative "jenkins_object"
 require_relative "build"
 require_relative "../exceptions"
 
 module JenkinsPipelineReport
   module Jenkins
-    class Job
+    class Job < JenkinsObject
+      # @api private
+      # @see Server#job
       def initialize(server, path)
         @server = server
         @path = path
@@ -131,7 +134,7 @@ module JenkinsPipelineReport
       #
       def parameters
         parameters = {}
-        data("property").each do |property|
+        static_data("property").each do |property|
           next unless property["parameterDefinitions"]
           property["parameterDefinitions"].each do |parameter|
             parameters[parameter["name"]] = {
@@ -149,7 +152,7 @@ module JenkinsPipelineReport
       #
       # @return [Array<Job>] Upstreams for this job.
       def upstreams
-        data("upstreamProjects").map do |job|
+        static_data("upstreamProjects").map do |job|
           job_url = "#{File.join(File.dirname(url), job["name"])}/"
           cache.job(job_url)
         end
@@ -161,7 +164,7 @@ module JenkinsPipelineReport
       # @return [Array<Job>] Downstreams for this job.
       #
       def downstreams
-        data("downstreamProjects").map do |job|
+        static_data("downstreamProjects").map do |job|
           job_url = "#{File.join(File.dirname(url), job["name"])}/"
           cache.job(job_url)
         end
@@ -173,8 +176,8 @@ module JenkinsPipelineReport
       # @return [Array<Job>] Active configurations (matrix builds) for this job.
       #
       def active_configurations
-        if data("activeConfigurations")
-          data("activeConfigurations").map do |job|
+        if static_data("activeConfigurations")
+          static_data("activeConfigurations").map do |job|
             cache.job(job["url"])
           end
         else
@@ -189,9 +192,9 @@ module JenkinsPipelineReport
       #
       def processes
         processes = []
-        data("actions").each do |action|
-          next unless data("processes")
-          data("processes").each do |job|
+        static_data("actions").each do |action|
+          next unless action["processes"]
+          action["processes"].each do |job|
             processes << cache.job(job["url"])
           end
         end
@@ -235,140 +238,41 @@ module JenkinsPipelineReport
         result
       end
 
-      JOB_BUILD_FIELDS = %w{
-        number
-        timestamp
-        actions[causes[upstreamUrl,upstreamBuild]]
-        target[url]
-      }.join(",").freeze
-
-      #
-      # The list of fields that will be retrieved in Job.data.
-      #
-      # @return [String] The list of fields that will be in Job.data.
-      #
-      JOB_FIELDS = %W{
-        name url nextBuildNumber
-        upstreamProjects[name] downstreamProjects[name]
+      # Static job fields
+      STATIC_FIELDS = %w{
+        name url upstreamProjects[name] downstreamProjects[name]
         activeConfigurations[url]
-        actions[processes[url]]
         property[parameterDefinitions[*[*]]]
         scm[userRemoteConfigs[url]]
-        allBuilds[#{JOB_BUILD_FIELDS}]
-      }.join(",").freeze
-
-      #
-      # Whether to cache jobs on disk.
-      #
-      CACHE_JOBS = true
-
-      #
-      # The job JSON data.
-      #
-      # Will be lazily fetched if we don't have it yet.
-      #
-      # Will contain only the fields listed in the #JOB_FIELDS constant.
-      #
-      # @return [Hash<String,*>] The job JSON data.
-      #
-      # @see JOB_FIELDS The list of fields in `data`
-      #
-      def data(field=nil)
-        if field
-          return @data[field] if @data
-          # Use data from the job list, if the field is there, rather than
-          # loading data for this particular job.
-          job_data = server.job_data(url)
-          result = job_data[field] if job_data
-          # If all else fails, load the job data directly.
-          result ||= data[field]
-          result
-        else
-          @data || load || refresh(recursive: false)
-        end
-      end
-
-      #
-      # Load the job data from cache
-      #
-      def load
-        if CACHE_JOBS
-          @data = cache.read_cache(url)
-          builds.each { |build| build.add_to_upstreams } if @data
-        end
-        @data
-      end
-
-      #
-      # Load or reload the job data from Jenkins.
-      #
-      # @param recursive [Boolean] `true` to refresh each build, `false` to just
-      #   refresh the job and its *list* of builds. as well as any matrix jobs
-      #   and processes. Downstreams and upstreams will not be refreshed.
-      #   Defaults to `false`.
-      # @param pipeline [Boolean] Whether to refresh all jobs in the pipelines.
-      #   Defaults to `false`.
-      #
-      def refresh(recursive: false, pipeline: false, invalidate: false)
-        if invalidate && !CACHE_JOBS
-          @data = nil
-        else
-          fetch
-        end
-        if pipeline
-          downstreams.each { |job| job.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
-          if recursive
-            active_configurations.each { |job| job.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
-            processes.each { |job| job.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
-          end
-        end
-        if recursive
-          builds.each { |build| build.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate, from_job: true) }
-        end
-        @data
-      end
-
-      # @api private
-      def build_data(number)
-        return nil unless @data || load
-        # Grab the build data for a particular build from allBuilds. Used to make
-        # certain immutable build data quick to load and to link up processes and
-        # downstreams without having to load all the builds.
-        data("allBuilds").find { |data| data["number"].to_i == number }
-      end
+        actions[processes[url]]
+      }
+      FIELDS = STATIC_FIELDS + %W{
+        allBuilds[#{Build::STATIC_FIELDS.join(",")}]
+      }
 
       private
 
-      def cache
-        server.cache
-      end
-
       def fetch
-        # First we load, so we can check for job recreation.
-        load
+        # First we load old data, so we can check for job recreation.
+        old_data = @data || load
+        old_build = old_data["allBuilds"].first if old_data
 
-        # Fetch the new job data.
-        fetched = cache.fetch(url, "tree=#{JOB_FIELDS}")
-
-        # Verify the queue hasn't jumped by looking at a build
-        if @data
-          old_build = @data["allBuilds"].first
-          fetched_build = fetched["allBuilds"].find { |build| build["number"] == old_build["number"] }
-          if old_build && old_build["timestamp"] != fetched_build["timestamp"]
-            raise JobRecreatedError, "Job #{url} has been deleted and recreated! First build used to be #{old_build}, is now #{fetched_build}!"
+        super do |fetched|
+          if old_build
+            fetched_build = fetched["allBuilds"].find { |build| build["number"] == old_build["number"] }
+            unless fetched_build && old_build["timestamp"] == fetched_build["timestamp"]
+              raise JobRecreatedError, "Job #{url} has been deleted and recreated! First build used to be #{old_build}, is now #{fetched_build}!"
+            end
           end
         end
+      end
 
-        # Set data to fetched data
-        @data = fetched
-
-        # Write to cache if needed
-        if CACHE_JOBS
-          cache.write_cache(url, @data)
+      # Called after fetch and load
+      def updated(data)
+        data["allBuilds"].each do |build_data|
+          build = build(build_data["number"])
+          build.static_data = build_data
         end
-
-        # Link build's upstreams and target
-        builds.each { |build| build.add_to_upstreams }
       end
     end
   end

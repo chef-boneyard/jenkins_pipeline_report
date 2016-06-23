@@ -83,9 +83,19 @@ module JenkinsPipelineReport
           end
         end
 
+        # Update the top step's duration to the build duration
         if stage.build.duration
           steps.update(time: steps.start_time + stage.build.duration, index: current_index)
         end
+
+        # Find steps that are still open, and report them as lastSteps.
+        open_steps = steps.open_steps
+        if open_steps && stage.build.result && stage.build.result != "SUCCESS"
+          report["failed_in"] ||= {}
+          report["failed_in"]["step"] = failed_in_step(last_step)
+        end
+
+        # Close all remaining steps in preparation for step_timing
         steps.close
 
         # Print the result in nice simple format
@@ -95,6 +105,13 @@ module JenkinsPipelineReport
         unless step_timing.is_a?(Numeric)
           report["steps"] = step_timing
         end
+      end
+
+      def failed_in_step(step)
+        # Take the last two steps (seems to be a reasonable name)
+        failed_in = [ step ]
+        failed_in << step.parent if step.parent && step.parent.parent
+        failed_in.join(" ")
       end
 
       def found_omnibus_line(description, time)

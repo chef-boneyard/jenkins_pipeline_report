@@ -174,6 +174,18 @@ module JenkinsPipelineReport
         end
 
         #
+        # Get the list of open steps
+        #
+        def open_steps
+          result = {}
+          open_children.each do |name, child|
+            result[name] = child.open_steps
+          end
+          return nil if result.empty?
+          result
+        end
+
+        #
         # Add a closed child to children. First removes it from open children,
         # then finds the best new home for it and adds it there.
         #

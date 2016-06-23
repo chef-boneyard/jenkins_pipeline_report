@@ -50,7 +50,20 @@ module JenkinsPipelineReport
       end
 
       #
+      # Generate the report or use the existing report
+      #
+      def refresh
+        if needs_update?
+          generate_report
+        else
+          report?
+        end
+      end
+
+      #
       # Generate the report.
+      #
+      # @param existing_report [Hash] The existing report (if any).
       #
       # @return [Hash] The report.
       #
@@ -58,18 +71,23 @@ module JenkinsPipelineReport
         Cli.logger.debug("- Generating stage report for #{build.url} ...")
         report = {
           "result" => build.result || "IN PROGRESS",
+          "failure_category" => nil,
+          "failure_cause" => nil,
+          "failed_in" => nil,
           "url" => build.url,
           "duration" => build_report.format_duration(generate_duration),
           "active_duration" => build_report.format_duration(generate_active_duration),
           "retries" => generate_retries,
           "retry_delay" => build_report.format_duration(generate_retry_delay),
           "queue_delay" => build_report.format_duration(generate_queue_delay),
-          "runs" => generate_run_reports,
+          "logs" => nil,
+          "steps" => nil,
           # TODO runs and processes
           # TODO failures, failure types, aggregation
           # TODO log excerpts
         }
         process_logs(report)
+        report["runs"] = generate_run_reports
         report.reject! { |key,value| value.nil? }
         report
       end
@@ -163,28 +181,62 @@ module JenkinsPipelineReport
         return result unless result == 0
       end
 
-      def needs_update?(report)
-        return true unless report
-        return true unless report["result"]
-        return true if report["result"] == "IN PROGRESS"
+      #
+      # Get the existing report, if there is one.
+      #
+      def report?
+        report = build_report.report?
+        stage_report ||= report && report["stages"] && report["stages"][stage_path]
+        stage_report = nil unless stage_report && stage_report["url"] == build.url
+        stage_report
+      end
+
+      #
+      # Tell if this stage needs an update.
+      #
+      def needs_update?
+        stage_report_needs_update?(build_report.report?, report?)
       end
 
       private
+
+      #
+      # Tell whether a stage needs update (so we can recurse without creating
+      # RunReport objects).
+      #
+      # @api private
+      def stage_report_needs_update?(report, stage_report)
+        report = build_report.report?
+        stage_report = report?
+        return true unless report && stage_report
+        return true if stage_report["result"] == "IN PROGRESS"
+        if build_report.analyze_successful_logs? && report["successful_logs_analyzed"] == false
+          return true if stage_report["result"] == "SUCCESS"
+        end
+        # TODO we're assuming it's not possible to retry a run after the build has
+        # completed here. If it is, we need to check the run reports (which is
+        # expensive right now because we can't instantiate runs without loading
+        # the build, and we don't want to load the build if we're just checking
+        # whether we need to do work).
+        # TODO check processes
+      end
 
       def generate_retries
         return retries.size - 1 if retries.size > 1
       end
 
       def process_logs(report)
-        # We don't process logs until builds complete
-        unless build.result.nil?
-          LogExtractor.new(self, report).extract
-          AcceptanceExtractor.new(self, report).extract
-          TimingExtractor.new(self, report).extract
-          FailureExtractor.new(self, report).extract
-        end
-      end
+        # We don't process in-progress logs
+        return if build.result.nil?
+        return if !build_report.analyze_successful_logs? && build.result == "SUCCESS"
 
+        LogExtractor.new(self, report).extract
+        AcceptanceExtractor.new(self, report).extract
+        TimingExtractor.new(self, report).extract
+        FailureExtractor.new(self, report).extract
+        # Toss console text out of memory (if it was grabbed at all)
+        @console_text_lines = nil
+      end
     end
   end
 end

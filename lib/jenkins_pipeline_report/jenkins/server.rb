@@ -1,12 +1,14 @@
 require "jenkins_api_client"
+require_relative "jenkins_object"
 require_relative "job"
+require_relative "user"
 
 module JenkinsPipelineReport
   module Jenkins
     # We cache information about the list of jobs, but nothing else. NOTE:these
     # are only top-level jobs, not process or matrix jobs. Those are cached
     # when you read the jobs themselves.
-    class Server
+    class Server < JenkinsObject
       #
       # Create a new Server.
       #
@@ -20,6 +22,7 @@ module JenkinsPipelineReport
         @client_options = client_options
         @client = JenkinsApi::Client.new(server_url: url, **client_options)
         @jobs = {}
+        @users = {}
       end
 
       #
@@ -37,6 +40,20 @@ module JenkinsPipelineReport
       attr_reader :url
 
       #
+      # The path relative to the server.
+      #
+      def path
+        "/"
+      end
+
+      #
+      # The server object.
+      #
+      def server
+        self
+      end
+
+      #
       # The options used for the JenkinsApi::Client.
       #
       # @return [Hash] The options used for the JenkinsApi::Client.
@@ -50,7 +67,7 @@ module JenkinsPipelineReport
       #   path (`/job/my-job/`) to the Job object.
       #
       def jobs
-        data["jobs"].map { |data| cache.job(data["url"]) }
+        data("jobs").map { |data| cache.job(data["url"]) }
       end
 
       #
@@ -96,63 +113,33 @@ module JenkinsPipelineReport
       end
 
       #
+      # Get the user with the given id (username).
+      #
+      # @param id [String] The username to get.
+      #
+      # @return [User] The naemd user.
+      #
+      def user(id)
+        @users[id] ||= User.new(self, id)
+      end
+
+      #
       # The list of fields to get for the server.
       #
-      SERVER_FIELDS = "url,jobs[url,upstreamJobs[url],downstreamJobs[url]]".freeze
+      # @see JenkinsObject::fetch
+      #
+      STATIC_FIELDS = %W{url}
+      FIELDS = STATIC_FIELDS + %W{jobs[#{Job::STATIC_FIELDS.join(",")}]}
 
       #
-      # Whether to cache servers on disk.
-      #
-      CACHE_SERVERS = true
-
-      #
-      # Get data about the server.
-      #
-      # @return [Hash] Build data from the server.
-      #
-      def data
-        @data || load || refresh(recursive: false)
-      end
-
-      #
-      # Load the Jenkins server data from cache
-      #
-      def load
-        if CACHE_SERVERS
-          @data = cache.read_cache(url)
-        end
-      end
-
-      #
-      # Load (or reload) the Jenkins server data from Jenkins
-      #
-      # @param recursive [Boolean] Whether to refresh each job or just the list
-      #   of jobs. :cache only caches things that can hit the disk cache.
-      #   Defaults to `false`.
-      # @param pipeline [Boolean] Whether to refresh all jobs in all pipelines
-      #   (equivalent to recursive for server). Defaults to `false`.
-      #
-      def refresh(recursive: false, pipeline: false, invalidate: false)
-        if invalidate && !CACHE_SERVERS
-          @data = nil
-        else
-          fetch_data
-        end
-        if recursive || pipeline
-          jobs.each { |job| job.refresh(recursive: recursive, pipeline: false, invalidate: invalidate) }
-        end
-        @data
-      end
-
-      #
-      # Get data from the cache or Jenkins server.
+      # Get data from the Jenkins server.
       #
       # @param path [String] The path to the object (excluding `/api/json`).
       #   e.g. `/job/my-job`. Always relative to url.
       # @param args [Array] Arguments to pass verbatim to client.
       # @return [Hash,Array] The parsed response.
       #
-      def fetch(path, query=nil, json: true)
+      def api_get(path, query=nil, json: true)
         Cli.logger.info "GET #{File.join(url, path)}"
         Cli.logger.debug "Query: #{query}" if query
         path = File.join(URI(url).path, path)
@@ -163,35 +150,16 @@ module JenkinsPipelineReport
         end
       end
 
-      #
-      # Grab the job data for a particular job from the server. Used to make
-      # certain immutable build data like upstreams and downstreams
-      # quick to load without having to fetch or read in the actual job
-      # information.
-      #
-      # @return [Hash] The partial job data, or `nil` if the job has not been
-      #   loaded yet or if the build is not in the job's list.
-      #
-      # @api private
-      # @see JOB_BUILD_FIELDS
-      #
-      def job_data(url)
-        return nil unless @data || load
-        data["jobs"].find { |data| data["url"] == url }
-      end
-
       private
 
-      def fetch_data
-        @data = fetch("", "tree=#{SERVER_FIELDS}")
-        # It doesn't technically store the URL, but we need to remember it.
-        @data["url"] ||= url
-        if CACHE_SERVERS
-          cache.write_cache(url, @data)
+      attr_reader :client
+
+      def updated(data)
+        data["url"] ||= url
+        data["jobs"].each do |job_data|
+          job(job_data["url"]).static_data = job_data
         end
       end
-
-      attr_reader :client
     end
   end
 end

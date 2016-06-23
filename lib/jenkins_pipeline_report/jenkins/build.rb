@@ -1,6 +1,8 @@
+require_relative "jenkins_object"
+
 module JenkinsPipelineReport
   module Jenkins
-    class Build
+    class Build < JenkinsObject
       #
       # Create a Build cache object.
       #
@@ -62,7 +64,7 @@ module JenkinsPipelineReport
       # @return [DateTime] The timestamp of this build.
       #
       def timestamp
-        timestamp_to_datetime(data("timestamp"))
+        timestamp_to_datetime(static_data("timestamp"))
       end
 
       #
@@ -117,11 +119,8 @@ module JenkinsPipelineReport
       # @return [Array<Build>] The runs for this build.
       #
       def runs
-        if data("runs")
-          data("runs").map { |data| cache.build(data["url"]) }.select { |build| build.upstreams.include?(self) }
-        else
-          []
-        end
+        runs = data("runs") || []
+        runs.map { |run| cache.build(run["url"]) }.select { |run| run.upstreams.include?(self) }
       end
 
       #
@@ -203,6 +202,20 @@ module JenkinsPipelineReport
       end
 
       #
+      # Get the user that triggered this build (if any).
+      #
+      # @return [User] The user that triggered this build (if any).
+      #
+      def triggered_by
+        causes.each do |cause|
+          if cause["userId"]
+            return server.user(cause["userId"])
+          end
+        end
+        nil
+      end
+
+      #
       # Get the upstream builds of this build.
       #
       # @return [Array<Build>] The build(s) that caused this build to start.
@@ -210,21 +223,26 @@ module JenkinsPipelineReport
       #
       def upstreams
         @upstreams ||= begin
-          actions = data("actions")
           upstreams = []
-          actions.each do |action|
-            next unless action["causes"]
-            action["causes"].each do |cause|
-              if cause["upstreamUrl"]
-                # upstreamUrl is a path, e.g. /job/my-job/
-                upstream_job = server.job(File.expand_path(cause["upstreamUrl"], "/"))
-                # upstreamBuild is a build number, e.g. 1
-                upstreams << upstream_job.build(cause["upstreamBuild"])
-              end
+          causes.each do |cause|
+            if cause["upstreamUrl"]
+              # upstreamUrl is a path, e.g. /job/my-job/
+              upstream_job = server.job(File.expand_path(cause["upstreamUrl"], "/"))
+              # upstreamBuild is a build number, e.g. 1
+              upstreams << upstream_job.build(cause["upstreamBuild"])
             end
           end
           upstreams
         end
+      end
+
+      #
+      # Get the causes of this build.
+      #
+      # @return [Array<Hash<String,String>] An array of causes for the build.
+      #
+      def causes
+        static_data("actions").flat_map { |action| action["causes"] || [] }
       end
 
       #
@@ -235,16 +253,7 @@ module JenkinsPipelineReport
       #
       def target
         @target ||= begin
-          # target WILL be in build_data if we have build_data. If it isn't there,
-          # it's because we're not a process. Don't go loading the build via
-          # `data` in that case.
-          if @data
-            target = @data["target"]
-          elsif build_data = job.build_data(number)
-            target = build_data["target"]
-          else
-            target = data["target"]
-          end
+          target = static_data("target")
           cache.build(target["url"]) if target && target["url"]
         end
       end
@@ -291,6 +300,8 @@ module JenkinsPipelineReport
         parameters
       end
 
+      CACHE_CONSOLE_TEXT = false
+
       #
       # Get the console text for this build.
       #
@@ -299,14 +310,15 @@ module JenkinsPipelineReport
       # @return [String] The console text for this build.
       #
       def console_text
-        path = File.join(self.path, "consoleText")
         if CACHE_CONSOLE_TEXT
-          console_text = server.read_cache(path, json: false)
+          url = File.join(self.url, "consoleText")
+          console_text = cache.read_cache(url, json: false)
         end
         unless console_text
-          console_text = server.fetch(path, json: false)
+          path = File.join(self.path, "consoleText")
+          console_text = server.api_get(path, json: false)
           if CACHE_CONSOLE_TEXT
-            server.write_cache(path, console_text, json: false)
+            cache.write_cache(url, console_text, json: false)
           end
         end
         console_text
@@ -323,6 +335,8 @@ module JenkinsPipelineReport
         data("artifacts").map { |artifact| artifact["relativePath"] }
       end
 
+      CACHE_ARTIFACTS = false
+
       #
       # Get an artifact of this build as binary data.
       #
@@ -331,14 +345,15 @@ module JenkinsPipelineReport
       # @return [String] The binary blob representing this artifact.
       #
       def artifact(relativePath)
-        path = File.join(self.path, "artifacts", relativePath)
         if CACHE_ARTIFACTS
-          artifact = server.read_cache(path, json: false)
+          url = File.join(self.url, "artifacts", relativePath)
+          artifact = cache.read_cache(url, json: false)
         end
         unless artifact
-          artifact = server.fetch(path, json: false)
+          path = File.join(self.path, "artifacts", relativePath)
+          artifact = server.api_get(url, json: false)
           if CACHE_ARTIFACTS
-            server.write_cache(path, artifact, json: false)
+            cache.write_cache(url, artifact, json: false)
           end
         end
         artifact
@@ -349,94 +364,16 @@ module JenkinsPipelineReport
       #
       # @return [String] The list of fields that will be in Job.data.
       #
-      BUILD_FIELDS = %W{
-        number url result timestamp duration builtOn
-        actions[causes[upstreamUrl,upstreamBuild],parameters[name,value]]
-        artifacts[relativePath] failCount skipCount totalCount
-        runs[url]
-      }.join(",").freeze
-
-      #
-      # Whether to cache builds.
-      #
-      CACHE_BUILDS = false
-
-      #
-      # Whether to cache console text.
-      #
-      CACHE_CONSOLE_TEXT = false
-
-      #
-      # Whether to cache artifacts.
-      #
-      CACHE_ARTIFACTS = false
-
-      #
-      # The build JSON data.
-      #
-      # Will be lazily fetched if we don't have it yet.
-      #
-      # Will contain only the fields listed in the #BUILD_FIELDS constant.
-      #
-      # @return [Hash<String,*>] The build JSON data.
-      #
-      # @see BUILD_FIELDS The list of fields in `data`
-      #
-      def data(field=nil)
-        if field
-          return @data[field] if @data
-          build_data = job.build_data(number)
-          result = build_data[field] if build_data
-          result ||= data[field]
-          result
-        else
-          @data || load || fetch
-        end
-      end
-
-      #
-      # Load the job data from cache
-      #
-      def load
-        if CACHE_BUILDS
-          @data = cache.read_cache(url)
-          add_to_upstreams if @data
-        end
-      end
-
-      #
-      # Load or reload the job data from Jenkins.
-      #
-      # To refresh processes and downstreams, you must refresh
-      # the parent job and its downstreams and active configurations.
-      #
-      # @param recursive [Boolean] Whether to refresh runs and processes as well.
-      #   Defaults to `false`.
-      # @param pipeline [Boolean] Whether to refresh upstream and downstream
-      #   pipelines of the job. Defaults to `false`.
-      #
-      def refresh(recursive: false, pipeline: false, invalidate: false, from_job: false)
-        # Make sure and load so we know the last result ...
-        load unless @data
-        # If we have never fetched, or if our last known result was in progress,
-        # we need to fetch. Otherwise, we don't.
-        if !@data || result.nil?
-          if invalidate && !CACHE_BUILDS
-            @data = nil
-          else
-            fetch
-          end
-        end
-        if recursive
-          runs.each { |build| build.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
-          processes.each { |build| build.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
-        end
-        if pipeline
-          job.refresh(recursive: false, pipeline: pipeline, invalidate: invalidate) unless from_job
-          # The job will take care of the job pipeline, builds just need to take care of the downstreams
-          downstreams.each { |build| build.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate, from_job: true) }
-        end
-      end
+      STATIC_FIELDS = %w{
+        number url timestamp
+        actions[causes[*],parameters[*]]
+      }
+      FIELDS = STATIC_FIELDS + %W{
+        result duration builtOn
+        failCount skipCount totalCount
+        artifacts[relativePath]
+        runs[url,#{STATIC_FIELDS.join(",")}]
+      }
 
       #
       # Set another build as downstream of this one. (Internally used.)
@@ -468,19 +405,32 @@ module JenkinsPipelineReport
         end
       end
 
+      def static_data=(data)
+        data = super
+        add_to_upstreams if data
+        data
+      end
+
+      private
+
       # @api private
+      def updated(data)
+        add_to_upstreams
+
+        # Tell the runs about the wonderful data we grabbed for them.
+        if data["runs"]
+          data["runs"].each do |run|
+            cache.build(run["url"]).static_data = run
+          end
+        end
+      end
+
       def add_to_upstreams
         upstreams.each do |upstream|
           upstream.add_downstream(self)
         end
 
         target.add_process(self) if target
-      end
-
-      private
-
-      def cache
-        job.server.cache
       end
 
       def server
@@ -498,21 +448,14 @@ module JenkinsPipelineReport
       end
 
       def fetch
-        fetched = cache.fetch(url, "tree=#{BUILD_FIELDS}")
-        timestamp = @data && @data["timestamp"]
-        timestamp ||= begin
-          build_data = job.build_data(number)
-          build_data["timestamp"] if build_data
+        if @data || static_data || load
+          timestamp = static_data("timestamp")
         end
-        if timestamp && timestamp != fetched["timestamp"]
-          raise "Build #{url} has changed timestamps! Old: #{timestamp}, new: #{fetched[timestamp]}. Perhaps the queue was deleted and recreated?"
+        super do |fetched|
+          if timestamp && timestamp != fetched["timestamp"]
+            raise "Build #{url} has changed timestamps! Old: #{timestamp}, new: #{fetched[timestamp]}. Perhaps the queue was deleted and recreated?"
+          end
         end
-        @data = fetched
-        add_to_upstreams
-        if CACHE_BUILDS
-          cache.write_cache(url, @data)
-        end
-        @data
       end
     end
   end

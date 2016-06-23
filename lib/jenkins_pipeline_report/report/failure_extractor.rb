@@ -31,7 +31,7 @@ module JenkinsPipelineReport
         if report["failed_in"]
           failed_tests = {}
           report["failed_in"].each do |type,tests|
-            next if %w{omnibus jenkins}.include?(type) # not a test
+            next if %w{step jenkins}.include?(type) # not a test
             failed_tests[type] = tests.uniq
           end
           if failed_tests.any?
@@ -78,7 +78,7 @@ module JenkinsPipelineReport
             category, cause = "machine", "zombie jenkins"
 
           when /ECONNRESET/
-            if excerpt =~ /ECONNRESET.*(https?:\/\/\S+)/
+            if line =~ /ECONNRESET.*(https?:\/\/\S+)/
               url = $1
               hostname = URI(url).hostname
             end
@@ -120,10 +120,10 @@ module JenkinsPipelineReport
           end
         end
 
-        # Mark failure_cause as the failed omnibus step if all else fails
-        if report["failed_in"] && report["failed_in"]["omnibus"]
-          report["failure_category"] ||= "code"
-          report["failure_cause"] ||= report["failed_in"]["omnibus"]
+        # Mark failure_cause as the last, innermost failed step if all else fails
+        if report["failed_in"] && report["failed_in"]["step"]
+          report["failure_category"] = "code"
+          report["failure_cause"] = report["failed_in"]["step"]
         end
       end
 
@@ -149,10 +149,6 @@ module JenkinsPipelineReport
 
           end
 
-        end
-
-        if report["steps"] && report["steps"]["omnibus"]
-          failed_in["omnibus"] = last_omnibus_step(report["steps"]["omnibus"])
         end
 
         report["failed_in"] = failed_in

@@ -25,6 +25,11 @@ module JenkinsPipelineReport
       attr_reader :cache_directory
 
       #
+      # Function that will be called to determine if an object should be cached.
+      #
+      attr_reader :should_cache
+
+      #
       # Create a new Jenkins multi-server cache.
       #
       # @param cache_directory [String] Path to a cache directory under which Jenkins
@@ -32,11 +37,12 @@ module JenkinsPipelineReport
       # @param client_options [Hash] Hash of client options to `JenkinsAPI::Client`, including
       #   `identity_file`, a link to a private key used on the Jenkins server.
       #
-      def initialize(cache_directory, **client_options)
+      def initialize(cache_directory: nil, should_cache: default_should_cache, client_options: {})
         @cache_directory = cache_directory
         @client_options = client_options
+        @should_cache = should_cache
         @servers = {}
-        @pipelines = {}
+        @valid_token = 0
         load_servers
       end
 
@@ -113,25 +119,26 @@ module JenkinsPipelineReport
       end
 
       #
-      # Refresh (or load) all Jenkins data for all servers.
-      #
-      def refresh(recursive: false, pipeline: false, invalidate: false)
-        if recursive || pipeline
-          servers.each { |server| server.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
-        end
-      end
-
-      #
-      # Make a Jenkins API call to the given URL and return the result.
-      #
-      # @api private
-      def fetch(url, query=nil, json: true)
-        server(url).fetch(URI(url).path, query)
-      end
-
-      #
       # Cache methods
       #
+
+      #
+      # Token indicating whether you are valid or not. If you have the token,
+      # you are valid. If you don't, you are not.
+      #
+      attr_reader :valid_token
+
+      def invalidate
+        @valid_token += 1
+      end
+
+      def invalidated?(jenkins_object)
+        jenkins_object.valid_token != valid_token
+      end
+
+      def should_cache?(jenkins_object)
+        should_cache.call(jenkins_object)
+      end
 
       #
       # The cache filename for a given URL.
@@ -179,6 +186,22 @@ module JenkinsPipelineReport
       # @param json [Boolean] Whether the data is JSON or raw (like consoleText). Defaults to `true`.
       #
       # @api private
+      def delete_cache(url, json: true)
+        filename = cache_filename(url, json)
+        if File.exist?(filename)
+          Cli.logger.debug("Deleting cache #{filename}")
+          File.delete(filename)
+        end
+      end
+
+      #
+      # Write Jenkins data to the cache.
+      #
+      # @param url [String] The URL to the data (e.g. `http://my.jenkins.com/job/my-job/1/`)
+      # @param data [Hash,String] The data to write (JSON hash or raw data).
+      # @param json [Boolean] Whether the data is JSON or raw (like consoleText). Defaults to `true`.
+      #
+      # @api private
       def write_cache(url, data, json: true)
         filename = cache_filename(url, json)
         Cli.logger.debug("Writing cache #{filename}")
@@ -187,6 +210,18 @@ module JenkinsPipelineReport
           IO.write(filename, JSON.dump(data))
         else
           IO.binwrite(filename, data)
+        end
+      end
+
+      # By default, cache only servers and jobs
+      def default_should_cache
+        proc do |jenkins_object|
+          case jenkins_object
+          when Server, Job
+            true
+          else
+            false
+          end
         end
       end
 
