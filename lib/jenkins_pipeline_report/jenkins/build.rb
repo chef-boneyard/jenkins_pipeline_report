@@ -118,7 +118,7 @@ module JenkinsPipelineReport
       #
       def runs
         if data("runs")
-          data("runs").map { |data| cache.build(data["url"]) }
+          data("runs").map { |data| cache.build(data["url"]) }.select { |build| build.upstreams.include?(self) }
         else
           []
         end
@@ -210,7 +210,7 @@ module JenkinsPipelineReport
       #
       def upstreams
         @upstreams ||= begin
-          actions = @data ? @data["actions"] : job.build_data(number)["actions"]
+          actions = data("actions")
           upstreams = []
           actions.each do |action|
             next unless action["causes"]
@@ -235,7 +235,16 @@ module JenkinsPipelineReport
       #
       def target
         @target ||= begin
-          target = build_data("target")
+          # target WILL be in build_data if we have build_data. If it isn't there,
+          # it's because we're not a process. Don't go loading the build via
+          # `data` in that case.
+          if @data
+            target = @data["target"]
+          elsif build_data = job.build_data(number)
+            target = build_data["target"]
+          else
+            target = data["target"]
+          end
           cache.build(target["url"]) if target && target["url"]
         end
       end
@@ -375,23 +384,13 @@ module JenkinsPipelineReport
       #
       def data(field=nil)
         if field
-          if @data
-            @data[field]
-          else
-            # Prefer to check the build data, if we have the field there.
-            job.build_data(number)[field] || data[field]
-          end
+          return @data[field] if @data
+          build_data = job.build_data(number)
+          result = build_data[field] if build_data
+          result ||= data[field]
+          result
         else
           @data || load || fetch
-        end
-      end
-
-      # @api private
-      def build_data(field)
-        if @data
-          @data[field]
-        else
-          job.build_data(number)[field]
         end
       end
 
@@ -416,7 +415,7 @@ module JenkinsPipelineReport
       # @param pipeline [Boolean] Whether to refresh upstream and downstream
       #   pipelines of the job. Defaults to `false`.
       #
-      def refresh(recursive: false, pipeline: false, invalidate: false)
+      def refresh(recursive: false, pipeline: false, invalidate: false, from_job: false)
         # Make sure and load so we know the last result ...
         load unless @data
         # If we have never fetched, or if our last known result was in progress,
@@ -428,12 +427,14 @@ module JenkinsPipelineReport
             fetch
           end
         end
+        if recursive
+          runs.each { |build| build.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
+          processes.each { |build| build.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
+        end
         if pipeline
-          job.refresh(recursive: false, pipeline: pipeline, invalidate: invalidate)
-          if recursive
-            # runs.each { |build| build.refresh(recursive: false) }
-            # processes.each { |build| build.refresh(recursive: false) }
-          end
+          job.refresh(recursive: false, pipeline: pipeline, invalidate: invalidate) unless from_job
+          # The job will take care of the job pipeline, builds just need to take care of the downstreams
+          downstreams.each { |build| build.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate, from_job: true) }
         end
       end
 
@@ -497,13 +498,16 @@ module JenkinsPipelineReport
       end
 
       def fetch
-        new_data = cache.fetch(url, "tree=#{BUILD_FIELDS}")
+        fetched = cache.fetch(url, "tree=#{BUILD_FIELDS}")
         timestamp = @data && @data["timestamp"]
-        timestamp ||= job.build_data(number)["timestamp"]
-        if timestamp && timestamp != new_data["timestamp"]
-          raise "Build #{url} has changed timestamps! Old: #{timestamp}, new: #{new_data[timestamp]}. Perhaps the queue was deleted and recreated?"
+        timestamp ||= begin
+          build_data = job.build_data(number)
+          build_data["timestamp"] if build_data
         end
-        @data = new_data
+        if timestamp && timestamp != fetched["timestamp"]
+          raise "Build #{url} has changed timestamps! Old: #{timestamp}, new: #{fetched[timestamp]}. Perhaps the queue was deleted and recreated?"
+        end
+        @data = fetched
         add_to_upstreams
         if CACHE_BUILDS
           cache.write_cache(url, @data)

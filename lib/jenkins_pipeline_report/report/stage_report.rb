@@ -64,6 +64,7 @@ module JenkinsPipelineReport
           "queue_delay" => build_report.format_duration(generate_queue_delay),
           "retry_delay" => build_report.format_duration(generate_retry_delay),
           "duration" => build_report.format_duration(generate_duration),
+          "runs" => generate_run_reports,
           # TODO runs and processes
           # TODO failures, failure types, aggregation
           # TODO log excerpts
@@ -84,6 +85,36 @@ module JenkinsPipelineReport
         Pathname(build.job.path).relative_path_from(Pathname("/job")).to_s
       end
 
+      def run_reports
+        @run_reports ||= begin
+          run_reports = {}
+          build.runs.each do |run|
+            run_report = RunReport.new(self, run.retries)
+            run_reports[run_report.stage_path] ||= run_report
+          end
+          run_reports.values
+        end
+      end
+
+      def generate_run_reports
+        reports = {}
+        run_reports.sort_by do |run_report|
+          result_score = case run_report.build.result
+          when nil
+            3
+          when "SUCCESS"
+            2
+          else
+            1
+          end
+          [ result_score, run_report.build.url ]
+        end.each do |run_report|
+          reports[run_report.stage_path] = run_report.generate_report
+        end
+        reports = nil if reports.empty?
+        reports
+      end
+
       def generate_change
         scm = build.job.data["scm"]
         if scm && scm["userRemoteConfigs"]
@@ -92,13 +123,13 @@ module JenkinsPipelineReport
             github_urls = github_urls.first
           end
         end
+
         result = {
           "git_remote" => github_urls,
           "git_commit" => build.parameters["GIT_COMMIT"],
           "project" => build.parameters["PROJECT"],
           "version" => build.parameters["OMNIBUS_BUILD_VERSION"],
         }
-
         result.reject! { |key,value| value.nil? || value == "" }
         result
       end
@@ -113,12 +144,29 @@ module JenkinsPipelineReport
 
       def generate_queue_delay
         previous_stage_end = retries.first.upstreams.map { |upstream| upstream.end_timestamp }.compact.max
-        return retries.first.timestamp - previous_stage_end if previous_stage_end
+        if previous_stage_end
+          queue_delay = retries.first.timestamp - previous_stage_end
+          run_reports.each do |run_report|
+            delay = run_report.generate_queue_delay
+            if delay
+              unless queue_delay && delay <= queue_delay
+                queue_delay = delay
+              end
+            end
+          end
+        end
+        queue_delay
       end
 
       def generate_retry_delay
         result = build.timestamp - retries.first.timestamp
         return result unless result == 0
+      end
+
+      def needs_update?(report)
+        return true unless report
+        return true unless report["result"]
+        return true if report["result"] == "IN PROGRESS"
       end
 
       private
@@ -137,3 +185,5 @@ module JenkinsPipelineReport
     end
   end
 end
+
+require_relative "run_report"

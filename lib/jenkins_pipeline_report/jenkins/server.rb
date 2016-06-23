@@ -164,15 +164,19 @@ module JenkinsPipelineReport
       end
 
       #
-      # Grab the build data for a particular build from allBuilds. Used to make
-      # certain immutable build data like timestamp, upstreams and downstreams
-      # quick to load without having to fetch or read in the actual build
+      # Grab the job data for a particular job from the server. Used to make
+      # certain immutable build data like upstreams and downstreams
+      # quick to load without having to fetch or read in the actual job
       # information.
+      #
+      # @return [Hash] The partial job data, or `nil` if the job has not been
+      #   loaded yet or if the build is not in the job's list.
       #
       # @api private
       # @see JOB_BUILD_FIELDS
       #
       def job_data(url)
+        return nil unless @data || load
         data["jobs"].find { |data| data["url"] == url }
       end
 

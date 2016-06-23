@@ -179,7 +179,7 @@ module JenkinsPipelineReport
         excerpts = create_excerpts(blocks)
         if excerpts.any?
           report["logs"] ||= {}
-          report["logs"]["consoleText"] ||= {}
+          report["logs"]["consoleText"] = excerpts
         end
       end
 

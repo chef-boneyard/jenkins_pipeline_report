@@ -13,7 +13,7 @@ module JenkinsPipelineReport
         # chef-acceptance timing
         acceptance_timing = []
         failures = []
-        chef_acceptance_results.each do |result|
+        chef_acceptance_results.each do |results|
           acceptance_run = {}
           results.each do |result|
             acceptance_run[result["suite"]] ||= {}

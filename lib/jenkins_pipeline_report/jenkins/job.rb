@@ -275,13 +275,14 @@ module JenkinsPipelineReport
       #
       def data(field=nil)
         if field
-          if @data
-            @data[field] || server.job_data(url)[field]
-          else
-            # Use data from the job list, if the field is there, rather than
-            # loading data for this particular job.
-            server.job_data(url)[field] || data[field]
-          end
+          return @data[field] if @data
+          # Use data from the job list, if the field is there, rather than
+          # loading data for this particular job.
+          job_data = server.job_data(url)
+          result = job_data[field] if job_data
+          # If all else fails, load the job data directly.
+          result ||= data[field]
+          result
         else
           @data || load || refresh(recursive: false)
         end
@@ -314,22 +315,22 @@ module JenkinsPipelineReport
         else
           fetch
         end
-        if recursive
-          # Since we're refreshing active configurations directly after, we don't
-          # bother with recursive refresh of builds. More efficient to grab the
-          # whole job at once.
-          builds.each { |build| build.refresh(recursive: false, pipeline: false, invalidate: invalidate) }
-        end
         if pipeline
-          all_downstreams.each { |job| job.refresh(recursive: false, pipeline: false, invalidate: invalidate) }
-          # active_configurations.each { |job| job.refresh }
-          # processes.each { |job| job.refresh }
+          downstreams.each { |job| job.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
+          if recursive
+            active_configurations.each { |job| job.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
+            processes.each { |job| job.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate) }
+          end
+        end
+        if recursive
+          builds.each { |build| build.refresh(recursive: recursive, pipeline: pipeline, invalidate: invalidate, from_job: true) }
         end
         @data
       end
 
       # @api private
       def build_data(number)
+        return nil unless @data || load
         # Grab the build data for a particular build from allBuilds. Used to make
         # certain immutable build data quick to load and to link up processes and
         # downstreams without having to load all the builds.

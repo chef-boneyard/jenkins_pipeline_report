@@ -161,9 +161,9 @@ module JenkinsPipelineReport
           end
 
           if result.empty?
-            result = duration.to_i
+            result = BuildReport.format_duration(duration)
           elsif duration > 10 && result.size > 1
-            result = { "total" => duration.to_i }.merge(result)
+            result = { "total" => BuildReport.format_duration(duration) }.merge(result)
           end
           result
         end

@@ -29,11 +29,19 @@ module JenkinsPipelineReport
         @report ||= read_cache || write_cache(generate_report)
       end
 
+      def format_duration(duration)
+        BuildReport.format_duration(duration)
+      end
+
       def format_datetime(datetime)
+        BuildReport.format_datetime(datetime)
+      end
+
+      def self.format_datetime(datetime)
         datetime.to_s
       end
 
-      def format_duration(duration)
+      def self.format_duration(duration)
         return nil if duration.nil?
         minutes, seconds = duration.divmod(60)
         hours, minutes = minutes.divmod(60)

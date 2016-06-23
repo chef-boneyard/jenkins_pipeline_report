@@ -90,6 +90,7 @@ module JenkinsPipelineReport
 
         # Print the result in nice simple format
         report["steps"] = steps.step_timing
+        report.delete("steps") if steps.is_a?(String)
       end
 
       def found_omnibus_line(description, time)
