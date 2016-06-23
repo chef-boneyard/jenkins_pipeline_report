@@ -67,13 +67,13 @@ module JenkinsPipelineReport
           "triggered_by" => generate_triggered_by,
           "parameters" => trigger.parameters,
           "change" => generate_change,
-          "stages" => generate_stages,
+          "stages" => generate_stage_reports,
         }
         report.reject! { |key,value| value.nil? }
         report
       end
 
-      def generate_stages
+      def generate_stage_reports
         result = {}
         stages.reverse_each do |stage|
           # Don't regenereate completed stages
@@ -153,10 +153,11 @@ module JenkinsPipelineReport
       def generate_change
         change = {}
         stages.map do |stage|
-          change.merge(stage.generate_change) do |key, old_value, new_value|
+          change.merge!(stage.generate_change) do |key, old_value, new_value|
             if old_value != new_value
               raise "More than one #{key} found in stages! One build had #{key}=#{old_value}, another had #{key}=#{new_value}"
             end
+            old_value
           end
         end
         change

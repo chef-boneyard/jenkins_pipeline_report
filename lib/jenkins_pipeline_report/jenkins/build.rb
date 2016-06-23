@@ -411,16 +411,25 @@ module JenkinsPipelineReport
       # To refresh processes and downstreams, you must refresh
       # the parent job and its downstreams and active configurations.
       #
-      def refresh(pipeline: false, recursive: true)
+      # @param recursive [Boolean] Whether to refresh runs and processes as well.
+      #   Defaults to `false`.
+      # @param pipeline [Boolean] Whether to refresh upstream and downstream
+      #   pipelines of the job. Defaults to `false`.
+      #
+      def refresh(recursive: false, pipeline: false, invalidate: false)
         # Make sure and load so we know the last result ...
         load unless @data
         # If we have never fetched, or if our last known result was in progress,
-        # we need to fetch.
+        # we need to fetch. Otherwise, we don't.
         if !@data || result.nil?
-          fetch
+          if invalidate && !CACHE_BUILDS
+            @data = nil
+          else
+            fetch
+          end
         end
         if pipeline
-          job.refresh(recursive: false, pipeline: true)
+          job.refresh(recursive: false, pipeline: pipeline, invalidate: invalidate)
           if recursive
             # runs.each { |build| build.refresh(recursive: false) }
             # processes.each { |build| build.refresh(recursive: false) }

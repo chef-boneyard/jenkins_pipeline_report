@@ -32,7 +32,7 @@ module JenkinsPipelineReport
         arg = jenkins_cache.jenkins_object(arg) if arg.is_a?(String)
 
         if refresh_jenkins
-          arg.refresh(pipeline: true)
+          arg.refresh(pipeline: true, invalidate: true)
         end
 
         case arg

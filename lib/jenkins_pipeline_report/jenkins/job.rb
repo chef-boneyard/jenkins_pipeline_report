@@ -303,17 +303,24 @@ module JenkinsPipelineReport
       # @param recursive [Boolean] `true` to refresh each build, `false` to just
       #   refresh the job and its *list* of builds. as well as any matrix jobs
       #   and processes. Downstreams and upstreams will not be refreshed.
+      #   Defaults to `false`.
+      # @param pipeline [Boolean] Whether to refresh all jobs in the pipelines.
+      #   Defaults to `false`.
       #
-      def refresh(recursive: true, pipeline: false)
-        fetch
+      def refresh(recursive: true, pipeline: false, invalidate: false)
+        if invalidate && !CACHE_JOBS
+          @data = nil
+        else
+          fetch
+        end
         if recursive
           # Since we're refreshing active configurations directly after, we don't
           # bother with recursive refresh of builds. More efficient to grab the
           # whole job at once.
-          builds.each { |build| build.refresh(recursive: false) }
+          builds.each { |build| build.refresh(recursive: false, pipeline: false, invalidate: invalidate) }
         end
         if pipeline
-          all_downstreams.each { |job| job.refresh(recursive: false) }
+          all_downstreams.each { |job| job.refresh(recursive: false, pipeline: false, invalidate: invalidate) }
           # active_configurations.each { |job| job.refresh }
           # processes.each { |job| job.refresh }
         end
@@ -345,7 +352,7 @@ module JenkinsPipelineReport
         if @data
           old_build = @data["allBuilds"].first
           fetched_build = fetched["allBuilds"].find { |build| build["number"] == old_build["number"] }
-          if old_build && old_build != fetched_build
+          if old_build && old_build["timestamp"] != fetched_build["timestamp"]
             raise JobRecreatedError, "Job #{url} has been deleted and recreated! First build used to be #{old_build}, is now #{fetched_build}!"
           end
         end

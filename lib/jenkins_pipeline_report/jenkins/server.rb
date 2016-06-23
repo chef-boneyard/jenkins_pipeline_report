@@ -127,17 +127,19 @@ module JenkinsPipelineReport
       # Load (or reload) the Jenkins server data from Jenkins
       #
       # @param recursive [Boolean] Whether to refresh each job or just the list
-      #   of jobs.
+      #   of jobs. :cache only caches things that can hit the disk cache.
+      #   Defaults to `false`.
+      # @param pipeline [Boolean] Whether to refresh all jobs in all pipelines
+      #   (equivalent to recursive for server). Defaults to `false`.
       #
-      def refresh(recursive: true)
-        @data = fetch("", "tree=#{SERVER_FIELDS}")
-        # It doesn't technically store the URL, but we need to remember it.
-        @data["url"] ||= url
-        if CACHE_SERVERS
-          cache.write_cache(url, @data)
+      def refresh(recursive: true, pipeline: false, invalidate: false)
+        if invalidate && !CACHE_SERVERS
+          @data = nil
+        else
+          fetch_data
         end
-        if recursive
-          jobs.each { |job| job.refresh }
+        if recursive || pipeline
+          jobs.each { |job| job.refresh(recursive: recursive, pipeline: false, invalidate: invalidate) }
         end
         @data
       end
@@ -175,6 +177,15 @@ module JenkinsPipelineReport
       end
 
       private
+
+      def fetch_data
+        @data = fetch("", "tree=#{SERVER_FIELDS}")
+        # It doesn't technically store the URL, but we need to remember it.
+        @data["url"] ||= url
+        if CACHE_SERVERS
+          cache.write_cache(url, @data)
+        end
+      end
 
       attr_reader :client
     end

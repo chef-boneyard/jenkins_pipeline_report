@@ -89,7 +89,7 @@ module JenkinsPipelineReport
           "version" => build.parameters["OMNIBUS_BUILD_VERSION"],
           "git_commit" => build.parameters["GIT_COMMIT"],
         }
-        result.reject! { |key,value| value.nil? || value.empty? }
+        result.reject! { |key,value| value.nil? || value == "" }
         result
       end
 
