@@ -1,0 +1,115 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/opscode-reporting-trigger-release/1/
+failure_category: code
+failure_cause: 'pedant: el-6: opscode-reporting-test'
+timestamp: 2015-12-14 15:07:13 UTC
+duration: 39m39s
+triggered_by: stevendanna
+active_duration: 1h24m8s
+parameters:
+  GIT_REF: 1.5.6
+  EXPIRE_CACHE: false
+change:
+  git_remote: git@github.com:opscode/omnibus-reporting.git
+  git_commit: f402cad15c8d7d74f8dd5119d2a0c93735cb0983
+  project: opscode-reporting
+  version: 1.5.6
+stages:
+  opscode-reporting-build/architecture=x86_64,platform=el-6,project=opscode-reporting,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-6,project=opscode-reporting,role=builder/11/
+    duration: 13m59s
+  opscode-reporting-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=builder/11/
+    duration: 10m5s
+  opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester/10/
+    duration: 20m36s
+  opscode-reporting-test:
+    result: FAILURE
+    failure_category: code
+    failure_cause: 'pedant: el-6'
+    url: http://wilson.ci.chef.co/job/opscode-reporting-test/10/
+    duration: 24m16s
+    runs:
+      el-6:
+        result: FAILURE
+        failure_category: code
+        failure_cause: pedant
+        failed_in:
+          step: pedant
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-6,project=opscode-reporting,role=tester/10/
+        duration: 18m2s
+        logs:
+          consoleText:
+            3296: |
+              --------------------------------------------------------------------------------
+              DEPRECATION: let declaration `direct_solr_query_sleep_time` accessed in a `before(:all)` hook at:
+                /opt/opscode-reporting/embedded/service/gem/ruby/2.1.0/bundler/gems/chef-pedant-dad401df0955/lib/pedant/rspec/search_util.rb:653:in `force_solr_commit'
+
+              `let` and `subject` declarations are not intended to be called
+            3320: |2
+
+              rspec ./spec/reporting/integration/create_node_runs_spec.rb:239 # Reporting API - Creation of Node Runs posting to complete a run and validating gzip behavior provides response code 200 when presented with a valid gzip compressed run
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 18m2s
+          before (setup time): 6m
+          chef-client private-chef::default: 5m17s
+          chef-client opscode-reporting::default: 32s
+          after (cleanup time): 2m5s
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-5,project=opscode-reporting,role=tester/10/
+        duration: 19m14s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-7,project=opscode-reporting,role=tester/10/
+        duration: 19m5s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester/10/
+        duration: 20m36s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-12.04,project=opscode-reporting,role=tester/10/
+        duration: 20m16s
+      ubuntu-14.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-14.04,project=opscode-reporting,role=tester/10/
+        duration: 24m15s
+  opscode-reporting-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-build/11/
+    duration: 15m9s
+    runs:
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-5,project=opscode-reporting,role=builder/11/
+        duration: 14m46s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-6,project=opscode-reporting,role=builder/11/
+        duration: 13m59s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-7,project=opscode-reporting,role=builder/11/
+        duration: 8m32s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=builder/11/
+        duration: 10m5s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-12.04,project=opscode-reporting,role=builder/11/
+        duration: 8m23s
+  opscode-reporting-trigger-release:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-trigger-release/1/
+    duration: 2s
+successful_logs_analyzed: false

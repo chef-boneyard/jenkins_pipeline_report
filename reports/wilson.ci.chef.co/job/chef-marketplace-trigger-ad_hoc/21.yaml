@@ -1,0 +1,65 @@
+---
+result: SUCCESS
+url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-ad_hoc/21/
+timestamp: 2016-03-08 21:03:44 UTC
+duration: 5h9m19s
+triggered_by: ryancragun
+active_duration: 3h45m17s
+queue_delays: 10s
+retry_delays: 1h23m36s
+parameters:
+  GIT_REF: ryan/biscotti_assets
+  EXPIRE_CACHE: false
+change:
+  git_remote: git@github.com:chef-partners/omnibus-marketplace.git
+  git_commit: d5b32cdde21b4c71349b6a16cc894b7b073f6341
+  project: chef-marketplace
+  version: 0.0.6+20160308210358.git.17.d5b32cd
+stages:
+  chef-marketplace-promote:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-marketplace-promote/110/
+    duration: 0s
+  chef-marketplace-test:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-marketplace-test/127/
+    duration: 2h56m
+    active_duration: 1h32m24s
+    retries: 1
+    retry_delay: 1h23m36s
+    runs:
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-6,project=chef-marketplace,role=tester/127/
+        duration: 1h32m23s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-7,project=chef-marketplace,role=tester/127/
+        duration: 24m57s
+      ubuntu-14.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=tester/127/
+        duration: 25m26s
+  chef-marketplace-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-marketplace-build/139/
+    duration: 2h12m49s
+    queue_delay: 10s
+    runs:
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-6,project=chef-marketplace,role=builder/139/
+        duration: 1h10m37s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-7,project=chef-marketplace,role=builder/139/
+        duration: 46m35s
+      ubuntu-14.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=builder/139/
+        duration: 2h12m45s
+  chef-marketplace-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-ad_hoc/21/
+    duration: 3s
+successful_logs_analyzed: false

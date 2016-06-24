@@ -1,0 +1,52 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/delivery-build/587/
+failure_category: network
+failure_cause: 'network reset rubygems.org: el-6: delivery-build'
+timestamp: 2016-06-10 09:32:33 UTC
+duration: 41m33s
+triggered_by: chef-jenkins
+active_duration: 41m33s
+parameters:
+  DELIVERY_SHA: 5d418880be52af1725de1e3371fffba8c931e40a
+  DELIVERY_CHANGE: aef160f7-174f-475d-b87e-9192bdf60ef9
+  APPEND_TIMESTAMP: false
+  GIT_REF: 5d418880be52af1725de1e3371fffba8c931e40a
+change:
+  git_remote: git@github.com:opscode/delivery.git
+stages:
+  delivery-build:
+    result: FAILURE
+    failure_category: network
+    failure_cause: 'network reset rubygems.org: el-6'
+    url: http://wilson.ci.chef.co/job/delivery-build/587/
+    duration: 41m33s
+    runs:
+      el-6:
+        result: FAILURE
+        failure_category: network
+        failure_cause: network reset rubygems.org
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=el-6,project=delivery,role=builder/587/
+        duration: 53s
+        logs:
+          consoleText:
+            166: |
+              Installing aws-sdk-core 2.3.13
+
+              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/aws-sdk-resources-2.3.13.gem)
+              An error occurred while installing aws-sdk-resources (2.3.13), and Bundler
+              cannot continue.
+              Make sure that `gem install aws-sdk-resources -v '2.3.13'` succeeds before
+              bundling.
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=el-7,project=delivery,role=builder/587/
+        duration: 41m21s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=ubuntu-12.04,project=delivery,role=builder/587/
+        duration: 40m7s
+successful_logs_analyzed: false

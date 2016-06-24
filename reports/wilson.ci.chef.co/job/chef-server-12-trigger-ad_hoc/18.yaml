@@ -1,0 +1,227 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/chef-server-12-trigger-ad_hoc/18/
+failure_category: code
+failure_cause: 'chef-client: ubuntu-10.04, ubuntu-12.04: chef-server-12-test'
+timestamp: 2016-01-11 20:11:23 UTC
+duration: 2h26m55s
+triggered_by: sdelano
+active_duration: 5h24m5s
+parameters:
+  GIT_REF: master
+  EXPIRE_CACHE: false
+change:
+  git_remote: git@github.com:chef/chef-server.git
+  git_commit: 015cf2546d67c3b4ded3c88c9d6db13ab3d78093
+  project: chef-server
+  version: 12.3.1+20160111201203
+stages:
+  chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/28/
+    duration: 1h35m6s
+  chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/28/
+    duration: 1h22m21s
+  chef-server-12-test:
+    result: FAILURE
+    failure_category: code
+    failure_cause: 'chef-client: ubuntu-10.04, ubuntu-12.04'
+    url: http://wilson.ci.chef.co/job/chef-server-12-test/28/
+    duration: 49m42s
+    runs:
+      ubuntu-10.04:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=tester/28/
+        duration: 5m40s
+        logs:
+          consoleText:
+            304: |
+              ============================================================
+
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/omnibus-ctl-0.4.2/lib/omnibus-ctl.rb:173:in `eval': can't activate net-ssh-3.0.2, already activated net-ssh-2.9.2 (Gem::LoadError)
+                from /opt/opscode/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1276:in `activate'
+                from /opt/opscode/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:216:in `block in finish_resolve'
+            997: |
+              [2016-01-11T21:52:08+00:00] INFO: Processing execute[restart_rabbitmq_log_service] action run (private-chef::rabbitmq line 19)
+              [2016-01-11T21:52:08+00:00] INFO: execute[restart_rabbitmq_log_service] ran successfully
+              [2016-01-11T21:52:08+00:00] ERROR: Running exception handlers
+              [2016-01-11T21:52:08+00:00] ERROR: Exception handlers complete
+              [2016-01-11T21:52:08+00:00] FATAL: Stacktrace dumped to /opt/opscode/embedded/cookbooks/cache/chef-stacktrace.out
+              [2016-01-11T21:52:08+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-01-11T21:52:09+00:00] FATAL: Mixlib::ShellOut::ShellCommandFailed: execute[/opt/opscode/embedded/bin/chpst -u opscode -U opscode /opt/opscode/embedded/bin/rabbitmqctl wait /var/opt/opscode/rabbitmq/db/rabbit@localhost.pid] (private-chef::rabbitmq line 110) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '2'
+              ---- Begin output of /opt/opscode/embedded/bin/chpst -u opscode -U opscode /opt/opscode/embedded/bin/rabbitmqctl wait /var/opt/opscode/rabbitmq/db/rabbit@localhost.pid ----
+              STDOUT: Waiting for rabbit@localhost ...
+            1020: |
+              No entry for terminal type "unknown";
+              using dumb terminal settings.
+              /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/config.rb:36:in `from_argv': Configuration file '/var/opt/opscode/oc-chef-pedant/etc/pedant_config.rb' not found! (RuntimeError)
+                from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant.rb:54:in `setup'
+                from ./bin/oc-chef-pedant:10:in `<main>'
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            1044: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to chef-server-ubuntu-10.04-tester-f80d1f(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              [BFA] Scanning build for known causes...
+              [BFA] No failure causes found
+        steps:
+          total: 5m40s
+          before (setup time): 2m38s
+          after (cleanup time): 2m57s
+      ubuntu-12.04:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-server,role=tester/28/
+        duration: 6m13s
+        logs:
+          consoleText:
+            304: |
+              ============================================================
+
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/omnibus-ctl-0.4.2/lib/omnibus-ctl.rb:173:in `eval': can't activate net-ssh-3.0.2, already activated net-ssh-2.9.2 (Gem::LoadError)
+                from /opt/opscode/embedded/lib/ruby/site_ruby/2.1.0/rubygems/specification.rb:1276:in `activate'
+                from /opt/opscode/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:216:in `block in finish_resolve'
+            992: |
+              [2016-01-11T21:52:41+00:00] INFO: Processing execute[restart_rabbitmq_log_service] action run (private-chef::rabbitmq line 19)
+              [2016-01-11T21:52:42+00:00] INFO: execute[restart_rabbitmq_log_service] ran successfully
+              [2016-01-11T21:52:42+00:00] ERROR: Running exception handlers
+              [2016-01-11T21:52:42+00:00] ERROR: Exception handlers complete
+              [2016-01-11T21:52:42+00:00] FATAL: Stacktrace dumped to /opt/opscode/embedded/cookbooks/cache/chef-stacktrace.out
+              [2016-01-11T21:52:42+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-01-11T21:52:44+00:00] FATAL: Mixlib::ShellOut::ShellCommandFailed: execute[/opt/opscode/embedded/bin/chpst -u opscode -U opscode /opt/opscode/embedded/bin/rabbitmqctl wait /var/opt/opscode/rabbitmq/db/rabbit@localhost.pid] (private-chef::rabbitmq line 110) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '2'
+              ---- Begin output of /opt/opscode/embedded/bin/chpst -u opscode -U opscode /opt/opscode/embedded/bin/rabbitmqctl wait /var/opt/opscode/rabbitmq/db/rabbit@localhost.pid ----
+              STDOUT: Waiting for rabbit@localhost ...
+            1015: |
+              No entry for terminal type "unknown";
+              using dumb terminal settings.
+              /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/config.rb:36:in `from_argv': Configuration file '/var/opt/opscode/oc-chef-pedant/etc/pedant_config.rb' not found! (RuntimeError)
+                from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant.rb:54:in `setup'
+                from ./bin/oc-chef-pedant:10:in `<main>'
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            1039: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to chef-server-ubuntu-12.04-tester-5b0c0e(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              [BFA] Scanning build for known causes...
+              [BFA] No failure causes found
+        steps:
+          total: 6m13s
+          before (setup time): 3m19s
+          after (cleanup time): 2m51s
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-5,project=chef-server,role=tester/28/
+        duration: 46m11s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-6,project=chef-server,role=tester/28/
+        duration: 49m41s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-7,project=chef-server,role=tester/28/
+        duration: 37m59s
+      ubuntu-14.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-server,role=tester/28/
+        duration: 43m31s
+  chef-server-12-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-build/28/
+    duration: 1h36m23s
+    runs:
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/28/
+        duration: 1h22m21s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/28/
+        duration: 1h35m6s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-7,project=chef-server,role=builder/28/
+        duration: 1h15m33s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=builder/28/
+        duration: 1h5m32s
+  chef-server-12-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-trigger-ad_hoc/18/
+    duration: 31s
+successful_logs_analyzed: false

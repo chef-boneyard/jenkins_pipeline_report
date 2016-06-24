@@ -1,0 +1,59 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/chef-backend-trigger-git_poll/153/
+failure_category: network
+failure_cause: 'network reset rubygems.org: el-7: chef-backend-build'
+timestamp: 2016-03-23 21:40:08 UTC
+duration: 48m34s
+active_duration: 1h10m24s
+parameters: {}
+change:
+  git_remote: git@github.com:chef/chef-backend.git
+  git_commit: 9956383c9669815076b83e8d30b554eba05c4d73
+  project: chef-backend
+stages:
+  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/183/
+    duration: 21m56s
+  chef-backend-build:
+    result: FAILURE
+    failure_category: network
+    failure_cause: 'network reset rubygems.org: el-7'
+    url: http://wilson.ci.chef.co/job/chef-backend-build/183/
+    duration: 48m24s
+    runs:
+      el-7:
+        result: FAILURE
+        failure_category: network
+        failure_cause: network reset rubygems.org
+        url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=el-7,project=chef-backend,role=builder/183/
+        duration: 2m18s
+        logs:
+          consoleText:
+            170: |
+              Fetching git://github.com/chef/omnibus-software.git
+
+              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/rake-10.5.0.gem)
+              An error occurred while installing rake (10.5.0), and Bundler cannot continue.
+              Make sure that `gem install rake -v '10.5.0'` succeeds before bundling.
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=el-5,project=chef-backend,role=builder/183/
+        duration: 28m24s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=el-6,project=chef-backend,role=builder/183/
+        duration: 25m55s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/183/
+        duration: 21m56s
+  chef-backend-trigger-git_poll:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-trigger-git_poll/153/
+    duration: 3s
+successful_logs_analyzed: false

@@ -1,0 +1,65 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/chef-analytics-trigger-release/7/
+failure_category: unknown
+failure_cause: 'unknown: chef-analytics-build'
+timestamp: 2016-04-22 21:10:33 UTC
+duration: 1h8m48s
+triggered_by: patrick-wright
+active_duration: 37m36s
+retry_delays: 45m38s
+parameters:
+  GIT_REF: 1.4.0
+  EXPIRE_CACHE: false
+change:
+  git_remote: git@github.com:chef/chef-analytics.git
+  git_commit: 18af6b292bd4422d514ac83af6ad2b760662c21a
+  project: opscode-analytics
+stages:
+  chef-analytics-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-analytics,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-analytics-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-analytics,role=builder/273/
+    duration: 14m34s
+  chef-analytics-build:
+    result: FAILURE
+    failure_category: unknown
+    failure_cause: unknown
+    url: http://wilson.ci.chef.co/job/chef-analytics-build/273/
+    duration: 22m30s
+    logs:
+      consoleText:
+        178: |2
+
+          STDERR: make: write error
+          /srv/jenkins/jobs/chef-analytics-build/workspace/opscode-ci/scripts/artifactory/create_build_record.rb:57:in `block in <main>': A build record already exists for opscode-analytics#1.4.0! (RuntimeError)
+            from /srv/jenkins/jobs/chef-analytics-build/workspace/opscode-ci/scripts/artifactory/create_build_record.rb:26:in `chdir'
+            from /srv/jenkins/jobs/chef-analytics-build/workspace/opscode-ci/scripts/artifactory/create_build_record.rb:26:in `<main>'
+    runs:
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-analytics-build/architecture=x86_64,platform=el-5,project=opscode-analytics,role=builder/273/
+        duration: 22m8s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-analytics-build/architecture=x86_64,platform=el-6,project=opscode-analytics,role=builder/273/
+        duration: 14m46s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-analytics-build/architecture=x86_64,platform=el-7,project=opscode-analytics,role=builder/273/
+        duration: 20m59s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-analytics-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-analytics,role=builder/273/
+        duration: 14m34s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-analytics-build/architecture=x86_64,platform=ubuntu-12.04,project=opscode-analytics,role=builder/273/
+        duration: 14m41s
+  chef-analytics-trigger-release:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-analytics-trigger-release/8/
+    duration: 46m10s
+    active_duration: 32s
+    retries: 1
+    retry_delay: 45m38s
+successful_logs_analyzed: false

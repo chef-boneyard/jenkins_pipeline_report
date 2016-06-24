@@ -1,0 +1,51 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/delivery-build/588/
+failure_category: network
+failure_cause: 'network reset rubygems.org: ubuntu: delivery-build'
+timestamp: 2016-06-10 14:14:12 UTC
+duration: 52m5s
+triggered_by: chef-jenkins
+active_duration: 52m5s
+parameters:
+  DELIVERY_SHA: 56124746cfa347a01557f2ae135f15e9a0bbe4e5
+  DELIVERY_CHANGE: 0ad64157-7921-456c-a6f9-185960d7304a
+  APPEND_TIMESTAMP: false
+  GIT_REF: 56124746cfa347a01557f2ae135f15e9a0bbe4e5
+change:
+  git_remote: git@github.com:opscode/delivery.git
+stages:
+  delivery-build:
+    result: FAILURE
+    failure_category: network
+    failure_cause: 'network reset rubygems.org: ubuntu'
+    url: http://wilson.ci.chef.co/job/delivery-build/588/
+    duration: 52m5s
+    runs:
+      ubuntu-12.04:
+        result: FAILURE
+        failure_category: network
+        failure_cause: network reset rubygems.org
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=ubuntu-12.04,project=delivery,role=builder/588/
+        duration: 58s
+        logs:
+          consoleText:
+            163: |
+              Resolving dependencies......
+
+              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/json_pure-1.8.3.gem)
+              An error occurred while installing json_pure (1.8.3), and Bundler cannot
+              continue.
+              Make sure that `gem install json_pure -v '1.8.3'` succeeds before bundling.
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=el-6,project=delivery,role=builder/588/
+        duration: 51m49s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=el-7,project=delivery,role=builder/588/
+        duration: 41m59s
+successful_logs_analyzed: false

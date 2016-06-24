@@ -1,0 +1,519 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/chef-backend-trigger-git_poll/136/
+failure_category: code
+failure_cause: 'chef-client: chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester;
+  chef-client: all: chef-backend-test'
+timestamp: 2016-03-17 19:10:09 UTC
+duration: 40m39s
+active_duration: 2h3m47s
+parameters: {}
+change:
+  git_remote: git@github.com:chef/chef-backend.git
+  git_commit: ce9b0ab263a2a98433759b006a41adcb3fef07f3
+  project: chef-backend
+  version: 0.2.0+20160317191024.git.176.ce9b0ab
+stages:
+  chef-backend-build/architecture=x86_64,platform=el-6,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=el-6,project=chef-backend,role=builder/164/
+    duration: 26m26s
+  chef-backend-build/architecture=x86_64,platform=el-5,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=el-5,project=chef-backend,role=builder/164/
+    duration: 28m24s
+  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/164/
+    duration: 18m38s
+  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
+    result: FAILURE
+    failure_category: code
+    failure_cause: chef-client
+    failed_in:
+      step: chef-client
+    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/157/
+    duration: 9m54s
+    logs:
+      consoleText:
+        553: |
+          \33[0mCookbook Trace:\33[0m
+          ---------------\33[0m
+            /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:57:in `block in from_file'
+          \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:52:in `from_file'
+          \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/_services.rb:13:in `block in from_file'
+        21779: |2
+                    cluster (2 or more nodes listed in the peers configuaration).
+
+          [2016-03-17T19:46:53+00:00] ERROR: Running exception handlers
+          [2016-03-17T19:46:53+00:00] ERROR: Exception handlers complete
+          [2016-03-17T19:46:53+00:00] FATAL: Stacktrace dumped to /opt/chef-backend/embedded/cookbooks/cache/chef-stacktrace.out
+          [2016-03-17T19:46:53+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+          [2016-03-17T19:46:53+00:00] FATAL: Errno::ECONNREFUSED: Connection refused - connect(2) for "10.194.12.189" port 2379
+          FAILED
+        21810: |
+          ============================================================
+
+          Build step 'Invoke XShell command' marked build as failure
+          Performing Post build task...
+          Match found for : : True
+    steps:
+      total: 9m54s
+      before (setup time): "-72h11m49s"
+      chef-client chef-backend::default: 31s
+      chef-client chef-backend::default 2: 35s
+      chef-client chef-backend::default 3: 34s
+      chef-client chef-backend::default 4: 34s
+      chef-client chef-backend::default 5: 34s
+      chef-client chef-backend::default 6: 34s
+      chef-client chef-backend::default 7: 34s
+      chef-client chef-backend::default 8: 34s
+      chef-client chef-backend::default 9: 34s
+      chef-client chef-backend::default 10: 34s
+      chef-client chef-backend::default 11: 34s
+      chef-client chef-backend::default 12: 35s
+      chef-client chef-backend::default 13: 34s
+      chef-client chef-backend::default 14: 34s
+      chef-client chef-backend::default 15: 34s
+      chef-client chef-backend::default 16: 30s
+      chef-client chef-backend::default 17: 34s
+      chef-client chef-backend::default 18: 35s
+      after (cleanup time): 2m7s
+  chef-backend-test:
+    result: FAILURE
+    failure_category: code
+    failure_cause: 'chef-client: all'
+    url: http://wilson.ci.chef.co/job/chef-backend-test/157/
+    duration: 11m44s
+    runs:
+      el-5:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=el-5,project=chef-backend,role=tester/157/
+        duration: 11m43s
+        logs:
+          consoleText:
+            518: |
+              \33[0mCookbook Trace:\33[0m
+              ---------------\33[0m
+                /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:57:in `block in from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:52:in `from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/_services.rb:13:in `block in from_file'
+            13745: |
+              [2016-03-16T19:17:36-04:00] INFO: Processing runit_service[postgresql] action start (chef-backend::_services line 37)
+              [2016-03-16T19:17:36-04:00] INFO: Processing ruby_block[wait for postgresql to start] action run (chef-backend::service_postgresql_setup line 12)
+              [2016-03-16T19:17:36-04:00] FATAL: Could not connect to database, retrying in 10 seconds.
+              [2016-03-16T19:17:46-04:00] INFO: ruby_block[wait for postgresql to start] called
+              [2016-03-16T19:17:46-04:00] INFO: Processing chef_backend_pg_user[chef_pgsql] action create (chef-backend::service_postgresql_setup line 29)
+            21640: |2
+                        cluster (2 or more nodes listed in the peers configuaration).
+
+              [2016-03-17T15:48:40-04:00] ERROR: Running exception handlers
+              [2016-03-17T15:48:40-04:00] ERROR: Exception handlers complete
+              [2016-03-17T15:48:40-04:00] FATAL: Stacktrace dumped to /opt/chef-backend/embedded/cookbooks/cache/chef-stacktrace.out
+              [2016-03-17T15:48:40-04:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-03-17T15:48:40-04:00] FATAL: Errno::ECONNREFUSED: Connection refused - connect(2) for "10.194.10.213" port 2379
+              FAILED
+            21671: |
+              ============================================================
+
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 11m43s
+          before (setup time): "-72h9m30s"
+          chef-client chef-backend::default: 39s
+          chef-client chef-backend::default 2: 42s
+          chef-client chef-backend::default 3: 44s
+          chef-client chef-backend::default 4: 49s
+          chef-client chef-backend::default 5: 49s
+          chef-client chef-backend::default 6: 45s
+          chef-client chef-backend::default 7: 48s
+          chef-client chef-backend::default 8: 50s
+          chef-client chef-backend::default 9: 45s
+          chef-client chef-backend::default 10: 48s
+          chef-client chef-backend::default 11: 44s
+          chef-client chef-backend::default 12: 54s
+          chef-client chef-backend::default 13: 44s
+          chef-client chef-backend::default 14: 44s
+          chef-client chef-backend::default 15: 45s
+          chef-client chef-backend::default 16: 49s
+          chef-client chef-backend::default 17: 46s
+          chef-client chef-backend::default 18: 48s
+          after (cleanup time): 2m10s
+      el-6:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=el-6,project=chef-backend,role=tester/157/
+        duration: 10m28s
+        logs:
+          consoleText:
+            503: |
+              \33[0mCookbook Trace:\33[0m
+              ---------------\33[0m
+                /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:57:in `block in from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:52:in `from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/_services.rb:13:in `block in from_file'
+            21775: |2
+                        cluster (2 or more nodes listed in the peers configuaration).
+
+              [2016-03-17T15:48:59-04:00] ERROR: Running exception handlers
+              [2016-03-17T15:48:59-04:00] ERROR: Exception handlers complete
+              [2016-03-17T15:48:59-04:00] FATAL: Stacktrace dumped to /opt/chef-backend/embedded/cookbooks/cache/chef-stacktrace.out
+              [2016-03-17T15:48:59-04:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-03-17T15:49:00-04:00] FATAL: Errno::ECONNREFUSED: Connection refused - connect(2) for "10.194.15.97" port 2379
+              FAILED
+            21806: |
+              ============================================================
+
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 10m28s
+          before (setup time): "-72h9m46s"
+          chef-client chef-backend::default: 53s
+          chef-client chef-backend::default 2: 53s
+          chef-client chef-backend::default 3: 51s
+          chef-client chef-backend::default 4: 52s
+          chef-client chef-backend::default 5: 1m23s
+          chef-client chef-backend::default 6: 47s
+          chef-client chef-backend::default 7: 52s
+          chef-client chef-backend::default 8: 53s
+          chef-client chef-backend::default 9: 47s
+          chef-client chef-backend::default 10: 53s
+          chef-client chef-backend::default 11: 54s
+          chef-client chef-backend::default 12: 52s
+          chef-client chef-backend::default 13: 53s
+          chef-client chef-backend::default 14: 51s
+          chef-client chef-backend::default 15: 53s
+          chef-client chef-backend::default 16: 53s
+          chef-client chef-backend::default 17: 51s
+          chef-client chef-backend::default 18: 52s
+          after (cleanup time): 36s
+      el-7:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=el-7,project=chef-backend,role=tester/157/
+        duration: 9m21s
+        logs:
+          consoleText:
+            50666: |
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/int1-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/file-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/domain-i.ri: remove failed: No such file or directory
+            59803: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception: remove failed: No such file or directory
+            60752: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/MYMETA.json: remove failed: No such file or directory
+            61135: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Dir/Base.pm: remove failed: No such file or directory
+            64955: |
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/typemap: remove failed: No such file or directory
+            103967: |
+              warning: file /opt/chef-backend/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/int1-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-backend/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/file-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-backend/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-backend/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/chef-backend/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/domain-i.ri: remove failed: No such file or directory
+            115230: |
+              \33[0mCookbook Trace:\33[0m
+              ---------------\33[0m
+                /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:57:in `block in from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:52:in `from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/_services.rb:13:in `block in from_file'
+            122613: |
+              [2016-03-14T18:51:07-04:00] INFO: Processing runit_service[postgresql] action start (chef-backend::_services line 37)
+              [2016-03-14T18:51:07-04:00] INFO: Processing ruby_block[wait for postgresql to start] action run (chef-backend::service_postgresql_setup line 12)
+              [2016-03-14T18:51:07-04:00] FATAL: Could not connect to database, retrying in 10 seconds.
+              [2016-03-14T18:51:17-04:00] INFO: ruby_block[wait for postgresql to start] called
+              [2016-03-14T18:51:17-04:00] INFO: Processing chef_backend_pg_user[chef_pgsql] action create (chef-backend::service_postgresql_setup line 29)
+            123769: |
+              [2016-03-14T19:17:58-04:00] INFO: Processing runit_service[postgresql] action start (chef-backend::_services line 37)
+              [2016-03-14T19:17:58-04:00] INFO: Processing ruby_block[wait for postgresql to start] action run (chef-backend::service_postgresql_setup line 12)
+              [2016-03-14T19:17:58-04:00] FATAL: Could not connect to database, retrying in 10 seconds.
+              [2016-03-14T19:18:08-04:00] INFO: ruby_block[wait for postgresql to start] called
+              [2016-03-14T19:18:08-04:00] INFO: Processing chef_backend_pg_user[chef_pgsql] action create (chef-backend::service_postgresql_setup line 29)
+            129545: |
+              [2016-03-16T20:06:38-04:00] INFO: Processing runit_service[postgresql] action start (chef-backend::_services line 37)
+              [2016-03-16T20:06:38-04:00] INFO: Processing ruby_block[wait for postgresql to start] action run (chef-backend::service_postgresql_setup line 12)
+              [2016-03-16T20:06:39-04:00] FATAL: Could not connect to database, retrying in 10 seconds.
+              [2016-03-16T20:06:49-04:00] INFO: ruby_block[wait for postgresql to start] called
+              [2016-03-16T20:06:49-04:00] INFO: Processing chef_backend_pg_user[chef_pgsql] action create (chef-backend::service_postgresql_setup line 29)
+            136249: |2
+                        cluster (2 or more nodes listed in the peers configuaration).
+
+              [2016-03-17T15:46:21-04:00] ERROR: Running exception handlers
+              [2016-03-17T15:46:21-04:00] ERROR: Exception handlers complete
+              [2016-03-17T15:46:21-04:00] FATAL: Stacktrace dumped to /opt/chef-backend/embedded/cookbooks/cache/chef-stacktrace.out
+              [2016-03-17T15:46:21-04:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-03-17T15:46:22-04:00] FATAL: Errno::ECONNREFUSED: Connection refused - connect(2) for "10.194.12.15" port 2379
+              FAILED
+            136280: |
+              ============================================================
+
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 9m21s
+          before (setup time): "-72h12m27s"
+          chef-client chef-backend::default: 27s
+          chef-client chef-backend::default 2: 30s
+          chef-client chef-backend::default 3: 32s
+          chef-client chef-backend::default 4: 28s
+          chef-client chef-backend::default 5: 29s
+          chef-client chef-backend::default 6: 32s
+          chef-client chef-backend::default 7: 38s
+          chef-client chef-backend::default 8: 38s
+          chef-client chef-backend::default 9: 32s
+          chef-client chef-backend::default 10: 34s
+          chef-client chef-backend::default 11: 24s
+          chef-client chef-backend::default 12: 34s
+          chef-client chef-backend::default 13: 43s
+          chef-client chef-backend::default 14: 30s
+          chef-client chef-backend::default 15: 34s
+          chef-client chef-backend::default 16: 28s
+          chef-client chef-backend::default 17: 31s
+          chef-client chef-backend::default 18: 29s
+          after (cleanup time): 2m7s
+      ubuntu-10.04:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/157/
+        duration: 9m54s
+        logs:
+          consoleText:
+            553: |
+              \33[0mCookbook Trace:\33[0m
+              ---------------\33[0m
+                /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:57:in `block in from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:52:in `from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/_services.rb:13:in `block in from_file'
+            21779: |2
+                        cluster (2 or more nodes listed in the peers configuaration).
+
+              [2016-03-17T19:46:53+00:00] ERROR: Running exception handlers
+              [2016-03-17T19:46:53+00:00] ERROR: Exception handlers complete
+              [2016-03-17T19:46:53+00:00] FATAL: Stacktrace dumped to /opt/chef-backend/embedded/cookbooks/cache/chef-stacktrace.out
+              [2016-03-17T19:46:53+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-03-17T19:46:53+00:00] FATAL: Errno::ECONNREFUSED: Connection refused - connect(2) for "10.194.12.189" port 2379
+              FAILED
+            21810: |
+              ============================================================
+
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 9m54s
+          before (setup time): "-72h11m49s"
+          chef-client chef-backend::default: 31s
+          chef-client chef-backend::default 2: 35s
+          chef-client chef-backend::default 3: 34s
+          chef-client chef-backend::default 4: 34s
+          chef-client chef-backend::default 5: 34s
+          chef-client chef-backend::default 6: 34s
+          chef-client chef-backend::default 7: 34s
+          chef-client chef-backend::default 8: 34s
+          chef-client chef-backend::default 9: 34s
+          chef-client chef-backend::default 10: 34s
+          chef-client chef-backend::default 11: 34s
+          chef-client chef-backend::default 12: 35s
+          chef-client chef-backend::default 13: 34s
+          chef-client chef-backend::default 14: 34s
+          chef-client chef-backend::default 15: 34s
+          chef-client chef-backend::default 16: 30s
+          chef-client chef-backend::default 17: 34s
+          chef-client chef-backend::default 18: 35s
+          after (cleanup time): 2m7s
+      ubuntu-12.04:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-backend,role=tester/157/
+        duration: 10m29s
+        logs:
+          consoleText:
+            550: |
+              \33[0mCookbook Trace:\33[0m
+              ---------------\33[0m
+                /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:57:in `block in from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:52:in `from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/_services.rb:13:in `block in from_file'
+            1011: |
+              [2016-03-14T19:28:56+00:00] INFO: Processing runit_service[postgresql] action start (chef-backend::_services line 37)
+              [2016-03-14T19:28:56+00:00] INFO: Processing ruby_block[wait for postgresql to start] action run (chef-backend::service_postgresql_setup line 12)
+              [2016-03-14T19:28:56+00:00] FATAL: Could not connect to database, retrying in 10 seconds.
+              [2016-03-14T19:29:06+00:00] INFO: ruby_block[wait for postgresql to start] called
+              [2016-03-14T19:29:06+00:00] INFO: Processing chef_backend_pg_user[chef_pgsql] action create (chef-backend::service_postgresql_setup line 29)
+            3346: |
+              [2016-03-14T20:28:11+00:00] INFO: Processing runit_service[postgresql] action start (chef-backend::_services line 37)
+              [2016-03-14T20:28:11+00:00] INFO: Processing ruby_block[wait for postgresql to start] action run (chef-backend::service_postgresql_setup line 12)
+              [2016-03-14T20:28:11+00:00] FATAL: Could not connect to database, retrying in 10 seconds.
+              [2016-03-14T20:28:21+00:00] INFO: ruby_block[wait for postgresql to start] called
+              [2016-03-14T20:28:21+00:00] INFO: Processing chef_backend_pg_user[chef_pgsql] action create (chef-backend::service_postgresql_setup line 29)
+            8058: |
+              [2016-03-14T22:52:18+00:00] INFO: runit_service[postgresql] started
+              [2016-03-14T22:52:18+00:00] INFO: Processing ruby_block[wait for postgresql to start] action run (chef-backend::service_postgresql_setup line 12)
+              [2016-03-14T22:52:19+00:00] FATAL: Could not connect to database, retrying in 10 seconds.
+              [2016-03-14T22:52:29+00:00] INFO: ruby_block[wait for postgresql to start] called
+              [2016-03-14T22:52:29+00:00] INFO: Processing chef_backend_pg_user[chef_pgsql] action create (chef-backend::service_postgresql_setup line 29)
+            18562: |
+              [2016-03-17T04:43:17+00:00] INFO: Processing runit_service[postgresql] action start (chef-backend::_services line 37)
+              [2016-03-17T04:43:17+00:00] INFO: Processing ruby_block[wait for postgresql to start] action run (chef-backend::service_postgresql_setup line 12)
+              [2016-03-17T04:43:17+00:00] FATAL: Could not connect to database, retrying in 10 seconds.
+              [2016-03-17T04:43:27+00:00] INFO: ruby_block[wait for postgresql to start] called
+              [2016-03-17T04:43:27+00:00] INFO: Processing chef_backend_pg_user[chef_pgsql] action create (chef-backend::service_postgresql_setup line 29)
+            21823: |2
+                        cluster (2 or more nodes listed in the peers configuaration).
+
+              [2016-03-17T19:47:29+00:00] ERROR: Running exception handlers
+              [2016-03-17T19:47:29+00:00] ERROR: Exception handlers complete
+              [2016-03-17T19:47:29+00:00] FATAL: Stacktrace dumped to /opt/chef-backend/embedded/cookbooks/cache/chef-stacktrace.out
+              [2016-03-17T19:47:29+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-03-17T19:47:30+00:00] FATAL: Errno::ECONNREFUSED: Connection refused - connect(2) for "10.194.9.231" port 2379
+              FAILED
+            21854: |
+              ============================================================
+
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 10m29s
+          before (setup time): "-72h10m23s"
+          chef-client chef-backend::default: 39s
+          chef-client chef-backend::default 2: 32s
+          chef-client chef-backend::default 3: 1m18s
+          chef-client chef-backend::default 4: 28s
+          chef-client chef-backend::default 5: 28s
+          chef-client chef-backend::default 6: 32s
+          chef-client chef-backend::default 7: 38s
+          chef-client chef-backend::default 8: 27s
+          chef-client chef-backend::default 9: 32s
+          chef-client chef-backend::default 10: 30s
+          chef-client chef-backend::default 11: 34s
+          chef-client chef-backend::default 12: 32s
+          chef-client chef-backend::default 13: 30s
+          chef-client chef-backend::default 14: 38s
+          chef-client chef-backend::default 15: 33s
+          chef-client chef-backend::default 16: 39s
+          chef-client chef-backend::default 17: 32s
+          chef-client chef-backend::default 18: 37s
+          after (cleanup time): 2m8s
+      ubuntu-14.04:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-backend,role=tester/157/
+        duration: 10m16s
+        logs:
+          consoleText:
+            607: |
+              \33[0mCookbook Trace:\33[0m
+              ---------------\33[0m
+                /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:57:in `block in from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:52:in `from_file'
+              \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/_services.rb:13:in `block in from_file'
+            21836: |2
+                        cluster (2 or more nodes listed in the peers configuaration).
+
+              [2016-03-17T19:47:17+00:00] ERROR: Running exception handlers
+              [2016-03-17T19:47:17+00:00] ERROR: Exception handlers complete
+              [2016-03-17T19:47:17+00:00] FATAL: Stacktrace dumped to /opt/chef-backend/embedded/cookbooks/cache/chef-stacktrace.out
+              [2016-03-17T19:47:17+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-03-17T19:47:17+00:00] FATAL: Errno::ECONNREFUSED: Connection refused - connect(2) for "10.194.12.73" port 2379
+              FAILED
+            21867: |
+              ============================================================
+
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 10m16s
+          before (setup time): "-72h11m37s"
+          chef-client chef-backend::default: 33s
+          chef-client chef-backend::default 2: 33s
+          chef-client chef-backend::default 3: 32s
+          chef-client chef-backend::default 4: 30s
+          chef-client chef-backend::default 5: 29s
+          chef-client chef-backend::default 6: 34s
+          chef-client chef-backend::default 7: 29s
+          chef-client chef-backend::default 8: 34s
+          chef-client chef-backend::default 9: 34s
+          chef-client chef-backend::default 10: 33s
+          chef-client chef-backend::default 11: 33s
+          chef-client chef-backend::default 12: 33s
+          chef-client chef-backend::default 13: 37s
+          chef-client chef-backend::default 14: 34s
+          chef-client chef-backend::default 15: 26s
+          chef-client chef-backend::default 16: 29s
+          chef-client chef-backend::default 17: 28s
+          chef-client chef-backend::default 18: 28s
+          after (cleanup time): 2m7s
+  chef-backend-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/164/
+    duration: 28m33s
+    runs:
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=el-5,project=chef-backend,role=builder/164/
+        duration: 28m24s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=el-6,project=chef-backend,role=builder/164/
+        duration: 26m26s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=el-7,project=chef-backend,role=builder/164/
+        duration: 17m34s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/164/
+        duration: 18m38s
+  chef-backend-trigger-git_poll:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-trigger-git_poll/136/
+    duration: 6s
+successful_logs_analyzed: false

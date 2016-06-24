@@ -1,0 +1,115 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-trigger-ad_hoc/11/
+failure_category: code
+failure_cause: 'pedant: el-5: opscode-push-jobs-server-test'
+timestamp: 2016-04-14 17:53:26 UTC
+duration: 1h57m20s
+triggered_by: prajaktapurohit
+active_duration: 1h57m5s
+parameters:
+  GIT_REF: praj/SPOOL-142/testbuild
+  EXPIRE_CACHE: true
+change:
+  git_remote: git@github.com:opscode/omnibus-pushy.git
+  git_commit: 3a99dcd2c8d74dfd520e4fd383dcd481f73fae31
+  project: opscode-push-jobs-server
+  version: 2.0.0-alpha.4+20160414175338.git.4.3a99dcd
+stages:
+  opscode-push-jobs-server-test:
+    result: FAILURE
+    failure_category: code
+    failure_cause: 'pedant: el-5'
+    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/95/
+    duration: 50m56s
+    runs:
+      el-5:
+        result: FAILURE
+        failure_category: code
+        failure_cause: pedant
+        failed_in:
+          step: pedant
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-5,project=opscode-push-jobs-server,role=tester/95/
+        duration: 50m55s
+        logs:
+          consoleText:
+            3021: |
+              Got a 201 response to a POST to /clients for client DONKEY: (try 1)
+              names: ["DONKEY"]
+              [2016-04-14T15:29:06-04:00] ERROR: [DONKEY] Received commit ef9c6bb8a335c36031762c545e239547, but command 'echo nevereverever' is not in the whitelist!
+                    trying to run a command that is not on the whitelist fails
+              Got a 201 response to a POST to /clients for client DONKEY: (try 1)
+            3035: |
+              Got a 201 response to a POST to /clients for client DONKEY: (try 1)
+              names: ["DONKEY"]
+              [2016-04-14T15:29:54-04:00] ERROR: [DONKEY] Received commit ef9c6bb8a335ab6074441ce8c5ff370f, but user 'nonexistentuser' does not exist!
+                    passing in a bad user, fails in the commit
+              Got a 201 response to a POST to /clients for client DONKEY: (try 1)
+              names: ["DONKEY"]
+              [2016-04-14T15:30:05-04:00] ERROR: [DONKEY] Received commit ef9c6bb8a3350679a57c97d38ddae4e6, but dir '/nonexistentdir' does not exist!
+                    passing in a bad directory, fails in the commit
+              Got a 201 response to a POST to /clients for client DONKEY: (try 1)
+            3800: |
+              Got a 201 response to a POST to /clients for client DONKEY: (try 1)
+              names: ["DONKEY"]
+              [2016-04-14T15:44:47-04:00] ERROR: [DONKEY] Received commit ef9c6bb8a3358b2a92e3ff4ec37bc21f, but command 'bad command' is not in the whitelist!
+              {:job_id=>"ef9c6bb8a3358b2a92e3ff4ec37bc21f"}
+                    the events should be: start,quorum_vote(failure),job_complete(quorum_failed)
+            4118: |
+              Randomized with seed 29338
+
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 50m55s
+          before (setup time): 9m35s
+          chef-client private-chef::default: 4m28s
+          chef-client opscode-pushy-server::default: 24s
+          after (cleanup time): 32m17s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-6,project=opscode-push-jobs-server,role=tester/95/
+        duration: 46m36s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-7,project=opscode-push-jobs-server,role=tester/95/
+        duration: 45m45s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-push-jobs-server,role=tester/95/
+        duration: 46m26s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-12.04,project=opscode-push-jobs-server,role=tester/95/
+        duration: 45m23s
+      ubuntu-14.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-14.04,project=opscode-push-jobs-server,role=tester/95/
+        duration: 45m39s
+  opscode-push-jobs-server-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/141/
+    duration: 1h6m6s
+    runs:
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-5,project=opscode-push-jobs-server,role=builder/141/
+        duration: 59m17s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-6,project=opscode-push-jobs-server,role=builder/141/
+        duration: 1h6m1s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-7,project=opscode-push-jobs-server,role=builder/141/
+        duration: 39m47s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-push-jobs-server,role=builder/141/
+        duration: 54m54s
+  opscode-push-jobs-server-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-trigger-ad_hoc/11/
+    duration: 3s
+successful_logs_analyzed: false

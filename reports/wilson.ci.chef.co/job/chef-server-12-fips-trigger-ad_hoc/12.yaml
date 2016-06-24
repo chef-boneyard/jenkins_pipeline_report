@@ -1,0 +1,66 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/chef-server-12-fips-trigger-ad_hoc/12/
+failure_category: code
+failure_cause: 'pedant: all: chef-server-12-fips-test'
+timestamp: 2015-12-30 14:36:27 UTC
+duration: 1h19m16s
+triggered_by: jaym
+active_duration: 1h19m1s
+parameters:
+  GIT_REF: jdm/fips-final
+  EXPIRE_CACHE: false
+change:
+  git_remote: git@github.com:chef/chef-server.git
+  git_commit: c2257fd29b46f5dc26ea19325be432a437cd520b
+  project: chef-server-fips
+  version: 12.3.1+20151230143642
+stages:
+  chef-server-12-fips-test:
+    result: FAILURE
+    failure_category: code
+    failure_cause: 'pedant: all'
+    url: http://wilson.ci.chef.co/job/chef-server-12-fips-test/12/
+    duration: 46m15s
+    runs:
+      el-6:
+        result: FAILURE
+        failure_category: code
+        failure_cause: pedant
+        failed_in:
+          step: pedant
+        url: http://wilson.ci.chef.co/job/chef-server-12-fips-test/architecture=x86_64,platform=el-6,project=chef-server-fips,role=tester/12/
+        duration: 46m14s
+        logs:
+          consoleText:
+            10868: |2
+
+                1) ACL API /<type>/<name>/_acl endpoint for clients type /clients/<name>/_acl/update endpoint PUT /clients/<name>/_acl/update malformed requests invalid actor returns 400
+              /opt/opscode/embedded/service/gem/ruby/2.1.0/gems/rspec-legacy_formatters-1.0.1/lib/rspec/legacy_formatters/base_formatter.rb:211:in `find_failed_line': undefined method `detect' for nil:NilClass (NoMethodError)
+                from /opt/opscode/embedded/service/gem/ruby/2.1.0/gems/rspec-legacy_formatters-1.0.1/lib/rspec/legacy_formatters/base_formatter.rb:193:in `read_failed_line'
+                from /opt/opscode/embedded/service/gem/ruby/2.1.0/gems/rspec-legacy_formatters-1.0.1/lib/rspec/legacy_formatters/base_text_formatter.rb:300:in `dump_failure_info'
+            10888: |2
+                from /opt/opscode/embedded/service/gem/ruby/2.1.0/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:73:in `run'
+                from ./bin/oc-chef-pedant:13:in `<main>'
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 46m14s
+          before (setup time): 3m
+          chef-client private-chef::default: 4m12s
+          after (cleanup time): 36m55s
+  chef-server-12-fips-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-fips-build/15/
+    duration: 32m39s
+    runs:
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-fips-build/architecture=x86_64,platform=el-6,project=chef-server-fips,role=builder/15/
+        duration: 32m18s
+  chef-server-12-fips-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-fips-trigger-ad_hoc/12/
+    duration: 6s
+successful_logs_analyzed: false

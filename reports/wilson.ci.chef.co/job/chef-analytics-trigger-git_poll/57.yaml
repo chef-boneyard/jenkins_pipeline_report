@@ -1,0 +1,56 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/chef-analytics-trigger-git_poll/57/
+failure_category: network
+failure_cause: 'network reset rubygems.org: ubuntu: chef-analytics-build'
+timestamp: 2016-06-13 17:28:08 UTC
+duration: 37m2s
+active_duration: 36m55s
+parameters: {}
+change:
+  git_remote: git@github.com:chef/chef-analytics.git
+  git_commit: ff67f56d2dc332db324c0239fb37638df3e12cd0
+  project: opscode-analytics
+stages:
+  chef-analytics-build:
+    result: FAILURE
+    failure_category: network
+    failure_cause: 'network reset rubygems.org: ubuntu'
+    url: http://wilson.ci.chef.co/job/chef-analytics-build/378/
+    duration: 36m37s
+    runs:
+      ubuntu-12.04:
+        result: FAILURE
+        failure_category: network
+        failure_cause: network reset rubygems.org
+        url: http://wilson.ci.chef.co/job/chef-analytics-build/architecture=x86_64,platform=ubuntu-12.04,project=opscode-analytics,role=builder/378/
+        duration: 1m3s
+        logs:
+          consoleText:
+            185: |
+              Installing mixlib-cli 1.5.0
+
+              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/mixlib-log-1.6.0.gem)
+              An error occurred while installing mixlib-log (1.6.0), and Bundler cannot
+              continue.
+              Make sure that `gem install mixlib-log -v '1.6.0'` succeeds before bundling.
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-analytics-build/architecture=x86_64,platform=el-5,project=opscode-analytics,role=builder/378/
+        duration: 36m18s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-analytics-build/architecture=x86_64,platform=el-6,project=opscode-analytics,role=builder/378/
+        duration: 31m17s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-analytics-build/architecture=x86_64,platform=el-7,project=opscode-analytics,role=builder/378/
+        duration: 35m29s
+  chef-analytics-trigger-git_poll:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-analytics-trigger-git_poll/57/
+    duration: 17s
+successful_logs_analyzed: false

@@ -1,0 +1,65 @@
+---
+result: SUCCESS
+url: http://wilson.ci.chef.co/job/delivery-trigger-ad_hoc/13/
+timestamp: 2016-05-24 15:56:08 UTC
+duration: 2h47m38s
+triggered_by: mcquin
+active_duration: 2h47m13s
+queue_delays: 10s
+parameters:
+  GIT_REF: BP-155/install-rpm-as-root
+  EXPIRE_CACHE: false
+change:
+  git_remote: git@github.com:opscode/delivery.git
+  git_commit: 6fdca3586137769f39a78f1b1a81c13c7e3783fd
+  project: delivery
+  version: 0.4.332+git.1.6fdca35
+stages:
+  delivery-promote:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/delivery-promote/313/
+    duration: 0s
+  delivery-test:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/delivery-test/407/
+    duration: 7m36s
+    runs:
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-test/architecture=x86_64,platform=el-6,project=delivery,role=tester/407/
+        duration: 7m35s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-test/architecture=x86_64,platform=el-7,project=delivery,role=tester/407/
+        duration: 6m6s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-test/architecture=x86_64,platform=ubuntu-12.04,project=delivery,role=tester/407/
+        duration: 5m20s
+      ubuntu-14.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-test/architecture=x86_64,platform=ubuntu-14.04,project=delivery,role=tester/407/
+        duration: 6m27s
+  delivery-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/delivery-build/491/
+    duration: 2h39m27s
+    queue_delay: 10s
+    runs:
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=el-6,project=delivery,role=builder/491/
+        duration: 2h12m7s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=el-7,project=delivery,role=builder/491/
+        duration: 1h36m25s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=ubuntu-12.04,project=delivery,role=builder/491/
+        duration: 1h36m5s
+  delivery-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/delivery-trigger-ad_hoc/13/
+    duration: 8s
+successful_logs_analyzed: false

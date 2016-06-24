@@ -1,0 +1,2060 @@
+---
+result: FAILURE
+url: http://manhattan.ci.chef.co/job/chefdk-trigger-ad_hoc/256/
+failure_category: code
+failure_cause: 'chef_acceptance[top-cookbooks::provision]: acceptance: chefdk-test'
+timestamp: 2016-05-03 22:22:57 UTC
+duration: 2h10m47s
+triggered_by: tyler-ball
+active_duration: 5h26m26s
+parameters:
+  GIT_REF: UW-2/rebased-git-on-windows
+  EXPIRE_CACHE: false
+change:
+  git_remote: git://github.com/chef/chef-dk.git
+  git_commit: 4ab422adca2008d20a563eb40a695e999925990a
+  project: chefdk
+  version: 0.14.4+20160503222309
+stages:
+  chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/367/
+    duration: 32m12s
+  chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/367/
+    duration: 35m43s
+  chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/367/
+    duration: 37m27s
+  chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/367/
+    duration: 30m29s
+  chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/367/
+    duration: 16m
+  chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/367/
+    duration: 44m1s
+  chefdk-test:
+    result: FAILURE
+    failure_category: code
+    failure_cause: 'chef_acceptance[top-cookbooks::provision]: acceptance'
+    url: http://manhattan.ci.chef.co/job/chefdk-test/142/
+    duration: 37m46s
+    runs:
+      acceptance:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef_acceptance[top-cookbooks::provision]
+        failed_in:
+          chef_acceptance:
+          - top-cookbooks::provision
+          step: CHEF-ACCEPTANCE
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/142/
+        duration: 14m34s
+        logs:
+          consoleText:
+            869: |2
+                                        ---------------
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:32:59 +0000]                           /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                                        /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                                        /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:32:59 +0000]                           /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                                        /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:32:59 +0000]                           Resource Declaration:
+            907: |2
+
+
+                                             ================================================================================
+                                             Error executing action `restart` on resource 'docker_service_manager_upstart[default]'
+                                             ================================================================================
+
+                                             Mixlib::ShellOut::CommandTimeout
+                                             --------------------------------
+                                             service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
+                                             Command exceeded allowed execution time, process terminated
+                                             ---- Begin output of /sbin/start docker ----
+                                             STDOUT:
+                                             STDERR:
+                                             ---- End output of /sbin/start docker ----
+                                             Ran /sbin/start docker returned
+
+                                             Cookbook Trace:
+                                             ---------------
+                                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                                             /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                                             Resource Declaration:
+                                             ---------------------
+                                             # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb
+
+                                        7: docker_service_manager_upstart 'default' do
+                                        8:   host 'unix:///var/run/docker.sock'
+            962: |2
+
+
+                                           ================================================================================
+                                           Error executing action `start` on resource 'docker
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:32:59 +0000] _service_manager_upstart[default]'
+                                           ================================================================================
+            1024: |2
+
+                                       Running handlers:
+                                       [2016-05-04T00:32:59+00:00] ERROR: Running exception handlers
+                                       Running handlers complete
+                                       [2016-05-04T00:32:59+00:00] ERROR: Exception handlers complete
+                                       Chef Client failed. 18 resources updated in 10 minutes 53 seconds
+                                       [2016-05-04T00:32:59+00:00] ERROR: Failed to post audit report to server. Saving report to /tmp/kitchen/cache/failed-audit-data.json
+                                       [2016-05-04T00:32:59+00:00] FATAL: Stacktrace dumped to /tmp/kitchen/cache/chef-stacktrace.out
+                                       [2016-05-04T00:32:59+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                                       [2016-05-04T00:32:59+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000]                          [2016-05-04T00:33:00+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000]                   >>>>>> Converge failed on instance <docker-default-ubuntu-1404>.
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000]
+            1049: "TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000]\nTOP-COOKBOOKS::PROVISION::[2016-05-04
+              00:33:00 +0000]\nTOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000]
+              zlib(finalizer): the stream was freed prematurely.\nTOP-COOKBOOKS::PROVISION::[2016-05-04
+              00:33:00 +0000]\n        ================================================================================\n
+              \       Error executing action `run` on resource 'execute[bundle exec
+              kitchen converge  -c]'\n        ================================================================================\n\n
+              \       Mixlib::ShellOut::ShellCommandFailed\n        ------------------------------------\n
+              \       Expected process to exit with [0], but received '10'\n        ----
+              Begin output of bundle exec kitchen converge  -c ----\n        STDOUT:
+              -----> Starting Kitchen (v1.7.3)\n        -----> Creating <docker-default-ubuntu-1404>...\n
+              \              If you are not using an account that qualifies under
+              the AWS\n        free-tier, you may be charged to run these suites.
+              The charge\n        should be minimal, but neither Test Kitchen nor
+              its maintainers\n        are responsible for your incurred costs.\n\n
+              \              Instance <i-eae4142c> requested.\n               Polling
+              AWS for existence, attempt 0...\n               Attempting to tag the
+              instance, 0 retries\n               EC2 instance <i-eae4142c> created.\n
+              \              Waited 0/300s for instance <i-eae4142c> to become ready.\n
+              \              Waited 5/300s for instance <i-eae4142c> to become ready.\n
+              \              Waited 10/300s for instance <i-eae4142c> to become ready.\n
+              \              Waited 15/300s for instance <i-eae4142c> to become ready.\n
+              \              Waited 20/300s for instance <i-eae4142c> to become ready.\n
+              \              Waited 25/300s for instance <i-eae4142c> to become ready.\n
+              \              EC2 instance <i-eae4142c> ready.\n               Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n               [SSH]
+              Established\n               Finished creating <docker-default-ubuntu-1404>
+              (1m4.79s).\n        -----> Converging <docker-default-ubuntu-1404>...\n
+              \              Preparing files for transfer\n               Preparing
+              dna.json\n               Resolving cookbook dependencies with Berkshelf
+              4.3.2...\n               Removing non-cookbook files before transfer\n
+              \              Preparing validation.pem\n               Preparing client.rb\n
+              \              ubuntu 14.04 x86_64\n               downloading http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.14.4+20160503222309/ubuntu/14.04/chefdk_0.14.4+20160503222309-1_amd64.deb\n
+              \                to file /tmp/install.sh.1373/chefdk_0.14.4+20160503222309-1_amd64.deb\n
+              \              trying wget...\n               Comparing checksum with
+              sha256sum...\n               Installing chefdk latest\n               installing
+              with dpkg...\n               Selecting previously unselected package
+              chefdk.\n               (Reading database ... \r(Reading database ...
+              5%\r(Reading database ... 10%\r(Reading database ... 15%\r(Reading database
+              ... 20%\r(Reading database ... 25%\r(Reading database ... 30%\r(Reading
+              database ... 35%\r(Reading database ... 40%\r(Reading database ... 45%\r(Reading
+              database ... 50%\r(Reading database ... 55%\r(Reading database ... 60%\r(Reading
+              database ... 65%\r(Reading database ... 70%\r(Reading database ... 75%\r(Reading
+              database ... 80%\r(Reading database ... 85%\r(Reading database ... 90%\r(Reading
+              database ... 95%\r(Reading database ... 100%\r(Reading database ...
+              51163 files and directories currently installed.)\n               Preparing
+              to unpack .../chefdk_0.14.4+20160503222309-1_amd64.deb ...\n               Unpacking
+              chefdk (0.14.4+20160503222309-1) ...\n               Setting up chefdk
+              (0.14.4+20160503222309-1) ...\n               Thank you for installing
+              Chef Development Kit!\n               Transferring files to <docker-default-ubuntu-1404>\n
+              \              Starting Chef Client, version 12.9.38\n               Creating
+              a new client identity for docker-default-ubuntu-1404 using the validator
+              key.\n               resolving cookbooks for run list: [\"apt\", \"apt-docker\",
+              \"docker_test::installation_packa\nTOP-COOKBOOKS::PROVISION::[2016-05-04
+              00:33:00 +0000] ge\", \"docker_test::service_upstart\", \"docker_test::auto\"]\n
+              \              Synchronizing Cookbooks:\n"
+            1351: |2
+                                   * service[docker] action start
+
+                              ================================================================================
+                              Error executing action `start` on resource 'service[docker]'
+                              ================================================================================
+
+                              Mixlib::ShellOut::CommandTimeout
+                              --------------------------------
+                              Command timed out after 600s:
+                              Command exceeded allowed execution time, process terminated
+                              ---- Begin output of /sbin/start docker ----
+                              STDOUT:
+                              STDERR:
+                              ---- End output of /sbin/start docker ----
+                              Ran /sbin/start docker returned
+
+                              Cookbook Trace:
+                              ---------------
+                              /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                              /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                              /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                              /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                              /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                              Resource Declaration:
+                              ---------------------
+                              # In /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb
+
+                               36:       service docker_name do
+                               37:         provider Chef::Provider::Service::Upstart
+                               38:         supports status: true
+                               39:         action :start
+                               40:       end
+
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000]              41:     end
+            1407: |2
+
+
+                                   ================================================================================
+                                   Error executing action `restart` on resource 'docker_service_manager_upstart[default]'
+                                   ================================================================================
+
+                                   Mixlib::ShellOut::CommandTimeout
+                                   --------------------------------
+                                   service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
+                                   Command exceeded allowed execution time, process terminated
+                                   ---- Begin output of /sbin/start docker ----
+                                   STDOUT:
+                                   STDERR:
+                                   ---- End output of /sbin/start docker ----
+                                   Ran /sbin/start docker returned
+
+                                   Cookbook Trace:
+                                   ---------------
+                                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                                   /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                                   Resource Declaration:
+                                   ---------------------
+                                   # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb
+
+                              7: docker_service_manager_upstart 'default' do
+                              8:   host 'unix:///var/run/docker.sock'
+            1463: |
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000]
+
+                                 ================================================================================
+                                 Error executing action `start` on resource 'docker_service_manager_upstart[default]'
+                                 ================================================================================
+
+                                 Mixlib::ShellOut::CommandTimeout
+                                 --------------------------------
+                                 docker_service_manager_upstart[default] (docker_test::service_upstart line 7) had an error: Mixlib::ShellOut::CommandTimeout: service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
+                                 Command exceeded allowed execution time, process terminated
+                                 ---- Begin output of /sbin/start docker ----
+                                 STDOUT:
+                                 STDERR:
+                                 ---- End output of /sbin/start docker ----
+                                 Ran /sbin/start docker returned
+
+                                 Cookbook Trace:
+                                 ---------------
+                                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                                 /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                                 Resource Declaration:
+                                 ---------------------
+                                 # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb
+
+                                   7: docker_service_manager_upstart 'default' do
+                                   8:   host 'unix:///var/run/docker.sock'
+                                   9:   action :start
+                                  10: end
+                                  11:
+
+                                 Compiled Resource:
+                                 ------------------
+                                 # Declared in /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in `from_file'
+
+                                 docker_service_manager_upstart("default") do
+                                   action [:start]
+                                   updated true
+                                   updated_by_last_action true
+                                   retries 0
+                                   retry_delay 2
+                                   default_guard_interpreter :default
+                                   declared_type :docker_service_manager_upstart
+                                   cookbook_name "docker_test"
+                                   recipe_name "service_upstart"
+                                   host ["unix:///var/run/docker.sock"]
+                                   pidfile "/var/run/docker.pid"
+                                 end
+
+                                 Platform:
+                                 ---------
+                                 x86_64-linux
+
+                             Starting audit phase
+            1524: |2
+
+                             Running handlers:
+                             [2016-05-04T00:32:59+00:00] ERROR: Running exception handlers
+                             Running handlers complete
+                             [2016-05-04T00:32:59+00:00] ERROR: Exception handlers complete
+                             Chef Client failed. 18 resources updated in 10 minutes 53 seconds
+                             [2016-05-04T00:32:59+00:00] ERROR: Failed to post audit report to server. Saving report to /tmp/kitchen/cache/failed-audit-data.json
+                             [2016-05-04T00:32:59+00:00] FATAL: Stacktrace du
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000] mped to /tmp/kitchen/cache/chef-stacktrace.out
+                             [2016-05-04T00:32:59+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                             [2016-05-04T00:32:59+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+                             [2016-05-04T00:33:00+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+                      STDERR: >>>>>> Converge failed on instance <docker-default-ubuntu-1404>.
+                      >>>>>> Please see .kitchen/logs/docker-default-ubuntu-1404.log for more details
+            1543: |2
+                      ']
+                      >>>>>> ----------------------
+                      zlib(finalizer): the stream was freed prematurely.
+                      ---- End output of bundle exec kitchen converge  -c ----
+                      Ran bundle exec kitchen converge  -c returned 10
+            1589: "\nTOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000]\n      ================================================================================\n
+              \     Error executing action `run` on resource 'cookbook_kitchen[converge
+              docker]'\n      ================================================================================\n\n
+              \     Mixlib::ShellOut::ShellCommandFailed\n      ------------------------------------\n
+              \     execute[bundle exec kitchen converge  -c] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '10'\n      ---- Begin output
+              of bundle exec kitchen converge  -c ----\n      STDOUT: -----> Starting
+              Kitchen (v1.7.3)\n      -----> Creating <docker-default-ubuntu-1404>...\n
+              \            If you are not using an account that qualifies under the
+              AWS\n      free-tier, you may be charged to run these suites. The charge\n
+              \     should be minimal, but neither Test Kitchen nor its maintainers\n
+              \     are responsible for your incurred costs.\n\n             Instance
+              <i-eae4142c> requested.\n             Polling AWS for existence, attempt
+              0...\n             Attempting to tag the instance, 0 retries\n             EC2
+              instance <i-eae4142c> created.\n             Waited 0/300s for instance
+              <i-eae4142c> to become ready.\n             Waited 5/300s for instance
+              <i-eae4142c> to become ready.\n             Waited 10/300s for instance
+              <i-eae4142c> to become ready.\n             Waited 15/300s for instance
+              <i-eae4142c> to become ready.\n             Waited 20/300s for instance
+              <i-eae4142c> to become ready.\n             Waited 25/300s for instance
+              <i-eae4142c> to become ready.\n             EC2 instance <i-eae4142c>
+              ready.\n             Waiting for SSH service on 10.194.8.194:22, retrying
+              in 3 seconds\n             Waiting for SSH service on 10.194.8.194:22,
+              retrying in 3 seconds\n             Waiting for SSH service on 10.194.8.194:22,
+              retrying in 3 seconds\n             Waiting for SSH service on 10.194.8.194:22,
+              retrying in 3 seconds\n             [SSH] Established\n             Finished
+              creating <docker-default-ubuntu-1404> (1m4.79s).\n      -----> Converging
+              <docker-default-ubuntu-1404>...\n             Preparing files for transfer\n
+              \            Preparing dna.json\n             Resolving cookbook dependencies
+              with Berkshelf 4.3.2...\n             Removing non-cookbook files before
+              transfer\n             Preparing validation.pem\n             Preparing
+              client.rb\n             ubuntu 14.04 x86_64\n             downloading
+              http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.14.4+20160503222309/ubuntu/14.04/chefdk_0.14.4+20160503222309-1_amd64.deb\n
+              \              to file /tmp/install.sh.1373/chefdk_0.14.4+20160503222309-1_amd64.deb\n
+              \            trying wget...\n             Comparing checksum with sha256sum...\n
+              \            Installing chefdk latest\n             installing with
+              dpkg...\n             Selecting previously unselected package chefdk.\n
+              \            (Reading database ... \r(Reading database ... 5%\r(Reading
+              database ... 10%\r(Reading database ... 15%\r(Reading database ... 20%\r(Reading
+              database ... 25%\r(Reading database ... 30%\r(Reading database ... 35%\r(Reading
+              database ... 40%\r(Reading database ... 45%\r(Reading database ... 50%\r(Reading
+              database ... 55%\r(Reading database ... 60%\r(Reading database ... 65%\r(Reading
+              database ... 70%\r(Reading database ... 75%\r(Reading database ... 80%\r(Reading
+              database ... 85%\r(Reading database ... 90%\r(Reading database ... 95%\r(Reading
+              database ... 100%\r(Reading database ... 51163 files and directories
+              currently installed.)\n             Preparing to unpack .../chefdk_0.14.4+20160503222309-1_amd64.deb
+              ...\n             Unpacking chefdk (0.14.4+20160503222309-1) ...\n             Setting
+              up chefdk (0.14.4+20160503222309-1) ...\n             Thank you for
+              installing Chef Development Kit!\n             Transferring files to
+              <docker-default-ubuntu-1404>\n             Starting Chef Client, version
+              12.9.38\n             Creatin\nTOP-COOKBOOKS::PROVISION::[2016-05-04
+              00:33:00 +0000] g a new client identity for docker-default-ubuntu-1404
+              using the validator key.\n             resolving cookbooks for run list:
+              [\"apt\", \"apt-docker\", \"docker_test::installation_package\", \"docker_test::service_upstart\",
+              \"docker_test::auto\"]\n"
+            1889: |2
+                                 * service[docker] action start
+
+                            ================================================================================
+                            Error executing action `start` on resource 'service[docker]'
+                            ================================================================================
+
+                            Mixlib::ShellOut::CommandTimeout
+                            --------------------------------
+                            Command timed out after 600s:
+                            Command exceeded allowed execution time, process terminated
+                            ---- Begin output of /sbin/start docker ----
+                            STDOUT:
+                            STDERR:
+                            ---- End output of /sbin/start docker ----
+                            Ran /sbin/start docker returned
+
+                            Cookbook Trace:
+                            ---------------
+                            /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                            /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                            /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                            /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                            /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                            Resource Declaration:
+                            ---------------------
+                            # In /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb
+
+                             36:       service docker_name do
+                             37:         provider Chef::Provider::Service::Upstart
+                             38:         supports status: true
+                             39:         action :start
+                             40:       end
+                             41:     end
+
+                            Compiled Resource:
+                            ------------------
+                            # Declared in /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:36:in `block in <class:DockerServiceManagerUpstart>'
+
+                            service("docker") do
+                              provider Chef::Provider::Servi
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000] ce::Upstart
+                              action [:start]
+            1945: |2
+
+
+                                 ================================================================================
+                                 Error executing action `restart` on resource 'docker_service_manager_upstart[default]'
+                                 ================================================================================
+
+                                 Mixlib::ShellOut::CommandTimeout
+                                 --------------------------------
+                                 service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
+                                 Command exceeded allowed execution time, process terminated
+                                 ---- Begin output of /sbin/start docker ----
+                                 STDOUT:
+                                 STDERR:
+                                 ---- End output of /sbin/start docker ----
+                                 Ran /sbin/start docker returned
+
+                                 Cookbook Trace:
+                                 ---------------
+                                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                                 /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                                 Resource Declaration:
+                                 ---------------------
+                                 # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb
+
+                            7: docker_service_manager_upstart 'default' do
+                            8:   host 'unix:///var/run/docker.sock'
+            2000: |2
+
+
+                               ================================================================================
+                               Error executing action `start` on resource 'docker_service_manager_upstart[default]'
+                               ================================================================================
+
+                               Mixlib::ShellOut::CommandTimeout
+                               --------------------------------
+                               docker_service_manager_upstart[default] (docker_test::service
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000] _upstart line 7) had an error: Mixlib::ShellOut::CommandTimeout: service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
+                               Command exceeded allowed execution time, process terminated
+            2017: |2
+                               Cookbook Trace:
+                               ---------------
+                               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                               /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                               Resource Declaration:
+            2062: |2
+
+                           Running handlers:
+                           [2016-05-04T00:32:59+00:00] ERROR: Running exception handlers
+                           Running handlers complete
+                           [2016-05-04T00:32:59+00:00] ERROR: Exception handlers complete
+                           Chef Client failed. 18 resources updated in 10 minutes 53 seconds
+                           [2016-05-04T00:32:59+00:00] ERROR: Failed to post audit report to server. Saving report to /tmp/kitchen/cache/failed-audit-data.json
+                           [2016-05-04T00:32:59+00:00] FATAL: Stacktrace dumped to /tmp/kitchen/cache/chef-stacktrace.out
+                           [2016-05-04T00:32:59+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                           [2016-05-04T00:32:59+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+                           [2016-05-04T00:33:00+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+                    STDERR: >>>>>> Converge failed on instance <docker-default-ubuntu-1404>.
+                    >>>>>> Please see .kitchen/logs/docker-default-ubuntu-1404.log for more details
+            2081: |2
+                    ']
+                    >>>>>> ----------------------
+                    zlib(finalizer): the stream was freed prematurely.
+                    ---- End output of bundle exec kitchen converge  -c ----
+                    Ran bundle exec kitchen converge  -c returned 10
+            2123: |2
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'top_cookbooks[converge]'
+                  ================================================================================
+
+                  Mixlib::ShellOut::ShellCommandFailed
+                  ------------------------------------
+                  cookbook_kitchen[converge docker] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb line 7) had an error: Mixlib::ShellOut::ShellCommandFailed: execute[bundle exec kitchen converge  -c] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '10'
+                  ---- Begin output of bundle exec kitchen converge  -c ----
+                  STDOUT: -----> Starting Kitchen (v1.7.3)
+                  -----> Creating <docker-default-ubuntu-1404>...
+                         If you are not using an account that qualifies under the AWS
+                  free-tier, you may be charged to run these suites. The charge
+                  should be minimal, but neither Test Kitchen nor its maintainers
+                  are responsible for your incurred costs.
+
+                         Instance <i-eae4142c> requested.
+                         Polling AWS for existence, attempt 0...
+                         Attempting to tag the instance, 0 retries
+                         EC2 instance <i-eae4142c> created.
+                         Waited 0/300s for instance <i-eae4142c> to become ready.
+                         Waited 5/300s for instance <i-eae4142c> to become ready.
+                         Waited 10/300s for instance <i-eae4142c> to become ready.
+                         Waite
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000] d 15/300s for instance <i-eae4142c> to become ready.
+                         Waited 20/300s for instance <i-eae4142c> to become ready.
+            2423: |2
+                               * service[docker] action start
+
+                          ================================================================================
+                          Error executing action `start` on resource 'service[docker]'
+                          ================================================================================
+
+                          Mixlib::ShellOut::CommandTimeout
+                          ----------------------
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000] ----------
+                          Command timed out after 600s:
+            2440: |2
+                          Cookbook Trace:
+                          ---------------
+                          /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                          /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                          /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                          /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                          /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                          Resource Declaration:
+            2479: |2
+
+
+                               ================================================================================
+                               Error executing action `restart` on resource 'docker_service_manager_upstart[default]'
+                               ================================================================================
+
+                               Mixlib::ShellOut::CommandTimeout
+                               --------------------------------
+                               service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
+                               Command exceeded allowed execution time, process terminated
+                               ---- Begin output of /sbin/start docker ----
+                               STDOUT:
+                               STDERR:
+                               ---- End output of /sbin/start docker ----
+                               Ran /sbin/start docker returned
+
+                               Cookbook Trace:
+                               ---------------
+                               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                               /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_conver
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000] ge_action'
+            2535: |2
+
+
+                             ================================================================================
+                             Error executing action `start` on resource 'docker_service_manager_upstart[default]'
+                             ================================================================================
+
+                             Mixlib::ShellOut::CommandTimeout
+                             --------------------------------
+                             docker_service_manager_upstart[default] (docker_test::service_upstart line 7) had an error: Mixlib::ShellOut::CommandTimeout: service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
+                             Command exceeded allowed execution time, process terminated
+                             ---- Begin output of /sbin/start docker ----
+                             STDOUT:
+                             STDERR:
+                             ---- End output of /sbin/start docker ----
+                             Ran /sbin/start docker returned
+
+                             Cookbook Trace:
+                             ---------------
+                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                             /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                             Resource Declaration:
+                             ---------------------
+                             # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb
+
+                               7: docker_service_manager_upstart 'default' do
+                               8:   host 'unix:///var/run/docker.sock'
+                               9:   action :start
+                              10: end
+                              11:
+
+                             Compiled Resource:
+                             ------------------
+                             # Declared in /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in `from_file'
+
+                             docker_service_manager_upstart("default") do
+                               action [:start]
+                               updated true
+                               updated_by_last_action true
+                               retries 0
+                               retry_delay 2
+                               default_guard_interpreter :default
+                               declared_type :docker_service_manager_upstart
+                               cookbook_name "docker_test"
+
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:00 +0000]              recipe_name "service_upstart"
+            2597: |2
+
+                         Running handlers:
+                         [2016-05-04T00:32:59+00:00] ERROR: Running exception handlers
+                         Running handlers complete
+                         [2016-05-04T00:32:59+00:00] ERROR: Exception handlers complete
+                         Chef Client failed. 18 resources updated in 10 minutes 53 seconds
+                         [2016-05-04T00:32:59+00:00] ERROR: Failed to post audit report to server. Saving report to /tmp/kitchen/cache/failed-audit-data.json
+                         [2016-05-04T00:32:59+00:00] FATAL: Stacktrace dumped to /tmp/kitchen/cache/chef-stacktrace.out
+                         [2016-05-04T00:32:59+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                         [2016-05-04T00:32:59+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+                         [2016-05-04T00:33:00+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+                  STDERR: >>>>>> Converge failed on instance <docker-default-ubuntu-1404>.
+                  >>>>>> Please see .kitchen/logs/docker-default-ubuntu-1404.log for more details
+            2615: |2
+                  ']
+                  >>>>>> ----------------------
+                  zlib(finalizer): the stream was freed prematurely.
+                  ---- End output of bundle exec kitchen converge  -c ----
+                  Ran bundle exec kitchen converge  -c returned 10
+            2655: |
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000] Running handlers:
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000]
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000] [2016-05-04T00:33:01+00:00] ERROR: Running exception handlers
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000] Running handlers complete
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000] [2016-05-04T00:33:01+00:00] ERROR: Exception handlers complete
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000] Chef Client failed. 2 resources updated in 12 minutes 46 seconds
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000]
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000] [2016-05-04T00:33:01+00:00] ERROR: Failed to post audit report to server. Saving report to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/failed-audit-data.json
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000] [2016-05-04T00:33:01+00:00] FATAL: Stacktrace dumped to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/chef-stacktrace.out
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000] [2016-05-04T00:33:01+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000] [2016-05-04T00:33:01+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              TOP-COOKBOOKS::PROVISION::[2016-05-04 00:33:01 +0000] [2016-05-04T00:33:01+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              CHEF-ACCEPTANCE::[2016-05-04 00:33:01 +0000] Encountered an error running the recipe provision: Expected process to exit with [0], but received '1'
+              ---- Begin output of chef-client -z -c /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/config.rb --force-formatter -j /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/dna.json -o acceptance-cookbook::provision --no-color ----
+            2975: |2
+                                             * service[docker] action start
+
+                                        ================================================================================
+                                        Error executing action `start` on resource 'service[docker]'
+                                        ================================================================================
+
+                                        Mixlib::ShellOut::CommandTimeout
+                                        --------------------------------
+                                        Command timed out after 600s:
+                                        Command exceeded allowed execution time, process terminated
+                                        ---- Begin output of /sbin/start docker ----
+                                        STDOUT:
+                                        STDERR:
+                                        ---- End output of /sbin/start docker ----
+                                        Ran /sbin/start docker returned
+
+                                        Cookbook Trace:
+                                        ---------------
+                                        /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                                        /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                                        /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                                        /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                                        /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                                        Resource Declaration:
+                                        ---------------------
+                                        # In /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb
+
+                                         36:       service docker_name do
+                                         37:         provider Chef::Provider::Service::Upstart
+                                         38:         supports status: true
+                                         39:         action :start
+                                         40:       end
+                                         41:     end
+
+                                        Compiled Resource:
+                                        ------------------
+                                        # Declared in /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:36:in `block in <class:DockerServiceManagerUpstart>'
+
+                                        service("docker") do
+                                          provider Chef::Provider::Service::Upstart
+                                          action [:start]
+                                          supports {:status=>true}
+                                          retries 0
+                                          retry_delay 2
+                                          default_guard_interpreter :default
+                                          service_name "docker"
+                                          pattern "docker"
+                                          declared_type :service
+                                          cookbook_name "docker_test"
+                                        end
+
+                                        Platform:
+                                        ---------
+                                        x86_64-linux
+
+
+                                             ================================================================================
+                                             Error executing action `restart` on resource 'docker_service_manager_upstart[default]'
+                                             ================================================================================
+
+                                             Mixlib::ShellOut::CommandTimeout
+                                             --------------------------------
+                                             service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
+                                             Command exceeded allowed execution time, process terminated
+                                             ---- Begin output of /sbin/start docker ----
+                                             STDOUT:
+                                             STDERR:
+                                             ---- End output of /sbin/start docker ----
+                                             Ran /sbin/start docker returned
+
+                                             Cookbook Trace:
+                                             ---------------
+                                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                                             /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                                             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                                             Resource Declaration:
+                                             ---------------------
+                                             # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb
+
+                                        7: docker_service_manager_upstart 'default' do
+                                        8:   host 'unix:///var/run/docker.sock'
+                                        9:   action :start
+                                       10: end
+                                       11:
+            3085: |2
+
+
+                                           ================================================================================
+                                           Error executing action `start` on resource 'docker_service_manager_upstart[default]'
+                                           ================================================================================
+
+                                           Mixlib::ShellOut::CommandTimeout
+                                           --------------------------------
+                                           docker_service_manager_upstart[default] (docker_test::service_upstart line 7) had an error: Mixlib::ShellOut::CommandTimeout: service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed out after 600s:
+                                           Command exceeded allowed execution time, process terminated
+                                           ---- Begin output of /sbin/start docker ----
+                                           STDOUT:
+                                           STDERR:
+                                           ---- End output of /sbin/start docker ----
+                                           Ran /sbin/start docker returned
+
+                                           Cookbook Trace:
+                                           ---------------
+                                           /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+                                           /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in `block in <class:DockerServiceManagerUpstart>'
+                                           /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `instance_eval'
+                                           /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in `compile_and_converge_action'
+                                           /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in `compile_and_converge_action'
+
+                                           Resource Declaration:
+                                           ---------------------
+                                           # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb
+
+                                             7: docker_service_manager_upstart 'default' do
+                                             8:   host 'unix:///var/run/docker.sock'
+                                             9:   action :start
+                                            10: end
+                                            11:
+
+                                           Compiled Resource:
+                                           ------------------
+                                           # Declared in /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in `from_file'
+
+                                           docker_service_manager_upstart("default") do
+                                             action [:start]
+                                             updated true
+                                             updated_by_last_action true
+                                             retries 0
+                                             retry_delay 2
+                                             default_guard_interpreter :default
+                                             declared_type :docker_service_manager_upstart
+                                             cookbook_name "docker_test"
+                                             recipe_name "service_upstart"
+                                             host ["unix:///var/run/docker.sock"]
+                                             pidfile "/var/run/docker.pid"
+                                           end
+
+                                           Platform:
+                                           ---------
+                                           x86_64-linux
+
+                                       Starting audit phase
+            3146: |2
+
+                                       Running handlers:
+                                       [2016-05-04T00:32:59+00:00] ERROR: Running exception handlers
+                                       Running handlers complete
+                                       [2016-05-04T00:32:59+00:00] ERROR: Exception handlers complete
+                                       Chef Client failed. 18 resources updated in 10 minutes 53 seconds
+                                       [2016-05-04T00:32:59+00:00] ERROR: Failed to post audit report to server. Saving report to /tmp/kitchen/cache/failed-audit-data.json
+                                       [2016-05-04T00:32:59+00:00] FATAL: Stacktrace dumped to /tmp/kitchen/cache/chef-stacktrace.out
+                                       [2016-05-04T00:32:59+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                                       [2016-05-04T00:32:59+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+                                       [2016-05-04T00:33:00+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+                                >>>>>> Converge failed on instance <docker-default-ubuntu-1404>.
+                                >>>>>> Please see .kitchen/logs/docker-default-ubuntu-1404.log for more details
+            3164: "                  ']\n                  >>>>>> ----------------------\n
+              \                 zlib(finalizer): the stream was freed prematurely.\n\n
+              \       ================================================================================\n
+              \       Error executing action `run` on resource 'execute[bundle exec
+              kitchen converge  -c]'\n        ================================================================================\n\n
+              \       Mixlib::ShellOut::ShellCommandFailed\n        ------------------------------------\n
+              \       Expected process to exit with [0], but received '10'\n        ----
+              Begin output of bundle exec kitchen converge  -c ----\n        STDOUT:
+              -----> Starting Kitchen (v1.7.3)\n        -----> Creating <docker-default-ubuntu-1404>...\n
+              \              If you are not using an account that qualifies under
+              the AWS\n        free-tier, you may be charged to run these suites.
+              The charge\n        should be minimal, but neither Test Kitchen nor
+              its maintainers\n        are responsible for your incurred costs.\n\n
+              \              Instance <i-eae4142c> requested.\n               Polling
+              AWS for existence, attempt 0...\n               Attempting to tag the
+              instance, 0 retries\n               EC2 instance <i-eae4142c> created.\n
+              \              Waited 0/300s for instance <i-eae4142c> to become ready.\n
+              \              Waited 5/300s for instance <i-eae4142c> to become ready.\n
+              \              Waited 10/300s for instance <i-eae4142c> to become ready.\n
+              \              Waited 15/300s for instance <i-eae4142c> to become ready.\n
+              \              Waited 20/300s for instance <i-eae4142c> to become ready.\n
+              \              Waited 25/300s for instance <i-eae4142c> to become ready.\n
+              \              EC2 instance <i-eae4142c> ready.\n               Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n               Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n               [SSH]
+              Established\n               Finished creating <docker-default-ubuntu-1404>
+              (1m4.79s).\n        -----> Converging <docker-default-ubuntu-1404>...\n
+              \              Preparing files for transfer\n               Preparing
+              dna.json\n               Resolving cookbook dependencies with Berkshelf
+              4.3.2...\n               Removing non-cookbook files before transfer\n
+              \              Preparing validation.pem\n               Preparing client.rb\n
+              \              ubuntu 14.04 x86_64\n               downloading http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.14.4+20160503222309/ubuntu/14.04/chefdk_0.14.4+20160503222309-1_amd64.deb\n
+              \                to file /tmp/install.sh.1373/chefdk_0.14.4+20160503222309-1_amd64.deb\n
+              \              trying wget...\n               Comparing checksum with
+              sha256sum...\n               Installing chefdk latest\n               installing
+              with dpkg...\n               Selecting previously unselected package
+              chefdk.\n               (Reading database ... \r(Reading database ...
+              5%\r(Reading database ... 10%\r(Reading database ... 15%\r(Reading database
+              ... 20%\r(Reading database ... 25%\r(Reading database ... 30%\r(Reading
+              database ... 35%\r(Reading database ... 40%\r(Reading database ... 45%\r(Reading
+              database ... 50%\r(Reading database ... 55%\r(Reading database ... 60%\r(Reading
+              database ... 65%\r(Reading database ... 70%\r(Reading database ... 75%\r(Reading
+              database ... 80%\r(Reading database ... 85%\r(Reading database ... 90%\r(Reading
+              database ... 95%\r(Reading database ... 100%\r(Reading database ...
+              51163 files and directories currently installed.)\n               Preparing
+              to unpack .../chefdk_0.14.4+20160503222309-1_amd64.deb ...\n               Unpacking
+              chefdk (0.14.4+20160503222309-1) ...\n               Setting up chefdk
+              (0.14.4+20160503222309-1) ...\n               Thank you for installing
+              Chef Development Kit!\n               Transferring files to <docker-default-ubuntu-1404>\n
+              \              Starting Chef Client, version 12.9.38\n               Creating
+              a new client identity for docker-default-ubuntu-1404 using the validator
+              key.\n               resolving cookbooks for run list: [\"apt\", \"apt-docker\",
+              \"docker_test::installation_package\", \"docker_test::service_upstart\",
+              \"docker_test::auto\"]\n               Synchronizing Cookbooks:\n                 -
+              apt (2.9.2)\n                 - apt-docker (0.3.0)\n                 -
+              docker_test (0.5.1)\n                 - docker (2.6.8)\n                 -
+              etcd (3.2.5)\n                 - compat_resource (12.9.1)\n               Installing
+              Cookbook Gems:\n               Compiling Cookbooks...\n               [2016-05-04T00:22:13+00:00]
+              WARN: Chef::Provider::AptRepository already exists!  Cannot create deprecation
+              class for LWRP provider apt_repository from cookbook apt\n               [2016-05-04T00:22:13+00:00]
+              WARN: AptRepository already exists!  Deprecation class overwrites Custom
+              resource apt_repository from cookbook apt\n               [2016-05-04T00:22:13+00:00]
+              WARN: Cloning resource attributes for docker_installation_package[default]
+              from prior resource (CHEF-3694)\n               [2016-05-04T00:22:13+00:00]
+              WARN: Previous docker_installation_package[default]: /tmp/kitchen/cache/cookbooks/docker_test/recipes/installation_package.rb:1:in
+              `from_file'\n               [2016-05-04T00:22:13+00:00] WARN: Current
+              \ docker_installation_package[default]: /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:3:in
+              `from_file'\n               Converging 18 resources\n               Recipe:
+              apt::default\n                 * file[/var/lib/apt/periodic/update-success-stamp]
+              action nothing (skipped due to action :nothing)\n                 *
+              directory[/etc/apt/apt.conf.d] action create (up to date)\n                 *
+              cookbook_file[/etc/apt/apt.conf.d/15update-stamp] action create (up
+              to date)\n                 * execute[apt-get update] action nothing
+              (skipped due to action :nothing)\n                 * execute[apt-get
+              autoremove] action nothing (skipped due to action :nothing)\n                 *
+              execute[apt-get autoclean] action nothing (skipped due to action :nothing)\n
+              \                * execute[apt-get-update-periodic] action run\n                   -
+              execute apt-get update\n                 * file[/var/lib/apt/periodic/update-success-stamp]
+              action touch\n                   - update utime on file /var/lib/apt/periodic/update-success-stamp\n
+              \                * directory[/var/cache/local] action create\n                   -
+              create new directory /var/cache/local\n                   - change mode
+              from '' to '0755'\n                   - change owner from '' to 'root'\n
+              \                  - change group from '' to 'root'\n                 *
+              directory[/var/cache/local/preseeding] action create\n                   -
+              create new directory /var/cache/local/preseeding\n                   -
+              change mode from '' to '0755'\n                   - change owner from
+              '' to 'root'\n                   - change group from '' to 'root'\n
+              \                * template[/etc/apt/apt.conf.d/10recommends] action
+              create\n                   - create new file /etc/apt/apt.conf.d/10recommends\n
+              \                  - update content in file /etc/apt/apt.conf.d/10recommends
+              from none to f41e1d\n                   --- /etc/apt/apt.conf.d/10recommends
+              \ 2016-05-04 00:22:26.072169087 +0000\n                   +++ /etc/apt/apt.conf.d/.chef-10recommends20160504-1504-1dw4xvf
+              \ 2016-05-04 00:22:26.072169087 +0000\n                   @@ -1 +1,4
+              @@\n                   +# Managed by Chef\n                   +APT::Install-Recommends
+              \"1\";\n                   +APT::Install-Suggests \"0\";\n                   -
+              change mode from '' to '0644'\n                   - change owner from
+              '' to 'root'\n                   - change group from '' to 'root'\n
+              \                * apt_package[apt-transport-https] action install (up
+              to date)\n               Recipe: apt-docker::default\n                 *
+              apt_repository[docker-main] action add\n                   * execute[install-key
+              58118E89F3A912897C070ADBF76221572C52609D] action run\n                     -
+              execute apt-key adv --recv --keyserver hkp://p80.pool.sks-keyservers.net:80
+              58118E89F3A912897C070ADBF76221572C52609D\n                   * execute[apt-cache
+              gencaches] action run\n                     - execute apt-cache gencaches\n
+              \                  * execute[apt-cache gencaches] action nothing (skipped
+              due to action :nothing)\n                   * apt_update[docker-main]
+              action nothing (skipped due to action :nothing)\n                   *
+              file[/etc/apt/sources.list.d/docker-main.list] action create\n                     -
+              create new file /etc/apt/sources.list.d/docker-main.list\n                     -
+              update content in file /etc/apt/sources.list.d/docker-main.list from
+              none to ec38ec\n                     --- /etc/apt/sources.list.d/docker-main.list
+              \ 2016-05-04 00:22:27.172169087 +0000\n                     +++ /etc/apt/sources.list.d/.chef-docker-main.list20160504-1504-10bvo6v
+              \ 2016-05-04 00:22:27.172169087 +0000\n                     @@ -1 +1,2
+              @@\n                     +deb      \"https://apt.dockerproject.org/repo\"
+              ubuntu-trusty main\n                     - change mode from '' to '0644'\n
+              \                    - change owner from '' to 'root'\n                     -
+              change group from '' to 'root'\n                   * execute[apt-cache
+              gencaches] action run\n                     - execute apt-cache gencaches\n
+              \                  * apt_update[docker-main] action update\n                     -
+              force update new lists of packages\n                     * directory[/var/lib/apt/periodic]
+              action create (up to date)\n                     * directory[/etc/apt/apt.conf.d]
+              action create (up to date)\n                     * file[/etc/apt/apt.conf.d/15update-stamp]
+              action create_if_missing (up to date)\n                     * execute[apt-get
+              -q update] action run\n                - execute apt-get -q update\n\n\n
+              \              Recipe: docker_test::installation_package\n                 *
+              docker_installation_package[default] action create\n                   *
+              apt_package[docker-engine] action install\n                     - install
+              version 1.10.0-0~trusty of package docker-engine\n\n               Recipe:
+              docker_test::service_upstart\n                 * docker_installation_package[default]
+              action create\n                   * apt_package[docker-engine] action
+              install (up to date)\n                    (up to date)\n                 *
+              docker_service_manager_upstart[default] action start\n                   *
+              directory[/usr/lib/docker] action create (up to date)\n                   *
+              template[/usr/lib/docker/docker-wait-ready] action create\n                     -
+              create new file /usr/lib/docker/docker-wait-ready\n                     -
+              update content in file /usr/lib/docker/docker-wait-ready from none to
+              8289cb\n                     --- /usr/lib/docker/docker-wait-ready  2016-05-04
+              00:22:48.220169087 +0000\n                     +++ /usr/lib/docker/.chef-docker-wait-ready20160504-1504-5s24re
+              \ 2016-05-04 00:22:48.220169087 +0000\n                     @@ -1 +1,11
+              @@\n                     +#!/usr/bin/env bash\n                     +i=0\n
+              \                    +while [ $i -lt 40 ]; do\n                     +
+              \ /usr/bin/docker --host=unix:///var/run/docker.sock ps | head -n 1
+              | grep ^CONTAINER > /dev/null 2>&1\n                     +  [ $? -eq
+              0 ] && break\n                     +  ((i++))\n                     +
+              \ sleep 0.5\n                     +done\n                     +[ $i
+              -eq 40 ] && exit 1\n                     +exit 0\n                     -
+              change mode from '' to '0755'\n                     - change owner from
+              '' to 'root'\n                     - change group from '' to 'root'\n
+              \                  * template[/etc/init/docker.conf] action create\n
+              \                    - update content in file /etc/init/docker.conf
+              from a9181d to 4b9fe9\n                     --- /etc/init/docker.conf
+              \ 2016-02-03 19:58:49.000000000 +0000\n                     +++ /etc/init/.chef-docker.conf20160504-1504-gczx1u
+              \ 2016-05-04 00:22:48.304169087 +0000\n                     @@ -10,52
+              +10,51 @@\n               kill timeout 20\n\n               pre-start
+              script\n                     -  # see also https://github.com/tianon/cgroupfs-mount/blob/master/cgroupfs-mount\n
+              \                    -  if grep -v '^#' /etc/fstab | grep -q cgroup
+              \\\n                     -    || [ ! -e /proc/cgroups ] \\\n                     -
+              \   || [ ! -d /sys/fs/cgroup ]; then\n                     -    exit
+              0\n                     -  fi\n                     -  if ! mountpoint
+              -q /sys/fs/cgroup; then\n                     -    mount -t tmpfs -o
+              uid=0,gid=0,mode=0755 cgroup /sys/fs/cgroup\n                     -
+              \ fi\n                     -  (\n                     -    cd /sys/fs/cgroup\n
+              \                    -    for sys in $(awk '!/^#/ { if ($4 == 1) print
+              $1 }' /proc/cgroups); do\n                     -      mkdir -p $sys\n
+              \                    -      if ! mountpoint -q $sys; then\n                     -
+              \       if ! mount -n -t cgroup -o $sys cgroup $sys; then\n                     -
+              \         rmdir $sys || true\n                     -        fi\n                     -
+              \     fi\n                     -    done\n                     -  )\n
+              \                    +  # see also https://github.com/tianon/cgroupfs-mount/blob/master/cgroupfs-mount\n
+              \                    +  if grep -v '^#' /etc/fstab | grep -q cgroup
+              \\\n                     +    || [ ! -e /proc/cgroups ] \\\n                     +
+              \   || [ ! -d /sys/fs/cgroup ]; then\n                     +    exit
+              0\n                     +  fi\n                     +  if ! mountpoint
+              -q /sys/fs/cgroup; then\n                     +    mount -t tmpfs -o
+              uid=0,gid=0,mode=0755 cgroup /sys/fs/cgroup\n                     +
+              \ fi\n                     +  (\n                     +    cd /sys/fs/cgroup\n
+              \                    +    for sys in $(awk '!/^#/ { if ($4 == 1) print
+              $1 }' /proc/cgroups); do\n                     +      mkdir -p $sys\n
+              \                    +      if ! mountpoint -q $sys; then\n                     +
+              \       if ! mount -n -t cgroup -o $sys cgroup $sys; then\n                     +
+              \         rmdir $sys || true\n                     +        fi\n                     +
+              \     fi\n                     +    done\n                     +  )\n
+              \              end script\n\n               script\n                     -
+              \ # modify these in /etc/default/$UPSTART_JOB (/etc/default/docker)\n
+              \                    -  DOCKER=/usr/bin/$UPSTART_JOB\n                     -
+              \ DOCKER_OPTS=\n                     -  if [ -f /etc/default/$UPSTART_JOB
+              ]; then\n                     -    . /etc/default/$UPSTART_JOB\n                     -
+              \ fi\n                     -  exec \"$DOCKER\" daemon $DOCKER_OPTS\n
+              \                    +  # modify these in /etc/default/$UPSTART_JOB
+              (/etc/default/docker)\n                     +  DOCKER=/usr/bin/$UPSTART_JOB\n
+              \                    +  DOCKER_OPTS=\n                     +  if [ -f
+              /etc/default/$UPSTART_JOB ]; then\n                     +    . /etc/default/$UPSTART_JOB\n
+              \                    +  fi\n                     +  exec \"$DOCKER\"
+              daemon $DOCKER_OPTS\n               end script\n\n                     -#
+              Don't emit \"started\" event until docker.sock is ready.\n                     +#
+              Don't emit \"started\" event until the docker socket is ready.\n               #
+              See https://github.com/docker/docker/issues/6647\n               post-start
+              script\n                     -  DOCKER_OPTS=\n                     -
+              \ if [ -f /etc/default/$UPSTART_JOB ]; then\n                     -
+              \   . /etc/default/$UPSTART_JOB\n                     -  fi\n                     -
+              \ if ! printf \"%s\" \"$DOCKER_OPTS\" | grep -qE -e '-H|--host'; then\n
+              \                    -    while ! [ -e /var/run/docker.sock ]; do\n
+              \                    -      initctl status $UPSTART_JOB | grep -qE \"(stop|respawn)/\"
+              && exit 1\n                     -      echo \"Waiting for /var/run/docker.sock\"\n
+              \                    -      sleep 0.1\n                     -    done\n
+              \                    -    echo \"/var/run/docker.sock is up\"\n                     -
+              \ fi\n                     +  DOCKER_OPTS=\n                     +  if
+              [ -f /etc/default/$UPSTART_JOB ]; then\n                     +    .
+              /etc/default/$UPSTART_JOB\n                     +  fi\n                     +
+              \ /usr/lib/docker/docker-wait-ready\n                     +  if [ $?
+              -eq 0 ]; then\n                     +    echo \" is up\"\n                     +
+              \ else\n                     +    echo \" failed to come start\"\n                     +
+              \   exit 1\n                     +  fi\n               end script\n
+              \                  * template[/etc/default/docker] action create\n                     -
+              update content in file /etc/default/docker from b395bb to 34924a\n                     ---
+              /etc/default/docker  2016-02-03 19:58:49.000000000 +0000\n                     +++
+              /etc/default/.chef-docker20160504-1504-18uul9a  2016-05-04 00:22:48.328169087
+              +0000\n                     @@ -1,21 +1,13 @@\n               # Docker
+              Upstart and SysVinit configuration file\n\n                     -#\n
+              \                    -# THIS FILE DOES NOT APPLY TO SYSTEMD\n                     -#\n
+              \                    -#   Please see the documentation for \"systemd
+              drop-ins\":\n                     -#   https://docs.docker.com/engine/articles/systemd/\n
+              \                    -#\n                     -\n               # Customize
+              location of Docker binary (especially for development testing).\n                     -#DOCKER=\"/usr/local/bin/docker\"\n
+              \                    +DOCKER=\"/usr/bin/docker\"\n\n               #
+              Use DOCKER_OPTS to modify the daemon startup options.\n                     -#DOCKER_OPTS=\"--dns
+              8.8.8.8 --dns 8.8.4.4\"\n                     +DOCKER_OPTS=\"-H unix:///var/run/docker.sock
+              --pidfile=/var/run/docker.pid\"\n\n               # If you need Docker
+              to use an HTTP proxy, it can also be specified here.\n                     -#export
+              http_proxy=\"http://127.0.0.1:3128/\"\n\n                     +\n               #
+              This is also a handy place to tweak where Docker's temporary files go.\n
+              \                    -#export TMPDIR=\"/mnt/bigdrive/docker-tmp\"\n
+              \                  * docker_service_manager_upstart[default] action
+              restart\n                     * service[docker] action stop\n                -
+              stop service service[docker]\n                     * directory[/usr/lib/docker]
+              action create (up to date)\n                     * template[/usr/lib/docker/docker-wait-ready]
+              action create (up to date)\n                     * template[/etc/init/docker.conf]
+              action create (up to date)\n                     * template[/etc/default/docker]
+              action create (up to date)\n                     * service[docker] action
+              start\n\n                ================================================================================\n
+              \               Error executing action `start` on resource 'service[docker]'\n
+              \               ================================================================================\n\n
+              \               Mixlib::ShellOut::CommandTimeout\n                --------------------------------\n
+              \               Command timed out after 600s:\n                Command
+              exceeded allowed execution time, process terminated\n                ----
+              Begin output of /sbin/start docker ----\n                STDOUT:\n                STDERR:\n
+              \               ---- End output of /sbin/start docker ----\n                Ran
+              /sbin/start docker returned\n\n                Cookbook Trace:\n                ---------------\n
+              \               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n                /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in
+              `block in <class:DockerServiceManagerUpstart>'\n                /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `instance_eval'\n                /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `compile_and_converge_action'\n                /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n\n                Resource Declaration:\n
+              \               ---------------------\n                # In /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb\n\n
+              \                36:       service docker_name do\n                 37:
+              \        provider Chef::Provider::Service::Upstart\n                 38:
+              \        supports status: true\n                 39:         action
+              :start\n                 40:       end\n                 41:     end\n\n
+              \               Compiled Resource:\n                ------------------\n
+              \               # Declared in /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:36:in
+              `block in <class:DockerServiceManagerUpstart>'\n\n                service(\"docker\")
+              do\n                  provider Chef::Provider::Service::Upstart\n                  action
+              [:start]\n                  supports {:status=>true}\n                  retries
+              0\n                  retry_delay 2\n                  default_guard_interpreter
+              :default\n                  service_name \"docker\"\n                  pattern
+              \"docker\"\n                  declared_type :service\n                  cookbook_name
+              \"docker_test\"\n                end\n\n                Platform:\n
+              \               ---------\n                x86_64-linux\n\n\n                     ================================================================================\n
+              \                    Error executing action `restart` on resource 'docker_service_manager_upstart[default]'\n
+              \                    ================================================================================\n\n
+              \                    Mixlib::ShellOut::CommandTimeout\n                     --------------------------------\n
+              \                    service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb
+              line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed
+              out after 600s:\n                     Command exceeded allowed execution
+              time, process terminated\n                     ---- Begin output of
+              /sbin/start docker ----\n                     STDOUT:\n                     STDERR:\n
+              \                    ---- End output of /sbin/start docker ----\n                     Ran
+              /sbin/start docker returned\n\n                     Cookbook Trace:\n
+              \                    ---------------\n                     /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n                     /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in
+              `block in <class:DockerServiceManagerUpstart>'\n                     /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `instance_eval'\n                     /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `compile_and_converge_action'\n                     /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n\n                     Resource Declaration:\n
+              \                    ---------------------\n                     # In
+              /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb\n\n
+              \               7: docker_service_manager_upstart 'default' do\n                8:
+              \  host 'unix:///var/run/docker.sock'\n                9:   action :start\n
+              \              10: end\n               11:\n\n                     Compiled
+              Resource:\n                     ------------------\n                     #
+              Declared in /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in
+              `from_file'\n\n                     docker_service_manager_upstart(\"default\")
+              do\n                action [:start]\n                updated true\n
+              \               updated_by_last_action true\n                retries
+              0\n                retry_delay 2\n                default_guard_interpreter
+              :default\n                declared_type :docker_service_manager_upstart\n
+              \               cookbook_name \"docker_test\"\n                recipe_name
+              \"service_upstart\"\n                host [\"unix:///var/run/docker.sock\"]\n
+              \               pidfile \"/var/run/docker.pid\"\n                     end\n\n
+              \                    Platform:\n                     ---------\n                     x86_64-linux\n\n\n
+              \                  ================================================================================\n
+              \                  Error executing action `start` on resource 'docker_service_manager_upstart[default]'\n
+              \                  ================================================================================\n\n
+              \                  Mixlib::ShellOut::CommandTimeout\n                   --------------------------------\n
+              \                  docker_service_manager_upstart[default] (docker_test::service_upstart
+              line 7) had an error: Mixlib::ShellOut::CommandTimeout: service[docker]
+              (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb
+              line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed
+              out after 600s:\n                   Command exceeded allowed execution
+              time, process terminated\n                   ---- Begin output of /sbin/start
+              docker ----\n                   STDOUT:\n                   STDERR:\n
+              \                  ---- End output of /sbin/start docker ----\n                   Ran
+              /sbin/start docker returned\n\n                   Cookbook Trace:\n
+              \                  ---------------\n                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n                   /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in
+              `block in <class:DockerServiceManagerUpstart>'\n                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `instance_eval'\n                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `compile_and_converge_action'\n                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n\n                   Resource Declaration:\n
+              \                  ---------------------\n                   # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb\n\n
+              \                    7: docker_service_manager_upstart 'default' do\n
+              \                    8:   host 'unix:///var/run/docker.sock'\n                     9:
+              \  action :start\n                    10: end\n                    11:\n\n
+              \                  Compiled Resource:\n                   ------------------\n
+              \                  # Declared in /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in
+              `from_file'\n\n                   docker_service_manager_upstart(\"default\")
+              do\n                     action [:start]\n                     updated
+              true\n                     updated_by_last_action true\n                     retries
+              0\n                     retry_delay 2\n                     default_guard_interpreter
+              :default\n                     declared_type :docker_service_manager_upstart\n
+              \                    cookbook_name \"docker_test\"\n                     recipe_name
+              \"service_upstart\"\n                     host [\"unix:///var/run/docker.sock\"]\n
+              \                    pidfile \"/var/run/docker.pid\"\n                   end\n\n
+              \                  Platform:\n                   ---------\n                   x86_64-linux\n\n
+              \              Starting audit phase\n\n               Finished in 0.00028
+              seconds (files took 0.38585 seconds to load)\n               0 examples,
+              0 failures\n               Auditing complete\n\n               Running
+              handlers:\n               [2016-05-04T00:32:59+00:00] ERROR: Running
+              exception handlers\n               Running handlers complete\n               [2016-05-04T00:32:59+00:00]
+              ERROR: Exception handlers complete\n               Chef Client failed.
+              18 resources updated in 10 minutes 53 seconds\n               [2016-05-04T00:32:59+00:00]
+              ERROR: Failed to post audit report to server. Saving report to /tmp/kitchen/cache/failed-audit-data.json\n
+              \              [2016-05-04T00:32:59+00:00] FATAL: Stacktrace dumped
+              to /tmp/kitchen/cache/chef-stacktrace.out\n               [2016-05-04T00:32:59+00:00]
+              FATAL: Please provide the contents of the stacktrace.out file if you
+              file a bug report\n               [2016-05-04T00:32:59+00:00] ERROR:
+              Found 1 errors, they are stored in the backtrace\n               [2016-05-04T00:33:00+00:00]
+              FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited
+              unsuccessfully (exit code 1)\n        STDERR: >>>>>> Converge failed
+              on instance <docker-default-ubuntu-1404>.\n        >>>>>> Please see
+              .kitchen/logs/docker-default-ubuntu-1404.log for more details\n        >>>>>>
+              ------Exception-------\n        >>>>>> Class: Kitchen::ActionFailed\n
+              \       >>>>>> Message: SSH exited (1) for command: [sh -c '\n\n        sudo
+              -E /opt/chefdk/bin/chef-client --local-mode --config /tmp/kitchen/client.rb
+              --log_level auto --force-formatter --no-color --json-attributes /tmp/kitchen/dna.json
+              --chef-zero-port 8889\n        ']\n        >>>>>> ----------------------\n
+              \       zlib(finalizer): the stream was freed prematurely.\n        ----
+              End output of bundle exec kitchen converge  -c ----\n        Ran bundle
+              exec kitchen converge  -c returned 10\n\n        Resource Declaration:\n
+              \       ---------------------\n        # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb\n\n
+              \        36:       execute \"bundle exec kitchen #{command}#{instances
+              ? \" #{instances}\" : \"\"}#{kitchen_options ? \" #{kitchen_options}\"
+              : \"\"}\" do\n         37:         cwd kitchen_dir\n         38:         env({\n
+              \        39:           \"KITCHEN_DRIVER\" => driver,\n         40:           \"KITCHEN_INSTANCES\"
+              => instances,\n         41:           \"KITCHEN_LOCAL_YAML\" => ::File.expand_path(\"../../.kitchen.#{driver}.yml\",
+              __FILE__),\n         42:           \"KITCHEN_CHEF_PRODUCT\" => chef_product,\n
+              \        43:           \"KITCHEN_CHEF_CHANNEL\" => chef_channel,\n         44:
+              \          \"KITCHEN_CHEF_VERSION\" => chef_version,\n         45:           \"ARTIFACTORY_USERNAME\"
+              => artifactory_username,\n         46:           \"ARTIFACTORY_PASSWORD\"
+              => artifactory_password\n         47:         }.merge(new_resource.env))\n
+              \        48:       end\n         49:     end\n\n        Compiled Resource:\n
+              \       ------------------\n        # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:36:in
+              `block in <class:Kitchen>'\n\n        execute(\"bundle exec kitchen
+              converge  -c\") do\n          action [:run]\n          retries 0\n          retry_delay
+              2\n          default_guard_interpreter :execute\n          command \"bundle
+              exec kitchen converge  -c\"\n          backup 5\n          cwd \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/test_run/docker/\"\n
+              \         environment {\"KITCHEN_DRIVER\"=>\"ec2\", \"KITCHEN_INSTANCES\"=>\"\",
+              \"KITCHEN_LOCAL_YAML\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/.kitchen.ec2.yml\",
+              \"KITCHEN_CHEF_PRODUCT\"=>\"chefdk\", \"KITCHEN_CHEF_CHANNEL\"=>\"unstable\",
+              \"KITCHEN_CHEF_VERSION\"=>\"latest\", \"ARTIFACTORY_USERNAME\"=>\"chef-web-downloads\",
+              \"ARTIFACTORY_PASSWORD\"=>\"fWPxYSB69EiuSpl8*3Dr^kGwf#hxUE6cmjeZRB%H!Cruit7qiKp%toH3nXKStQUg\",
+              \"BUNDLE_GEMFILE\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/Gemfile\",
+              \"KITCHEN_YAML\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.kitchen.docker.yml\"}\n
+              \         returns 0\n          declared_type :execute\n          cookbook_name
+              \"acceptance-cookbook\"\n        end\n\n        Platform:\n        ---------\n
+              \       x86_64-linux\n\n\n      ================================================================================\n
+              \     Error executing action `run` on resource 'cookbook_kitchen[converge
+              docker]'\n      ================================================================================\n\n
+              \     Mixlib::ShellOut::ShellCommandFailed\n      ------------------------------------\n
+              \     execute[bundle exec kitchen converge  -c] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '10'\n      ---- Begin output
+              of bundle exec kitchen converge  -c ----\n      STDOUT: -----> Starting
+              Kitchen (v1.7.3)\n      -----> Creating <docker-default-ubuntu-1404>...\n
+              \            If you are not using an account that qualifies under the
+              AWS\n      free-tier, you may be charged to run these suites. The charge\n
+              \     should be minimal, but neither Test Kitchen nor its maintainers\n
+              \     are responsible for your incurred costs.\n\n             Instance
+              <i-eae4142c> requested.\n             Polling AWS for existence, attempt
+              0...\n             Attempting to tag the instance, 0 retries\n             EC2
+              instance <i-eae4142c> created.\n             Waited 0/300s for instance
+              <i-eae4142c> to become ready.\n             Waited 5/300s for instance
+              <i-eae4142c> to become ready.\n             Waited 10/300s for instance
+              <i-eae4142c> to become ready.\n             Waited 15/300s for instance
+              <i-eae4142c> to become ready.\n             Waited 20/300s for instance
+              <i-eae4142c> to become ready.\n             Waited 25/300s for instance
+              <i-eae4142c> to become ready.\n             EC2 instance <i-eae4142c>
+              ready.\n             Waiting for SSH service on 10.194.8.194:22, retrying
+              in 3 seconds\n             Waiting for SSH service on 10.194.8.194:22,
+              retrying in 3 seconds\n             Waiting for SSH service on 10.194.8.194:22,
+              retrying in 3 seconds\n             Waiting for SSH service on 10.194.8.194:22,
+              retrying in 3 seconds\n             [SSH] Established\n             Finished
+              creating <docker-default-ubuntu-1404> (1m4.79s).\n      -----> Converging
+              <docker-default-ubuntu-1404>...\n             Preparing files for transfer\n
+              \            Preparing dna.json\n             Resolving cookbook dependencies
+              with Berkshelf 4.3.2...\n             Removing non-cookbook files before
+              transfer\n             Preparing validation.pem\n             Preparing
+              client.rb\n             ubuntu 14.04 x86_64\n             downloading
+              http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.14.4+20160503222309/ubuntu/14.04/chefdk_0.14.4+20160503222309-1_amd64.deb\n
+              \              to file /tmp/install.sh.1373/chefdk_0.14.4+20160503222309-1_amd64.deb\n
+              \            trying wget...\n             Comparing checksum with sha256sum...\n
+              \            Installing chefdk latest\n             installing with
+              dpkg...\n             Selecting previously unselected package chefdk.\n
+              \            (Reading database ... \r(Reading database ... 5%\r(Reading
+              database ... 10%\r(Reading database ... 15%\r(Reading database ... 20%\r(Reading
+              database ... 25%\r(Reading database ... 30%\r(Reading database ... 35%\r(Reading
+              database ... 40%\r(Reading database ... 45%\r(Reading database ... 50%\r(Reading
+              database ... 55%\r(Reading database ... 60%\r(Reading database ... 65%\r(Reading
+              database ... 70%\r(Reading database ... 75%\r(Reading database ... 80%\r(Reading
+              database ... 85%\r(Reading database ... 90%\r(Reading database ... 95%\r(Reading
+              database ... 100%\r(Reading database ... 51163 files and directories
+              currently installed.)\n             Preparing to unpack .../chefdk_0.14.4+20160503222309-1_amd64.deb
+              ...\n             Unpacking chefdk (0.14.4+20160503222309-1) ...\n             Setting
+              up chefdk (0.14.4+20160503222309-1) ...\n             Thank you for
+              installing Chef Development Kit!\n             Transferring files to
+              <docker-default-ubuntu-1404>\n             Starting Chef Client, version
+              12.9.38\n             Creating a new client identity for docker-default-ubuntu-1404
+              using the validator key.\n             resolving cookbooks for run list:
+              [\"apt\", \"apt-docker\", \"docker_test::installation_package\", \"docker_test::service_upstart\",
+              \"docker_test::auto\"]\n             Synchronizing Cookbooks:\n               -
+              apt (2.9.2)\n               - apt-docker (0.3.0)\n               - docker_test
+              (0.5.1)\n               - docker (2.6.8)\n               - etcd (3.2.5)\n
+              \              - compat_resource (12.9.1)\n             Installing Cookbook
+              Gems:\n             Compiling Cookbooks...\n             [2016-05-04T00:22:13+00:00]
+              WARN: Chef::Provider::AptRepository already exists!  Cannot create deprecation
+              class for LWRP provider apt_repository from cookbook apt\n             [2016-05-04T00:22:13+00:00]
+              WARN: AptRepository already exists!  Deprecation class overwrites Custom
+              resource apt_repository from cookbook apt\n             [2016-05-04T00:22:13+00:00]
+              WARN: Cloning resource attributes for docker_installation_package[default]
+              from prior resource (CHEF-3694)\n             [2016-05-04T00:22:13+00:00]
+              WARN: Previous docker_installation_package[default]: /tmp/kitchen/cache/cookbooks/docker_test/recipes/installation_package.rb:1:in
+              `from_file'\n             [2016-05-04T00:22:13+00:00] WARN: Current
+              \ docker_installation_package[default]: /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:3:in
+              `from_file'\n             Converging 18 resources\n             Recipe:
+              apt::default\n               * file[/var/lib/apt/periodic/update-success-stamp]
+              action nothing (skipped due to action :nothing)\n               * directory[/etc/apt/apt.conf.d]
+              action create (up to date)\n               * cookbook_file[/etc/apt/apt.conf.d/15update-stamp]
+              action create (up to date)\n               * execute[apt-get update]
+              action nothing (skipped due to action :nothing)\n               * execute[apt-get
+              autoremove] action nothing (skipped due to action :nothing)\n               *
+              execute[apt-get autoclean] action nothing (skipped due to action :nothing)\n
+              \              * execute[apt-get-update-periodic] action run\n                 -
+              execute apt-get update\n               * file[/var/lib/apt/periodic/update-success-stamp]
+              action touch\n                 - update utime on file /var/lib/apt/periodic/update-success-stamp\n
+              \              * directory[/var/cache/local] action create\n                 -
+              create new directory /var/cache/local\n                 - change mode
+              from '' to '0755'\n                 - change owner from '' to 'root'\n
+              \                - change group from '' to 'root'\n               *
+              directory[/var/cache/local/preseeding] action create\n                 -
+              create new directory /var/cache/local/preseeding\n                 -
+              change mode from '' to '0755'\n                 - change owner from
+              '' to 'root'\n                 - change group from '' to 'root'\n               *
+              template[/etc/apt/apt.conf.d/10recommends] action create\n                 -
+              create new file /etc/apt/apt.conf.d/10recommends\n                 -
+              update content in file /etc/apt/apt.conf.d/10recommends from none to
+              f41e1d\n                 --- /etc/apt/apt.conf.d/10recommends  2016-05-04
+              00:22:26.072169087 +0000\n                 +++ /etc/apt/apt.conf.d/.chef-10recommends20160504-1504-1dw4xvf
+              \ 2016-05-04 00:22:26.072169087 +0000\n                 @@ -1 +1,4 @@\n
+              \                +# Managed by Chef\n                 +APT::Install-Recommends
+              \"1\";\n                 +APT::Install-Suggests \"0\";\n                 -
+              change mode from '' to '0644'\n                 - change owner from
+              '' to 'root'\n                 - change group from '' to 'root'\n               *
+              apt_package[apt-transport-https] action install (up to date)\n             Recipe:
+              apt-docker::default\n               * apt_repository[docker-main] action
+              add\n                 * execute[install-key 58118E89F3A912897C070ADBF76221572C52609D]
+              action run\n                   - execute apt-key adv --recv --keyserver
+              hkp://p80.pool.sks-keyservers.net:80 58118E89F3A912897C070ADBF76221572C52609D\n
+              \                * execute[apt-cache gencaches] action run\n                   -
+              execute apt-cache gencaches\n                 * execute[apt-cache gencaches]
+              action nothing (skipped due to action :nothing)\n                 *
+              apt_update[docker-main] action nothing (skipped due to action :nothing)\n
+              \                * file[/etc/apt/sources.list.d/docker-main.list] action
+              create\n                   - create new file /etc/apt/sources.list.d/docker-main.list\n
+              \                  - update content in file /etc/apt/sources.list.d/docker-main.list
+              from none to ec38ec\n                   --- /etc/apt/sources.list.d/docker-main.list
+              \ 2016-05-04 00:22:27.172169087 +0000\n                   +++ /etc/apt/sources.list.d/.chef-docker-main.list20160504-1504-10bvo6v
+              \ 2016-05-04 00:22:27.172169087 +0000\n                   @@ -1 +1,2
+              @@\n                   +deb      \"https://apt.dockerproject.org/repo\"
+              ubuntu-trusty main\n                   - change mode from '' to '0644'\n
+              \                  - change owner from '' to 'root'\n                   -
+              change group from '' to 'root'\n                 * execute[apt-cache
+              gencaches] action run\n                   - execute apt-cache gencaches\n
+              \                * apt_update[docker-main] action update\n                   -
+              force update new lists of packages\n                   * directory[/var/lib/apt/periodic]
+              action create (up to date)\n                   * directory[/etc/apt/apt.conf.d]
+              action create (up to date)\n                   * file[/etc/apt/apt.conf.d/15update-stamp]
+              action create_if_missing (up to date)\n                   * execute[apt-get
+              -q update] action run\n              - execute apt-get -q update\n\n\n
+              \            Recipe: docker_test::installation_package\n               *
+              docker_installation_package[default] action create\n                 *
+              apt_package[docker-engine] action install\n                   - install
+              version 1.10.0-0~trusty of package docker-engine\n\n             Recipe:
+              docker_test::service_upstart\n               * docker_installation_package[default]
+              action create\n                 * apt_package[docker-engine] action
+              install (up to date)\n                  (up to date)\n               *
+              docker_service_manager_upstart[default] action start\n                 *
+              directory[/usr/lib/docker] action create (up to date)\n                 *
+              template[/usr/lib/docker/docker-wait-ready] action create\n                   -
+              create new file /usr/lib/docker/docker-wait-ready\n                   -
+              update content in file /usr/lib/docker/docker-wait-ready from none to
+              8289cb\n                   --- /usr/lib/docker/docker-wait-ready  2016-05-04
+              00:22:48.220169087 +0000\n                   +++ /usr/lib/docker/.chef-docker-wait-ready20160504-1504-5s24re
+              \ 2016-05-04 00:22:48.220169087 +0000\n                   @@ -1 +1,11
+              @@\n                   +#!/usr/bin/env bash\n                   +i=0\n
+              \                  +while [ $i -lt 40 ]; do\n                   +  /usr/bin/docker
+              --host=unix:///var/run/docker.sock ps | head -n 1 | grep ^CONTAINER
+              > /dev/null 2>&1\n                   +  [ $? -eq 0 ] && break\n                   +
+              \ ((i++))\n                   +  sleep 0.5\n                   +done\n
+              \                  +[ $i -eq 40 ] && exit 1\n                   +exit
+              0\n                   - change mode from '' to '0755'\n                   -
+              change owner from '' to 'root'\n                   - change group from
+              '' to 'root'\n                 * template[/etc/init/docker.conf] action
+              create\n                   - update content in file /etc/init/docker.conf
+              from a9181d to 4b9fe9\n                   --- /etc/init/docker.conf
+              \ 2016-02-03 19:58:49.000000000 +0000\n                   +++ /etc/init/.chef-docker.conf20160504-1504-gczx1u
+              \ 2016-05-04 00:22:48.304169087 +0000\n                   @@ -10,52
+              +10,51 @@\n             kill timeout 20\n\n             pre-start script\n
+              \                  -  # see also https://github.com/tianon/cgroupfs-mount/blob/master/cgroupfs-mount\n
+              \                  -  if grep -v '^#' /etc/fstab | grep -q cgroup \\\n
+              \                  -    || [ ! -e /proc/cgroups ] \\\n                   -
+              \   || [ ! -d /sys/fs/cgroup ]; then\n                   -    exit 0\n
+              \                  -  fi\n                   -  if ! mountpoint -q /sys/fs/cgroup;
+              then\n                   -    mount -t tmpfs -o uid=0,gid=0,mode=0755
+              cgroup /sys/fs/cgroup\n                   -  fi\n                   -
+              \ (\n                   -    cd /sys/fs/cgroup\n                   -
+              \   for sys in $(awk '!/^#/ { if ($4 == 1) print $1 }' /proc/cgroups);
+              do\n                   -      mkdir -p $sys\n                   -      if
+              ! mountpoint -q $sys; then\n                   -        if ! mount -n
+              -t cgroup -o $sys cgroup $sys; then\n                   -          rmdir
+              $sys || true\n                   -        fi\n                   -      fi\n
+              \                  -    done\n                   -  )\n                   +
+              \ # see also https://github.com/tianon/cgroupfs-mount/blob/master/cgroupfs-mount\n
+              \                  +  if grep -v '^#' /etc/fstab | grep -q cgroup \\\n
+              \                  +    || [ ! -e /proc/cgroups ] \\\n                   +
+              \   || [ ! -d /sys/fs/cgroup ]; then\n                   +    exit 0\n
+              \                  +  fi\n                   +  if ! mountpoint -q /sys/fs/cgroup;
+              then\n                   +    mount -t tmpfs -o uid=0,gid=0,mode=0755
+              cgroup /sys/fs/cgroup\n                   +  fi\n                   +
+              \ (\n                   +    cd /sys/fs/cgroup\n                   +
+              \   for sys in $(awk '!/^#/ { if ($4 == 1) print $1 }' /proc/cgroups);
+              do\n                   +      mkdir -p $sys\n                   +      if
+              ! mountpoint -q $sys; then\n                   +        if ! mount -n
+              -t cgroup -o $sys cgroup $sys; then\n                   +          rmdir
+              $sys || true\n                   +        fi\n                   +      fi\n
+              \                  +    done\n                   +  )\n             end
+              script\n\n             script\n                   -  # modify these
+              in /etc/default/$UPSTART_JOB (/etc/default/docker)\n                   -
+              \ DOCKER=/usr/bin/$UPSTART_JOB\n                   -  DOCKER_OPTS=\n
+              \                  -  if [ -f /etc/default/$UPSTART_JOB ]; then\n                   -
+              \   . /etc/default/$UPSTART_JOB\n                   -  fi\n                   -
+              \ exec \"$DOCKER\" daemon $DOCKER_OPTS\n                   +  # modify
+              these in /etc/default/$UPSTART_JOB (/etc/default/docker)\n                   +
+              \ DOCKER=/usr/bin/$UPSTART_JOB\n                   +  DOCKER_OPTS=\n
+              \                  +  if [ -f /etc/default/$UPSTART_JOB ]; then\n                   +
+              \   . /etc/default/$UPSTART_JOB\n                   +  fi\n                   +
+              \ exec \"$DOCKER\" daemon $DOCKER_OPTS\n             end script\n\n
+              \                  -# Don't emit \"started\" event until docker.sock
+              is ready.\n                   +# Don't emit \"started\" event until
+              the docker socket is ready.\n             # See https://github.com/docker/docker/issues/6647\n
+              \            post-start script\n                   -  DOCKER_OPTS=\n
+              \                  -  if [ -f /etc/default/$UPSTART_JOB ]; then\n                   -
+              \   . /etc/default/$UPSTART_JOB\n                   -  fi\n                   -
+              \ if ! printf \"%s\" \"$DOCKER_OPTS\" | grep -qE -e '-H|--host'; then\n
+              \                  -    while ! [ -e /var/run/docker.sock ]; do\n                   -
+              \     initctl status $UPSTART_JOB | grep -qE \"(stop|respawn)/\" &&
+              exit 1\n                   -      echo \"Waiting for /var/run/docker.sock\"\n
+              \                  -      sleep 0.1\n                   -    done\n
+              \                  -    echo \"/var/run/docker.sock is up\"\n                   -
+              \ fi\n                   +  DOCKER_OPTS=\n                   +  if [
+              -f /etc/default/$UPSTART_JOB ]; then\n                   +    . /etc/default/$UPSTART_JOB\n
+              \                  +  fi\n                   +  /usr/lib/docker/docker-wait-ready\n
+              \                  +  if [ $? -eq 0 ]; then\n                   +    echo
+              \" is up\"\n                   +  else\n                   +    echo
+              \" failed to come start\"\n                   +    exit 1\n                   +
+              \ fi\n             end script\n                 * template[/etc/default/docker]
+              action create\n                   - update content in file /etc/default/docker
+              from b395bb to 34924a\n                   --- /etc/default/docker  2016-02-03
+              19:58:49.000000000 +0000\n                   +++ /etc/default/.chef-docker20160504-1504-18uul9a
+              \ 2016-05-04 00:22:48.328169087 +0000\n                   @@ -1,21 +1,13
+              @@\n             # Docker Upstart and SysVinit configuration file\n\n
+              \                  -#\n                   -# THIS FILE DOES NOT APPLY
+              TO SYSTEMD\n                   -#\n                   -#   Please see
+              the documentation for \"systemd drop-ins\":\n                   -#   https://docs.docker.com/engine/articles/systemd/\n
+              \                  -#\n                   -\n             # Customize
+              location of Docker binary (especially for development testing).\n                   -#DOCKER=\"/usr/local/bin/docker\"\n
+              \                  +DOCKER=\"/usr/bin/docker\"\n\n             # Use
+              DOCKER_OPTS to modify the daemon startup options.\n                   -#DOCKER_OPTS=\"--dns
+              8.8.8.8 --dns 8.8.4.4\"\n                   +DOCKER_OPTS=\"-H unix:///var/run/docker.sock
+              --pidfile=/var/run/docker.pid\"\n\n             # If you need Docker
+              to use an HTTP proxy, it can also be specified here.\n                   -#export
+              http_proxy=\"http://127.0.0.1:3128/\"\n\n                   +\n             #
+              This is also a handy place to tweak where Docker's temporary files go.\n
+              \                  -#export TMPDIR=\"/mnt/bigdrive/docker-tmp\"\n                 *
+              docker_service_manager_upstart[default] action restart\n                   *
+              service[docker] action stop\n              - stop service service[docker]\n
+              \                  * directory[/usr/lib/docker] action create (up to
+              date)\n                   * template[/usr/lib/docker/docker-wait-ready]
+              action create (up to date)\n                   * template[/etc/init/docker.conf]
+              action create (up to date)\n                   * template[/etc/default/docker]
+              action create (up to date)\n                   * service[docker] action
+              start\n\n              ================================================================================\n
+              \             Error executing action `start` on resource 'service[docker]'\n
+              \             ================================================================================\n\n
+              \             Mixlib::ShellOut::CommandTimeout\n              --------------------------------\n
+              \             Command timed out after 600s:\n              Command exceeded
+              allowed execution time, process terminated\n              ---- Begin
+              output of /sbin/start docker ----\n              STDOUT:\n              STDERR:\n
+              \             ---- End output of /sbin/start docker ----\n              Ran
+              /sbin/start docker returned\n\n              Cookbook Trace:\n              ---------------\n
+              \             /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n              /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in
+              `block in <class:DockerServiceManagerUpstart>'\n              /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `instance_eval'\n              /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `compile_and_converge_action'\n              /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n\n              Resource Declaration:\n
+              \             ---------------------\n              # In /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb\n\n
+              \              36:       service docker_name do\n               37:
+              \        provider Chef::Provider::Service::Upstart\n               38:
+              \        supports status: true\n               39:         action :start\n
+              \              40:       end\n               41:     end\n\n              Compiled
+              Resource:\n              ------------------\n              # Declared
+              in /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:36:in
+              `block in <class:DockerServiceManagerUpstart>'\n\n              service(\"docker\")
+              do\n                provider Chef::Provider::Service::Upstart\n                action
+              [:start]\n                supports {:status=>true}\n                retries
+              0\n                retry_delay 2\n                default_guard_interpreter
+              :default\n                service_name \"docker\"\n                pattern
+              \"docker\"\n                declared_type :service\n                cookbook_name
+              \"docker_test\"\n              end\n\n              Platform:\n              ---------\n
+              \             x86_64-linux\n\n\n                   ================================================================================\n
+              \                  Error executing action `restart` on resource 'docker_service_manager_upstart[default]'\n
+              \                  ================================================================================\n\n
+              \                  Mixlib::ShellOut::CommandTimeout\n                   --------------------------------\n
+              \                  service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb
+              line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed
+              out after 600s:\n                   Command exceeded allowed execution
+              time, process terminated\n                   ---- Begin output of /sbin/start
+              docker ----\n                   STDOUT:\n                   STDERR:\n
+              \                  ---- End output of /sbin/start docker ----\n                   Ran
+              /sbin/start docker returned\n\n                   Cookbook Trace:\n
+              \                  ---------------\n                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n                   /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in
+              `block in <class:DockerServiceManagerUpstart>'\n                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `instance_eval'\n                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `compile_and_converge_action'\n                   /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n\n                   Resource Declaration:\n
+              \                  ---------------------\n                   # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb\n\n
+              \             7: docker_service_manager_upstart 'default' do\n              8:
+              \  host 'unix:///var/run/docker.sock'\n              9:   action :start\n
+              \            10: end\n             11:\n\n                   Compiled
+              Resource:\n                   ------------------\n                   #
+              Declared in /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in
+              `from_file'\n\n                   docker_service_manager_upstart(\"default\")
+              do\n              action [:start]\n              updated true\n              updated_by_last_action
+              true\n              retries 0\n              retry_delay 2\n              default_guard_interpreter
+              :default\n              declared_type :docker_service_manager_upstart\n
+              \             cookbook_name \"docker_test\"\n              recipe_name
+              \"service_upstart\"\n              host [\"unix:///var/run/docker.sock\"]\n
+              \             pidfile \"/var/run/docker.pid\"\n                   end\n\n
+              \                  Platform:\n                   ---------\n                   x86_64-linux\n\n\n
+              \                ================================================================================\n
+              \                Error executing action `start` on resource 'docker_service_manager_upstart[default]'\n
+              \                ================================================================================\n\n
+              \                Mixlib::ShellOut::CommandTimeout\n                 --------------------------------\n
+              \                docker_service_manager_upstart[default] (docker_test::service_upstart
+              line 7) had an error: Mixlib::ShellOut::CommandTimeout: service[docker]
+              (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb
+              line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed
+              out after 600s:\n                 Command exceeded allowed execution
+              time, process terminated\n                 ---- Begin output of /sbin/start
+              docker ----\n                 STDOUT:\n                 STDERR:\n                 ----
+              End output of /sbin/start docker ----\n                 Ran /sbin/start
+              docker returned\n\n                 Cookbook Trace:\n                 ---------------\n
+              \                /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n                 /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in
+              `block in <class:DockerServiceManagerUpstart>'\n                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `instance_eval'\n                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `compile_and_converge_action'\n                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n\n                 Resource Declaration:\n
+              \                ---------------------\n                 # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb\n\n
+              \                  7: docker_service_manager_upstart 'default' do\n
+              \                  8:   host 'unix:///var/run/docker.sock'\n                   9:
+              \  action :start\n                  10: end\n                  11:\n\n
+              \                Compiled Resource:\n                 ------------------\n
+              \                # Declared in /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in
+              `from_file'\n\n                 docker_service_manager_upstart(\"default\")
+              do\n                   action [:start]\n                   updated true\n
+              \                  updated_by_last_action true\n                   retries
+              0\n                   retry_delay 2\n                   default_guard_interpreter
+              :default\n                   declared_type :docker_service_manager_upstart\n
+              \                  cookbook_name \"docker_test\"\n                   recipe_name
+              \"service_upstart\"\n                   host [\"unix:///var/run/docker.sock\"]\n
+              \                  pidfile \"/var/run/docker.pid\"\n                 end\n\n
+              \                Platform:\n                 ---------\n                 x86_64-linux\n\n
+              \            Starting audit phase\n\n             Finished in 0.00028
+              seconds (files took 0.38585 seconds to load)\n             0 examples,
+              0 failures\n             Auditing complete\n\n             Running handlers:\n
+              \            [2016-05-04T00:32:59+00:00] ERROR: Running exception handlers\n
+              \            Running handlers complete\n             [2016-05-04T00:32:59+00:00]
+              ERROR: Exception handlers complete\n             Chef Client failed.
+              18 resources updated in 10 minutes 53 seconds\n             [2016-05-04T00:32:59+00:00]
+              ERROR: Failed to post audit report to server. Saving report to /tmp/kitchen/cache/failed-audit-data.json\n
+              \            [2016-05-04T00:32:59+00:00] FATAL: Stacktrace dumped to
+              /tmp/kitchen/cache/chef-stacktrace.out\n             [2016-05-04T00:32:59+00:00]
+              FATAL: Please provide the contents of the stacktrace.out file if you
+              file a bug report\n             [2016-05-04T00:32:59+00:00] ERROR: Found
+              1 errors, they are stored in the backtrace\n             [2016-05-04T00:33:00+00:00]
+              FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited
+              unsuccessfully (exit code 1)\n      STDERR: >>>>>> Converge failed on
+              instance <docker-default-ubuntu-1404>.\n      >>>>>> Please see .kitchen/logs/docker-default-ubuntu-1404.log
+              for more details\n      >>>>>> ------Exception-------\n      >>>>>>
+              Class: Kitchen::ActionFailed\n      >>>>>> Message: SSH exited (1) for
+              command: [sh -c '\n\n      sudo -E /opt/chefdk/bin/chef-client --local-mode
+              --config /tmp/kitchen/client.rb --log_level auto --force-formatter --no-color
+              --json-attributes /tmp/kitchen/dna.json --chef-zero-port 8889\n      ']\n
+              \     >>>>>> ----------------------\n      zlib(finalizer): the stream
+              was freed prematurely.\n      ---- End output of bundle exec kitchen
+              converge  -c ----\n      Ran bundle exec kitchen converge  -c returned
+              10\n\n      Resource Declaration:\n      ---------------------\n      #
+              In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb\n\n
+              \       7:     cookbook_kitchen \"#{command} docker\" do\n        8:
+              \    end\n        9:\n\n      Compiled Resource:\n      ------------------\n
+              \     # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb:7:in
+              `block in <class:TopCookbooks>'\n\n      cookbook_kitchen(\"converge
+              docker\") do\n        action [:run]\n        updated true\n        updated_by_last_action
+              true\n        retries 0\n        retry_delay 2\n        default_guard_interpreter
+              :default\n        declared_type :cookbook_kitchen\n        cookbook_name
+              \"acceptance-cookbook\"\n        repository \"https://github.com/chef-cookbooks/docker.git\"\n
+              \       test_cookbook \"docker\"\n        repository_root \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/test_run/docker\"\n
+              \       branch \"master\"\n        command \"converge\"\n        kitchen_options
+              \"-c\"\n        kitchen_dir \"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/test_run/docker/\"\n
+              \       chef_channel \"unstable\"\n        chef_version \"latest\"\n
+              \       env {\"BUNDLE_GEMFILE\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/Gemfile\",
+              \"KITCHEN_YAML\"=>\"/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.kitchen.docker.yml\"}\n
+              \     end\n\n      Platform:\n      ---------\n      x86_64-linux\n\n\n
+              \   ================================================================================\n
+              \   Error executing action `run` on resource 'top_cookbooks[converge]'\n
+              \   ================================================================================\n\n
+              \   Mixlib::ShellOut::ShellCommandFailed\n    ------------------------------------\n
+              \   cookbook_kitchen[converge docker] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+              line 7) had an error: Mixlib::ShellOut::ShellCommandFailed: execute[bundle
+              exec kitchen converge  -c] (/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+              line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected
+              process to exit with [0], but received '10'\n    ---- Begin output of
+              bundle exec kitchen converge  -c ----\n    STDOUT: -----> Starting Kitchen
+              (v1.7.3)\n    -----> Creating <docker-default-ubuntu-1404>...\n           If
+              you are not using an account that qualifies under the AWS\n    free-tier,
+              you may be charged to run these suites. The charge\n    should be minimal,
+              but neither Test Kitchen nor its maintainers\n    are responsible for
+              your incurred costs.\n\n           Instance <i-eae4142c> requested.\n
+              \          Polling AWS for existence, attempt 0...\n           Attempting
+              to tag the instance, 0 retries\n           EC2 instance <i-eae4142c>
+              created.\n           Waited 0/300s for instance <i-eae4142c> to become
+              ready.\n           Waited 5/300s for instance <i-eae4142c> to become
+              ready.\n           Waited 10/300s for instance <i-eae4142c> to become
+              ready.\n           Waited 15/300s for instance <i-eae4142c> to become
+              ready.\n           Waited 20/300s for instance <i-eae4142c> to become
+              ready.\n           Waited 25/300s for instance <i-eae4142c> to become
+              ready.\n           EC2 instance <i-eae4142c> ready.\n           Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n           Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n           Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n           Waiting
+              for SSH service on 10.194.8.194:22, retrying in 3 seconds\n           [SSH]
+              Established\n           Finished creating <docker-default-ubuntu-1404>
+              (1m4.79s).\n    -----> Converging <docker-default-ubuntu-1404>...\n
+              \          Preparing files for transfer\n           Preparing dna.json\n
+              \          Resolving cookbook dependencies with Berkshelf 4.3.2...\n
+              \          Removing non-cookbook files before transfer\n           Preparing
+              validation.pem\n           Preparing client.rb\n           ubuntu 14.04
+              x86_64\n           downloading http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.14.4+20160503222309/ubuntu/14.04/chefdk_0.14.4+20160503222309-1_amd64.deb\n
+              \            to file /tmp/install.sh.1373/chefdk_0.14.4+20160503222309-1_amd64.deb\n
+              \          trying wget...\n           Comparing checksum with sha256sum...\n
+              \          Installing chefdk latest\n           installing with dpkg...\n
+              \          Selecting previously unselected package chefdk.\n           (Reading
+              database ... \r(Reading database ... 5%\r(Reading database ... 10%\r(Reading
+              database ... 15%\r(Reading database ... 20%\r(Reading database ... 25%\r(Reading
+              database ... 30%\r(Reading database ... 35%\r(Reading database ... 40%\r(Reading
+              database ... 45%\r(Reading database ... 50%\r(Reading database ... 55%\r(Reading
+              database ... 60%\r(Reading database ... 65%\r(Reading database ... 70%\r(Reading
+              database ... 75%\r(Reading database ... 80%\r(Reading database ... 85%\r(Reading
+              database ... 90%\r(Reading database ... 95%\r(Reading database ... 100%\r(Reading
+              database ... 51163 files and directories currently installed.)\n           Preparing
+              to unpack .../chefdk_0.14.4+20160503222309-1_amd64.deb ...\n           Unpacking
+              chefdk (0.14.4+20160503222309-1) ...\n           Setting up chefdk (0.14.4+20160503222309-1)
+              ...\n           Thank you for installing Chef Development Kit!\n           Transferring
+              files to <docker-default-ubuntu-1404>\n           Starting Chef Client,
+              version 12.9.38\n           Creating a new client identity for docker-default-ubuntu-1404
+              using the validator key.\n           resolving cookbooks for run list:
+              [\"apt\", \"apt-docker\", \"docker_test::installation_package\", \"docker_test::service_upstart\",
+              \"docker_test::auto\"]\n           Synchronizing Cookbooks:\n             -
+              apt (2.9.2)\n             - apt-docker (0.3.0)\n             - docker_test
+              (0.5.1)\n             - docker (2.6.8)\n             - etcd (3.2.5)\n
+              \            - compat_resource (12.9.1)\n           Installing Cookbook
+              Gems:\n           Compiling Cookbooks...\n           [2016-05-04T00:22:13+00:00]
+              WARN: Chef::Provider::AptRepository already exists!  Cannot create deprecation
+              class for LWRP provider apt_repository from cookbook apt\n           [2016-05-04T00:22:13+00:00]
+              WARN: AptRepository already exists!  Deprecation class overwrites Custom
+              resource apt_repository from cookbook apt\n           [2016-05-04T00:22:13+00:00]
+              WARN: Cloning resource attributes for docker_installation_package[default]
+              from prior resource (CHEF-3694)\n           [2016-05-04T00:22:13+00:00]
+              WARN: Previous docker_installation_package[default]: /tmp/kitchen/cache/cookbooks/docker_test/recipes/installation_package.rb:1:in
+              `from_file'\n           [2016-05-04T00:22:13+00:00] WARN: Current  docker_installation_package[default]:
+              /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:3:in
+              `from_file'\n           Converging 18 resources\n           Recipe:
+              apt::default\n             * file[/var/lib/apt/periodic/update-success-stamp]
+              action nothing (skipped due to action :nothing)\n             * directory[/etc/apt/apt.conf.d]
+              action create (up to date)\n             * cookbook_file[/etc/apt/apt.conf.d/15update-stamp]
+              action create (up to date)\n             * execute[apt-get update] action
+              nothing (skipped due to action :nothing)\n             * execute[apt-get
+              autoremove] action nothing (skipped due to action :nothing)\n             *
+              execute[apt-get autoclean] action nothing (skipped due to action :nothing)\n
+              \            * execute[apt-get-update-periodic] action run\n               -
+              execute apt-get update\n             * file[/var/lib/apt/periodic/update-success-stamp]
+              action touch\n               - update utime on file /var/lib/apt/periodic/update-success-stamp\n
+              \            * directory[/var/cache/local] action create\n               -
+              create new directory /var/cache/local\n               - change mode
+              from '' to '0755'\n               - change owner from '' to 'root'\n
+              \              - change group from '' to 'root'\n             * directory[/var/cache/local/preseeding]
+              action create\n               - create new directory /var/cache/local/preseeding\n
+              \              - change mode from '' to '0755'\n               - change
+              owner from '' to 'root'\n               - change group from '' to 'root'\n
+              \            * template[/etc/apt/apt.conf.d/10recommends] action create\n
+              \              - create new file /etc/apt/apt.conf.d/10recommends\n
+              \              - update content in file /etc/apt/apt.conf.d/10recommends
+              from none to f41e1d\n               --- /etc/apt/apt.conf.d/10recommends
+              \ 2016-05-04 00:22:26.072169087 +0000\n               +++ /etc/apt/apt.conf.d/.chef-10recommends20160504-1504-1dw4xvf
+              \ 2016-05-04 00:22:26.072169087 +0000\n               @@ -1 +1,4 @@\n
+              \              +# Managed by Chef\n               +APT::Install-Recommends
+              \"1\";\n               +APT::Install-Suggests \"0\";\n               -
+              change mode from '' to '0644'\n               - change owner from ''
+              to 'root'\n               - change group from '' to 'root'\n             *
+              apt_package[apt-transport-https] action install (up to date)\n           Recipe:
+              apt-docker::default\n             * apt_repository[docker-main] action
+              add\n               * execute[install-key 58118E89F3A912897C070ADBF76221572C52609D]
+              action run\n                 - execute apt-key adv --recv --keyserver
+              hkp://p80.pool.sks-keyservers.net:80 58118E89F3A912897C070ADBF76221572C52609D\n
+              \              * execute[apt-cache gencaches] action run\n                 -
+              execute apt-cache gencaches\n               * execute[apt-cache gencaches]
+              action nothing (skipped due to action :nothing)\n               * apt_update[docker-main]
+              action nothing (skipped due to action :nothing)\n               * file[/etc/apt/sources.list.d/docker-main.list]
+              action create\n                 - create new file /etc/apt/sources.list.d/docker-main.list\n
+              \                - update content in file /etc/apt/sources.list.d/docker-main.list
+              from none to ec38ec\n                 --- /etc/apt/sources.list.d/docker-main.list
+              \ 2016-05-04 00:22:27.172169087 +0000\n                 +++ /etc/apt/sources.list.d/.chef-docker-main.list20160504-1504-10bvo6v
+              \ 2016-05-04 00:22:27.172169087 +0000\n                 @@ -1 +1,2 @@\n
+              \                +deb      \"https://apt.dockerproject.org/repo\" ubuntu-trusty
+              main\n                 - change mode from '' to '0644'\n                 -
+              change owner from '' to 'root'\n                 - change group from
+              '' to 'root'\n               * execute[apt-cache gencaches] action run\n
+              \                - execute apt-cache gencaches\n               * apt_update[docker-main]
+              action update\n                 - force update new lists of packages\n
+              \                * directory[/var/lib/apt/periodic] action create (up
+              to date)\n                 * directory[/etc/apt/apt.conf.d] action create
+              (up to date)\n                 * file[/etc/apt/apt.conf.d/15update-stamp]
+              action create_if_missing (up to date)\n                 * execute[apt-get
+              -q update] action run\n            - execute apt-get -q update\n\n\n
+              \          Recipe: docker_test::installation_package\n             *
+              docker_installation_package[default] action create\n               *
+              apt_package[docker-engine] action install\n                 - install
+              version 1.10.0-0~trusty of package docker-engine\n\n           Recipe:
+              docker_test::service_upstart\n             * docker_installation_package[default]
+              action create\n               * apt_package[docker-engine] action install
+              (up to date)\n                (up to date)\n             * docker_service_manager_upstart[default]
+              action start\n               * directory[/usr/lib/docker] action create
+              (up to date)\n               * template[/usr/lib/docker/docker-wait-ready]
+              action create\n                 - create new file /usr/lib/docker/docker-wait-ready\n
+              \                - update content in file /usr/lib/docker/docker-wait-ready
+              from none to 8289cb\n                 --- /usr/lib/docker/docker-wait-ready
+              \ 2016-05-04 00:22:48.220169087 +0000\n                 +++ /usr/lib/docker/.chef-docker-wait-ready20160504-1504-5s24re
+              \ 2016-05-04 00:22:48.220169087 +0000\n                 @@ -1 +1,11
+              @@\n                 +#!/usr/bin/env bash\n                 +i=0\n                 +while
+              [ $i -lt 40 ]; do\n                 +  /usr/bin/docker --host=unix:///var/run/docker.sock
+              ps | head -n 1 | grep ^CONTAINER > /dev/null 2>&1\n                 +
+              \ [ $? -eq 0 ] && break\n                 +  ((i++))\n                 +
+              \ sleep 0.5\n                 +done\n                 +[ $i -eq 40 ]
+              && exit 1\n                 +exit 0\n                 - change mode
+              from '' to '0755'\n                 - change owner from '' to 'root'\n
+              \                - change group from '' to 'root'\n               *
+              template[/etc/init/docker.conf] action create\n                 - update
+              content in file /etc/init/docker.conf from a9181d to 4b9fe9\n                 ---
+              /etc/init/docker.conf  2016-02-03 19:58:49.000000000 +0000\n                 +++
+              /etc/init/.chef-docker.conf20160504-1504-gczx1u  2016-05-04 00:22:48.304169087
+              +0000\n                 @@ -10,52 +10,51 @@\n           kill timeout
+              20\n\n           pre-start script\n                 -  # see also https://github.com/tianon/cgroupfs-mount/blob/master/cgroupfs-mount\n
+              \                -  if grep -v '^#' /etc/fstab | grep -q cgroup \\\n
+              \                -    || [ ! -e /proc/cgroups ] \\\n                 -
+              \   || [ ! -d /sys/fs/cgroup ]; then\n                 -    exit 0\n
+              \                -  fi\n                 -  if ! mountpoint -q /sys/fs/cgroup;
+              then\n                 -    mount -t tmpfs -o uid=0,gid=0,mode=0755
+              cgroup /sys/fs/cgroup\n                 -  fi\n                 -  (\n
+              \                -    cd /sys/fs/cgroup\n                 -    for sys
+              in $(awk '!/^#/ { if ($4 == 1) print $1 }' /proc/cgroups); do\n                 -
+              \     mkdir -p $sys\n                 -      if ! mountpoint -q $sys;
+              then\n                 -        if ! mount -n -t cgroup -o $sys cgroup
+              $sys; then\n                 -          rmdir $sys || true\n                 -
+              \       fi\n                 -      fi\n                 -    done\n
+              \                -  )\n                 +  # see also https://github.com/tianon/cgroupfs-mount/blob/master/cgroupfs-mount\n
+              \                +  if grep -v '^#' /etc/fstab | grep -q cgroup \\\n
+              \                +    || [ ! -e /proc/cgroups ] \\\n                 +
+              \   || [ ! -d /sys/fs/cgroup ]; then\n                 +    exit 0\n
+              \                +  fi\n                 +  if ! mountpoint -q /sys/fs/cgroup;
+              then\n                 +    mount -t tmpfs -o uid=0,gid=0,mode=0755
+              cgroup /sys/fs/cgroup\n                 +  fi\n                 +  (\n
+              \                +    cd /sys/fs/cgroup\n                 +    for sys
+              in $(awk '!/^#/ { if ($4 == 1) print $1 }' /proc/cgroups); do\n                 +
+              \     mkdir -p $sys\n                 +      if ! mountpoint -q $sys;
+              then\n                 +        if ! mount -n -t cgroup -o $sys cgroup
+              $sys; then\n                 +          rmdir $sys || true\n                 +
+              \       fi\n                 +      fi\n                 +    done\n
+              \                +  )\n           end script\n\n           script\n
+              \                -  # modify these in /etc/default/$UPSTART_JOB (/etc/default/docker)\n
+              \                -  DOCKER=/usr/bin/$UPSTART_JOB\n                 -
+              \ DOCKER_OPTS=\n                 -  if [ -f /etc/default/$UPSTART_JOB
+              ]; then\n                 -    . /etc/default/$UPSTART_JOB\n                 -
+              \ fi\n                 -  exec \"$DOCKER\" daemon $DOCKER_OPTS\n                 +
+              \ # modify these in /etc/default/$UPSTART_JOB (/etc/default/docker)\n
+              \                +  DOCKER=/usr/bin/$UPSTART_JOB\n                 +
+              \ DOCKER_OPTS=\n                 +  if [ -f /etc/default/$UPSTART_JOB
+              ]; then\n                 +    . /etc/default/$UPSTART_JOB\n                 +
+              \ fi\n                 +  exec \"$DOCKER\" daemon $DOCKER_OPTS\n           end
+              script\n\n                 -# Don't emit \"started\" event until docker.sock
+              is ready.\n                 +# Don't emit \"started\" event until the
+              docker socket is ready.\n           # See https://github.com/docker/docker/issues/6647\n
+              \          post-start script\n                 -  DOCKER_OPTS=\n                 -
+              \ if [ -f /etc/default/$UPSTART_JOB ]; then\n                 -    .
+              /etc/default/$UPSTART_JOB\n                 -  fi\n                 -
+              \ if ! printf \"%s\" \"$DOCKER_OPTS\" | grep -qE -e '-H|--host'; then\n
+              \                -    while ! [ -e /var/run/docker.sock ]; do\n                 -
+              \     initctl status $UPSTART_JOB | grep -qE \"(stop|respawn)/\" &&
+              exit 1\n                 -      echo \"Waiting for /var/run/docker.sock\"\n
+              \                -      sleep 0.1\n                 -    done\n                 -
+              \   echo \"/var/run/docker.sock is up\"\n                 -  fi\n                 +
+              \ DOCKER_OPTS=\n                 +  if [ -f /etc/default/$UPSTART_JOB
+              ]; then\n                 +    . /etc/default/$UPSTART_JOB\n                 +
+              \ fi\n                 +  /usr/lib/docker/docker-wait-ready\n                 +
+              \ if [ $? -eq 0 ]; then\n                 +    echo \" is up\"\n                 +
+              \ else\n                 +    echo \" failed to come start\"\n                 +
+              \   exit 1\n                 +  fi\n           end script\n               *
+              template[/etc/default/docker] action create\n                 - update
+              content in file /etc/default/docker from b395bb to 34924a\n                 ---
+              /etc/default/docker  2016-02-03 19:58:49.000000000 +0000\n                 +++
+              /etc/default/.chef-docker20160504-1504-18uul9a  2016-05-04 00:22:48.328169087
+              +0000\n                 @@ -1,21 +1,13 @@\n           # Docker Upstart
+              and SysVinit configuration file\n\n                 -#\n                 -#
+              THIS FILE DOES NOT APPLY TO SYSTEMD\n                 -#\n                 -#
+              \  Please see the documentation for \"systemd drop-ins\":\n                 -#
+              \  https://docs.docker.com/engine/articles/systemd/\n                 -#\n
+              \                -\n           # Customize location of Docker binary
+              (especially for development testing).\n                 -#DOCKER=\"/usr/local/bin/docker\"\n
+              \                +DOCKER=\"/usr/bin/docker\"\n\n           # Use DOCKER_OPTS
+              to modify the daemon startup options.\n                 -#DOCKER_OPTS=\"--dns
+              8.8.8.8 --dns 8.8.4.4\"\n                 +DOCKER_OPTS=\"-H unix:///var/run/docker.sock
+              --pidfile=/var/run/docker.pid\"\n\n           # If you need Docker to
+              use an HTTP proxy, it can also be specified here.\n                 -#export
+              http_proxy=\"http://127.0.0.1:3128/\"\n\n                 +\n           #
+              This is also a handy place to tweak where Docker's temporary files go.\n
+              \                -#export TMPDIR=\"/mnt/bigdrive/docker-tmp\"\n               *
+              docker_service_manager_upstart[default] action restart\n                 *
+              service[docker] action stop\n            - stop service service[docker]\n
+              \                * directory[/usr/lib/docker] action create (up to date)\n
+              \                * template[/usr/lib/docker/docker-wait-ready] action
+              create (up to date)\n                 * template[/etc/init/docker.conf]
+              action create (up to date)\n                 * template[/etc/default/docker]
+              action create (up to date)\n                 * service[docker] action
+              start\n\n            ================================================================================\n
+              \           Error executing action `start` on resource 'service[docker]'\n
+              \           ================================================================================\n\n
+              \           Mixlib::ShellOut::CommandTimeout\n            --------------------------------\n
+              \           Command timed out after 600s:\n            Command exceeded
+              allowed execution time, process terminated\n            ---- Begin output
+              of /sbin/start docker ----\n            STDOUT:\n            STDERR:\n
+              \           ---- End output of /sbin/start docker ----\n            Ran
+              /sbin/start docker returned\n\n            Cookbook Trace:\n            ---------------\n
+              \           /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n            /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in
+              `block in <class:DockerServiceManagerUpstart>'\n            /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `instance_eval'\n            /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `compile_and_converge_action'\n            /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n\n            Resource Declaration:\n
+              \           ---------------------\n            # In /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb\n\n
+              \            36:       service docker_name do\n             37:         provider
+              Chef::Provider::Service::Upstart\n             38:         supports
+              status: true\n             39:         action :start\n             40:
+              \      end\n             41:     end\n\n            Compiled Resource:\n
+              \           ------------------\n            # Declared in /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:36:in
+              `block in <class:DockerServiceManagerUpstart>'\n\n            service(\"docker\")
+              do\n              provider Chef::Provider::Service::Upstart\n              action
+              [:start]\n              supports {:status=>true}\n              retries
+              0\n              retry_delay 2\n              default_guard_interpreter
+              :default\n              service_name \"docker\"\n              pattern
+              \"docker\"\n              declared_type :service\n              cookbook_name
+              \"docker_test\"\n            end\n\n            Platform:\n            ---------\n
+              \           x86_64-linux\n\n\n                 ================================================================================\n
+              \                Error executing action `restart` on resource 'docker_service_manager_upstart[default]'\n
+              \                ================================================================================\n\n
+              \                Mixlib::ShellOut::CommandTimeout\n                 --------------------------------\n
+              \                service[docker] (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb
+              line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed
+              out after 600s:\n                 Command exceeded allowed execution
+              time, process terminated\n                 ---- Begin output of /sbin/start
+              docker ----\n                 STDOUT:\n                 STDERR:\n                 ----
+              End output of /sbin/start docker ----\n                 Ran /sbin/start
+              docker returned\n\n                 Cookbook Trace:\n                 ---------------\n
+              \                /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n                 /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in
+              `block in <class:DockerServiceManagerUpstart>'\n                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `instance_eval'\n                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `compile_and_converge_action'\n                 /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n\n                 Resource Declaration:\n
+              \                ---------------------\n                 # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb\n\n
+              \           7: docker_service_manager_upstart 'default' do\n            8:
+              \  host 'unix:///var/run/docker.sock'\n            9:   action :start\n
+              \          10: end\n           11:\n\n                 Compiled Resource:\n
+              \                ------------------\n                 # Declared in
+              /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in
+              `from_file'\n\n                 docker_service_manager_upstart(\"default\")
+              do\n            action [:start]\n            updated true\n            updated_by_last_action
+              true\n            retries 0\n            retry_delay 2\n            default_guard_interpreter
+              :default\n            declared_type :docker_service_manager_upstart\n
+              \           cookbook_name \"docker_test\"\n            recipe_name \"service_upstart\"\n
+              \           host [\"unix:///var/run/docker.sock\"]\n            pidfile
+              \"/var/run/docker.pid\"\n                 end\n\n                 Platform:\n
+              \                ---------\n                 x86_64-linux\n\n\n               ================================================================================\n
+              \              Error executing action `start` on resource 'docker_service_manager_upstart[default]'\n
+              \              ================================================================================\n\n
+              \              Mixlib::ShellOut::CommandTimeout\n               --------------------------------\n
+              \              docker_service_manager_upstart[default] (docker_test::service_upstart
+              line 7) had an error: Mixlib::ShellOut::CommandTimeout: service[docker]
+              (/tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb
+              line 36) had an error: Mixlib::ShellOut::CommandTimeout: Command timed
+              out after 600s:\n               Command exceeded allowed execution time,
+              process terminated\n               ---- Begin output of /sbin/start
+              docker ----\n               STDOUT:\n               STDERR:\n               ----
+              End output of /sbin/start docker ----\n               Ran /sbin/start
+              docker returned\n\n               Cookbook Trace:\n               ---------------\n
+              \              /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n               /tmp/kitchen/cache/cookbooks/docker/libraries/docker_service_manager_upstart.rb:53:in
+              `block in <class:DockerServiceManagerUpstart>'\n               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `instance_eval'\n               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:122:in
+              `compile_and_converge_action'\n               /tmp/kitchen/cache/cookbooks/compat_resource/files/lib/chef_compat/copied_from_chef/chef/provider.rb:123:in
+              `compile_and_converge_action'\n\n               Resource Declaration:\n
+              \              ---------------------\n               # In /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb\n\n
+              \                7: docker_service_manager_upstart 'default' do\n                 8:
+              \  host 'unix:///var/run/docker.sock'\n                 9:   action
+              :start\n                10: end\n                11:\n\n               Compiled
+              Resource:\n               ------------------\n               # Declared
+              in /tmp/kitchen/cache/cookbooks/docker_test/recipes/service_upstart.rb:7:in
+              `from_file'\n\n               docker_service_manager_upstart(\"default\")
+              do\n                 action [:start]\n                 updated true\n
+              \                updated_by_last_action true\n                 retries
+              0\n                 retry_delay 2\n                 default_guard_interpreter
+              :default\n                 declared_type :docker_service_manager_upstart\n
+              \                cookbook_name \"docker_test\"\n                 recipe_name
+              \"service_upstart\"\n                 host [\"unix:///var/run/docker.sock\"]\n
+              \                pidfile \"/var/run/docker.pid\"\n               end\n\n
+              \              Platform:\n               ---------\n               x86_64-linux\n\n
+              \          Starting audit phase\n\n           Finished in 0.00028 seconds
+              (files took 0.38585 seconds to load)\n           0 examples, 0 failures\n
+              \          Auditing complete\n\n           Running handlers:\n           [2016-05-04T00:32:59+00:00]
+              ERROR: Running exception handlers\n           Running handlers complete\n
+              \          [2016-05-04T00:32:59+00:00] ERROR: Exception handlers complete\n
+              \          Chef Client failed. 18 resources updated in 10 minutes 53
+              seconds\n           [2016-05-04T00:32:59+00:00] ERROR: Failed to post
+              audit report to server. Saving report to /tmp/kitchen/cache/failed-audit-data.json\n
+              \          [2016-05-04T00:32:59+00:00] FATAL: Stacktrace dumped to /tmp/kitchen/cache/chef-stacktrace.out\n
+              \          [2016-05-04T00:32:59+00:00] FATAL: Please provide the contents
+              of the stacktrace.out file if you file a bug report\n           [2016-05-04T00:32:59+00:00]
+              ERROR: Found 1 errors, they are stored in the backtrace\n           [2016-05-04T00:33:00+00:00]
+              FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited
+              unsuccessfully (exit code 1)\n    STDERR: >>>>>> Converge failed on
+              instance <docker-default-ubuntu-1404>.\n    >>>>>> Please see .kitchen/logs/docker-default-ubuntu-1404.log
+              for more details\n    >>>>>> ------Exception-------\n    >>>>>> Class:
+              Kitchen::ActionFailed\n    >>>>>> Message: SSH exited (1) for command:
+              [sh -c '\n\n    sudo -E /opt/chefdk/bin/chef-client --local-mode --config
+              /tmp/kitchen/client.rb --log_level auto --force-formatter --no-color
+              --json-attributes /tmp/kitchen/dna.json --chef-zero-port 8889\n    ']\n
+              \   >>>>>> ----------------------\n    zlib(finalizer): the stream was
+              freed prematurely.\n    ---- End output of bundle exec kitchen converge
+              \ -c ----\n    Ran bundle exec kitchen converge  -c returned 10\n\n
+              \   Resource Declaration:\n    ---------------------\n    # In /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/provision.rb\n\n
+              \     1: top_cookbooks \"converge\"\n\n    Compiled Resource:\n    ------------------\n
+              \   # Declared in /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in
+              `from_file'\n\n    top_cookbooks(\"converge\") do\n      action [:run]\n
+              \     updated true\n      updated_by_last_action true\n      retries
+              0\n      retry_delay 2\n      default_guard_interpreter :default\n      declared_type
+              :top_cookbooks\n      cookbook_name \"acceptance-cookbook\"\n      recipe_name
+              \"provision\"\n      command \"converge\"\n    end\n\n    Platform:\n
+              \   ---------\n    x86_64-linux\n\nStarting audit phase\n"
+            4747: |2
+
+              Running handlers:
+              [2016-05-04T00:33:01+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-05-04T00:33:01+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 2 resources updated in 12 minutes 46 seconds
+              [2016-05-04T00:33:01+00:00] ERROR: Failed to post audit report to server. Saving report to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/failed-audit-data.json
+              [2016-05-04T00:33:01+00:00] FATAL: Stacktrace dumped to /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/local-mode-cache/cache/chef-stacktrace.out
+              [2016-05-04T00:33:01+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-05-04T00:33:01+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              [2016-05-04T00:33:01+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              STDERR:
+              ---- End output of chef-client -z -c /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/config.rb --force-formatter -j /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/dna.json -o acceptance-cookbook::provision --no-color ----
+              Ran chef-client -z -c /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/.chef/config.rb --force-formatter -j /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-12.9.38/acceptance/top-cookbooks/.acceptance/acceptance-cookbook/tmp/dna.json -o acceptance-cookbook::provision --no-color returned 1
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:289:in `invalid!'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:276:in `error!'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/chef_runner.rb:40:in `block in run!'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.1/lib/bundler.rb:237:in `block in with_clean_env'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.1/lib/bundler.rb:447:in `with_env'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.1/lib/bundler.rb:237:in `with_clean_env'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/chef_runner.rb:35:in `run!'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/application.rb:144:in `run_command'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/application.rb:111:in `block in run_suite'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/application.rb:109:in `each'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/application.rb:109:in `run_suite'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/application.rb:75:in `block (2 levels) in start_worker'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/application.rb:73:in `loop'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/bundler/gems/chef-acceptance-49458ec493db/lib/chef-acceptance/application.rb:73:in `block in start_worker'
+              CHEF-ACCEPTANCE::[2016-05-04 00:33:01 +0000] --force-destroy specified so attempting to run the destroy recipe
+              TOP-COOKBOOKS::DESTROY::[2016-05-04 00:33:01 +0000] Initialized [.acceptance_logs/top-cookbooks/destroy.log] logger...
+            4974: |
+              CHEF-ACCEPTANCE::[2016-05-04 00:33:44 +0000] | top-cookbooks | Total         | 00:13:32 | Y     |
+              CHEF-ACCEPTANCE::[2016-05-04 00:33:44 +0000] | Run           | Total         | 00:13:32 | Y     |
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+        steps:
+          total: 14m34s
+          before (setup time): 24m12s
+          CHEF-ACCEPTANCE:
+            total: 13m32s
+            TOP-COOKBOOKS::PROVISION: 12m49s
+            TOP-COOKBOOKS::DESTROY: 43s
+          after (cleanup time): "-23m9s"
+        chef_acceptance_timing:
+        - top-cookbooks:
+            provision: 12m8s
+            force-destroy: 32s
+            Total: 13m32s
+          Run:
+            Total: 13m32s
+      windows-2008r2-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/142/
+        duration: 9m51s
+      debian-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/142/
+        duration: 17m20s
+      debian-7:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-7,project=chefdk,role=tester/142/
+        duration: 12m41s
+      debian-8:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-8,project=chefdk,role=tester/142/
+        duration: 13m31s
+      el-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-6,project=chefdk,role=tester/142/
+        duration: 26m50s
+      el-7:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-7,project=chefdk,role=tester/142/
+        duration: 11m20s
+      mac_os_x-10.10:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.10,project=chefdk,role=tester/142/
+        duration: 9m30s
+      mac_os_x-10.11:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.11,project=chefdk,role=tester/142/
+        duration: 7m39s
+      mac_os_x-10.9:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=tester/142/
+        duration: 9m54s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=tester/142/
+        duration: 11m8s
+      ubuntu-14.04:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/142/
+        duration: 15m20s
+  chefdk-build:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/367/
+    duration: 1h32m41s
+    runs:
+      windows-2008r2-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/367/
+        duration: 30m29s
+      debian-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/367/
+        duration: 37m27s
+      el-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/367/
+        duration: 44m1s
+      el-7:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/367/
+        duration: 32m12s
+      mac_os_x-10.9:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/367/
+        duration: 16m
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/367/
+        duration: 35m43s
+  chefdk-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-trigger-ad_hoc/256/
+    duration: 3s
+successful_logs_analyzed: false

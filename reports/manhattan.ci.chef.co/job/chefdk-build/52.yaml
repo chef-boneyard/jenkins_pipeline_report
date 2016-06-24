@@ -1,0 +1,142 @@
+---
+result: FAILURE
+url: http://manhattan.ci.chef.co/job/chefdk-build/52/
+failure_category: network
+failure_cause: 'worker disconnected: windows: chefdk-build'
+timestamp: 2016-03-07 21:58:00 UTC
+duration: 46m
+triggered_by: mwrock
+active_duration: 1h58m24s
+parameters:
+  GIT_REF: jenkins_acceptance
+  APPEND_TIMESTAMP: true
+  DELIVERY_CHANGE: ''
+  DELIVERY_SHA: ''
+change:
+  git_remote: git://github.com/chef/chef-dk.git
+stages:
+  chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/52/
+    duration: 26m36s
+  chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/52/
+    duration: 45m47s
+  chefdk-build:
+    result: FAILURE
+    failure_category: network
+    failure_cause: 'worker disconnected: windows'
+    url: http://manhattan.ci.chef.co/job/chefdk-build/52/
+    duration: 46m
+    runs:
+      windows-2008r2-i386:
+        result: FAILURE
+        failure_category: network
+        failure_cause: worker disconnected
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/52/
+        duration: 18m35s
+        logs:
+          consoleText:
+            209: |
+              ============================================================
+
+              Slave went offline during the build
+              ERROR: Connection was broken: java.io.IOException: Connection timed out
+                at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+                at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+                at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+                at sun.nio.ch.IOUtil.read(IOUtil.java:197)
+                at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:379)
+                at hudson.remoting.SocketChannelStream$1.read(SocketChannelStream.java:35)
+                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:65)
+                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:109)
+                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:103)
+                at java.io.BufferedInputStream.fill(BufferedInputStream.java:235)
+                at java.io.BufferedInputStream.read1(BufferedInputStream.java:275)
+                at java.io.BufferedInputStream.read(BufferedInputStream.java:334)
+                at hudson.remoting.FlightRecorderInputStream.read(FlightRecorderInputStream.java:90)
+                at hudson.remoting.ChunkedInputStream.read(ChunkedInputStream.java:46)
+                at hudson.remoting.ChunkedInputStream.readUntilBreak(ChunkedInputStream.java:97)
+                at hudson.remoting.ChunkedCommandTransport.readBlock(ChunkedCommandTransport.java:39)
+                at hudson.remoting.AbstractSynchronousByteArrayCommandTransport.read(AbstractSynchronousByteArrayCommandTransport.java:34)
+                at hudson.remoting.SynchronousCommandTransport$ReaderThread.run(SynchronousCommandTransport.java:48)
+
+              Build step 'Invoke XShell command' marked build as failure
+              FATAL: channel is already closed
+              hudson.remoting.ChannelClosedException: channel is already closed
+                at hudson.remoting.Channel.send(Channel.java:550)
+                at hudson.remoting.Request.call(Request.java:129)
+                at hudson.remoting.Channel.call(Channel.java:752)
+                at hudson.Launcher$RemoteLauncher.kill(Launcher.java:941)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:542)
+                at hudson.model.Run.execute(Run.java:1741)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              Caused by: java.io.IOException: Connection timed out
+                at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+                at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+                at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+                at sun.nio.ch.IOUtil.read(IOUtil.java:197)
+                at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:379)
+                at hudson.remoting.SocketChannelStream$1.read(SocketChannelStream.java:35)
+                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:65)
+                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:109)
+                at sun.nio.ch.ChannelInputStream.read(ChannelInputStream.java:103)
+                at java.io.BufferedInputStream.fill(BufferedInputStream.java:235)
+                at java.io.BufferedInputStream.read1(BufferedInputStream.java:275)
+                at java.io.BufferedInputStream.read(BufferedInputStream.java:334)
+                at hudson.remoting.FlightRecorderInputStream.read(FlightRecorderInputStream.java:90)
+                at hudson.remoting.ChunkedInputStream.read(ChunkedInputStream.java:46)
+                at hudson.remoting.ChunkedInputStream.readUntilBreak(ChunkedInputStream.java:97)
+                at hudson.remoting.ChunkedCommandTransport.readBlock(ChunkedCommandTransport.java:39)
+                at hudson.remoting.AbstractSynchronousByteArrayCommandTransport.read(AbstractSynchronousByteArrayCommandTransport.java:34)
+                at hudson.remoting.SynchronousCommandTransport$ReaderThread.run(SynchronousCommandTransport.java:48)
+              ERROR: Publisher hudson.tasks.ArtifactArchiver aborted due to exception
+              hudson.AbortException: no workspace for chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder #52
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              ERROR: Publisher hudson.tasks.Fingerprinter aborted due to exception
+              hudson.AbortException: no workspace for chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder #52
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              Regular expression run condition: Expression=[^(?!true)$], Label=[]
+              Run condition [Regular expression match] enabling perform for step [[Editable Email Notification]]
+      debian-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/52/
+        duration: 37m45s
+      el-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/52/
+        duration: 45m47s
+      el-7:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/52/
+        duration: 31m53s
+      mac_os_x-10.9:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/52/
+        duration: 26m36s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/52/
+        duration: 32m5s
+successful_logs_analyzed: false

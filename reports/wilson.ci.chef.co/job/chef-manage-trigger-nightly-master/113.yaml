@@ -1,0 +1,143 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/chef-manage-trigger-nightly-master/113/
+failure_category: code
+failure_cause: 'chef-client: ubuntu-14.04: chef-manage-test'
+timestamp: 2016-03-31 09:35:00 UTC
+duration: 2h59m33s
+active_duration: 4h14m51s
+parameters: {}
+change:
+  git_remote: git@github.com:chef/chef-manage.git
+  git_commit: 7d163e717feaa91dd7c78e7111f2229510a589e5
+  project: chef-manage
+  version: 2.2.0+20160331093603.git.4.7d163e7
+stages:
+  chef-manage-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-manage-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=builder/146/
+    duration: 56m31s
+  chef-manage-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=tester:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=tester/129/
+    duration: 19m
+  chef-manage-test:
+    result: FAILURE
+    failure_category: code
+    failure_cause: 'chef-client: ubuntu-14.04'
+    url: http://wilson.ci.chef.co/job/chef-manage-test/129/
+    duration: 34m31s
+    runs:
+      ubuntu-14.04:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-manage,role=tester/129/
+        duration: 15m19s
+        logs:
+          consoleText:
+            2622: |
+              [2016-03-31T12:15:11+00:00] INFO: Processing execute[restart_nginx_log_service] action run (private-chef::nginx line 19)
+              [2016-03-31T12:15:12+00:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-03-31T12:15:12+00:00] ERROR: Running exception handlers
+              [2016-03-31T12:15:12+00:00] ERROR: Exception handlers complete
+              [2016-03-31T12:15:12+00:00] FATAL: Stacktrace dumped to /opt/opscode/embedded/cookbooks/cache/chef-stacktrace.out
+              [2016-03-31T12:15:12+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-03-31T12:15:12+00:00] FATAL: Mixlib::ShellOut::ShellCommandFailed: execute[restart_postgresql_log_service] (private-chef::postgresql line 19) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '1'
+              ---- Begin output of /opt/opscode/embedded/bin/sv restart /opt/opscode/sv/postgresql/log ----
+              STDOUT: timeout: run: /opt/opscode/sv/postgresql/log: (pid 6769) 292s, got TERM
+              STDERR:
+              ---- End output of /opt/opscode/embedded/bin/sv restart /opt/opscode/sv/postgresql/log ----
+              Ran /opt/opscode/embedded/bin/sv restart /opt/opscode/sv/postgresql/log returned 1
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            2661: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to chef-manage-ubuntu-14.04-tester-c31d42(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              Regular expression run condition: Expression=[^(?!true)$], Label=[]
+              Run condition [Regular expression match] enabling perform for step [[Editable Email Notification]]
+        steps:
+          total: 15m19s
+          before (setup time): 8m41s
+          after (cleanup time): 6m32s
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=el-5,project=chef-manage,role=tester/129/
+        duration: 34m30s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=el-6,project=chef-manage,role=tester/129/
+        duration: 25m22s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=el-7,project=chef-manage,role=tester/129/
+        duration: 20m28s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=tester/129/
+        duration: 19m
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-manage,role=tester/129/
+        duration: 20m7s
+  chef-manage-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-manage-build/146/
+    duration: 2h23m49s
+    runs:
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-manage-build/architecture=x86_64,platform=el-5,project=chef-manage,role=builder/146/
+        duration: 2h23m13s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-manage-build/architecture=x86_64,platform=el-6,project=chef-manage,role=builder/146/
+        duration: 1h29m44s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-manage-build/architecture=x86_64,platform=el-7,project=chef-manage,role=builder/146/
+        duration: 55m42s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-manage-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=builder/146/
+        duration: 56m31s
+  chef-manage-trigger-nightly-master:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-manage-trigger-nightly-master/113/
+    duration: 57s
+successful_logs_analyzed: false

@@ -1,0 +1,53 @@
+---
+result: SUCCESS
+url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-ad_hoc/4/
+timestamp: 2015-12-15 00:12:12 UTC
+duration: 1h8m37s
+triggered_by: ryancragun
+active_duration: 1h8m14s
+queue_delays: 10s
+parameters:
+  GIT_REF: ryan/node_register
+  EXPIRE_CACHE: false
+change:
+  git_remote: git@github.com:chef-partners/omnibus-marketplace.git
+  git_commit: 6bb296158cfc1510efa8d4d3143f9fab3bd6aefc
+  project: chef-marketplace
+  version: 0.0.4+20151215001223.git.6.6bb2961
+stages:
+  chef-marketplace-promote:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-marketplace-promote/3/
+    duration: 0s
+  chef-marketplace-test:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-marketplace-test/10/
+    duration: 41m9s
+    runs:
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-6,project=chef-marketplace,role=tester/10/
+        duration: 41m9s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-7,project=chef-marketplace,role=tester/10/
+        duration: 31m
+  chef-marketplace-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-marketplace-build/10/
+    duration: 27m3s
+    queue_delay: 10s
+    runs:
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-6,project=chef-marketplace,role=builder/10/
+        duration: 26m52s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-7,project=chef-marketplace,role=builder/10/
+        duration: 16m14s
+  chef-marketplace-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-ad_hoc/4/
+    duration: 1s
+successful_logs_analyzed: false

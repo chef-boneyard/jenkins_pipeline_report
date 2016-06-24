@@ -1,0 +1,49 @@
+---
+result: SUCCESS
+url: http://wilson.ci.chef.co/job/chef-server-12-fips-trigger-ad_hoc/4/
+timestamp: 2015-12-16 21:52:11 UTC
+duration: 3h28m19s
+triggered_by: jaym
+active_duration: 2h22m46s
+queue_delays: 10s
+retry_delays: 1h5m6s
+parameters:
+  GIT_REF: jdm/fips2
+  EXPIRE_CACHE: false
+change:
+  git_remote: git@github.com:chef/chef-server.git
+  git_commit: 4f5bb37d9b3bd7d330aa890e453b7cf689641767
+  project: chef-server-fips
+  version: 12.3.1+20151216215230
+stages:
+  chef-server-12-fips-promote:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-fips-promote/1/
+    duration: 0s
+  chef-server-12-fips-test:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-fips-test/4/
+    duration: 1h50m24s
+    active_duration: 45m17s
+    retries: 1
+    retry_delay: 1h5m6s
+    runs:
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-fips-test/architecture=x86_64,platform=el-6,project=chef-server-fips,role=tester/4/
+        duration: 45m16s
+  chef-server-12-fips-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-fips-build/6/
+    duration: 1h37m20s
+    queue_delay: 10s
+    runs:
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-fips-build/architecture=x86_64,platform=el-6,project=chef-server-fips,role=builder/6/
+        duration: 1h37m
+  chef-server-12-fips-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-fips-trigger-ad_hoc/4/
+    duration: 8s
+successful_logs_analyzed: false

@@ -1,0 +1,51 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/delivery-build/458/
+failure_category: network
+failure_cause: 'network reset rubygems.org: el-6: delivery-build'
+timestamp: 2016-05-17 13:44:50 UTC
+duration: 21m14s
+triggered_by: chef-jenkins
+active_duration: 21m14s
+parameters:
+  DELIVERY_SHA: 73eee6f8dbc028ba22181a3405b0c6c7de81487f
+  DELIVERY_CHANGE: e9705368-addb-4d6e-943f-c8ea2fe4689b
+  APPEND_TIMESTAMP: false
+  GIT_REF: 73eee6f8dbc028ba22181a3405b0c6c7de81487f
+change:
+  git_remote: git@github.com:opscode/delivery.git
+stages:
+  delivery-build:
+    result: FAILURE
+    failure_category: network
+    failure_cause: 'network reset rubygems.org: el-6'
+    url: http://wilson.ci.chef.co/job/delivery-build/458/
+    duration: 21m14s
+    runs:
+      el-6:
+        result: FAILURE
+        failure_category: network
+        failure_cause: network reset rubygems.org
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=el-6,project=delivery,role=builder/458/
+        duration: 1m39s
+        logs:
+          consoleText:
+            177: |
+              Installing ffi-yajl 2.2.3 with native extensions
+
+              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/ipaddress-0.8.3.gem)
+              An error occurred while installing ipaddress (0.8.3), and Bundler cannot
+              continue.
+              Make sure that `gem install ipaddress -v '0.8.3'` succeeds before bundling.
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=el-7,project=delivery,role=builder/458/
+        duration: 21m
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=ubuntu-12.04,project=delivery,role=builder/458/
+        duration: 17m37s
+successful_logs_analyzed: false

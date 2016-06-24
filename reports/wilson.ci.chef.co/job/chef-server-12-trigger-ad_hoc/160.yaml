@@ -1,0 +1,621 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/chef-server-12-trigger-ad_hoc/160/
+failure_category: code
+failure_cause: 'chef-client: all: chef-server-12-test'
+timestamp: 2016-05-18 16:55:55 UTC
+duration: 2h9m2s
+triggered_by: ryancragun
+active_duration: 1h11m10s
+retry_delays: 1h39m23s
+parameters:
+  GIT_REF: master
+  EXPIRE_CACHE: false
+change:
+  git_remote: git@github.com:chef/chef-server.git
+  git_commit: 329dc5bb39cbbf9c45a1e6e615e4d4989abda941
+  project: chef-server
+  version: 12.6.0+20160518183535
+stages:
+  chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/274/
+    duration: 20m29s
+  chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/274/
+    duration: 21m14s
+  chef-server-12-test:
+    result: FAILURE
+    failure_category: code
+    failure_cause: 'chef-client: all'
+    url: http://wilson.ci.chef.co/job/chef-server-12-test/232/
+    duration: 7m52s
+    runs:
+      el-5:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-5,project=chef-server,role=tester/232/
+        duration: 7m52s
+        logs:
+          consoleText:
+            397: |
+              [2016-05-18T15:02:47-04:00] INFO: GET /organizations/chef/nodes/ip-10-194-15-112.us-west-2.compute.internal
+              [2016-05-18T15:02:47-04:00] INFO: #<ChefZero::RestErrorResponse: 404: Object not found: chefzero://localhost:8889/nodes/ip-10-194-15-112.us-west-2.compute.internal>
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:91:in `rescue in get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:83:in `get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/rest_object_endpoint.rb:18:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:62:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_router.rb:24:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:664:in `block in app'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:87:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:33:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:305:in `block in send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:336:in `block in retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:334:in `loop'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:334:in `retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:299:in `send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:144:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:111:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/node.rb:604:in `load'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/node.rb:588:in `find_or_create'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/client.rb:465:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/client.rb:267:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:267:in `run_with_graceful_exit_option'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:243:in `block in run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:226:in `run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application/client.rb:419:in `run_application'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:58:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/bin/chef-client:26:in `<top (required)>'
+              /opt/opscode/embedded/bin/chef-client:23:in `load'
+              /opt/opscode/embedded/bin/chef-client:23:in `<main>'
+              [2016-05-18T15:02:47-04:00] INFO: HTTP Request Returned 404 Not Found: Object not found: chefzero://localhost:8889/nodes/ip-10-194-15-112.us-west-2.compute.internal
+              [2016-05-18T15:02:47-04:00] INFO: POST /organizations/chef/nodes
+            1625: |2
+
+              \33[0m[2016-05-18T15:02:52-04:00] INFO: Running queued delayed notifications before re-raising exception
+              [2016-05-18T15:02:52-04:00] ERROR: Running exception handlers
+              [2016-05-18T15:02:52-04:00] ERROR: Exception handlers complete
+              [2016-05-18T15:02:52-04:00] FATAL: Stacktrace dumped to /var/opt/opscode/local-mode-cache/chef-stacktrace.out
+              [2016-05-18T15:02:52-04:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-05-18T15:02:52-04:00] FATAL: NoMethodError: template[/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-defaults] (private-chef::rabbitmq line 62) had an error: NoMethodError: undefined method `streaming_request' for "/var/opt/opscode/local-mode-cache/cookbooks":String
+            1640: |
+              ============================================================
+
+              /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/config.rb:34:in `from_argv': Configuration file '/var/opt/opscode/oc-chef-pedant/etc/pedant_config.rb' not found! (RuntimeError)
+                from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant.rb:54:in `setup'
+                from ./bin/oc-chef-pedant:10:in `<main>'
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            1664: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to chef-server-rhel-5-tester-4e6602(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              Regular expression run condition: Expression=[^(?!true)$], Label=[true]
+              Run condition [Regular expression match] preventing perform for step [[Editable Email Notification]]
+        steps:
+          total: 7m52s
+          before (setup time): 5m37s
+          after (cleanup time): 2m11s
+      el-6:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-6,project=chef-server,role=tester/232/
+        duration: 4m56s
+        logs:
+          consoleText:
+            393: |
+              [2016-05-18T14:55:44-04:00] INFO: GET /organizations/chef/nodes/ip-10-194-9-233.us-west-2.compute.internal
+              [2016-05-18T14:55:44-04:00] INFO: #<ChefZero::RestErrorResponse: 404: Object not found: chefzero://localhost:8889/nodes/ip-10-194-9-233.us-west-2.compute.internal>
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:91:in `rescue in get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:83:in `get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/rest_object_endpoint.rb:18:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:62:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_router.rb:24:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:664:in `block in app'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:87:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:33:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:305:in `block in send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:336:in `block in retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:334:in `loop'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:334:in `retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:299:in `send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:144:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:111:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/node.rb:604:in `load'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/node.rb:588:in `find_or_create'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/client.rb:465:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/client.rb:267:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:267:in `run_with_graceful_exit_option'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:243:in `block in run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:226:in `run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application/client.rb:419:in `run_application'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:58:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/bin/chef-client:26:in `<top (required)>'
+              /opt/opscode/embedded/bin/chef-client:23:in `load'
+              /opt/opscode/embedded/bin/chef-client:23:in `<main>'
+              [2016-05-18T14:55:44-04:00] INFO: HTTP Request Returned 404 Not Found: Object not found: chefzero://localhost:8889/nodes/ip-10-194-9-233.us-west-2.compute.internal
+              [2016-05-18T14:55:44-04:00] INFO: POST /organizations/chef/nodes
+            1624: |2
+
+              \33[0m[2016-05-18T14:55:51-04:00] INFO: Running queued delayed notifications before re-raising exception
+              [2016-05-18T14:55:51-04:00] ERROR: Running exception handlers
+              [2016-05-18T14:55:51-04:00] ERROR: Exception handlers complete
+              [2016-05-18T14:55:51-04:00] FATAL: Stacktrace dumped to /var/opt/opscode/local-mode-cache/chef-stacktrace.out
+              [2016-05-18T14:55:51-04:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-05-18T14:55:51-04:00] FATAL: NoMethodError: template[/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-defaults] (private-chef::rabbitmq line 62) had an error: NoMethodError: undefined method `streaming_request' for "/var/opt/opscode/local-mode-cache/cookbooks":String
+            1639: |
+              ============================================================
+
+              /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/config.rb:34:in `from_argv': Configuration file '/var/opt/opscode/oc-chef-pedant/etc/pedant_config.rb' not found! (RuntimeError)
+                from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant.rb:54:in `setup'
+                from ./bin/oc-chef-pedant:10:in `<main>'
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            1663: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to chef-server-rhel-6-tester-8151c8(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              Regular expression run condition: Expression=[^(?!true)$], Label=[true]
+              Run condition [Regular expression match] preventing perform for step [[Editable Email Notification]]
+        steps:
+          total: 4m56s
+          before (setup time): "-1m26s"
+          after (cleanup time): 6m18s
+      el-7:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-7,project=chef-server,role=tester/232/
+        duration: 5m50s
+        logs:
+          consoleText:
+            55655: |
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/int1-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/file-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.7.2/ri/Nokogiri/XML/SyntaxError/domain-i.ri: remove failed: No such file or directory
+            62866: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception: remove failed: No such file or directory
+            63805: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/MYMETA.json: remove failed: No such file or directory
+            64220: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Dir/Base.pm: remove failed: No such file or directory
+            68044: |
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/typemap: remove failed: No such file or directory
+            77510: |
+              [2016-05-18T15:00:46-04:00] INFO: GET /organizations/chef/nodes/ip-10-194-10-226.us-west-2.compute.internal
+              [2016-05-18T15:00:46-04:00] INFO: #<ChefZero::RestErrorResponse: 404: Object not found: chefzero://localhost:8889/nodes/ip-10-194-10-226.us-west-2.compute.internal>
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:91:in `rescue in get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:83:in `get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/rest_object_endpoint.rb:18:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:62:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_router.rb:24:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:664:in `block in app'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:87:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:33:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:305:in `block in send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:336:in `block in retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:334:in `loop'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:334:in `retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:299:in `send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:144:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:111:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/node.rb:604:in `load'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/node.rb:588:in `find_or_create'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/client.rb:465:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/client.rb:267:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:267:in `run_with_graceful_exit_option'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:243:in `block in run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:226:in `run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application/client.rb:419:in `run_application'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:58:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/bin/chef-client:26:in `<top (required)>'
+              /opt/opscode/embedded/bin/chef-client:23:in `load'
+              /opt/opscode/embedded/bin/chef-client:23:in `<main>'
+              [2016-05-18T15:00:46-04:00] INFO: HTTP Request Returned 404 Not Found: Object not found: chefzero://localhost:8889/nodes/ip-10-194-10-226.us-west-2.compute.internal
+              [2016-05-18T15:00:46-04:00] INFO: POST /organizations/chef/nodes
+            78734: |2
+
+              \33[0m[2016-05-18T15:00:51-04:00] INFO: Running queued delayed notifications before re-raising exception
+              [2016-05-18T15:00:51-04:00] ERROR: Running exception handlers
+              [2016-05-18T15:00:51-04:00] ERROR: Exception handlers complete
+              [2016-05-18T15:00:51-04:00] FATAL: Stacktrace dumped to /var/opt/opscode/local-mode-cache/chef-stacktrace.out
+              [2016-05-18T15:00:51-04:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-05-18T15:00:53-04:00] FATAL: NoMethodError: template[/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-defaults] (private-chef::rabbitmq line 62) had an error: NoMethodError: undefined method `streaming_request' for "/var/opt/opscode/local-mode-cache/cookbooks":String
+            78749: |
+              ============================================================
+
+              /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/config.rb:34:in `from_argv': Configuration file '/var/opt/opscode/oc-chef-pedant/etc/pedant_config.rb' not found! (RuntimeError)
+                from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant.rb:54:in `setup'
+                from ./bin/oc-chef-pedant:10:in `<main>'
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            78773: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to chef-server-rhel-7-tester-d586ce(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              Regular expression run condition: Expression=[^(?!true)$], Label=[true]
+              Run condition [Regular expression match] preventing perform for step [[Editable Email Notification]]
+        steps:
+          total: 5m50s
+          before (setup time): 3m37s
+          after (cleanup time): 2m10s
+      ubuntu-12.04:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-server,role=tester/232/
+        duration: 5m19s
+        logs:
+          consoleText:
+            412: |
+              [2016-05-18T19:00:16+00:00] INFO: GET /organizations/chef/nodes/ip-10-194-11-179.us-west-2.compute.internal
+              [2016-05-18T19:00:16+00:00] INFO: #<ChefZero::RestErrorResponse: 404: Object not found: chefzero://localhost:8889/nodes/ip-10-194-11-179.us-west-2.compute.internal>
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:91:in `rescue in get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:83:in `get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/rest_object_endpoint.rb:18:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:62:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_router.rb:24:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:664:in `block in app'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:87:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:33:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:305:in `block in send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:336:in `block in retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:334:in `loop'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:334:in `retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:299:in `send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:144:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:111:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/node.rb:604:in `load'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/node.rb:588:in `find_or_create'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/client.rb:465:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/client.rb:267:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:267:in `run_with_graceful_exit_option'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:243:in `block in run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:226:in `run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application/client.rb:419:in `run_application'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:58:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/bin/chef-client:26:in `<top (required)>'
+              /opt/opscode/embedded/bin/chef-client:23:in `load'
+              /opt/opscode/embedded/bin/chef-client:23:in `<main>'
+              [2016-05-18T19:00:16+00:00] INFO: HTTP Request Returned 404 Not Found: Object not found: chefzero://localhost:8889/nodes/ip-10-194-11-179.us-west-2.compute.internal
+              [2016-05-18T19:00:16+00:00] INFO: POST /organizations/chef/nodes
+            1642: |2
+
+              \33[0m[2016-05-18T19:00:20+00:00] INFO: Running queued delayed notifications before re-raising exception
+              [2016-05-18T19:00:20+00:00] ERROR: Running exception handlers
+              [2016-05-18T19:00:20+00:00] ERROR: Exception handlers complete
+              [2016-05-18T19:00:20+00:00] FATAL: Stacktrace dumped to /var/opt/opscode/local-mode-cache/chef-stacktrace.out
+              [2016-05-18T19:00:20+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-05-18T19:00:21+00:00] FATAL: NoMethodError: template[/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-defaults] (private-chef::rabbitmq line 62) had an error: NoMethodError: undefined method `streaming_request' for "/var/opt/opscode/local-mode-cache/cookbooks":String
+            1657: |
+              ============================================================
+
+              /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/config.rb:34:in `from_argv': Configuration file '/var/opt/opscode/oc-chef-pedant/etc/pedant_config.rb' not found! (RuntimeError)
+                from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant.rb:54:in `setup'
+                from ./bin/oc-chef-pedant:10:in `<main>'
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            1681: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to chef-server-ubuntu-12.04-tester-28c735(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              Regular expression run condition: Expression=[^(?!true)$], Label=[true]
+              Run condition [Regular expression match] preventing perform for step [[Editable Email Notification]]
+        steps:
+          total: 5m19s
+          before (setup time): 3m8s
+          after (cleanup time): 2m9s
+      ubuntu-14.04:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-server,role=tester/232/
+        duration: 4m51s
+        logs:
+          consoleText:
+            439: |
+              [2016-05-18T18:59:46+00:00] INFO: GET /organizations/chef/nodes/ip-10-194-13-226.us-west-2.compute.internal
+              [2016-05-18T18:59:46+00:00] INFO: #<ChefZero::RestErrorResponse: 404: Object not found: chefzero://localhost:8889/nodes/ip-10-194-13-226.us-west-2.compute.internal>
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:91:in `rescue in get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:83:in `get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/rest_object_endpoint.rb:18:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:62:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_router.rb:24:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:664:in `block in app'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:87:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:33:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:305:in `block in send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:336:in `block in retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:334:in `loop'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:334:in `retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:299:in `send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:144:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/http.rb:111:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/node.rb:604:in `load'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/node.rb:588:in `find_or_create'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/client.rb:465:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/client.rb:267:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:267:in `run_with_graceful_exit_option'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:243:in `block in run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:226:in `run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application/client.rb:419:in `run_application'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/lib/chef/application.rb:58:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.10.60/bin/chef-client:26:in `<top (required)>'
+              /opt/opscode/embedded/bin/chef-client:23:in `load'
+              /opt/opscode/embedded/bin/chef-client:23:in `<main>'
+              [2016-05-18T18:59:46+00:00] INFO: HTTP Request Returned 404 Not Found: Object not found: chefzero://localhost:8889/nodes/ip-10-194-13-226.us-west-2.compute.internal
+              [2016-05-18T18:59:46+00:00] INFO: POST /organizations/chef/nodes
+            1669: |2
+
+              \33[0m[2016-05-18T18:59:50+00:00] INFO: Running queued delayed notifications before re-raising exception
+              [2016-05-18T18:59:50+00:00] ERROR: Running exception handlers
+              [2016-05-18T18:59:50+00:00] ERROR: Exception handlers complete
+              [2016-05-18T18:59:50+00:00] FATAL: Stacktrace dumped to /var/opt/opscode/local-mode-cache/chef-stacktrace.out
+              [2016-05-18T18:59:50+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-05-18T18:59:52+00:00] FATAL: NoMethodError: template[/opt/opscode/embedded/service/rabbitmq/sbin/rabbitmq-defaults] (private-chef::rabbitmq line 62) had an error: NoMethodError: undefined method `streaming_request' for "/var/opt/opscode/local-mode-cache/cookbooks":String
+            1684: |
+              ============================================================
+
+              /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/config.rb:34:in `from_argv': Configuration file '/var/opt/opscode/oc-chef-pedant/etc/pedant_config.rb' not found! (RuntimeError)
+                from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant.rb:54:in `setup'
+                from ./bin/oc-chef-pedant:10:in `<main>'
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            1708: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to chef-server-ubuntu-14.04-tester-69fc04(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              Regular expression run condition: Expression=[^(?!true)$], Label=[true]
+              Run condition [Regular expression match] preventing perform for step [[Editable Email Notification]]
+        steps:
+          total: 4m51s
+          before (setup time): 2m37s
+          after (cleanup time): 2m11s
+  chef-server-12-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-build/274/
+    duration: 21m23s
+    runs:
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/274/
+        duration: 21m14s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/274/
+        duration: 20m29s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-7,project=chef-server,role=builder/274/
+        duration: 20m50s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=ubuntu-12.04,project=chef-server,role=builder/274/
+        duration: 14m22s
+  chef-server-12-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-trigger-ad_hoc/161/
+    duration: 1h39m33s
+    active_duration: 10s
+    retries: 1
+    retry_delay: 1h39m23s
+successful_logs_analyzed: false

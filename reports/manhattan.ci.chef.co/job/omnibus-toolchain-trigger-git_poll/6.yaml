@@ -1,0 +1,168 @@
+---
+result: ABORTED
+url: http://manhattan.ci.chef.co/job/omnibus-toolchain-trigger-git_poll/6/
+failure_category: aborted
+failure_cause: 'aborted: el-5, el-6-i386, el-7, solaris-10-sun4v; unknown: aix: omnibus-toolchain-build'
+timestamp: 2015-12-19 21:10:08 UTC
+duration: 6m15s
+active_duration: 6m7s
+parameters: {}
+change:
+  git_remote: git@github.com:chef/omnibus-toolchain.git
+  git_commit: ed845c2cdf622deca6017c3049604c5f4fbf07a3
+  project: omnibus-toolchain
+stages:
+  omnibus-toolchain-build:
+    result: ABORTED
+    failure_category: aborted
+    failure_cause: 'aborted: el-5, el-6-i386, el-7, solaris-10-sun4v; unknown: aix'
+    url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/7/
+    duration: 6m5s
+    runs:
+      el-6-i386:
+        result: ABORTED
+        failure_category: aborted
+        failure_cause: aborted
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=i386,platform=el-6,project=omnibus-toolchain,role=builder/7/
+        duration: 3m22s
+        logs:
+          consoleText:
+            18556: |2
+                                                  I | ldd: warning: you do not have execution permission for `/opt/omnibus-toolchain/embedded/lib/perl5/5.18.1/Object/Accessor.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/omnibus-toolchain/embedded/lib/perl5/5.18.1/Fatal.pm:
+                                                  I | ldd: warning: you do not have execution permission for `/opt/omnibus-toolchain/embedded/lib/perl5/5.18.1/Fatal.pm'
+                                                  I |   not a dynamic executable
+                                                  I | /opt/omnibus-toolchain/embedded/lib/perl5/5.18.1/File/Basename.pm:
+            30691: |2
+                                    [HealthCheck] D | Analyzing dependencies for /opt/omnibus-toolchain/embedded/lib/perl5/5.18.1/Log/Message.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/omnibus-toolchain/embedded/lib/perl5/5.18.1/Object/Accessor.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/omnibus-toolchain/embedded/lib/perl5/5.18.1/Fatal.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/omnibus-toolchain/embedded/lib/perl5/5.18.1/File/Basename.pm
+                                    [HealthCheck] D | Analyzing dependencies for /opt/omnibus-toolchain/embedded/lib/perl5/5.18.1/File/CheckTree.pm
+      aix-6.1-powerpc:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=powerpc,platform=aix-6.1,project=omnibus-toolchain,role=builder/7/
+        duration: 0s
+        logs:
+          consoleText:
+            29: |
+              Cloning repository git@github.com:chef/omnibus-toolchain.git
+               > git init /home/jenkins/workspace/omnibus-toolchain-build/architecture/powerpc/platform/aix-6.1/project/omnibus-toolchain/role/builder # timeout=10
+              ERROR: Error cloning remote repo 'origin'
+              hudson.plugins.git.GitException: Could not init /home/jenkins/workspace/omnibus-toolchain-build/architecture/powerpc/platform/aix-6.1/project/omnibus-toolchain/role/builder
+                at org.jenkinsci.plugins.gitclient.CliGitAPIImpl$4.execute(CliGitAPIImpl.java:585)
+                at org.jenkinsci.plugins.gitclient.CliGitAPIImpl$2.execute(CliGitAPIImpl.java:442)
+                at org.jenkinsci.plugins.gitclient.RemoteGitImpl$CommandInvocationHandler$1.call(RemoteGitImpl.java:152)
+                at org.jenkinsci.plugins.gitclient.RemoteGitImpl$CommandInvocationHandler$1.call(RemoteGitImpl.java:145)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:274)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1157)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:627)
+                at java.lang.Thread.run(Thread.java:809)
+                at ......remote call to chef-aix-6-powerpc-builder-bf6c4a(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at org.jenkinsci.plugins.gitclient.RemoteGitImpl$CommandInvocationHandler.execute(RemoteGitImpl.java:145)
+                at sun.reflect.GeneratedMethodAccessor729.invoke(Unknown Source)
+                at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+                at java.lang.reflect.Method.invoke(Method.java:606)
+                at org.jenkinsci.plugins.gitclient.RemoteGitImpl$CommandInvocationHandler.invoke(RemoteGitImpl.java:131)
+                at com.sun.proxy.$Proxy77.execute(Unknown Source)
+                at hudson.plugins.git.GitSCM.retrieveChanges(GitSCM.java:1003)
+                at hudson.plugins.git.GitSCM.checkout(GitSCM.java:1043)
+                at hudson.scm.SCM.checkout(SCM.java:484)
+                at hudson.model.AbstractProject.checkout(AbstractProject.java:1270)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.defaultCheckout(AbstractBuild.java:609)
+                at jenkins.scm.SCMCheckoutStrategy.checkout(SCMCheckoutStrategy.java:86)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:531)
+                at hudson.model.Run.execute(Run.java:1741)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              Caused by: hudson.plugins.git.GitException: Error performing command: git init /home/jenkins/workspace/omnibus-toolchain-build/architecture/powerpc/platform/aix-6.1/project/omnibus-toolchain/role/builder
+                at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandIn(CliGitAPIImpl.java:1607)
+                at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandIn(CliGitAPIImpl.java:1576)
+                at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandIn(CliGitAPIImpl.java:1572)
+                at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommand(CliGitAPIImpl.java:1233)
+                at org.jenkinsci.plugins.gitclient.CliGitAPIImpl$4.execute(CliGitAPIImpl.java:583)
+                at org.jenkinsci.plugins.gitclient.CliGitAPIImpl$2.execute(CliGitAPIImpl.java:442)
+                at org.jenkinsci.plugins.gitclient.RemoteGitImpl$CommandInvocationHandler$1.call(RemoteGitImpl.java:152)
+                at org.jenkinsci.plugins.gitclient.RemoteGitImpl$CommandInvocationHandler$1.call(RemoteGitImpl.java:145)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:274)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1157)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:627)
+                at java.lang.Thread.run(Thread.java:809)
+              Caused by: java.io.IOException: Cannot run program "git" (in directory "/home/jenkins/workspace/omnibus-toolchain-build/architecture/powerpc/platform/aix-6.1/project/omnibus-toolchain/role/builder"): error=2, A file or directory in the path name does not exist.
+                at java.lang.ProcessBuilder.start(ProcessBuilder.java:1059)
+                at hudson.Proc$LocalProc.<init>(Proc.java:244)
+                at hudson.Proc$LocalProc.<init>(Proc.java:216)
+                at hudson.Launcher$LocalLauncher.launch(Launcher.java:803)
+                at hudson.Launcher$ProcStarter.start(Launcher.java:381)
+                at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandIn(CliGitAPIImpl.java:1596)
+                ... 15 more
+              Caused by: java.io.IOException: error=2, A file or directory in the path name does not exist.
+                at java.lang.UNIXProcess.<init>(UNIXProcess.java:212)
+                at java.lang.ProcessImpl.start(ProcessImpl.java:164)
+                at java.lang.ProcessBuilder.start(ProcessBuilder.java:1040)
+                ... 20 more
+              ERROR: null
+              Archiving artifacts
+              Recording fingerprints
+      solaris-10-sun4v:
+        result: ABORTED
+        failure_category: aborted
+        failure_cause: aborted
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=sun4v,platform=solaris-10,project=omnibus-toolchain,role=builder/7/
+        duration: 0s
+      el-5:
+        result: ABORTED
+        failure_category: aborted
+        failure_cause: aborted
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=x86_64,platform=el-5,project=omnibus-toolchain,role=builder/7/
+        duration: 1s
+      el-7:
+        result: ABORTED
+        failure_category: aborted
+        failure_cause: aborted
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=x86_64,platform=el-7,project=omnibus-toolchain,role=builder/7/
+        duration: 9s
+      debian-6-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=i386,platform=debian-6,project=omnibus-toolchain,role=builder/7/
+        duration: 2m45s
+      el-5-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=i386,platform=el-5,project=omnibus-toolchain,role=builder/7/
+        duration: 3m44s
+      freebsd-10-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=i386,platform=freebsd-10,project=omnibus-toolchain,role=builder/7/
+        duration: 2m36s
+      freebsd-9-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=i386,platform=freebsd-9,project=omnibus-toolchain,role=builder/7/
+        duration: 2m21s
+      ubuntu-10.04-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=i386,platform=ubuntu-10.04,project=omnibus-toolchain,role=builder/7/
+        duration: 2m35s
+      solaris-10-i86pc:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=i86pc,platform=solaris-10,project=omnibus-toolchain,role=builder/7/
+        duration: 2m12s
+  omnibus-toolchain-trigger-git_poll:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/omnibus-toolchain-trigger-git_poll/6/
+    duration: 1s
+successful_logs_analyzed: false

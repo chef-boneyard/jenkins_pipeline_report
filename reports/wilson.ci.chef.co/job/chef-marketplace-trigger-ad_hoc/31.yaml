@@ -1,0 +1,52 @@
+---
+result: ABORTED
+url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-ad_hoc/31/
+failure_category: network
+failure_cause: 'network reset rubygems.org: el-6: chef-marketplace-build'
+timestamp: 2016-05-26 15:39:50 UTC
+duration: 41m41s
+triggered_by: jkeiser
+active_duration: 41m31s
+parameters:
+  GIT_REF: origin/jk/licenses
+  EXPIRE_CACHE: false
+change:
+  git_remote: git@github.com:chef-partners/omnibus-marketplace.git
+  git_commit: aa2b3dcc168a6a583d80e98c41731758e3a65696
+  project: chef-marketplace
+stages:
+  chef-marketplace-build:
+    result: ABORTED
+    failure_category: network
+    failure_cause: 'network reset rubygems.org: el-6'
+    url: http://wilson.ci.chef.co/job/chef-marketplace-build/245/
+    duration: 41m29s
+    runs:
+      el-6:
+        result: FAILURE
+        failure_category: network
+        failure_cause: network reset rubygems.org
+        url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-6,project=chef-marketplace,role=builder/245/
+        duration: 4m58s
+        logs:
+          consoleText:
+            228: |
+              Installing net-sftp 2.1.2
+
+              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/net-ssh-gateway-1.2.0.gem)
+              An error occurred while installing net-ssh-gateway (1.2.0), and Bundler cannot
+              continue.
+              Make sure that `gem install net-ssh-gateway -v '1.2.0'` succeeds before
+              bundling.
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-7,project=chef-marketplace,role=builder/245/
+        duration: 39m10s
+  chef-marketplace-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-ad_hoc/31/
+    duration: 2s
+successful_logs_analyzed: false
