@@ -126,7 +126,7 @@ module JenkinsPipelineReport
       #
       # The list of fields to get for the server.
       #
-      # @see JenkinsObject::fetch
+      # @see JenkinsObject::fetch_data
       #
       STATIC_FIELDS = %W{url}
       FIELDS = STATIC_FIELDS + %W{jobs[#{Job::STATIC_FIELDS.join(",")}]}
@@ -154,7 +154,7 @@ module JenkinsPipelineReport
 
       attr_reader :client
 
-      def updated(data)
+      def updated_data(data)
         data["url"] ||= url
         data["jobs"].each do |job_data|
           job(job_data["url"]).static_data = job_data

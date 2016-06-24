@@ -229,14 +229,17 @@ module JenkinsPipelineReport
       #
       # @api private
       def stage_report_needs_update?(report, stage_report)
-        report = build_report.report?
-        stage_report = report?
         return true unless report && stage_report
         return true if stage_report["result"] == "IN PROGRESS"
         if build_report.analyze_successful_logs? && report["successful_logs_analyzed"] == false
           return true if stage_report["result"] == "SUCCESS"
         end
-        # TODO we're assuming it's not possible to retry a run after the build has
+        if stage_report["runs"]
+          return true if stage_report["runs"].any? do |configuration, run_report|
+            stage_report_needs_update?(report, run_report)
+          end
+        end
+        # TODO we're assuming it's not possible to retry or add a run after the build has
         # completed here. If it is, we need to check the run reports (which is
         # expensive right now because we can't instantiate runs without loading
         # the build, and we don't want to load the build if we're just checking

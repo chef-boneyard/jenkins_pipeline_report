@@ -42,7 +42,7 @@ module JenkinsPipelineReport
         @client_options = client_options
         @should_cache = should_cache
         @servers = {}
-        @valid_token = 0
+        @cache_version = nil
         load_servers
       end
 
@@ -123,17 +123,24 @@ module JenkinsPipelineReport
       #
 
       #
-      # Token indicating whether you are valid or not. If you have the token,
-      # you are valid. If you don't, you are not.
+      # Token indicating whether data is valid. Objects store this token when
+      # they fetch from Jenkins. It is checked on access: if the token has
+      # changed since they last loaded from Jenkins, they force a refresh.
       #
-      attr_reader :valid_token
+      attr_reader :cache_version
 
+      #
+      # Invalidate the entire cache. This causes all objects in the cache to be
+      # invalidated; the first access to a Jenkins object after this point will
+      # always fetch.
+      #
       def invalidate
-        @valid_token += 1
+        @cache_version ||= 0
+        @cache_version += 1
       end
 
       def invalidated?(jenkins_object)
-        jenkins_object.valid_token != valid_token
+        jenkins_object.cache_version != cache_version
       end
 
       def should_cache?(jenkins_object)

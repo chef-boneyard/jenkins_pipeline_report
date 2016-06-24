@@ -40,7 +40,8 @@ module JenkinsPipelineReport
         return true if analyze_successful_logs? && report["successful_logs_analyzed"] == false
         # Handle build retries
         return true unless report_has_all_stages?(report)
-        return true unless stage_reports.any? { |stage| stage.needs_update? }
+        return true if stage_reports.any? { |stage| stage.needs_update? }
+        nil
         # TODO if runs are retries or processes happen, regenerate
       end
 

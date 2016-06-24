@@ -33,7 +33,7 @@ module JenkinsPipelineReport
       #
       def initialize(reports_directory: nil, analyze_successful_logs: false)
         @reports_directory = reports_directory
-        @analyze_successful_logs
+        @analyze_successful_logs = analyze_successful_logs
       end
 
       #
@@ -68,13 +68,16 @@ module JenkinsPipelineReport
 
       def report_path(url, type: :yaml)
         uri = URI(url)
-        filename = File.join(uri.host, uri.path)
+        if uri.host
+          filename = File.join(uri.host, uri.path)
+        else
+          filename = uri.path
+        end
         filename.sub!(/\/+$/, "") # remove trailing slashes
         filename = "#{filename}.#{type}" if type
         filename.gsub!(/[^\w\.-_\/\\]/, "-") # strip bad filename characters
         File.join(reports_directory, filename)
       end
-
     end
   end
 end

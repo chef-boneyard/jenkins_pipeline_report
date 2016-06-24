@@ -414,7 +414,7 @@ module JenkinsPipelineReport
       private
 
       # @api private
-      def updated(data)
+      def updated_data(data)
         add_to_upstreams
 
         # Tell the runs about the wonderful data we grabbed for them.
@@ -447,8 +447,8 @@ module JenkinsPipelineReport
         duration.to_f / 1000.0
       end
 
-      def fetch
-        if @data || static_data || load
+      def fetch_data
+        if @data || @static_data || load_data
           timestamp = static_data("timestamp")
         end
         super do |fetched|

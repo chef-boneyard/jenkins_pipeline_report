@@ -252,9 +252,9 @@ module JenkinsPipelineReport
 
       private
 
-      def fetch
+      def fetch_data
         # First we load old data, so we can check for job recreation.
-        old_data = @data || load
+        old_data = @data || load_data
         old_build = old_data["allBuilds"].first if old_data
 
         super do |fetched|
@@ -267,8 +267,8 @@ module JenkinsPipelineReport
         end
       end
 
-      # Called after fetch and load
-      def updated(data)
+      # Called after fetch_data and load
+      def updated_data(data)
         data["allBuilds"].each do |build_data|
           build = build(build_data["number"])
           build.static_data = build_data
