@@ -9,7 +9,7 @@ module JenkinsPipelineReport
         if field
           # If something is already loaded, use it!
           return @data[field] if @data
-          return static_data[field] if static_data && static_data[field]
+          return @static_data[field] if @static_data && @static_data[field]
           data[field]
         else
           return @data if @data
@@ -51,7 +51,7 @@ module JenkinsPipelineReport
       # out of date).
       def load!
         load_data unless cache.invalidated?(self)
-        fetch_data
+        @data || fetch_data
       end
 
       # Directly refresh the data from the server.
@@ -75,8 +75,6 @@ module JenkinsPipelineReport
         data = cache.read_cache(url)
         if data
           @data = data
-          @static_data = nil
-          @cache_version = cache.cache_version
           updated_data(data)
         end
         data
@@ -88,7 +86,6 @@ module JenkinsPipelineReport
         # cache bad data (and overwrite the good!).
         validate.call(data) if validate
         @data = data
-        @static_data = nil
         @cache_version = cache.cache_version
         if should_cache?
           cache.write_cache(url, @data)
