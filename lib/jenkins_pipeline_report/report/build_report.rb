@@ -90,7 +90,7 @@ module JenkinsPipelineReport
           "failure_cause" => nil,
           "timestamp" => format_datetime(trigger.timestamp),
           "duration" => format_duration(generate_duration),
-          "triggered_by" => trigger.triggered_by.id,
+          "triggered_by" => generate_triggered_by,
           "active_duration" => format_duration(generate_active_duration),
           "queue_delays" => format_duration(generate_queue_delays),
           "retry_delays" => format_duration(generate_retry_delays),
@@ -128,6 +128,11 @@ module JenkinsPipelineReport
       def generate_duration
         stage_end_times = stage_reports.map { |stage| stage.build.end_timestamp }.compact
         stage_end_times.max - trigger.timestamp
+      end
+
+      def generate_triggered_by
+        user = trigger.triggered_by
+        user.id if user
       end
 
       #
