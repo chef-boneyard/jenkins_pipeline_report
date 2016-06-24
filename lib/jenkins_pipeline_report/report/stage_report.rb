@@ -88,6 +88,7 @@ module JenkinsPipelineReport
         }
         process_logs(report)
         report["runs"] = generate_run_reports
+        generate_failure_cause(report)
         report.reject! { |key,value| value.nil? }
         report
       end
@@ -131,6 +132,28 @@ module JenkinsPipelineReport
         end
         reports = nil if reports.empty?
         reports
+      end
+
+      def generate_failure_cause(report)
+        if report["runs"]
+          configurations = report["runs"].keys
+          # Group the runs by failure cause
+          failed_runs = report["runs"].select { |k,run| run["result"] != "IN PROGRESS" && run["result"] != "SUCCESS" }
+          if failed_runs.any?
+            by_category = failed_runs.group_by { |configuration,run| run["failure_category"] }
+            report["failure_category"] = by_category.to_a.sort_by { |k,v| v.size }.last[0]
+            by_cause = failed_runs.group_by { |configuration,run| run["failure_cause"] }
+            report["failure_cause"] = by_cause.map do |failure_cause, runs|
+              failed_configurations = runs.map { |configuration,run| configuration }
+              failed_configurations = categorize_run_types(failed_configurations, configurations)
+              "#{failure_cause}: #{failed_configurations.join(", ")}"
+            end.join("; ")
+          end
+        end
+        if report["result"] != "IN PROGRESS" && report["result"] != "SUCCESS"
+          report["failure_category"] ||= "unknown"
+          report["failure_cause"] ||= "unknown"
+        end
       end
 
       def generate_change
@@ -236,6 +259,51 @@ module JenkinsPipelineReport
         FailureExtractor.new(self, report).extract
         # Toss console text out of memory (if it was grabbed at all)
         @console_text_lines = nil
+      end
+
+      # e.g. architecture=x86_64,platform=acceptance,project=chef,role=tester ->
+      # -> chef-test, 243, acceptance
+      def configuration_summary(configuration_str)
+        #
+        # Summarize the configuration for easy consumption
+        #
+        # configuration is a hash
+        configuration = {}
+        configuration_str.split(",").sort_by { |name, value| name }.each do |name_value|
+          name, value = name_value.split("=", 2)
+          configuration[name] = value
+        end
+
+        case configuration["role"]
+        when "builder", "tester"
+          configuration_summary = configuration["platform"]
+          configuration_summary << "-#{configuration["architecture"]}" unless configuration["architecture"] == "x86_64"
+          configuration_summary
+        else
+          configuration_summary = configuration_str
+        end
+
+        configuration_summary
+      end
+
+      def categorize_run_types(run_types, all_run_types)
+        # Categorize runs so that if everything fails, we just say "all"
+        # To do this, categorize all the runs by what OS they are from:
+        os_categories = all_run_types.group_by { |type| type.split("-")[0] }
+        run_categories = {}
+        run_categories["all"] = all_run_types - [ "acceptance" ]
+        run_categories["unix"] = os_categories.reject { |c,t| c == "windows" }.values.flatten
+        run_categories["linux"] = os_categories.reject { |c,t| %w{aix solaris bsd windows}.include?(c) }.values.flatten
+        run_categories["bsd"] = os_categories.select { |c,t| c =~ /bsd/ }.values.flatten
+        run_categories.merge!(os_categories)
+        run_categories.each do |category, types|
+          next if types.empty?
+          # If every type in the category is in run_types, replace those types with the category
+          if (types - run_types).empty?
+            run_types = run_types - types + [ category ]
+          end
+        end
+        run_types.sort.uniq
       end
     end
   end

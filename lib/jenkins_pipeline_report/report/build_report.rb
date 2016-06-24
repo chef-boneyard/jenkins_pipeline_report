@@ -86,6 +86,8 @@ module JenkinsPipelineReport
         report = {
           "result" => generate_result,
           "url" => trigger.url,
+          "failure_category" => nil,
+          "failure_cause" => nil,
           "timestamp" => format_datetime(trigger.timestamp),
           "duration" => format_duration(generate_duration),
           "triggered_by" => trigger.triggered_by.id,
@@ -97,6 +99,7 @@ module JenkinsPipelineReport
           "stages" => generate_stage_reports,
         }
         report["successful_logs_analyzed"] = false unless analyze_successful_logs?
+        generate_failure_cause(report)
         report.reject! { |key,value| value.nil? }
         report
       end
@@ -107,6 +110,19 @@ module JenkinsPipelineReport
           result[stage.stage_path] = stage.refresh
         end
         result
+      end
+
+      def generate_failure_cause(report)
+        if report["stages"]
+          failed_stages = report["stages"].select { |stage_path, stage| stage["result"] != "IN PROGRESS" && stage["result"] != "SUCCESS" }
+          if failed_stages.any?
+            by_category = failed_stages.group_by { |path,stage| stage["failure_category"] }
+            report["failure_category"] = by_category.to_a.sort_by { |category,stages| stages.size }.last[0]
+            report["failure_cause"] = failed_stages.map do |path,stage|
+              "#{stage["failure_cause"]}: #{path}"
+            end.join("; ")
+          end
+        end
       end
 
       def generate_duration

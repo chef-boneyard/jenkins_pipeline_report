@@ -30,6 +30,10 @@ module JenkinsPipelineReport
         end
       end
 
+      def static_data=(value)
+        @static_data = value unless @data
+      end
+
       def cache
         server.cache
       end
@@ -72,10 +76,6 @@ module JenkinsPipelineReport
 
       def jenkins_query
         "tree=#{self.class::FIELDS.join(",")}"
-      end
-
-      def static_data=(value)
-        @static_data = value unless @data
       end
 
       def should_cache?

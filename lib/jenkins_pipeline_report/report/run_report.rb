@@ -14,7 +14,8 @@ module JenkinsPipelineReport
         # Get rid of "job" from the top of the path. Generally the result will
         # just be `name`, but sometimes it'll be a multipath, so it pays to be
         # correct.
-        Pathname(build.job.path).relative_path_from(Pathname(parent_report.build.job.path)).to_s
+        path = Pathname(build.job.path).relative_path_from(Pathname(parent_report.build.job.path)).to_s
+        configuration_summary(path)
       end
 
       def generate_queue_delay

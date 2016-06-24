@@ -109,8 +109,8 @@ module JenkinsPipelineReport
 
       def failed_in_step(step)
         # Take the last two steps (seems to be a reasonable name)
-        failed_in = [ step ]
-        failed_in << step.parent if step.parent && step.parent.parent
+        failed_in = [ step.name ]
+        failed_in.unshift(step.parent.name) if step.parent && step.parent.parent
         failed_in.join(" ")
       end
 
