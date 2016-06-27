@@ -3,10 +3,11 @@ result: FAILURE
 url: http://wilson.ci.chef.co/job/opscode-reporting-trigger-nightly-master/34/
 failure_category: code
 failure_cause: 'pedant: opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester;
+  pedant: opscode-reporting-test/architecture=x86_64,platform=el-5,project=opscode-reporting,role=tester;
   pedant: all: opscode-reporting-test'
 timestamp: 2016-01-12 08:37:00 UTC
 duration: 1h31m29s
-active_duration: 3h28m42s
+active_duration: 3h46m56s
 parameters: {}
 change:
   git_remote: git@github.com:opscode/omnibus-reporting.git
@@ -50,6 +51,34 @@ stages:
       chef-client private-chef::default: 4m32s
       chef-client opscode-reporting::default: 44s
       after (cleanup time): 2m56s
+  opscode-reporting-test/architecture=x86_64,platform=el-5,project=opscode-reporting,role=tester:
+    result: FAILURE
+    failure_category: code
+    failure_cause: pedant
+    failed_in:
+      step: pedant
+    url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-5,project=opscode-reporting,role=tester/40/
+    duration: 18m13s
+    logs:
+      consoleText:
+        3352: |
+          --------------------------------------------------------------------------------
+          DEPRECATION: let declaration `direct_solr_query_sleep_time` accessed in a `before(:all)` hook at:
+            /opt/opscode-reporting/embedded/service/gem/ruby/2.1.0/bundler/gems/chef-pedant-dad401df0955/lib/pedant/rspec/search_util.rb:653:in `force_solr_commit'
+
+          `let` and `subject` declarations are not intended to be called
+        3379: |
+          rspec ./spec/reporting/integration/reports_spec.rb:137 # Reporting API - Reports when requesting reports when requesting runcounts with day granularity provides the expected number of records
+          rspec ./spec/reporting/integration/reports_spec.rb:137 # Reporting API - Reports when requesting reports when requesting runcounts with week granularity provides the expected number of records
+          Build step 'Invoke XShell command' marked build as failure
+          Performing Post build task...
+          Match found for : : True
+    steps:
+      total: 18m13s
+      before (setup time): 8m1s
+      chef-client private-chef::default: 3m29s
+      chef-client opscode-reporting::default: 28s
+      after (cleanup time): 2m11s
   opscode-reporting-test:
     result: FAILURE
     failure_category: code
