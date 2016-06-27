@@ -2,13 +2,13 @@
 result: FAILURE
 url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/93/
 failure_category: network
-failure_cause: 'zombie jenkins: chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder;
-  network reset rubygems.org: chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder;
+failure_cause: 'network reset rubygems.org: chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder;
+  zombie jenkins: chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder;
   zombie jenkins: windows; network reset rubygems.org: el-6: chefdk-build'
 timestamp: 2016-06-20 22:29:51 UTC
 duration: 2h55m1s
 triggered_by: chef-jenkins
-active_duration: 8h29m16s
+active_duration: 7h57m43s
 parameters:
   GIT_REF: v0.15.18
   EXPIRE_CACHE: false
@@ -25,28 +25,6 @@ stages:
     result: SUCCESS
     url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/544/
     duration: 54m44s
-  chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder:
-    result: SUCCESS
-    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/544/
-    duration: 1h15m51s
-  chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder:
-    result: FAILURE
-    failure_category: machine
-    failure_cause: zombie jenkins
-    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/544/
-    duration: 48m19s
-    logs:
-      consoleText:
-        26: |
-          Deleting project workspace... Cannot delete workspace: remote file operation failed: C:\jenkins\workspace\chefdk-build\architecture\i386\platform\windows-2008r2\project\chefdk\role\builder at hudson.remoting.Channel@b3cb442:chefdk-windows-2008r2-i386-builder-9fb5e4: java.nio.file.FileSystemException: C:\jenkins\workspace\chefdk-build\architecture\i386\platform\windows-2008r2\project\chefdk\role\builder: The process cannot access the file because it is being used by another process.
-
-          ERROR: Cannot delete workspace: remote file operation failed: C:\jenkins\workspace\chefdk-build\architecture\i386\platform\windows-2008r2\project\chefdk\role\builder at hudson.remoting.Channel@b3cb442:chefdk-windows-2008r2-i386-builder-9fb5e4: java.nio.file.FileSystemException: C:\jenkins\workspace\chefdk-build\architecture\i386\platform\windows-2008r2\project\chefdk\role\builder: The process cannot access the file because it is being used by another process.
-
-          Archiving artifacts
-  chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder:
-    result: SUCCESS
-    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/544/
-    duration: 31m32s
   chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder:
     result: FAILURE
     failure_category: network
@@ -822,6 +800,24 @@ stages:
           NetFetcher: 40m49s
           GitFetcher: 4m19s
       after (cleanup time): "-1h40m32s"
+  chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/544/
+    duration: 1h15m51s
+  chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder:
+    result: FAILURE
+    failure_category: machine
+    failure_cause: zombie jenkins
+    url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/544/
+    duration: 48m19s
+    logs:
+      consoleText:
+        26: |
+          Deleting project workspace... Cannot delete workspace: remote file operation failed: C:\jenkins\workspace\chefdk-build\architecture\i386\platform\windows-2008r2\project\chefdk\role\builder at hudson.remoting.Channel@b3cb442:chefdk-windows-2008r2-i386-builder-9fb5e4: java.nio.file.FileSystemException: C:\jenkins\workspace\chefdk-build\architecture\i386\platform\windows-2008r2\project\chefdk\role\builder: The process cannot access the file because it is being used by another process.
+
+          ERROR: Cannot delete workspace: remote file operation failed: C:\jenkins\workspace\chefdk-build\architecture\i386\platform\windows-2008r2\project\chefdk\role\builder at hudson.remoting.Channel@b3cb442:chefdk-windows-2008r2-i386-builder-9fb5e4: java.nio.file.FileSystemException: C:\jenkins\workspace\chefdk-build\architecture\i386\platform\windows-2008r2\project\chefdk\role\builder: The process cannot access the file because it is being used by another process.
+
+          Archiving artifacts
   chefdk-build:
     result: FAILURE
     failure_category: network

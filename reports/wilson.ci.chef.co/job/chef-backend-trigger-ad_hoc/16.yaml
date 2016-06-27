@@ -2,12 +2,11 @@
 result: FAILURE
 url: http://wilson.ci.chef.co/job/chef-backend-trigger-ad_hoc/16/
 failure_category: code
-failure_cause: 'chef-client: chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester;
-  chef-client: all: chef-backend-test'
+failure_cause: 'chef-client: all: chef-backend-test'
 timestamp: 2016-02-16 19:32:43 UTC
 duration: 35m15s
 triggered_by: marcparadise
-active_duration: 59m59s
+active_duration: 35m1s
 parameters:
   GIT_REF: mp/service-status
   EXPIRE_CACHE: false
@@ -17,44 +16,6 @@ change:
   project: chef-backend
   version: 0.0.0+20160216193255
 stages:
-  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
-    result: SUCCESS
-    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/58/
-    duration: 15m13s
-  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
-    result: FAILURE
-    failure_category: code
-    failure_cause: chef-client
-    failed_in:
-      step: chef-client
-    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/57/
-    duration: 9m44s
-    logs:
-      consoleText:
-        942: |
-          \33[0mCookbook Trace:\33[0m
-          ---------------\33[0m
-          /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/providers/pg_user.rb:11:in `block in class_from_file'\33[0m
-
-          \33[0mResource Declaration:\33[0m
-        994: |
-          [2016-02-16T20:03:21+00:00] INFO: Processing execute[restart_postgresql_log_service] action run (chef-backend::_services line 19)
-          [2016-02-16T20:03:21+00:00] INFO: execute[restart_postgresql_log_service] ran successfully
-          [2016-02-16T20:03:21+00:00] ERROR: Running exception handlers
-          [2016-02-16T20:03:21+00:00] ERROR: Exception handlers complete
-          [2016-02-16T20:03:21+00:00] FATAL: Stacktrace dumped to /opt/chef-backend/embedded/cookbooks/cache/chef-stacktrace.out
-          [2016-02-16T20:03:21+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
-          [2016-02-16T20:03:21+00:00] FATAL: NameError: chef_backend_pg_user[chef_pgsql] (chef-backend::service_postgresql_setup line 29) had an error: NameError: uninitialized constant Libchefbackend::PostgresConnector
-        1009: |
-          ============================================================
-
-          Build step 'Invoke XShell command' marked build as failure
-          Performing Post build task...
-          Match found for : : True
-    steps:
-      total: 9m44s
-      before (setup time): 7m27s
-      after (cleanup time): 2m13s
   chef-backend-test:
     result: FAILURE
     failure_category: code
