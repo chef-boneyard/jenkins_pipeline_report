@@ -1,0 +1,1284 @@
+---
+result: FAILURE
+url: http://manhattan.ci.chef.co/job/chefdk-trigger-ad_hoc/394/
+failure_category: unknown
+failure_cause: 'chef_acceptance[top-cookbooks::provision]: acceptance; unknown: debian,
+  el, mac_os_x, ubuntu: chefdk-test'
+timestamp: 2016-06-28 15:39:08 UTC
+duration: 1h51m13s
+triggered_by: tyler-ball
+active_duration: 1h50m57s
+queue_delays: 10s
+parameters:
+  GIT_REF: git_on_path
+  EXPIRE_CACHE: false
+change:
+  git_remote: git://github.com/chef/chef-dk.git
+  git_commit: f29ab89a1115679e7927296c9ac44c9b4ede3525
+  project: chefdk
+  version: 0.16.11+20160628153919
+stages:
+  chefdk-test:
+    result: FAILURE
+    failure_category: unknown
+    failure_cause: 'chef_acceptance[top-cookbooks::provision]: acceptance; unknown:
+      debian, el, mac_os_x, ubuntu'
+    url: http://manhattan.ci.chef.co/job/chefdk-test/244/
+    duration: 30m48s
+    queue_delay: 10s
+    runs:
+      acceptance:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef_acceptance[top-cookbooks::provision]
+        failed_in:
+          chef_acceptance:
+          - top-cookbooks::provision
+          step: CHEF-ACCEPTANCE
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/244/
+        duration: 30m48s
+        logs:
+          consoleText:
+            8139: |2
+                                D      -Composite Exception--
+                                D      Class: Kitchen::ActionFailed
+                                D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>] on powershell-windows-2012r2
+                                D      ----------------------
+                                D      ------Backtrace-------
+            8178: |2
+                                D      ---Nested Exception---
+                                D      Class: Kitchen::ActionFailed
+                                D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>]
+                                D      ----------------------
+                                D      ------Backtrace-------
+            8215: |2
+                                D      ----End Backtrace-----
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000]
+                      ================================================================================
+                      Error executing action `run` on resource 'execute[bundle exec kitchen converge  -c -l debug]'
+                      ================================================================================
+
+                      Mixlib::ShellOut::ShellCommandFailed
+                      ------------------------------------
+                      Expected process to exit with [0], but received '20'
+                      ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+                      STDOUT: -----> Starting Kitchen (v1.9.0)
+                      D      Berksfile found at /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/powershell/Berksfile, loading Berkshelf
+                      D      Berkshelf 4.3.3 library loaded
+                      D      winrm requested, loading winrm gem (["~> 1.6"])
+                      D      winrm is loaded.
+                      D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+                      D      winrm-fs is loaded.
+                      -----> Creating <powershell-windows-2012r2>...
+                      D      platform name windows-2012r2 appears to be a standard platform. Searching for windows 2012r2 ...
+                      D      Searching for images matching {:name=>"Windows_Server-2012-R2*-English-*-Base-*", :"owner-alias"=>"amazon", :architecture=>"x86_64", :"virtualization-type"=>"hvm", :"block-device-mapping.volume-type"=>"gp2", :"image-type"=>"machine"} ...
+                      D      Search returned 3 images:
+                      D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.06.15: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-06-16T16:58:39.000Z
+                      D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.05.11: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-05-12T20:22:38.000Z
+                      D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.04.13: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-04-13T01:30:48.000Z
+                      D      Image for powershell-windows-2012r2: Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.06.15.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-06-16T16:58:39.000Z
+                             Detected platform: windows version 2012r2rtm on x86_64. Instance Type: m3.large. Default username: administrator (default).
+                      D      No SSH username specified: using default username administrator  for image ami-8d0acfed, which we detected as windows 2012r2rtm x86_64.
+                             If you are not using an account that qualifies under the AWS
+                      free-tier, you may be charged to run these suites. The charge
+                      should be minimal, but neither Test Kitchen nor its maintainers
+                      are responsible for your incurred costs.
+
+                      D      Creating EC2 instance in region us-west-2 with properties:
+                      D      - instance_type = "m3.large"
+                      D      - ebs_optimized = false
+                      D      - image_id = "ami-8d0acfed"
+                      D      - key_name = "jenkins"
+                      D      - subnet_id = "subnet-19ac017c"
+                      D      - private_ip_address = nil
+                      D      - placement = {:availability_zone=>"us-west-2a"}
+                      D      - security_group_ids = ["sg-e401eb83", "sg-96274af3"]
+                      D      - user_data = "PHBvd2Vyc2hlbGw+CiRsb2dmaWxlPSJDOlxcUHJvZ3JhbSBGaWxlc1xcQW1h\nem9uXFxFYzJDb25maWdTZXJ2aWNlXFxMb2dzXFxraXRjaGVuLWVjMi5sb2ci\nCiNQUyBSZW1vdGluZyBhbmQgJiB3aW5ybS5jbWQgYmFzaWMgY29uZmlnCkVu\nYWJsZS1QU1JlbW90aW5nIC1Gb3JjZSAtU2tpcE5ldHdvcmtQcm9maWxlQ2hl\nY2sKJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2NvbmZpZyAnQHtNYXhUaW1lb3V0\nbXM9IjE4MDAwMDAifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQgc2V0IHdp\nbnJtL2NvbmZpZy93aW5ycyAnQHtNYXhNZW1vcnlQZXJTaGVsbE1CPSIxMDI0\nIn0nID4+ICRsb2dmaWxlCiYgd2lucm0uY21kIHNldCB3aW5ybS9jb25maWcv\nd2lucnMgJ0B7TWF4U2hlbGxzUGVyVXNlcj0iNTAifScgPj4gJGxvZ2ZpbGUK\nI1NlcnZlciBzZXR0aW5ncyAtIHN1cHBvcnQgdXNlcm5hbWUvcGFzc3dvcmQg\nbG9naW4KJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2NvbmZpZy9zZXJ2aWNlL2F1\ndGggJ0B7QmFzaWM9InRydWUifScgPj4gJGxv
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] Z2ZpbGUKJiB3aW5ybS5jbWQg\nc2V0IHdpbnJtL2NvbmZpZy9zZXJ2aWNlICdAe0FsbG93VW5lbmNyeXB0ZWQ9\nInRydWUifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2Nv\nbmZpZy93aW5ycyAnQHtNYXhNZW1vcnlQZXJTaGVsbE1CPSIxMDI0In0nID4+\nICRsb2dmaWxlCiNGaXJld2FsbCBDb25maWcKJiBuZXRzaCBhZHZmaXJld2Fs\nbCBmaXJld2FsbCBzZXQgcnVsZSBuYW1lPSJXaW5kb3dzIFJlbW90ZSBNYW5h\nZ2VtZW50IChIVFRQLUluKSIgcHJvZmlsZT1wdWJsaWMgcHJvdG9jb2w9dGNw\nIGxvY2FscG9ydD01OTg1IHJlbW90ZWlwPWxvY2Fsc3VibmV0IG5ldyByZW1v\ndGVpcD1hbnkgID4+ICRsb2dmaWxlCiNTZXQgc2NyaXB0IGV4ZWN1dGlvbiB0\nbyB1bnJlc3RyaWN0ZWQKJiBTZXQtRXhlY3V0aW9uUG9saWN5IFVucmVzdHJp\nY3RlZCAtRm9yY2UKPC9wb3dlcnNoZWxsPgo=\n"
+                             Instance <i-bd70a212> requested.
+            8352: |2
+                      D      -Composite Exception--
+                      D      Class: Kitchen::ActionFailed
+                      D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>] on powershell-windows-2012r2
+                      D      ----------------------
+                      D      ------Backtrace-------
+            8391: |2
+                      D      ---Nested Exception---
+                      D      Class: Kitchen::ActionFailed
+                      D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>]
+                      D      ----------------------
+                      D      ------Backtrace-------
+            8480: |
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000]
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000]
+                    ================================================================================
+                    Error executing action `run` on resource 'cookbook_kitchen[converge powershell]'
+                    ================================================================================
+
+                    Mixlib::ShellOut::ShellCommandFailed
+                    ------------------------------------
+                    execute[bundle exec kitchen converge  -c -l debug] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '20'
+                    ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+                    STDOUT: -----> Starting Kitchen (v1.9.0)
+                    D      Berksfile found at /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/powershell/Berksfile, loading Berkshelf
+                    D      Berkshelf 4.3.3 library loaded
+                    D      winrm requested, loading winrm gem (["~> 1.6"])
+                    D      winrm is loaded.
+                    D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+                    D      winrm-fs is loaded.
+                    -----> Creating <powershell-windows-2012r2>...
+                    D      platform name windows-2012r2 appears to be a standard platform. Searching for windows 2012r2 ...
+                    D      Searching for images matching {:name=>"Windows_Server-2012-R2*-English-*-Base-*", :"owner-alias"=>"amazon", :architecture=>"x86_64", :"virtualization-type"=>"hvm", :"block-device-mapping.volume-type"=>"gp2", :"image-type"=>"machine"} ...
+                    D      Search returned 3 images:
+                    D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.06.15: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-06-16T16:58:39.000Z
+                    D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.05.11: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-05-12T20:22:38.000Z
+                    D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.04.13: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-04-13T01:30:48.000Z
+                    D      Image for powershell-windows-2012r2: Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.06.15.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-06-16T16:58:39.000Z
+                           Detected platform: windows version 2012r2rtm on x86_64. Instance Type: m3.large. Default username: administrator (default).
+                    D      No SSH username specified: using default username administrator  for image ami-8d0acfed, which we detected as windows 2012r2rtm x86_64.
+                           If you are not using an account that qualifies under the AWS
+                    free-tier, you may be charged to run these suites. The charge
+                    should be minimal, but neither Test Kitchen nor its maintainers
+                    are responsible for your incurred costs.
+
+                    D      Creating EC2 instance in region us-west-2 with properties:
+                    D      - instance_type = "m3.large"
+                    D      - ebs_optimized = false
+                    D      - image_id = "ami-8d0acfed"
+                    D      - key_name = "jenkins"
+                    D      - subnet_id = "subnet-19ac017c"
+                    D      - private_ip_address = nil
+                    D      - placement = {:availability_zone=>"us-west-2a"}
+                    D      - security_group_ids = ["sg-e401eb83", "sg-96274af3"]
+                    D      - user_data = "PHBvd2Vyc2hlbGw+CiRsb2dmaWxlPSJDOlxcUHJvZ3JhbSBGaWxlc1xcQW1h\nem9uXFxFYzJDb25maWdTZXJ2aWNlXFxMb2dzXFxraXRjaGVuLWVjMi5sb2ci\nCiNQUyBSZW1vdGluZyBhbmQgJiB3aW5ybS5jbWQgYmFzaWMgY29uZmlnCkVu\nYWJsZS1QU1JlbW90aW5nIC1Gb3JjZSAtU2tpcE5ldHdvcmtQcm9maWxlQ2hl\nY2sKJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2NvbmZpZyAnQHtNYXhUaW1lb3V0\nbXM9IjE4MDAwMDAifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQgc2V0IHdp\nbnJtL2NvbmZpZy93aW5ycyAnQHtNYXhNZW1vcnlQZXJTaGVsbE1CPSIxMDI0\nIn0nID4+ICRsb2dmaWxlCiYgd2lucm0uY21kIHNldCB3aW5ybS9jb25maW
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] cv\nd2lucnMgJ0B7TWF4U2hlbGxzUGVyVXNlcj0iNTAifScgPj4gJGxvZ2ZpbGUK\nI1NlcnZlciBzZXR0aW5ncyAtIHN1cHBvcnQgdXNlcm5hbWUvcGFzc3dvcmQg\nbG9naW4KJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2NvbmZpZy9zZXJ2aWNlL2F1\ndGggJ0B7QmFzaWM9InRydWUifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQg\nc2V0IHdpbnJtL2NvbmZpZy9zZXJ2aWNlICdAe0FsbG93VW5lbmNyeXB0ZWQ9\nInRydWUifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2Nv\nbmZpZy93aW5ycyAnQHtNYXhNZW1vcnlQZXJTaGVsbE1CPSIxMDI0In0nID4+\nICRsb2dmaWxlCiNGaXJld2FsbCBDb25maWcKJiBuZXRzaCBhZHZmaXJld2Fs\nbCBmaXJld2FsbCBzZXQgcnVsZSBuYW1lPSJXaW5kb3dzIFJlbW90ZSBNYW5h\nZ2VtZW50IChIVFRQLUluKSIgcHJvZmlsZT1wdWJsaWMgcHJvdG9jb2w9dGNw\nIGxvY2FscG9ydD01OTg1IHJlbW90ZWlwPWxvY2Fsc3VibmV0IG5ldyByZW1v\ndGVpcD1hbnkgID4+ICRsb2dmaWxlCiNTZXQgc2NyaXB0IGV4ZWN1dGlvbiB0\nbyB1bnJlc3RyaWN0ZWQKJiBTZXQtRXhlY3V0aW9uUG9saWN5IFVucmVzdHJp\nY3RlZCAtRm9yY2UKPC9wb3dlcnNoZWxsPgo=\n"
+                           Instance <i-bd70a212> requested.
+            8617: |2
+                    D      -Composite Exception--
+                    D      Class: Kitchen::ActionFailed
+                    D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>] on powershell-windows-2012r2
+                    D      ----------------------
+                    D      ------Backtrace-------
+            8656: |2
+                    D      ---Nested Exception---
+                    D      Class: Kitchen::ActionFailed
+                    D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>]
+                    D      ----------------------
+                    D      ------Backtrace-------
+            8738: |2
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'top_cookbooks[converge]'
+                  ================================================================================
+
+                  Mixlib::ShellOut::ShellCommandFailed
+                  ------------------------------------
+                  cookbook_kitchen[converge powershell] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb line 23) had an error: Mixlib::ShellOut::ShellCommandFailed: execute[bundle exec kitchen converge  -c -l debug] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '20'
+                  ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+                  STDOUT: -----> Starting Kitchen (v1.9.0)
+                  D      Berksfile found at /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/powershell/Berksfile, loading Berkshelf
+                  D      Berkshelf 4.3.3 library loaded
+                  D      w
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] inrm requested, loading winrm gem (["~> 1.6"])
+                  D      winrm is loaded.
+            8876: |2
+                  D      -Composite Exception--
+                  D      Class: Kitchen::ActionFailed
+                  D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>] on powershell-windows-2012r2
+                  D      ----------------------
+                  D      ------Backtrace-------
+            8914: |2
+                  D      ---Nested Exception---
+                  D      Class: Kitchen::ActionFailed
+                  D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>]
+                  D      ----------------------
+                  D      ------Backtrace-------
+            8997: |
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] Running handlers:
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000]
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] [2016-06-28T17:29:26+00:00] ERROR: Running exception handlers
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] Running handlers complete
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] [2016-06-28T17:29:26+00:00] ERROR: Exception handlers complete
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] Chef Client failed. 14 resources updated in 27 minutes 38 seconds
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000]
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] [2016-06-28T17:29:26+00:00] ERROR: Failed to post audit report to server. Saving report to /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/failed-audit-data.json
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] [2016-06-28T17:29:26+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/chef-stacktrace.out
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] [2016-06-28T17:29:26+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:26 +0000] [2016-06-28T17:29:26+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              TOP-COOKBOOKS::PROVISION::[2016-06-28 17:29:28 +0000] [2016-06-28T17:29:28+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              CHEF-ACCEPTANCE::[2016-06-28 17:29:28 +0000] Encountered an error running the recipe provision: Expected process to exit with [0], but received '1'
+              ---- Begin output of chef-client -z -c /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+            16186: |2
+                                D      -Composite Exception--
+                                D      Class: Kitchen::ActionFailed
+                                D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>] on powershell-windows-2012r2
+                                D      ----------------------
+                                D      ------Backtrace-------
+            16223: |2
+                                D      ---Nested Exception---
+                                D      Class: Kitchen::ActionFailed
+                                D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>]
+                                D      ----------------------
+                                D      ------Backtrace-------
+            16259: |2
+                                D      ----End Backtrace-----
+
+                      ================================================================================
+                      Error executing action `run` on resource 'execute[bundle exec kitchen converge  -c -l debug]'
+                      ================================================================================
+
+                      Mixlib::ShellOut::ShellCommandFailed
+                      ------------------------------------
+                      Expected process to exit with [0], but received '20'
+                      ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+                      STDOUT: -----> Starting Kitchen (v1.9.0)
+                      D      Berksfile found at /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/powershell/Berksfile, loading Berkshelf
+                      D      Berkshelf 4.3.3 library loaded
+                      D      winrm requested, loading winrm gem (["~> 1.6"])
+                      D      winrm is loaded.
+                      D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+                      D      winrm-fs is loaded.
+                      -----> Creating <powershell-windows-2012r2>...
+                      D      platform name windows-2012r2 appears to be a standard platform. Searching for windows 2012r2 ...
+                      D      Searching for images matching {:name=>"Windows_Server-2012-R2*-English-*-Base-*", :"owner-alias"=>"amazon", :architecture=>"x86_64", :"virtualization-type"=>"hvm", :"block-device-mapping.volume-type"=>"gp2", :"image-type"=>"machine"} ...
+                      D      Search returned 3 images:
+                      D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.06.15: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-06-16T16:58:39.000Z
+                      D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.05.11: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-05-12T20:22:38.000Z
+                      D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.04.13: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-04-13T01:30:48.000Z
+                      D      Image for powershell-windows-2012r2: Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.06.15.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-06-16T16:58:39.000Z
+                             Detected platform: windows version 2012r2rtm on x86_64. Instance Type: m3.large. Default username: administrator (default).
+                      D      No SSH username specified: using default username administrator  for image ami-8d0acfed, which we detected as windows 2012r2rtm x86_64.
+                             If you are not using an account that qualifies under the AWS
+                      free-tier, you may be charged to run these suites. The charge
+                      should be minimal, but neither Test Kitchen nor its maintainers
+                      are responsible for your incurred costs.
+
+                      D      Creating EC2 instance in region us-west-2 with properties:
+                      D      - instance_type = "m3.large"
+                      D      - ebs_optimized = false
+                      D      - image_id = "ami-8d0acfed"
+                      D      - key_name = "jenkins"
+                      D      - subnet_id = "subnet-19ac017c"
+                      D      - private_ip_address = nil
+                      D      - placement = {:availability_zone=>"us-west-2a"}
+                      D      - security_group_ids = ["sg-e401eb83", "sg-96274af3"]
+                      D      - user_data = "PHBvd2Vyc2hlbGw+CiRsb2dmaWxlPSJDOlxcUHJvZ3JhbSBGaWxlc1xcQW1h\nem9uXFxFYzJDb25maWdTZXJ2aWNlXFxMb2dzXFxraXRjaGVuLWVjMi5sb2ci\nCiNQUyBSZW1vdGluZyBhbmQgJiB3aW5ybS5jbWQgYmFzaWMgY29uZmlnCkVu\nYWJsZS1QU1JlbW90aW5nIC1Gb3JjZSAtU2tpcE5ldHdvcmtQcm9maWxlQ2hl\nY2sKJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2NvbmZpZyAnQHtNYXhUaW1lb3V0\nbXM9IjE4MDAwMDAifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQgc2V0IHdp\nbnJtL2NvbmZpZy93aW5ycyAnQHtNYXhNZW1vcnlQZXJTaGVsbE1CPSIxMDI0\nIn0nID4+ICRsb2dmaWxlCiYgd2lucm0uY21kIHNldCB3aW5ybS9jb25maWcv\nd2lucnMgJ0B7TWF4U2hlbGxzUGVyVXNlcj0iNTAifScgPj4gJGxvZ2ZpbGUK\nI1NlcnZlciBzZXR0aW5ncyAtIHN1cHBvcnQgdXNlcm5hbWUvcGFzc3dvcmQg\nbG9naW4KJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2NvbmZpZy9zZXJ2aWNlL2F1\ndGggJ0B7QmFzaWM9InRydWUifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQg\nc2V0IHdpbnJtL2NvbmZpZy9zZXJ2aWNlICdAe0FsbG93VW5lbmNyeXB0ZWQ9\nInRydWUifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2Nv\nbmZpZy93aW5ycyAnQHtNYXhNZW1vcnlQZXJTaGVsbE1CPSIxMDI0In0nID4+\nICRsb2dmaWxlCiNGaXJld2FsbCBDb25maWcKJiBuZXRzaCBhZHZmaXJld2Fs\nbCBmaXJld2FsbCBzZXQgcnVsZSBuYW1lPSJXaW5kb3dzIFJlbW90ZSBNYW5h\nZ2VtZW50IChIVFRQLUluKSIgcHJvZmlsZT1wdWJsaWMgcHJvdG9jb2w9dGNw\nIGxvY2FscG9ydD01OTg1IHJlbW90ZWlwPWxvY2Fsc3VibmV0IG5ldyByZW1v\ndGVpcD1hbnkgID4+ICRsb2dmaWxlCiNTZXQgc2NyaXB0IGV4ZWN1dGlvbiB0\nbyB1bnJlc3RyaWN0ZWQKJiBTZXQtRXhlY3V0aW9uUG9saWN5IFVucmVzdHJp\nY3RlZCAtRm9yY2UKPC9wb3dlcnNoZWxsPgo=\n"
+                             Instance <i-bd70a212> requested.
+                             Polling AWS for existence, attempt 0...
+                             Attempting to tag the instance, 0 retries
+                             EC2 instance <i-bd70a212> created.
+                             Waited 0/300s for instance <i-bd70a212> to become ready.
+                             Waited 5/300s for instance <i-bd70a212> to become ready.
+                             Waited 10/300s for instance <i-bd70a212> to become ready.
+                             Waited 15/300s for instance <i-bd70a212> to become ready.
+                             Waited 20/300s for instance <i-bd70a212> to become ready.
+                             Waited 25/300s for instance <i-bd70a212> to become ready.
+                             Waited 30/300s for instance <i-bd70a212> to become ready.
+                             Waited 35/300s for instance <i-bd70a212> to become ready.
+                             Waited 40/300s for instance <i-bd70a212> to become ready.
+                             Waited 45/300s for instance <i-bd70a212> to become ready.
+                             Waited 50/300s for instance <i-bd70a212> to become ready.
+                             Waited 55/300s for instance <i-bd70a212> to become ready.
+                             Waited 60/300s for instance <i-bd70a212> to become ready.
+                             Waited 65/300s for instance <i-bd70a212> to become ready.
+                             Waited 70/300s for instance <i-bd70a212> to become ready.
+                             Waited 75/300s for instance <i-bd70a212> to become ready.
+                             Waited 80/300s for instance <i-bd70a212> to become ready.
+                             Waited 85/300s for instance <i-bd70a212> to become ready.
+                             Waited 90/300s for instance <i-bd70a212> to become ready.
+                             Waited 95/300s for instance <i-bd70a212> to become ready.
+                      D      Console output: ---
+                      2016/06/28 17:28:02Z: EC2ConfigMonitorState: 0
+                      2016/06/28 17:28:02Z: Windows sysprep configuration complete.
+                      2016/06/28 17:28:07Z: AMI Origin Version: 2016.06.15
+                      2016/06/28 17:28:07Z: AMI Origin Name: Windows_Server-2012-R2_RTM-English-64Bit-Base
+                      2016/06/28 17:28:07Z: OS: Microsoft Windows NT 6.3.9600
+                      2016/06/28 17:28:07Z: OsVersion: 6.3
+                      2016/06/28 17:28:07Z: OsProductName: Windows Server 2012 R2 Standard
+                      2016/06/28 17:28:07Z: OsBuildLabEx: 9600.18292.amd64fre.winblue_ltsb.160330-1744
+                      2016/06/28 17:28:07Z: Language: en-US
+                      2016/06/28 17:28:07Z: TimeZone: Coordinated Universal Time
+                      2016/06/28 17:28:07Z: Offset: UTC 00:00:00
+                      2016/06/28 17:28:07Z: EC2 Agent: Ec2Config service v3.17.1032
+                      2016/06/28 17:28:09Z: Message: Waiting for meta-data accessibility...
+                      2016/06/28 17:28:09Z: Message: Meta-data is now available.
+                      2016/06/28 17:28:10Z: AMI-ID: ami-8d0acfed
+                      2016/06/28 17:28:10Z: Instance-ID: i-bd70a212
+                      2016/06/28 17:28:12Z: Driver: AWS PV Network Device v7.3.2.0
+                      2016/06/28 17:28:12Z: Driver: AWS PV Storage Host Adapter v7.3.2.0
+                      2016/06/28 17:28:12Z: Ec2SetPassword: Enabled
+                      2016/06/28 17:28:13Z: RDPCERTIFICATE-SUBJECTNAME: WIN-03DJIQSL6TD
+                      2016/06/28 17:28:13Z: RDPCERTIFICATE-THUMBPRINT: ED4429EB046B239AB8B8DA69C7D311758A714F1D
+                      2016/06/28 17:28:16Z: Username: Administrator
+                      2016/06/28 17:28:16Z: Password: <Password>
+                      Z9JpRo8RqUXJkYxKAAgYAcwFEUSeUd/3I2qe0P6OjBnTwONKL+iOUBy+mHXrSyGQUAkw+hHKZ1iIoR1zdfaOCg7mNML1AL7SGNdUExACBQpD+hERj2AoPj75uKhQtCGdXRQSIoS1Tqq7slPg0zkVal3zAC1Gd37YgStvz1bU32bHD9ue1rT3jw0icgj4IaOwHPVsPsXPrpLN+R1/X4LnEkk+Dp3VxrSgdyWR0SRbyYzYpgPDHlYT735YujHBOE5XRnoFHEPWR19AKgl3hLOg8zUebA9w0TJBv7N9hI6Bsyll4PXMdfJlb5E8vpNbvI6G7029DP86W4qdLorWV0q3Kg==
+                      </Password>
+                      2016/06/28 17:28:17Z: Message: Windows is Ready to use
+
+                             Waited 0/300s for instance <i-bd70a212> to fetch windows admin password.
+                             Retrieved Windows password for instance <i-bd70a212>.
+                             EC2 instance <i-bd70a212> ready.
+                      D      [WinRM] opening remote shell on http://10.194.11.86:5985/wsman
+                      D      ------Exception-------
+                      D      Class: Kitchen::ActionFailed
+                      D      Message: 1 actions failed.
+                      D      ----------------------
+                      D      ------Backtrace-------
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:179:in `run_action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command/action.rb:39:in `block in call'
+                      D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command/action.rb:37:in `call'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/cli.rb:56:in `perform'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/cli.rb:180:in `block (2 levels) in <class:CLI>'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/cli.rb:321:in `invoke_task'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/bin/kitchen:13:in `block in <top (required)>'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/errors.rb:174:in `with_friendly_errors'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/bin/kitchen:13:in `<top (required)>'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bin/kitchen:22:in `load'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bin/kitchen:22:in `<top (required)>'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli/exec.rb:63:in `load'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli/exec.rb:63:in `kernel_load'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli/exec.rb:24:in `run'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli.rb:304:in `exec'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor/invocation.rb:126:in `invoke_command'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor.rb:359:in `dispatch'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor/base.rb:440:in `start'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli.rb:11:in `start'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/exe/bundle:27:in `block in <top (required)>'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/friendly_errors.rb:98:in `with_friendly_errors'
+                      D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/exe/bundle:19:in `<top (required)>'
+                      D      /opt/chefdk/embedded/bin/bundle:22:in `load'
+                      D      /opt/chefdk/embedded/bin/bundle:22:in `<main>'
+                      D      ----End Backtrace-----
+                      D      -Composite Exception--
+                      D      Class: Kitchen::ActionFailed
+                      D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>] on powershell-windows-2012r2
+                      D      ----------------------
+                      D      ------Backtrace-------
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:64:in `raise_if_wsman_fault'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:51:in `raise_if_error'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:35:in `parse_to_xml'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/transport.rb:200:in `send_request'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:492:in `send_message'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:153:in `open_shell'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:72:in `block in open'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:222:in `retryable'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:71:in `open'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:359:in `create_executor'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:335:in `session'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:136:in `wait_until_ready'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/kitchen-ec2-1.0.0/lib/kitchen/driver/ec2.rb:205:in `create'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `public_send'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `block in perform_action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `call'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:478:in `block in action'
+                      D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:477:in `action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `perform_action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:359:in `create_action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:348:in `block in transition_to'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `each'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `transition_to'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:138:in `converge'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `public_send'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `run_action_in_thread'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+                      D      ----End Backtrace-----
+                      D      ---Nested Exception---
+                      D      Class: Kitchen::ActionFailed
+                      D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>]
+                      D      ----------------------
+                      D      ------Backtrace-------
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:64:in `raise_if_wsman_fault'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:51:in `raise_if_error'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:35:in `parse_to_xml'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/transport.rb:200:in `send_request'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:492:in `send_message'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:153:in `open_shell'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:72:in `block in open'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:222:in `retryable'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:71:in `open'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:359:in `create_executor'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:335:in `session'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:136:in `wait_until_ready'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/kitchen-ec2-1.0.0/lib/kitchen/driver/ec2.rb:205:in `create'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `public_send'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `block in perform_action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `call'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:478:in `block in action'
+                      D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:477:in `action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `perform_action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:359:in `create_action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:348:in `block in transition_to'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `each'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `transition_to'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:138:in `converge'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `public_send'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `run_action_in_thread'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+                      D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+                      D      ----End Backtrace-----
+                      STDERR: >>>>>> ------Exception-------
+                      >>>>>> Class: Kitchen::ActionFailed
+                      >>>>>> Message: 1 actions failed.
+                      >>>>>> ----------------------
+                      >>>>>> Please see .kitchen/logs/kitchen.log for more details
+                      >>>>>> Also try running `kitchen diagnose --all` for configuration
+                      ---- End output of bundle exec kitchen converge  -c -l debug ----
+                      Ran bundle exec kitchen converge  -c -l debug returned 20
+
+                      Resource Declaration:
+                      ---------------------
+                      # In /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                       36:       execute "bundle exec kitchen #{command}#{instances ? " #{instances}" : ""}#{kitchen_options ? " #{kitchen_options}" : ""}" do
+                       37:         cwd kitchen_dir
+                       38:         env({
+                       39:           "KITCHEN_DRIVER" => driver,
+                       40:           "KITCHEN_INSTANCES" => instances,
+                       41:           "KITCHEN_LOCAL_YAML" => ::File.expand_path("../../.kitchen.#{driver}.yml", __FILE__),
+                       42:           "KITCHEN_CHEF_PRODUCT" => chef_product,
+                       43:           "KITCHEN_CHEF_CHANNEL" => chef_channel,
+                       44:           "KITCHEN_CHEF_VERSION" => chef_version,
+                       45:           "ARTIFACTORY_USERNAME" => artifactory_username,
+                       46:           "ARTIFACTORY_PASSWORD" => artifactory_password
+                       47:         }.merge(new_resource.env))
+                       48:       end
+                       49:     end
+
+                      Compiled Resource:
+                      ------------------
+                      # Declared in /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:36:in `block in <class:Kitchen>'
+
+                      execute("bundle exec kitchen converge  -c -l debug") do
+                        action [:run]
+                        retries 0
+                        retry_delay 2
+                        default_guard_interpreter :execute
+                        command "bundle exec kitchen converge  -c -l debug"
+                        backup 5
+                        cwd "/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/powershell/"
+                        environment {"KITCHEN_DRIVER"=>"ec2", "KITCHEN_INSTANCES"=>"", "KITCHEN_LOCAL_YAML"=>"/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/.kitchen.ec2.yml", "KITCHEN_CHEF_PRODUCT"=>"chefdk", "KITCHEN_CHEF_CHANNEL"=>"unstable", "KITCHEN_CHEF_VERSION"=>"0.16.11+20160628153919", "ARTIFACTORY_USERNAME"=>"chef-web-downloads", "ARTIFACTORY_PASSWORD"=>"fWPxYSB69EiuSpl8*3Dr^kGwf#hxUE6cmjeZRB%H!Cruit7qiKp%toH3nXKStQUg", "BUNDLE_GEMFILE"=>"/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/Gemfile", "KITCHEN_YAML"=>"/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/.kitchen.powershell.yml"}
+                        returns 0
+                        declared_type :execute
+                        cookbook_name "acceptance-cookbook"
+                      end
+
+                      Platform:
+                      ---------
+                      x86_64-linux
+
+
+                    ================================================================================
+                    Error executing action `run` on resource 'cookbook_kitchen[converge powershell]'
+                    ================================================================================
+
+                    Mixlib::ShellOut::ShellCommandFailed
+                    ------------------------------------
+                    execute[bundle exec kitchen converge  -c -l debug] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '20'
+                    ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+                    STDOUT: -----> Starting Kitchen (v1.9.0)
+                    D      Berksfile found at /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/powershell/Berksfile, loading Berkshelf
+                    D      Berkshelf 4.3.3 library loaded
+                    D      winrm requested, loading winrm gem (["~> 1.6"])
+                    D      winrm is loaded.
+                    D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+                    D      winrm-fs is loaded.
+                    -----> Creating <powershell-windows-2012r2>...
+                    D      platform name windows-2012r2 appears to be a standard platform. Searching for windows 2012r2 ...
+                    D      Searching for images matching {:name=>"Windows_Server-2012-R2*-English-*-Base-*", :"owner-alias"=>"amazon", :architecture=>"x86_64", :"virtualization-type"=>"hvm", :"block-device-mapping.volume-type"=>"gp2", :"image-type"=>"machine"} ...
+                    D      Search returned 3 images:
+                    D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.06.15: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-06-16T16:58:39.000Z
+                    D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.05.11: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-05-12T20:22:38.000Z
+                    D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.04.13: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-04-13T01:30:48.000Z
+                    D      Image for powershell-windows-2012r2: Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.06.15.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-06-16T16:58:39.000Z
+                           Detected platform: windows version 2012r2rtm on x86_64. Instance Type: m3.large. Default username: administrator (default).
+                    D      No SSH username specified: using default username administrator  for image ami-8d0acfed, which we detected as windows 2012r2rtm x86_64.
+                           If you are not using an account that qualifies under the AWS
+                    free-tier, you may be charged to run these suites. The charge
+                    should be minimal, but neither Test Kitchen nor its maintainers
+                    are responsible for your incurred costs.
+
+                    D      Creating EC2 instance in region us-west-2 with properties:
+                    D      - instance_type = "m3.large"
+                    D      - ebs_optimized = false
+                    D      - image_id = "ami-8d0acfed"
+                    D      - key_name = "jenkins"
+                    D      - subnet_id = "subnet-19ac017c"
+                    D      - private_ip_address = nil
+                    D      - placement = {:availability_zone=>"us-west-2a"}
+                    D      - security_group_ids = ["sg-e401eb83", "sg-96274af3"]
+                    D      - user_data = "PHBvd2Vyc2hlbGw+CiRsb2dmaWxlPSJDOlxcUHJvZ3JhbSBGaWxlc1xcQW1h\nem9uXFxFYzJDb25maWdTZXJ2aWNlXFxMb2dzXFxraXRjaGVuLWVjMi5sb2ci\nCiNQUyBSZW1vdGluZyBhbmQgJiB3aW5ybS5jbWQgYmFzaWMgY29uZmlnCkVu\nYWJsZS1QU1JlbW90aW5nIC1Gb3JjZSAtU2tpcE5ldHdvcmtQcm9maWxlQ2hl\nY2sKJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2NvbmZpZyAnQHtNYXhUaW1lb3V0\nbXM9IjE4MDAwMDAifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQgc2V0IHdp\nbnJtL2NvbmZpZy93aW5ycyAnQHtNYXhNZW1vcnlQZXJTaGVsbE1CPSIxMDI0\nIn0nID4+ICRsb2dmaWxlCiYgd2lucm0uY21kIHNldCB3aW5ybS9jb25maWcv\nd2lucnMgJ0B7TWF4U2hlbGxzUGVyVXNlcj0iNTAifScgPj4gJGxvZ2ZpbGUK\nI1NlcnZlciBzZXR0aW5ncyAtIHN1cHBvcnQgdXNlcm5hbWUvcGFzc3dvcmQg\nbG9naW4KJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2NvbmZpZy9zZXJ2aWNlL2F1\ndGggJ0B7QmFzaWM9InRydWUifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQg\nc2V0IHdpbnJtL2NvbmZpZy9zZXJ2aWNlICdAe0FsbG93VW5lbmNyeXB0ZWQ9\nInRydWUifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2Nv\nbmZpZy93aW5ycyAnQHtNYXhNZW1vcnlQZXJTaGVsbE1CPSIxMDI0In0nID4+\nICRsb2dmaWxlCiNGaXJld2FsbCBDb25maWcKJiBuZXRzaCBhZHZmaXJld2Fs\nbCBmaXJld2FsbCBzZXQgcnVsZSBuYW1lPSJXaW5kb3dzIFJlbW90ZSBNYW5h\nZ2VtZW50IChIVFRQLUluKSIgcHJvZmlsZT1wdWJsaWMgcHJvdG9jb2w9dGNw\nIGxvY2FscG9ydD01OTg1IHJlbW90ZWlwPWxvY2Fsc3VibmV0IG5ldyByZW1v\ndGVpcD1hbnkgID4+ICRsb2dmaWxlCiNTZXQgc2NyaXB0IGV4ZWN1dGlvbiB0\nbyB1bnJlc3RyaWN0ZWQKJiBTZXQtRXhlY3V0aW9uUG9saWN5IFVucmVzdHJp\nY3RlZCAtRm9yY2UKPC9wb3dlcnNoZWxsPgo=\n"
+                           Instance <i-bd70a212> requested.
+                           Polling AWS for existence, attempt 0...
+                           Attempting to tag the instance, 0 retries
+                           EC2 instance <i-bd70a212> created.
+                           Waited 0/300s for instance <i-bd70a212> to become ready.
+                           Waited 5/300s for instance <i-bd70a212> to become ready.
+                           Waited 10/300s for instance <i-bd70a212> to become ready.
+                           Waited 15/300s for instance <i-bd70a212> to become ready.
+                           Waited 20/300s for instance <i-bd70a212> to become ready.
+                           Waited 25/300s for instance <i-bd70a212> to become ready.
+                           Waited 30/300s for instance <i-bd70a212> to become ready.
+                           Waited 35/300s for instance <i-bd70a212> to become ready.
+                           Waited 40/300s for instance <i-bd70a212> to become ready.
+                           Waited 45/300s for instance <i-bd70a212> to become ready.
+                           Waited 50/300s for instance <i-bd70a212> to become ready.
+                           Waited 55/300s for instance <i-bd70a212> to become ready.
+                           Waited 60/300s for instance <i-bd70a212> to become ready.
+                           Waited 65/300s for instance <i-bd70a212> to become ready.
+                           Waited 70/300s for instance <i-bd70a212> to become ready.
+                           Waited 75/300s for instance <i-bd70a212> to become ready.
+                           Waited 80/300s for instance <i-bd70a212> to become ready.
+                           Waited 85/300s for instance <i-bd70a212> to become ready.
+                           Waited 90/300s for instance <i-bd70a212> to become ready.
+                           Waited 95/300s for instance <i-bd70a212> to become ready.
+                    D      Console output: ---
+                    2016/06/28 17:28:02Z: EC2ConfigMonitorState: 0
+                    2016/06/28 17:28:02Z: Windows sysprep configuration complete.
+                    2016/06/28 17:28:07Z: AMI Origin Version: 2016.06.15
+                    2016/06/28 17:28:07Z: AMI Origin Name: Windows_Server-2012-R2_RTM-English-64Bit-Base
+                    2016/06/28 17:28:07Z: OS: Microsoft Windows NT 6.3.9600
+                    2016/06/28 17:28:07Z: OsVersion: 6.3
+                    2016/06/28 17:28:07Z: OsProductName: Windows Server 2012 R2 Standard
+                    2016/06/28 17:28:07Z: OsBuildLabEx: 9600.18292.amd64fre.winblue_ltsb.160330-1744
+                    2016/06/28 17:28:07Z: Language: en-US
+                    2016/06/28 17:28:07Z: TimeZone: Coordinated Universal Time
+                    2016/06/28 17:28:07Z: Offset: UTC 00:00:00
+                    2016/06/28 17:28:07Z: EC2 Agent: Ec2Config service v3.17.1032
+                    2016/06/28 17:28:09Z: Message: Waiting for meta-data accessibility...
+                    2016/06/28 17:28:09Z: Message: Meta-data is now available.
+                    2016/06/28 17:28:10Z: AMI-ID: ami-8d0acfed
+                    2016/06/28 17:28:10Z: Instance-ID: i-bd70a212
+                    2016/06/28 17:28:12Z: Driver: AWS PV Network Device v7.3.2.0
+                    2016/06/28 17:28:12Z: Driver: AWS PV Storage Host Adapter v7.3.2.0
+                    2016/06/28 17:28:12Z: Ec2SetPassword: Enabled
+                    2016/06/28 17:28:13Z: RDPCERTIFICATE-SUBJECTNAME: WIN-03DJIQSL6TD
+                    2016/06/28 17:28:13Z: RDPCERTIFICATE-THUMBPRINT: ED4429EB046B239AB8B8DA69C7D311758A714F1D
+                    2016/06/28 17:28:16Z: Username: Administrator
+                    2016/06/28 17:28:16Z: Password: <Password>
+                    Z9JpRo8RqUXJkYxKAAgYAcwFEUSeUd/3I2qe0P6OjBnTwONKL+iOUBy+mHXrSyGQUAkw+hHKZ1iIoR1zdfaOCg7mNML1AL7SGNdUExACBQpD+hERj2AoPj75uKhQtCGdXRQSIoS1Tqq7slPg0zkVal3zAC1Gd37YgStvz1bU32bHD9ue1rT3jw0icgj4IaOwHPVsPsXPrpLN+R1/X4LnEkk+Dp3VxrSgdyWR0SRbyYzYpgPDHlYT735YujHBOE5XRnoFHEPWR19AKgl3hLOg8zUebA9w0TJBv7N9hI6Bsyll4PXMdfJlb5E8vpNbvI6G7029DP86W4qdLorWV0q3Kg==
+                    </Password>
+                    2016/06/28 17:28:17Z: Message: Windows is Ready to use
+
+                           Waited 0/300s for instance <i-bd70a212> to fetch windows admin password.
+                           Retrieved Windows password for instance <i-bd70a212>.
+                           EC2 instance <i-bd70a212> ready.
+                    D      [WinRM] opening remote shell on http://10.194.11.86:5985/wsman
+                    D      ------Exception-------
+                    D      Class: Kitchen::ActionFailed
+                    D      Message: 1 actions failed.
+                    D      ----------------------
+                    D      ------Backtrace-------
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:179:in `run_action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command/action.rb:39:in `block in call'
+                    D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command/action.rb:37:in `call'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/cli.rb:56:in `perform'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/cli.rb:180:in `block (2 levels) in <class:CLI>'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/cli.rb:321:in `invoke_task'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/bin/kitchen:13:in `block in <top (required)>'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/errors.rb:174:in `with_friendly_errors'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/bin/kitchen:13:in `<top (required)>'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bin/kitchen:22:in `load'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bin/kitchen:22:in `<top (required)>'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli/exec.rb:63:in `load'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli/exec.rb:63:in `kernel_load'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli/exec.rb:24:in `run'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli.rb:304:in `exec'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor/invocation.rb:126:in `invoke_command'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor.rb:359:in `dispatch'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor/base.rb:440:in `start'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli.rb:11:in `start'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/exe/bundle:27:in `block in <top (required)>'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/friendly_errors.rb:98:in `with_friendly_errors'
+                    D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/exe/bundle:19:in `<top (required)>'
+                    D      /opt/chefdk/embedded/bin/bundle:22:in `load'
+                    D      /opt/chefdk/embedded/bin/bundle:22:in `<main>'
+                    D      ----End Backtrace-----
+                    D      -Composite Exception--
+                    D      Class: Kitchen::ActionFailed
+                    D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>] on powershell-windows-2012r2
+                    D      ----------------------
+                    D      ------Backtrace-------
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:64:in `raise_if_wsman_fault'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:51:in `raise_if_error'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:35:in `parse_to_xml'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/transport.rb:200:in `send_request'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:492:in `send_message'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:153:in `open_shell'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:72:in `block in open'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:222:in `retryable'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:71:in `open'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:359:in `create_executor'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:335:in `session'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:136:in `wait_until_ready'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/kitchen-ec2-1.0.0/lib/kitchen/driver/ec2.rb:205:in `create'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `public_send'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `block in perform_action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `call'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:478:in `block in action'
+                    D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:477:in `action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `perform_action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:359:in `create_action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:348:in `block in transition_to'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `each'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `transition_to'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:138:in `converge'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `public_send'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `run_action_in_thread'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+                    D      ----End Backtrace-----
+                    D      ---Nested Exception---
+                    D      Class: Kitchen::ActionFailed
+                    D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>]
+                    D      ----------------------
+                    D      ------Backtrace-------
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:64:in `raise_if_wsman_fault'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:51:in `raise_if_error'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:35:in `parse_to_xml'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/transport.rb:200:in `send_request'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:492:in `send_message'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:153:in `open_shell'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:72:in `block in open'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:222:in `retryable'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:71:in `open'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:359:in `create_executor'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:335:in `session'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:136:in `wait_until_ready'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/kitchen-ec2-1.0.0/lib/kitchen/driver/ec2.rb:205:in `create'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `public_send'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `block in perform_action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `call'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:478:in `block in action'
+                    D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:477:in `action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `perform_action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:359:in `create_action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:348:in `block in transition_to'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `each'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `transition_to'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:138:in `converge'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `public_send'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `run_action_in_thread'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+                    D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+                    D      ----End Backtrace-----
+                    STDERR: >>>>>> ------Exception-------
+                    >>>>>> Class: Kitchen::ActionFailed
+                    >>>>>> Message: 1 actions failed.
+                    >>>>>> ----------------------
+                    >>>>>> Please see .kitchen/logs/kitchen.log for more details
+                    >>>>>> Also try running `kitchen diagnose --all` for configuration
+                    ---- End output of bundle exec kitchen converge  -c -l debug ----
+                    Ran bundle exec kitchen converge  -c -l debug returned 20
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+
+                     23:     cookbook_kitchen "#{command} powershell" do
+                     24:     end
+                     25:
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb:23:in `block in <class:TopCookbooks>'
+
+                    cookbook_kitchen("converge powershell") do
+                      action [:run]
+                      updated true
+                      updated_by_last_action true
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      declared_type :cookbook_kitchen
+                      cookbook_name "acceptance-cookbook"
+                      repository "https://github.com/chef-cookbooks/powershell.git"
+                      test_cookbook "powershell"
+                      repository_root "/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/powershell"
+                      branch "master"
+                      command "converge"
+                      kitchen_options "-c -l debug"
+                      kitchen_dir "/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/powershell/"
+                      env {"BUNDLE_GEMFILE"=>"/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/Gemfile", "KITCHEN_YAML"=>"/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/.kitchen.powershell.yml"}
+                    end
+
+                    Platform:
+                    ---------
+                    x86_64-linux
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'top_cookbooks[converge]'
+                  ================================================================================
+
+                  Mixlib::ShellOut::ShellCommandFailed
+                  ------------------------------------
+                  cookbook_kitchen[converge powershell] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb line 23) had an error: Mixlib::ShellOut::ShellCommandFailed: execute[bundle exec kitchen converge  -c -l debug] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '20'
+                  ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+                  STDOUT: -----> Starting Kitchen (v1.9.0)
+                  D      Berksfile found at /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/powershell/Berksfile, loading Berkshelf
+                  D      Berkshelf 4.3.3 library loaded
+                  D      winrm requested, loading winrm gem (["~> 1.6"])
+                  D      winrm is loaded.
+                  D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+                  D      winrm-fs is loaded.
+                  -----> Creating <powershell-windows-2012r2>...
+                  D      platform name windows-2012r2 appears to be a standard platform. Searching for windows 2012r2 ...
+                  D      Searching for images matching {:name=>"Windows_Server-2012-R2*-English-*-Base-*", :"owner-alias"=>"amazon", :architecture=>"x86_64", :"virtualization-type"=>"hvm", :"block-device-mapping.volume-type"=>"gp2", :"image-type"=>"machine"} ...
+                  D      Search returned 3 images:
+                  D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.06.15: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-06-16T16:58:39.000Z
+                  D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.05.11: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-05-12T20:22:38.000Z
+                  D      - Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.04.13: Detected windows 2012r2rtm x86_64.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-04-13T01:30:48.000Z
+                  D      Image for powershell-windows-2012r2: Windows_Server-2012-R2_RTM-English-64Bit-Base-2016.06.15.  Architecture: x86_64, Virtualization: hvm, Storage: ebs gp2, Created: 2016-06-16T16:58:39.000Z
+                         Detected platform: windows version 2012r2rtm on x86_64. Instance Type: m3.large. Default username: administrator (default).
+                  D      No SSH username specified: using default username administrator  for image ami-8d0acfed, which we detected as windows 2012r2rtm x86_64.
+                         If you are not using an account that qualifies under the AWS
+                  free-tier, you may be charged to run these suites. The charge
+                  should be minimal, but neither Test Kitchen nor its maintainers
+                  are responsible for your incurred costs.
+
+                  D      Creating EC2 instance in region us-west-2 with properties:
+                  D      - instance_type = "m3.large"
+                  D      - ebs_optimized = false
+                  D      - image_id = "ami-8d0acfed"
+                  D      - key_name = "jenkins"
+                  D      - subnet_id = "subnet-19ac017c"
+                  D      - private_ip_address = nil
+                  D      - placement = {:availability_zone=>"us-west-2a"}
+                  D      - security_group_ids = ["sg-e401eb83", "sg-96274af3"]
+                  D      - user_data = "PHBvd2Vyc2hlbGw+CiRsb2dmaWxlPSJDOlxcUHJvZ3JhbSBGaWxlc1xcQW1h\nem9uXFxFYzJDb25maWdTZXJ2aWNlXFxMb2dzXFxraXRjaGVuLWVjMi5sb2ci\nCiNQUyBSZW1vdGluZyBhbmQgJiB3aW5ybS5jbWQgYmFzaWMgY29uZmlnCkVu\nYWJsZS1QU1JlbW90aW5nIC1Gb3JjZSAtU2tpcE5ldHdvcmtQcm9maWxlQ2hl\nY2sKJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2NvbmZpZyAnQHtNYXhUaW1lb3V0\nbXM9IjE4MDAwMDAifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQgc2V0IHdp\nbnJtL2NvbmZpZy93aW5ycyAnQHtNYXhNZW1vcnlQZXJTaGVsbE1CPSIxMDI0\nIn0nID4+ICRsb2dmaWxlCiYgd2lucm0uY21kIHNldCB3aW5ybS9jb25maWcv\nd2lucnMgJ0B7TWF4U2hlbGxzUGVyVXNlcj0iNTAifScgPj4gJGxvZ2ZpbGUK\nI1NlcnZlciBzZXR0aW5ncyAtIHN1cHBvcnQgdXNlcm5hbWUvcGFzc3dvcmQg\nbG9naW4KJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2NvbmZpZy9zZXJ2aWNlL2F1\ndGggJ0B7QmFzaWM9InRydWUifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQg\nc2V0IHdpbnJtL2NvbmZpZy9zZXJ2aWNlICdAe0FsbG93VW5lbmNyeXB0ZWQ9\nInRydWUifScgPj4gJGxvZ2ZpbGUKJiB3aW5ybS5jbWQgc2V0IHdpbnJtL2Nv\nbmZpZy93aW5ycyAnQHtNYXhNZW1vcnlQZXJTaGVsbE1CPSIxMDI0In0nID4+\nICRsb2dmaWxlCiNGaXJld2FsbCBDb25maWcKJiBuZXRzaCBhZHZmaXJld2Fs\nbCBmaXJld2FsbCBzZXQgcnVsZSBuYW1lPSJXaW5kb3dzIFJlbW90ZSBNYW5h\nZ2VtZW50IChIVFRQLUluKSIgcHJvZmlsZT1wdWJsaWMgcHJvdG9jb2w9dGNw\nIGxvY2FscG9ydD01OTg1IHJlbW90ZWlwPWxvY2Fsc3VibmV0IG5ldyByZW1v\ndGVpcD1hbnkgID4+ICRsb2dmaWxlCiNTZXQgc2NyaXB0IGV4ZWN1dGlvbiB0\nbyB1bnJlc3RyaWN0ZWQKJiBTZXQtRXhlY3V0aW9uUG9saWN5IFVucmVzdHJp\nY3RlZCAtRm9yY2UKPC9wb3dlcnNoZWxsPgo=\n"
+                         Instance <i-bd70a212> requested.
+                         Polling AWS for existence, attempt 0...
+                         Attempting to tag the instance, 0 retries
+                         EC2 instance <i-bd70a212> created.
+                         Waited 0/300s for instance <i-bd70a212> to become ready.
+                         Waited 5/300s for instance <i-bd70a212> to become ready.
+                         Waited 10/300s for instance <i-bd70a212> to become ready.
+                         Waited 15/300s for instance <i-bd70a212> to become ready.
+                         Waited 20/300s for instance <i-bd70a212> to become ready.
+                         Waited 25/300s for instance <i-bd70a212> to become ready.
+                         Waited 30/300s for instance <i-bd70a212> to become ready.
+                         Waited 35/300s for instance <i-bd70a212> to become ready.
+                         Waited 40/300s for instance <i-bd70a212> to become ready.
+                         Waited 45/300s for instance <i-bd70a212> to become ready.
+                         Waited 50/300s for instance <i-bd70a212> to become ready.
+                         Waited 55/300s for instance <i-bd70a212> to become ready.
+                         Waited 60/300s for instance <i-bd70a212> to become ready.
+                         Waited 65/300s for instance <i-bd70a212> to become ready.
+                         Waited 70/300s for instance <i-bd70a212> to become ready.
+                         Waited 75/300s for instance <i-bd70a212> to become ready.
+                         Waited 80/300s for instance <i-bd70a212> to become ready.
+                         Waited 85/300s for instance <i-bd70a212> to become ready.
+                         Waited 90/300s for instance <i-bd70a212> to become ready.
+                         Waited 95/300s for instance <i-bd70a212> to become ready.
+                  D      Console output: ---
+                  2016/06/28 17:28:02Z: EC2ConfigMonitorState: 0
+                  2016/06/28 17:28:02Z: Windows sysprep configuration complete.
+                  2016/06/28 17:28:07Z: AMI Origin Version: 2016.06.15
+                  2016/06/28 17:28:07Z: AMI Origin Name: Windows_Server-2012-R2_RTM-English-64Bit-Base
+                  2016/06/28 17:28:07Z: OS: Microsoft Windows NT 6.3.9600
+                  2016/06/28 17:28:07Z: OsVersion: 6.3
+                  2016/06/28 17:28:07Z: OsProductName: Windows Server 2012 R2 Standard
+                  2016/06/28 17:28:07Z: OsBuildLabEx: 9600.18292.amd64fre.winblue_ltsb.160330-1744
+                  2016/06/28 17:28:07Z: Language: en-US
+                  2016/06/28 17:28:07Z: TimeZone: Coordinated Universal Time
+                  2016/06/28 17:28:07Z: Offset: UTC 00:00:00
+                  2016/06/28 17:28:07Z: EC2 Agent: Ec2Config service v3.17.1032
+                  2016/06/28 17:28:09Z: Message: Waiting for meta-data accessibility...
+                  2016/06/28 17:28:09Z: Message: Meta-data is now available.
+                  2016/06/28 17:28:10Z: AMI-ID: ami-8d0acfed
+                  2016/06/28 17:28:10Z: Instance-ID: i-bd70a212
+                  2016/06/28 17:28:12Z: Driver: AWS PV Network Device v7.3.2.0
+                  2016/06/28 17:28:12Z: Driver: AWS PV Storage Host Adapter v7.3.2.0
+                  2016/06/28 17:28:12Z: Ec2SetPassword: Enabled
+                  2016/06/28 17:28:13Z: RDPCERTIFICATE-SUBJECTNAME: WIN-03DJIQSL6TD
+                  2016/06/28 17:28:13Z: RDPCERTIFICATE-THUMBPRINT: ED4429EB046B239AB8B8DA69C7D311758A714F1D
+                  2016/06/28 17:28:16Z: Username: Administrator
+                  2016/06/28 17:28:16Z: Password: <Password>
+                  Z9JpRo8RqUXJkYxKAAgYAcwFEUSeUd/3I2qe0P6OjBnTwONKL+iOUBy+mHXrSyGQUAkw+hHKZ1iIoR1zdfaOCg7mNML1AL7SGNdUExACBQpD+hERj2AoPj75uKhQtCGdXRQSIoS1Tqq7slPg0zkVal3zAC1Gd37YgStvz1bU32bHD9ue1rT3jw0icgj4IaOwHPVsPsXPrpLN+R1/X4LnEkk+Dp3VxrSgdyWR0SRbyYzYpgPDHlYT735YujHBOE5XRnoFHEPWR19AKgl3hLOg8zUebA9w0TJBv7N9hI6Bsyll4PXMdfJlb5E8vpNbvI6G7029DP86W4qdLorWV0q3Kg==
+                  </Password>
+                  2016/06/28 17:28:17Z: Message: Windows is Ready to use
+
+                         Waited 0/300s for instance <i-bd70a212> to fetch windows admin password.
+                         Retrieved Windows password for instance <i-bd70a212>.
+                         EC2 instance <i-bd70a212> ready.
+                  D      [WinRM] opening remote shell on http://10.194.11.86:5985/wsman
+                  D      ------Exception-------
+                  D      Class: Kitchen::ActionFailed
+                  D      Message: 1 actions failed.
+                  D      ----------------------
+                  D      ------Backtrace-------
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:179:in `run_action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command/action.rb:39:in `block in call'
+                  D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command/action.rb:37:in `call'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/cli.rb:56:in `perform'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/cli.rb:180:in `block (2 levels) in <class:CLI>'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/cli.rb:321:in `invoke_task'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/bin/kitchen:13:in `block in <top (required)>'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/errors.rb:174:in `with_friendly_errors'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/bin/kitchen:13:in `<top (required)>'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bin/kitchen:22:in `load'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bin/kitchen:22:in `<top (required)>'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli/exec.rb:63:in `load'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli/exec.rb:63:in `kernel_load'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli/exec.rb:24:in `run'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli.rb:304:in `exec'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor/invocation.rb:126:in `invoke_command'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor.rb:359:in `dispatch'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/vendor/thor/lib/thor/base.rb:440:in `start'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/cli.rb:11:in `start'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/exe/bundle:27:in `block in <top (required)>'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler/friendly_errors.rb:98:in `with_friendly_errors'
+                  D      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/exe/bundle:19:in `<top (required)>'
+                  D      /opt/chefdk/embedded/bin/bundle:22:in `load'
+                  D      /opt/chefdk/embedded/bin/bundle:22:in `<main>'
+                  D      ----End Backtrace-----
+                  D      -Composite Exception--
+                  D      Class: Kitchen::ActionFailed
+                  D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>] on powershell-windows-2012r2
+                  D      ----------------------
+                  D      ------Backtrace-------
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:64:in `raise_if_wsman_fault'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:51:in `raise_if_error'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:35:in `parse_to_xml'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/transport.rb:200:in `send_request'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:492:in `send_message'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:153:in `open_shell'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:72:in `block in open'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:222:in `retryable'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:71:in `open'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:359:in `create_executor'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:335:in `session'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:136:in `wait_until_ready'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/kitchen-ec2-1.0.0/lib/kitchen/driver/ec2.rb:205:in `create'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `public_send'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `block in perform_action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `call'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:478:in `block in action'
+                  D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:477:in `action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `perform_action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:359:in `create_action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:348:in `block in transition_to'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `each'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `transition_to'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:138:in `converge'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `public_send'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `run_action_in_thread'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+                  D      ----End Backtrace-----
+                  D      ---Nested Exception---
+                  D      Class: Kitchen::ActionFailed
+                  D      Message: Failed to complete #create action: [[WSMAN ERROR CODE: 2150858793]: <f:WSManFault Code='2150858793' Machine='10.194.11.86' xmlns:f='http://schemas.microsoft.com/wbem/wsman/1/wsmanfault'><f:Message>The WS-Management service cannot complete the operation within the time specified in OperationTimeout.  </f:Message></f:WSManFault>]
+                  D      ----------------------
+                  D      ------Backtrace-------
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:64:in `raise_if_wsman_fault'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:51:in `raise_if_error'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/response_handler.rb:35:in `parse_to_xml'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/http/transport.rb:200:in `send_request'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:492:in `send_message'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:153:in `open_shell'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:72:in `block in open'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:222:in `retryable'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/command_executor.rb:71:in `open'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/winrm-1.8.1/lib/winrm/winrm_service.rb:359:in `create_executor'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:335:in `session'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/transport/winrm.rb:136:in `wait_until_ready'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/kitchen-ec2-1.0.0/lib/kitchen/driver/ec2.rb:205:in `create'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `public_send'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `block in perform_action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `call'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:478:in `block in action'
+                  D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:477:in `action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:449:in `perform_action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:359:in `create_action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:348:in `block in transition_to'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `each'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:347:in `transition_to'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/instance.rb:138:in `converge'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `public_send'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:194:in `run_action_in_thread'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.0/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+                  D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+                  D      ----End Backtrace-----
+                  STDERR: >>>>>> ------Exception-------
+                  >>>>>> Class: Kitchen::ActionFailed
+                  >>>>>> Message: 1 actions failed.
+                  >>>>>> ----------------------
+                  >>>>>> Please see .kitchen/logs/kitchen.log for more details
+                  >>>>>> Also try running `kitchen diagnose --all` for configuration
+                  ---- End output of bundle exec kitchen converge  -c -l debug ----
+                  Ran bundle exec kitchen converge  -c -l debug returned 20
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    1: top_cookbooks "converge"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+                  top_cookbooks("converge") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :top_cookbooks
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "provision"
+                    command "converge"
+                  end
+
+                  Platform:
+                  ---------
+                  x86_64-linux
+
+              Starting audit phase
+            17016: |2
+
+              Running handlers:
+              [2016-06-28T17:29:26+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-28T17:29:26+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 14 resources updated in 27 minutes 38 seconds
+              [2016-06-28T17:29:26+00:00] ERROR: Failed to post audit report to server. Saving report to /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/failed-audit-data.json
+              [2016-06-28T17:29:26+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/chef-stacktrace.out
+              [2016-06-28T17:29:26+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-28T17:29:26+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              [2016-06-28T17:29:28+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              STDERR:
+              ---- End output of chef-client -z -c /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+              Ran chef-client -z -c /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/dna.json -o acceptance-cookbook::provision --no-color returned 1
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:289:in `invalid!'
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:276:in `error!'
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/chef_runner.rb:53:in `block in run!'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler.rb:237:in `block in with_clean_env'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler.rb:447:in `with_env'
+              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler.rb:237:in `with_clean_env'
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/chef_runner.rb:42:in `run!'
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:149:in `run_command'
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:116:in `block in run_suite'
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:114:in `each'
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:114:in `run_suite'
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:76:in `block (2 levels) in start_worker'
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:74:in `loop'
+              /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:74:in `block in start_worker'
+              CHEF-ACCEPTANCE::[2016-06-28 17:29:28 +0000] --force-destroy specified so attempting to run the destroy recipe
+              TOP-COOKBOOKS::DESTROY::[2016-06-28 17:29:28 +0000] Initialized [/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/logs/top-cookbooks/destroy.log] logger...
+            17296: |
+              CHEF-ACCEPTANCE::[2016-06-28 17:30:21 +0000] | top-cookbooks | Total         | 00:28:35 | Y     |
+              CHEF-ACCEPTANCE::[2016-06-28 17:30:21 +0000] | Run           | Total         | 00:28:35 | Y     |
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+        steps:
+          total: 30m48s
+          before (setup time): 2m12s
+          CHEF-ACCEPTANCE:
+            total: 28m36s
+            TOP-COOKBOOKS::PROVISION: 27m43s
+            TOP-COOKBOOKS::DESTROY: 53s
+        chef_acceptance_timing:
+        - top-cookbooks:
+            provision: 25m50s
+            force-destroy: 38s
+            Total: 28m35s
+          Run:
+            Total: 28m35s
+      debian-6:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/244/
+        duration: 1m38s
+        logs:
+          consoleText:
+            512: |
+              Running verification for component 'chef-sugar'
+              Running verification for component 'knife-supermarket'
+              ........................../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `exec': No such file or directory - /opt/chefdk/embedded/bin/git (Errno::ENOENT)
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `block in fork_subprocess'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:316:in `fork'
+            529: |2
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      debian-7:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-7,project=chefdk,role=tester/244/
+        duration: 1m21s
+        logs:
+          consoleText:
+            512: |
+              Running verification for component 'chef-sugar'
+              Running verification for component 'knife-supermarket'
+              ........................../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `exec': No such file or directory - /opt/chefdk/embedded/bin/git (Errno::ENOENT)
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `block in fork_subprocess'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:316:in `fork'
+            529: |2
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      debian-8:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-8,project=chefdk,role=tester/244/
+        duration: 2m48s
+        logs:
+          consoleText:
+            510: |
+              Running verification for component 'chef-sugar'
+              Running verification for component 'knife-supermarket'
+              ........................../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `exec': No such file or directory - /opt/chefdk/embedded/bin/git (Errno::ENOENT)
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `block in fork_subprocess'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:316:in `fork'
+            527: |2
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      el-6:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-6,project=chefdk,role=tester/244/
+        duration: 2m9s
+        logs:
+          consoleText:
+            523: |
+              Running verification for component 'chef-sugar'
+              Running verification for component 'knife-supermarket'
+              ........................../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `exec': No such file or directory - /opt/chefdk/embedded/bin/git (Errno::ENOENT)
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `block in fork_subprocess'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:316:in `fork'
+            540: |2
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      el-7:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-7,project=chefdk,role=tester/244/
+        duration: 1m33s
+        logs:
+          consoleText:
+            530: |
+              Running verification for component 'chef-sugar'
+              Running verification for component 'knife-supermarket'
+              ......................../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `exec': No such file or directory - /opt/chefdk/embedded/bin/git (Errno::ENOENT)
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `block in fork_subprocess'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:316:in `fork'
+            547: |2
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      mac_os_x-10.10:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.10,project=chefdk,role=tester/244/
+        duration: 2m16s
+        logs:
+          consoleText:
+            412: |
+              /dev/disk1            GUID_partition_scheme
+              /dev/disk1s1          Apple_HFS                        /Volumes/chefdk
+              find: /Volumes/chefdk/.Trashes: Permission denied
+              installer: Package name is Chef Development Kit
+              installer: Installing at base path /
+            550: |
+              Running verification for component 'chef-sugar'
+              Running verification for component 'knife-supermarket'
+              ....................../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `exec': No such file or directory - /opt/chefdk/embedded/bin/git (Errno::ENOENT)
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `block in fork_subprocess'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:316:in `fork'
+            567: |2
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      mac_os_x-10.11:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.11,project=chefdk,role=tester/244/
+        duration: 1m31s
+        logs:
+          consoleText:
+            412: |
+              /dev/disk1            GUID_partition_scheme
+              /dev/disk1s1          Apple_HFS                        /Volumes/chefdk
+              find: /Volumes/chefdk/.Trashes: Permission denied
+              installer: Package name is Chef Development Kit
+              installer: Installing at base path /
+            550: |
+              Running verification for component 'chef-sugar'
+              Running verification for component 'knife-supermarket'
+              .............../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `exec': No such file or directory - /opt/chefdk/embedded/bin/git (Errno::ENOENT)
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `block in fork_subprocess'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:316:in `fork'
+            567: |2
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      mac_os_x-10.9:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=tester/244/
+        duration: 2m
+        logs:
+          consoleText:
+            412: |
+              /dev/disk1            GUID_partition_scheme
+              /dev/disk1s1          Apple_HFS                        /Volumes/chefdk
+              find: /Volumes/chefdk/.Trashes: Permission denied
+              installer: Package name is Chef Development Kit
+              installer: Installing at base path /
+            550: |
+              Running verification for component 'chef-sugar'
+              Running verification for component 'knife-supermarket'
+              ......................../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `exec': No such file or directory - /opt/chefdk/embedded/bin/git (Errno::ENOENT)
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `block in fork_subprocess'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:316:in `fork'
+            567: |2
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      ubuntu-12.04:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=tester/244/
+        duration: 1m33s
+        logs:
+          consoleText:
+            511: |
+              Running verification for component 'chef-sugar'
+              Running verification for component 'knife-supermarket'
+              ......................../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `exec': No such file or directory - /opt/chefdk/embedded/bin/git (Errno::ENOENT)
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `block in fork_subprocess'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:316:in `fork'
+            528: |2
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      ubuntu-14.04:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/244/
+        duration: 1m37s
+        logs:
+          consoleText:
+            514: |
+              Running verification for component 'chef-sugar'
+              Running verification for component 'knife-supermarket'
+              ......................../opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `exec': No such file or directory - /opt/chefdk/embedded/bin/git (Errno::ENOENT)
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:338:in `block in fork_subprocess'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout/unix.rb:316:in `fork'
+            531: |2
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
+                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.16.11/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      windows-2008r2-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/244/
+        duration: 8m54s
+  chefdk-build:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-build/584/
+    duration: 1h20m3s
+    runs:
+      windows-2008r2-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/584/
+        duration: 1h2m3s
+      debian-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/584/
+        duration: 1h5m36s
+      el-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/584/
+        duration: 1h19m58s
+      el-7:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/584/
+        duration: 47m30s
+      mac_os_x-10.9:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/584/
+        duration: 29m42s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/584/
+        duration: 55m15s
+  chefdk-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chefdk-trigger-ad_hoc/394/
+    duration: 5s
+successful_logs_analyzed: false
