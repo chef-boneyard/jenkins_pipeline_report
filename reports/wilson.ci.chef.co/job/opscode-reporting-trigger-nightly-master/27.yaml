@@ -2,12 +2,10 @@
 result: FAILURE
 url: http://wilson.ci.chef.co/job/opscode-reporting-trigger-nightly-master/27/
 failure_category: code
-failure_cause: 'pedant: opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester;
-  pedant: opscode-reporting-test/architecture=x86_64,platform=el-5,project=opscode-reporting,role=tester;
-  pedant: all: opscode-reporting-test'
+failure_cause: 'pedant: all: opscode-reporting-test'
 timestamp: 2016-01-05 08:37:00 UTC
 duration: 53m54s
-active_duration: 2h15m19s
+active_duration: 53m40s
 parameters: {}
 change:
   git_remote: git@github.com:opscode/omnibus-reporting.git
@@ -15,70 +13,6 @@ change:
   project: opscode-reporting
   version: 1.5.6+20160105083713
 stages:
-  opscode-reporting-build/architecture=x86_64,platform=el-6,project=opscode-reporting,role=builder:
-    result: SUCCESS
-    url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-6,project=opscode-reporting,role=builder/37/
-    duration: 23m15s
-  opscode-reporting-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=builder:
-    result: SUCCESS
-    url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=builder/37/
-    duration: 17m51s
-  opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester:
-    result: FAILURE
-    failure_category: code
-    failure_cause: pedant
-    failed_in:
-      step: pedant
-    url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester/33/
-    duration: 22m25s
-    logs:
-      consoleText:
-        3391: |
-          --------------------------------------------------------------------------------
-          DEPRECATION: let declaration `direct_solr_query_sleep_time` accessed in a `before(:all)` hook at:
-            /opt/opscode-reporting/embedded/service/gem/ruby/2.1.0/bundler/gems/chef-pedant-dad401df0955/lib/pedant/rspec/search_util.rb:653:in `force_solr_commit'
-
-          `let` and `subject` declarations are not intended to be called
-        3418: |
-          rspec ./spec/reporting/integration/reports_spec.rb:137 # Reporting API - Reports when requesting reports when requesting runcounts with day granularity provides the expected number of records
-          rspec ./spec/reporting/integration/reports_spec.rb:137 # Reporting API - Reports when requesting reports when requesting runcounts with week granularity provides the expected number of records
-          Build step 'Invoke XShell command' marked build as failure
-          Performing Post build task...
-          Match found for : : True
-    steps:
-      total: 22m25s
-      before (setup time): 8m13s
-      chef-client private-chef::default: 6m8s
-      chef-client opscode-reporting::default: 49s
-      after (cleanup time): 2m59s
-  opscode-reporting-test/architecture=x86_64,platform=el-5,project=opscode-reporting,role=tester:
-    result: FAILURE
-    failure_category: code
-    failure_cause: pedant
-    failed_in:
-      step: pedant
-    url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-5,project=opscode-reporting,role=tester/33/
-    duration: 18m6s
-    logs:
-      consoleText:
-        3363: |
-          --------------------------------------------------------------------------------
-          DEPRECATION: let declaration `direct_solr_query_sleep_time` accessed in a `before(:all)` hook at:
-            /opt/opscode-reporting/embedded/service/gem/ruby/2.1.0/bundler/gems/chef-pedant-dad401df0955/lib/pedant/rspec/search_util.rb:653:in `force_solr_commit'
-
-          `let` and `subject` declarations are not intended to be called
-        3390: |
-          rspec ./spec/reporting/integration/reports_spec.rb:137 # Reporting API - Reports when requesting reports when requesting runcounts with day granularity provides the expected number of records
-          rspec ./spec/reporting/integration/reports_spec.rb:137 # Reporting API - Reports when requesting reports when requesting runcounts with week granularity provides the expected number of records
-          Build step 'Invoke XShell command' marked build as failure
-          Performing Post build task...
-          Match found for : : True
-    steps:
-      total: 18m6s
-      before (setup time): 8m10s
-      chef-client private-chef::default: 3m13s
-      chef-client opscode-reporting::default: 26s
-      after (cleanup time): 2m12s
   opscode-reporting-test:
     result: FAILURE
     failure_category: code
