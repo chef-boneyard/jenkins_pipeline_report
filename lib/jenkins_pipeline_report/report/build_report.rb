@@ -83,7 +83,7 @@ module JenkinsPipelineReport
       end
 
       def generate_report
-        Cli.logger.info("Generating build report for #{trigger.url} ...")
+        report_cache.logger.info("Generating build report for #{trigger.url} ...")
         report = {
           "result" => generate_result,
           "url" => trigger.url,
@@ -238,7 +238,10 @@ module JenkinsPipelineReport
         stage = StageReport.new(self, retries)
         next_stages = {}
         stage.build.downstreams.each do |downstream|
-          next_stages[downstream.job] ||= calculate_stages(downstream)
+          # matrix jobs are not downstreams
+          unless build.job.active_configurations.include?(downstream.job)
+            next_stages[downstream.job] ||= calculate_stages(downstream)
+          end
         end
         [ stage, *next_stages.values.flatten(1) ].uniq
       end

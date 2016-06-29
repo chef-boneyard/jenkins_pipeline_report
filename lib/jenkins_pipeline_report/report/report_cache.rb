@@ -17,6 +17,13 @@ module JenkinsPipelineReport
       attr_reader :reports_directory
 
       #
+      # The logger to log to.
+      #
+      # @return [Logger] The logger to log to.
+      #
+      attr_reader :logger
+
+      #
       # Whether to analyze the logs of successful builds.
       #
       # @return [Boolean] Whether to analyze the logs of successful builds.
@@ -31,7 +38,8 @@ module JenkinsPipelineReport
       # @param reports_directory [String] The path to the reports directory.
       # @param analyze_successful_logs [Boolean] Whether to analyze logs of successful builds.
       #
-      def initialize(reports_directory: nil, analyze_successful_logs: false)
+      def initialize(reports_directory: nil, logger: Cli.logger, analyze_successful_logs: false)
+        @logger = logger
         @reports_directory = reports_directory
         @analyze_successful_logs = analyze_successful_logs
       end
@@ -46,7 +54,7 @@ module JenkinsPipelineReport
       def delete_cache(url)
         path = report_path(url)
         if File.exist?(path)
-          Cli.logger.info("Deleting #{path} ...")
+          logger.info("Deleting #{path} ...")
           File.delete(path)
         end
       end
@@ -54,14 +62,14 @@ module JenkinsPipelineReport
       def read_cache(url)
         path = report_path(url)
         if File.exist?(path)
-          Cli.logger.debug("Reading #{path} ...")
+          logger.debug("Reading #{path} ...")
           Psych.load_file(path)
         end
       end
 
       def write_cache(url, value)
         path = report_path(url)
-        Cli.logger.debug("Writing #{path} ...")
+        logger.debug("Writing #{path} ...")
         FileUtils.mkdir_p(File.dirname(path))
         IO.write(path, Psych.dump(value))
       end

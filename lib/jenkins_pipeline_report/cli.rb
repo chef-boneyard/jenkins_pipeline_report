@@ -62,28 +62,6 @@ module JenkinsPipelineReport
       end
     end
 
-    def self.invalidate_jenkins_object(arg)
-      case arg
-      when Array
-        arg.each { |obj| invalidate_jenkins_object(obj) }
-      when Cache
-        arg.servers.each { |obj| invalidate_jenkins_object(obj) }
-      when Server
-        arg.invalidate
-        arg.jobs.each { |obj| invalidate_jenkins_object(obj) }
-      when Job
-        arg.invalidate
-        invalidate_jenkins_object(arg.downstreams)
-        invalidate_jenkins_object(arg.active_configurations)
-        invalidate_jenkins_object(arg.processes)
-        invalidate_jenkins_object(arg.builds)
-      when Build
-        arg.invalidate
-        invalidate_jenkins_object(arg.runs)
-      end
-      arg.refresh(recursive: true, pipeline: true, invalidate: true)
-    end
-
     def self.jenkins_args
       if ARGV.any?
         ARGV.map { |arg| jenkins_cache.jenkins_object(url) }

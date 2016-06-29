@@ -107,6 +107,10 @@ module JenkinsPipelineReport
       def should_cache?
         cache.should_cache?(self)
       end
+
+      def logger
+        cache.logger
+      end
     end
   end
 end

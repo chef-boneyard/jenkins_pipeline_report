@@ -20,6 +20,13 @@ module JenkinsPipelineReport
       attr_reader :client_options
 
       #
+      # The logger to log to.
+      #
+      # @return [Logger] The logger to log to.
+      #
+      attr_reader :logger
+
+      #
       # The directory where jenkins data will be cached.
       #
       attr_reader :cache_directory
@@ -37,8 +44,9 @@ module JenkinsPipelineReport
       # @param client_options [Hash] Hash of client options to `JenkinsAPI::Client`, including
       #   `identity_file`, a link to a private key used on the Jenkins server.
       #
-      def initialize(cache_directory: nil, should_cache: default_should_cache, client_options: {})
+      def initialize(cache_directory: nil, logger: Cli.logger, should_cache: default_should_cache, client_options: {})
         @cache_directory = cache_directory
+        @logger = logger
         @client_options = client_options
         @should_cache = should_cache
         @servers = {}
@@ -176,7 +184,7 @@ module JenkinsPipelineReport
       def read_cache(url, json: true)
         filename = cache_filename(url, json)
         if File.exist?(filename)
-          Cli.logger.debug("Reading cache #{filename}")
+          logger.debug("Reading cache #{filename}")
           if json
             JSON.parse(IO.read(filename))
           else
@@ -196,7 +204,7 @@ module JenkinsPipelineReport
       def delete_cache(url, json: true)
         filename = cache_filename(url, json)
         if File.exist?(filename)
-          Cli.logger.debug("Deleting cache #{filename}")
+          logger.debug("Deleting cache #{filename}")
           File.delete(filename)
         end
       end
@@ -211,7 +219,7 @@ module JenkinsPipelineReport
       # @api private
       def write_cache(url, data, json: true)
         filename = cache_filename(url, json)
-        Cli.logger.debug("Writing cache #{filename}")
+        logger.debug("Writing cache #{filename}")
         FileUtils.mkdir_p(File.dirname(filename))
         if json
           IO.write(filename, JSON.dump(data))

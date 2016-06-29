@@ -140,8 +140,8 @@ module JenkinsPipelineReport
       # @return [Hash,Array] The parsed response.
       #
       def api_get(path, query=nil, json: true)
-        Cli.logger.info "GET #{File.join(url, path)}"
-        Cli.logger.debug "Query: #{query}" if query
+        logger.info "GET #{File.join(url, path)}"
+        logger.debug "Query: #{query}" if query
         path = File.join(URI(url).path, path)
         if json
           client.api_get_request(path, query)

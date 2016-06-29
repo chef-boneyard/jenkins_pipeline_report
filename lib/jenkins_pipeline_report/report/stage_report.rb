@@ -21,6 +21,10 @@ module JenkinsPipelineReport
       #
       attr_reader :build_report
 
+      def report_cache
+        build_report.report_cache
+      end
+
       #
       # The retries involved in this build stage, from oldest to newest.
       #
@@ -68,7 +72,7 @@ module JenkinsPipelineReport
       # @return [Hash] The report.
       #
       def generate_report
-        Cli.logger.debug("- Generating stage report for #{build.url} ...")
+        report_cache.logger.debug("- Generating stage report for #{build.url} ...")
         report = {
           "result" => build.result || "IN PROGRESS",
           "failure_category" => nil,

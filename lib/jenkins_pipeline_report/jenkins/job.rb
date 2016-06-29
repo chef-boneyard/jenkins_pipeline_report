@@ -85,6 +85,20 @@ module JenkinsPipelineReport
         data("nextBuildNumber")
       end
 
+      LAST_BUILD_FIELDS = %w{
+        lastBuild lastCompletedBuild lastSuccessfulBuild lastFailedBuild lastUnsuccessfulBuild
+        lastStableBuild lastUnstableBuild
+      }
+      LAST_BUILD_FIELDS.each do |field|
+        method_name = field.gsub(/([A-Z][a-z]+)/) { |word| "_#{word.downcase}" }
+        class_eval <<-EOM, __FILE__, __LINE__+1
+          def #{method_name}
+            build = data(#{field.inspect})
+            self.build(build["number"].to_i) if build
+          end
+        EOM
+      end
+
       #
       # Get the parent job if this is not directly under the root.
       #
@@ -246,9 +260,11 @@ module JenkinsPipelineReport
         scm[userRemoteConfigs[url]]
         actions[processes[url]]
       }
-      FIELDS = STATIC_FIELDS + %W{
-        allBuilds[#{Build::STATIC_FIELDS.join(",")}]
-      }
+      FIELDS = STATIC_FIELDS +
+        LAST_BUILD_FIELDS.map { |field| "#{field}[number]" } +
+        %W{
+          allBuilds[#{Build::STATIC_FIELDS.join(",")}]
+        }
 
       private
 
