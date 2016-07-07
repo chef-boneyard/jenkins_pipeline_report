@@ -1,0 +1,1841 @@
+---
+result: FAILURE
+url: http://manhattan.ci.chef.co/job/chef-trigger-ad_hoc/59/
+failure_category: unknown
+failure_cause: 'CHEF-ACCEPTANCE CHEF-ACCEPTANCE::PRAJAKTA: acceptance; unknown: ubuntu-12.04:
+  chef-test'
+timestamp: 2016-06-29 20:05:51 UTC
+duration: 2h12m38s
+triggered_by: prajaktapurohit
+active_duration: 2h12m22s
+queue_delays: 10s
+parameters:
+  GIT_REF: praj/FLOW-370/acceptance_logging
+  EXPIRE_CACHE: false
+change:
+  git_remote: git://github.com/chef/chef.git
+  git_commit: 7769ba2e4b858a3b274a3cfb977b64a3ef49b8f3
+  project: chef
+  version: 12.12.7+20160629200630
+stages:
+  chef-test:
+    result: FAILURE
+    failure_category: unknown
+    failure_cause: 'CHEF-ACCEPTANCE CHEF-ACCEPTANCE::PRAJAKTA: acceptance; unknown:
+      ubuntu-12.04'
+    url: http://manhattan.ci.chef.co/job/chef-test/50/
+    duration: 1h39m9s
+    runs:
+      acceptance:
+        result: FAILURE
+        failure_category: code
+        failure_cause: CHEF-ACCEPTANCE CHEF-ACCEPTANCE::PRAJAKTA
+        failed_in:
+          step: CHEF-ACCEPTANCE CHEF-ACCEPTANCE::PRAJAKTA
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/50/
+        duration: 9m18s
+        logs:
+          consoleText:
+            2222: |2
+                    * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                      ================================================================================
+                      Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                      ================================================================================
+
+                      NameError
+                      ---------
+                      uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                      Cookbook Trace:
+                      ---------------
+                      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                      Resource Declaration:
+                      ---------------------
+                      # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                       49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                       50:         block do
+                       51:           suite = kitchen_dir.split("/").last
+                       52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                       53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                       54:         end
+                       55:       end
+                       56:     end
+
+                      Compiled Resource:
+                      ------------------
+                      # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                      ruby_block("copy_kitchen_logs_to_data_path") do
+                        action [:run]
+                        retries 0
+                        retry_delay 2
+                        default_guard_interpreter :default
+                        block_name "copy_kitchen_logs_to_data_path"
+                        declared_type :ruby_block
+                        cookbook_name "acceptance-cookbook"
+                        block #<Proc:0x00000006521218@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                      end
+
+
+                    ================================================================================
+                    Error executing action `run` on resource 'cookbook_kitchen[converge docker]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+
+                      7:     cookbook_kitchen "#{command} docker" do
+                      8:     end
+                      9:
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbook
+              TOP-COOKBOOKS::PROVISION::PRAJAKTA::[2016-06-29 20:42:53 +0000] s.rb:7:in `block in <class:TopCookbooks>'
+            2309: |2
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'top_cookbooks[converge]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  cookbook_kitchen[converge docker] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb line 7) had an error: NameError: ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    1: top_cookbooks "converge"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+                  top_cookbooks("converge") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :top_cookbooks
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "provision"
+                    command "converge"
+                  end
+
+              TOP-COOKBOOKS::PROVISION::PRAJAKTA::[2016-06-29 20:42:53 +0000] Starting audit phase
+              TOP-COOKBOOKS::PROVISION::PRAJAKTA::[2016-06-29 20:42:53 +0000]
+            2352: |2
+
+              Running handlers:
+              [2016-06-29T20:42:54+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:42:54+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 3 resources updated in 01 minutes 50 seconds
+              [2016-06-29T20:42:54+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/chef-stacktrace.out
+              [2016-06-29T20:42:54+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:42:54+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:42:54 +0000]                        Waited 85/300s for instance <i-915c833e> to become ready.
+              WINDOWS-SERVICE::PROVISION::PRAJAKTA::[2016-06-29 20:42:55 +0000]                        Waited 55/300s for instance <i-c85d8267> to become ready.
+              TOP-COOKBOOKS::PROVISION::PRAJAKTA::[2016-06-29 20:42:56 +0000] [2016-06-29T20:42:56+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:42:56 +0000] Encountered an error running the recipe provision: Expected process to exit with [0], but received '1'
+              ---- Begin output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+            3499: |2
+                    * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                      ================================================================================
+                      Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                      ================================================================================
+
+                      NameError
+                      ---------
+                      uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                      Cookbook Trace:
+                      ---------------
+                      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                      Resource Declaration:
+                      ---------------------
+                      # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                       49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                       50:         block do
+                       51:           suite = kitchen_dir.split("/").last
+                       52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                       53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                       54:         end
+                       55:       end
+                       56:     end
+
+                      Compiled Resource:
+                      ------------------
+                      # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                      ruby_block("copy_kitchen_logs_to_data_path") do
+                        action [:run]
+                        retries 0
+                        retry_delay 2
+                        default_guard_interpreter :default
+                        block_name "copy_kitchen_logs_to_data_path"
+                        declared_type :ruby_block
+                        cookbook_name "acceptance-cookbook"
+                        block #<Proc:0x00000006521218@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                      end
+
+
+                    ================================================================================
+                    Error executing action `run` on resource 'cookbook_kitchen[converge docker]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+
+                      7:     cookbook_kitchen "#{command} docker" do
+                      8:     end
+                      9:
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb:7:in `block in <class:TopCookbooks>'
+
+                    cookbook_kitchen("converge docker") do
+                      action [:run]
+                      updated true
+                      updated_by_last_action true
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      declared_type :cookbook_kitchen
+                      cookbook_name "acceptance-cookbook"
+                      repository "https://github.com/chef-cookbooks/docker.git"
+                      test_cookbook "docker"
+                      repository_root "/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/top-cookbooks/test_run/docker"
+                      branch "master"
+                      command "converge"
+                      kitchen_options "-c -l debug"
+                      kitchen_dir "/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/top-cookbooks/test_run/docker/"
+                      chef_product "chef"
+                      env {"BUNDLE_GEMFILE"=>"/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/Gemfile", "KITCHEN_YAML"=>"/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/top-cookbooks/.kitchen.docker.yml"}
+                    end
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'top_cookbooks[converge]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  cookbook_kitchen[converge docker] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb line 7) had an error: NameError: ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    1: top_cookbooks "converge"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+                  top_cookbooks("converge") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :top_cookbooks
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "provision"
+                    command "converge"
+                  end
+
+              Starting audit phase
+            3627: |2
+
+              Running handlers:
+              [2016-06-29T20:42:54+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:42:54+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 3 resources updated in 01 minutes 50 seconds
+              [2016-06-29T20:42:54+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/cache/chef-stacktrace.out
+              [2016-06-29T20:42:54+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:42:54+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              [2016-06-29T20:42:56+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              STDERR:
+              ---- End output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+              Ran chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/provision/dna.json -o acceptance-cookbook::provision --no-color returned 1
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:289:in `invalid!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:276:in `error!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:53:in `block in run!'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:219:in `block in with_clean_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:199:in `with_original_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:205:in `with_clean_env'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:42:in `run!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:150:in `run_command'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:117:in `block in run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `each'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:77:in `block (2 levels) in start_worker'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `loop'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `block in start_worker'
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:42:56 +0000] --force-destroy specified so attempting to run the destroy recipe
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:42:56 +0000] *************@log_header:TOP-COOKBOOKS::DESTROY
+            3706: |
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:09 +0000]
+
+                      ================================================================================
+                      Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                      ================================================================================
+
+                      NameError
+                      ---------
+                      uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                      Cookbook Trace:
+                      ---------------
+                      /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                      Resource Declaration:
+                      ---------------------
+                      # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                       49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                       50:         block do
+                       51:           suite = kitchen_dir.split("/").last
+                       52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                       53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                       54:         end
+                       55:       end
+                       56:     end
+
+                      Compiled Resource:
+                      ------------------
+                      # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                      ruby_block("copy_kitchen_logs_to_data_path") do
+                        action [:run]
+                        retries 0
+                        retry_delay 2
+                        default_guard_interpreter :default
+                        block_name "copy_kitchen_logs_to_data_path"
+                        declared_type :ruby_block
+                        cookbook_name "acceptance-cookbook"
+                        block #<Proc:0x000000039029e8@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                      end
+
+
+                    ================================================================================
+                    Error executing action `run` on resource 'cookbook_kitchen[destroy docker]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/destroy/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+
+                      7:     cookbook_kitchen "#{command} docker" do
+                      8:     end
+                      9:
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/destroy/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb:7:in `block in <class:TopCookbooks>'
+
+                    cookbook_kitchen("destroy docker") do
+                      action [:run]
+                      updated true
+
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:09 +0000]       updated_by_last_action true
+            3819: |
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:09 +0000] Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+            3854: |
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:09 +0000] Running handlers:
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:09 +0000]
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:09 +0000] [2016-06-29T20:43:09+00:00] ERROR: Running exception handlers
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:09 +0000] Running handlers complete
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:10 +0000] [2016-06-29T20:43:10+00:00] ERROR: Exception handlers complete
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:10 +0000] Chef Client failed. 1 resources updated in 10 seconds
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:10 +0000]
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:10 +0000] [2016-06-29T20:43:10+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/top-cookbooks/destroy/cache/chef-stacktrace.out
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:10 +0000] [2016-06-29T20:43:10+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:10 +0000] [2016-06-29T20:43:10+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:43:10 +0000]                        Waited 100/300s for instance <i-915c833e> to become ready.
+              TOP-COOKBOOKS::DESTROY::PRAJAKTA::[2016-06-29 20:43:11 +0000] [2016-06-29T20:43:11+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:43:11 +0000] *************@log_header:FIPS::PROVISION
+              ***************@log_path:/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/logs/fips/provision.log******************************************
+            8764: |2
+                  * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                    ================================================================================
+                    Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                     49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                     50:         block do
+                     51:           suite = kitchen_dir.split("/").last
+                     52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     54:         end
+                     55:       end
+                     56:     end
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                    ruby_block("copy_kitchen_logs_to_data_path") do
+                      action [:run]
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      block_name "copy_kitchen_logs_to_data_path"
+                      declared_type :ruby_block
+                      cookbook_name "acceptance-cookbook"
+                      block #<Proc:0x0000000532b9c8@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                    end
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[setup]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    1: kitchen "setup"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+                  kitchen("setup") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :kitchen
+                    cookbook_name "acceptance-cookbook"
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:27 +0000]
+                    recipe_name "provision"
+            8854: |
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:28 +0000] Running handlers:
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:28 +0000]
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:28 +0000] [2016-06-29T20:46:28+00:00] ERROR: Running exception handlers
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:28 +0000] Running handlers complete
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:28 +0000] [2016-06-29T20:46:28+00:00] ERROR: Exception handlers complete
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:28 +0000] Chef Client failed. 1 resources updated in 05 minutes 24 seconds
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:28 +0000]
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:28 +0000] [2016-06-29T20:46:28+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/chef-stacktrace.out
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:28 +0000] [2016-06-29T20:46:28+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:28 +0000] [2016-06-29T20:46:28+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              TRIVIAL::PROVISION::PRAJAKTA::[2016-06-29 20:46:30 +0000] [2016-06-29T20:46:30+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:46:30 +0000] Encountered an error running the recipe provision: Expected process to exit with [0], but received '1'
+              ---- Begin output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+            9678: |2
+                  * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                    ================================================================================
+                    Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                     49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                     50:         block do
+                     51:           suite = kitchen_dir.split("/").last
+                     52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     54:         end
+                     55:       end
+                     56:     end
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                    ruby_block("copy_kitchen_logs_to_data_path") do
+                      action [:run]
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      block_name "copy_kitchen_logs_to_data_path"
+                      declared_type :ruby_block
+                      cookbook_name "acceptance-cookbook"
+                      block #<Proc:0x0000000532b9c8@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                    end
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[setup]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    1: kitchen "setup"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+                  kitchen("setup") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :kitchen
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "provision"
+                    command "setup"
+                    kitchen_options "-c -l debug"
+                    kitchen_dir "/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/trivial"
+                    chef_product "chef"
+                  end
+
+              Starting audit phase
+            9764: |2
+
+              Running handlers:
+              [2016-06-29T20:46:28+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:46:28+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 1 resources updated in 05 minutes 24 seconds
+              [2016-06-29T20:46:28+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/cache/chef-stacktrace.out
+              [2016-06-29T20:46:28+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:46:28+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              [2016-06-29T20:46:30+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              STDERR:
+              ---- End output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+              Ran chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/provision/dna.json -o acceptance-cookbook::provision --no-color returned 1
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:289:in `invalid!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:276:in `error!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:53:in `block in run!'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:219:in `block in with_clean_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:199:in `with_original_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:205:in `with_clean_env'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:42:in `run!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:150:in `run_command'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:117:in `block in run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `each'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:77:in `block (2 levels) in start_worker'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `loop'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `block in start_worker'
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:46:30 +0000] --force-destroy specified so attempting to run the destroy recipe
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:30 +0000] *************@log_header:TRIVIAL::DESTROY
+            9920: |2
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+            9958: |2
+
+              Running handlers:
+              [2016-06-29T20:46:40+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:46:40+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 1 resources updated in 04 minutes 50 seconds
+              WINDOWS-SERVICE::PROVISION::PRAJAKTA::[2016-06-29 20:46:40 +0000] [2016-06-29T20:46:40+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/chef-stacktrace.out
+              [2016-06-29T20:46:40+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:46:40+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:40 +0000]                 D      winrm is loaded.
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:40 +0000]                 D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:40 +0000]                 D      winrm-fs is loaded.
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:41 +0000]                 -----> Destroying <chef-current-install-windows-2012r2>...
+              WINDOWS-SERVICE::PROVISION::PRAJAKTA::[2016-06-29 20:46:41 +0000] [2016-06-29T20:46:41+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:46:42 +0000] Encountered an error running the recipe provision: Expected process to exit with [0], but received '1'
+              ---- Begin output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+            10781: |2
+                  * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                    ================================================================================
+                    Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                     49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                     50:         block do
+                     51:           suite = kitchen_dir.split("/").last
+                     52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     54:         end
+                     55:       end
+                     56:     end
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                    ruby_block("copy_kitchen_logs_to_data_path") do
+                      action [:run]
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      block_name "copy_kitchen_logs_to_data_path"
+                      declared_type :ruby_block
+                      cookbook_name "acceptance-cookbook"
+                      block #<Proc:0x00000004b3bcb8@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                    end
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[converge]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    1: kitchen "converge"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+                  kitchen("converge") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :kitchen
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "provision"
+                    command "converge"
+                    kitchen_options "-c -l debug"
+                    kitchen_dir "/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/windows-service"
+                    chef_product "chef"
+                  end
+
+              Starting audit phase
+            10867: |2
+
+              Running handlers:
+              [2016-06-29T20:46:40+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:46:40+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 1 resources updated in 04 minutes 50 seconds
+              [2016-06-29T20:46:40+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/cache/chef-stacktrace.out
+              [2016-06-29T20:46:40+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:46:40+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              [2016-06-29T20:46:41+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              STDERR:
+              ---- End output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+              Ran chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/provision/dna.json -o acceptance-cookbook::provision --no-color returned 1
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:289:in `invalid!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:276:in `error!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:53:in `block in run!'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:219:in `block in with_clean_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:199:in `with_original_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:205:in `with_clean_env'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:42:in `run!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:150:in `run_command'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:117:in `block in run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `each'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:77:in `block (2 levels) in start_worker'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `loop'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `block in start_worker'
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:46:42 +0000] --force-destroy specified so attempting to run the destroy recipe
+              WINDOWS-SERVICE::DESTROY::PRAJAKTA::[2016-06-29 20:46:42 +0000] *************@log_header:WINDOWS-SERVICE::DESTROY
+            10918: |2
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+            10949: |2
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[destroy]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:43 +0000]
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:43 +0000] # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/destroy/cache/cookbooks/acceptance-cookbook/recipes/destroy.rb
+            11004: |
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:45 +0000] Running handlers:
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:45 +0000]
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:45 +0000] [2016-06-29T20:46:45+00:00] ERROR: Running exception handlers
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:45 +0000] Running handlers complete
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:45 +0000] [2016-06-29T20:46:45+00:00] ERROR: Exception handlers complete
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:45 +0000] Chef Client failed. 1 resources updated in 11 seconds
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:45 +0000]
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:45 +0000] [2016-06-29T20:46:45+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/trivial/destroy/cache/chef-stacktrace.out
+              [2016-06-29T20:46:45+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:46:45+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              TRIVIAL::DESTROY::PRAJAKTA::[2016-06-29 20:46:45 +0000] [2016-06-29T20:46:45+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:46:45 +0000] *************@log_header:BASICS::PROVISION
+              ***************@log_path:/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/logs/basics/provision.log******************************************
+            11106: |
+              WINDOWS-SERVICE::DESTROY::PRAJAKTA::[2016-06-29 20:47:02 +0000]
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+            11153: |2
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+            11212: |2
+
+              Running handlers:
+              [2016-06-29T20:47:03+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:47:03+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 1 resources updated in 16 seconds
+              WINDOWS-SERVICE::DESTROY::PRAJAKTA::[2016-06-29 20:47:03 +0000] [2016-06-29T20:47:03+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/windows-service/destroy/cache/chef-stacktrace.out
+              [2016-06-29T20:47:03+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:47:03+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:47:04 +0000]                        Transferring files to <fips-integration-windows-2012r2>
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:47:04 +0000]                 D      creating hash for file $env:TEMP\kitchen
+            11305: |2
+                              D        }
+                              D      }
+              WINDOWS-SERVICE::DESTROY::PRAJAKTA::[2016-06-29 20:47:05 +0000] [2016-06-29T20:47:05+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:47:05 +0000] *************@log_header:DATA-COLLECTOR::PROVISION
+              ***************@log_path:/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/logs/data-collector/provision.log******************************************
+            12664: |2
+                  * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                    ================================================================================
+                    Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                     49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                     50:         block do
+                     51:           suite = kitchen_dir.split("/").last
+                     52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     54:         end
+                     55:       end
+                     56:     end
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                    ruby_block("copy_kitchen_logs_to_data_path") do
+                      action [:run]
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      block_name "copy_kitchen_logs_to_data_path"
+                      declared_type :ruby_block
+                      cookbook_name "acceptance-cookbook"
+                      block #<Proc:0x000000051be888@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                    end
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[converge]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    1: kitchen "converge"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+                  kitchen("converge") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :kitchen
+                    cookbook_name "acceptance-cookb
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:58 +0000] ook"
+                    recipe_name "provision"
+            12756: |
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:59 +0000] Running handlers:
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:59 +0000]
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:59 +0000] [2016-06-29T20:47:59+00:00] ERROR: Running exception handlers
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:59 +0000] Running handlers complete
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:59 +0000] [2016-06-29T20:47:59+00:00] ERROR: Exception handlers complete
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:59 +0000] Chef Client failed. 1 resources updated in 01 minutes 08 seconds
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:59 +0000]
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:59 +0000] [2016-06-29T20:47:59+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/chef-stacktrace.out
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:59 +0000] [2016-06-29T20:47:59+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:47:59 +0000] [2016-06-29T20:47:59+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              BASICS::PROVISION::PRAJAKTA::[2016-06-29 20:48:01 +0000] [2016-06-29T20:48:01+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:48:01 +0000] Encountered an error running the recipe provision: Expected process to exit with [0], but received '1'
+              ---- Begin output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+            13824: |2
+                  * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                    ================================================================================
+                    Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                     49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                     50:         block do
+                     51:           suite = kitchen_dir.split("/").last
+                     52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     54:         end
+                     55:       end
+                     56:     end
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                    ruby_block("copy_kitchen_logs_to_data_path") do
+                      action [:run]
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      block_name "copy_kitchen_logs_to_data_path"
+                      declared_type :ruby_block
+                      cookbook_name "acceptance-cookbook"
+                      block #<Proc:0x000000051be888@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                    end
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[converge]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    1: kitchen "converge"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+                  kitchen("converge") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :kitchen
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "provision"
+                    command "converge"
+                    kitchen_options "-c -l debug"
+                    kitchen_dir "/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/basics"
+                    chef_product "chef"
+                  end
+
+              Starting audit phase
+            13910: |2
+
+              Running handlers:
+              [2016-06-29T20:47:59+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:47:59+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 1 resources updated in 01 minutes 08 seconds
+              [2016-06-29T20:47:59+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/cache/chef-stacktrace.out
+              [2016-06-29T20:47:59+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:47:59+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              [2016-06-29T20:48:01+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              STDERR:
+              ---- End output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+              Ran chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/provision/dna.json -o acceptance-cookbook::provision --no-color returned 1
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:289:in `invalid!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:276:in `error!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:53:in `block in run!'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:219:in `block in with_clean_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:199:in `with_original_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:205:in `with_clean_env'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:42:in `run!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:150:in `run_command'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:117:in `block in run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `each'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:77:in `block (2 levels) in start_worker'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `loop'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `block in start_worker'
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:48:01 +0000] --force-destroy specified so attempting to run the destroy recipe
+              BASICS::DESTROY::PRAJAKTA::[2016-06-29 20:48:01 +0000] *************@log_header:BASICS::DESTROY
+            14974: |2
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+            15005: |2
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[converge]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    1: kitchen "converge"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+                  kitchen("converge") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :kitchen
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "provision"
+                    command "converge"
+                    kitchen_options "-c -l debug"
+                    kitchen_dir "/home/jenkins/workspace/chef-tes
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:08 +0000] t/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/fips"
+                    chef_product "chef"
+            15054: |
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:10 +0000] Running handlers:
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:10 +0000]
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:10 +0000] [2016-06-29T20:48:10+00:00] ERROR: Running exception handlers
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:10 +0000] Running handlers complete
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:10 +0000] [2016-06-29T20:48:10+00:00] ERROR: Exception handlers complete
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:10 +0000] Chef Client failed. 1 resources updated in 04 minutes 55 seconds
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:10 +0000]
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:10 +0000] [2016-06-29T20:48:10+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/chef-stacktrace.out
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:10 +0000] [2016-06-29T20:48:10+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:10 +0000] [2016-06-29T20:48:10+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              BASICS::DESTROY::PRAJAKTA::[2016-06-29 20:48:11 +0000]
+                    [execute] -----> Starting Kitchen (v1.10.2)
+              FIPS::PROVISION::PRAJAKTA::[2016-06-29 20:48:11 +0000] [2016-06-29T20:48:11+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              BASICS::DESTROY::PRAJAKTA::[2016-06-29 20:48:11 +0000]                 -----> Destroying <chef-current-install-ubuntu-1404>...
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:48:11 +0000] Encountered an error running the recipe provision: Expected process to exit with [0], but received '1'
+            18670: |2
+                  * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                    ================================================================================
+                    Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                     49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                     50:         block do
+                     51:           suite = kitchen_dir.split("/").last
+                     52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     54:         end
+                     55:       end
+                     56:     end
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                    ruby_block("copy_kitchen_logs_to_data_path") do
+                      action [:run]
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      block_name "copy_kitchen_logs_to_data_path"
+                      declared_type :ruby_block
+                      cookbook_name "acceptance-cookbook"
+                      block #<Proc:0x000000029961a8@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                    end
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[converge]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    1: kitchen "converge"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+                  kitchen("converge") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :kitchen
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "provision"
+                    command "converge"
+                    kitchen_options "-c -l debug"
+                    kitchen_dir "/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/fips"
+                    chef_product "chef"
+                  end
+
+              Starting audit phase
+            18756: |2
+
+              Running handlers:
+              [2016-06-29T20:48:10+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:48:10+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 1 resources updated in 04 minutes 55 seconds
+              [2016-06-29T20:48:10+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/cache/chef-stacktrace.out
+              [2016-06-29T20:48:10+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:48:10+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              [2016-06-29T20:48:11+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              STDERR:
+              ---- End output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+              Ran chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/provision/dna.json -o acceptance-cookbook::provision --no-color returned 1
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:289:in `invalid!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:276:in `error!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:53:in `block in run!'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:219:in `block in with_clean_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:199:in `with_original_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:205:in `with_clean_env'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:42:in `run!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:150:in `run_command'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:117:in `block in run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `each'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:77:in `block (2 levels) in start_worker'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `loop'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `block in start_worker'
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:48:11 +0000] --force-destroy specified so attempting to run the destroy recipe
+              FIPS::DESTROY::PRAJAKTA::[2016-06-29 20:48:11 +0000] *************@log_header:FIPS::DESTROY
+            18811: |2
+                  * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                    ================================================================================
+                    Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                     49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                     50:         block do
+                     51:           suite = kitchen_dir.split("/").last
+                     52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     54:         end
+                     55:       end
+                     56:     end
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                    ruby_block("copy_kitchen_logs_to_data_path") do
+                      action [:run]
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      block_name "copy_kitchen_logs_to_data_path"
+                      declared_type :ruby_block
+                      cookbook_name "acceptance-cookbook"
+                      block #<Proc:0x00000001fc7320@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                    end
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[destroy]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/destroy/cache/cookbooks/acceptance-cookbook/recipes/destroy.rb
+
+                    1: kitchen "destroy"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/destroy/cache/cookbooks/acceptance-cookbook/recipes/destroy.rb:1:in `from_file'
+
+                  kitchen("destroy") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :kitchen
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "
+              BASICS::DESTROY::PRAJAKTA::[2016-06-29 20:48:13 +0000] destroy"
+                    command "destroy"
+            19016: |2
+
+              Running handlers:
+              [2016-06-29T20:48:15+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:48:15+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 1 resources updated in 10 seconds
+              [2016-06-29T20:48:15+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/basics/destroy/cache/chef-stacktrace.out
+              [2016-06-29T20:48:15+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:48:15+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              FIPS::DESTROY::PRAJAKTA::[2016-06-29 20:48:16 +0000] Starting Chef Client, version 12.6.0
+              BASICS::DESTROY::PRAJAKTA::[2016-06-29 20:48:17 +0000] [2016-06-29T20:48:17+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:19 +0000]                          * execute[bundle install --binstubs] action run
+                                         - execute bundle install --binstubs
+            19161: |2
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[converge]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    2: kitchen "converge"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:2:in `from_file'
+
+                  kitchen("converge") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :kitchen
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "provision"
+                    command "converge"
+                    kitchen_options "-c -l debug"
+                    kitchen_dir "/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/data-collector"
+                    chef_product "chef"
+                  end
+
+              Starting audit phase
+              FIPS::DESTROY::PRAJAKTA::[2016-06-29 20:48:22 +0000]
+            19215: |
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:23 +0000] Running handlers:
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:23 +0000]
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:23 +0000] [2016-06-29T20:48:23+00:00] ERROR: Running exception handlers
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:23 +0000] Running handlers complete
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:23 +0000] [2016-06-29T20:48:23+00:00] ERROR: Exception handlers complete
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:23 +0000] Chef Client failed. 2 resources updated in 01 minutes 14 seconds
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:23 +0000]
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:23 +0000] [2016-06-29T20:48:23+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/chef-stacktrace.out
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:23 +0000] [2016-06-29T20:48:23+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:23 +0000] [2016-06-29T20:48:23+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              FIPS::DESTROY::PRAJAKTA::[2016-06-29 20:48:23 +0000]                 D      winrm-fs is loaded.
+              FIPS::DESTROY::PRAJAKTA::[2016-06-29 20:48:23 +0000]                 D      winrm requested, loading winrm gem (["~> 1.6"])
+            19277: |
+              FIPS::DESTROY::PRAJAKTA::[2016-06-29 20:48:25 +0000]
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+            19380: |
+              FIPS::DESTROY::PRAJAKTA::[2016-06-29 20:48:25 +0000] Starting audit phase
+              FIPS::DESTROY::PRAJAKTA::[2016-06-29 20:48:25 +0000]
+              DATA-COLLECTOR::PROVISION::PRAJAKTA::[2016-06-29 20:48:25 +0000] [2016-06-29T20:48:25+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:48:25 +0000] Encountered an error running the recipe provision: Expected process to exit with [0], but received '1'
+              ---- Begin output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+            20599: |2
+                  * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                    ================================================================================
+                    Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                     49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                     50:         block do
+                     51:           suite = kitchen_dir.split("/").last
+                     52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     54:         end
+                     55:       end
+                     56:     end
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                    ruby_block("copy_kitchen_logs_to_data_path") do
+                      action [:run]
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      block_name "copy_kitchen_logs_to_data_path"
+                      declared_type :ruby_block
+                      cookbook_name "acceptance-cookbook"
+                      block #<Proc:0x0000000512cf00@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                    end
+
+
+                  ================================================================================
+                  Error executing action `run` on resource 'kitchen[converge]'
+                  ================================================================================
+
+                  NameError
+                  ---------
+                  ruby_block[copy_kitchen_logs_to_data_path] (/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 49) had an error: NameError: uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+                  ---------------------
+                  # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+                    2: kitchen "converge"
+
+                  Compiled Resource:
+                  ------------------
+                  # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:2:in `from_file'
+
+                  kitchen("converge") do
+                    action [:run]
+                    updated true
+                    updated_by_last_action true
+                    retries 0
+                    retry_delay 2
+                    default_guard_interpreter :default
+                    declared_type :kitchen
+                    cookbook_name "acceptance-cookbook"
+                    recipe_name "provision"
+                    command "converge"
+                    kitchen_options "-c -l debug"
+                    kitchen_dir "/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/data-collector"
+                    chef_product "chef"
+                  end
+
+              Starting audit phase
+            20685: |2
+
+              Running handlers:
+              [2016-06-29T20:48:23+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:48:23+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 2 resources updated in 01 minutes 14 seconds
+              [2016-06-29T20:48:23+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/cache/chef-stacktrace.out
+              [2016-06-29T20:48:23+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:48:23+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              [2016-06-29T20:48:25+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              STDERR:
+              ---- End output of chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+              Ran chef-client -z -c /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/provision/dna.json -o acceptance-cookbook::provision --no-color returned 1
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:289:in `invalid!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:276:in `error!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:53:in `block in run!'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:219:in `block in with_clean_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:199:in `with_original_env'
+              /home/jenkins/.chefdk/gem/ruby/2.1.0/gems/bundler-1.11.2/lib/bundler.rb:205:in `with_clean_env'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/chef_runner.rb:42:in `run!'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:150:in `run_command'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:117:in `block in run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `each'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:115:in `run_suite'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:77:in `block (2 levels) in start_worker'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `loop'
+              /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/acceptance/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-0361dd9d6863/lib/chef-acceptance/application.rb:75:in `block in start_worker'
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:48:25 +0000] --force-destroy specified so attempting to run the destroy recipe
+              DATA-COLLECTOR::DESTROY::PRAJAKTA::[2016-06-29 20:48:25 +0000] *************@log_header:DATA-COLLECTOR::DESTROY
+            20720: |2
+
+              Running handlers:
+              [2016-06-29T20:48:27+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:48:27+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 1 resources updated in 10 seconds
+              [2016-06-29T20:48:27+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/fips/destroy/cache/chef-stacktrace.out
+              [2016-06-29T20:48:27+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:48:27+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              FIPS::DESTROY::PRAJAKTA::[2016-06-29 20:48:28 +0000] [2016-06-29T20:48:28+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              DATA-COLLECTOR::DESTROY::PRAJAKTA::[2016-06-29 20:48:29 +0000] Starting Chef Client, version 12.6.0
+              DATA-COLLECTOR::DESTROY::PRAJAKTA::[2016-06-29 20:48:32 +0000] [2016-06-29T20:48:32+00:00] WARN: Run List override has been provided.
+            20773: |2
+                  * ruby_block[copy_kitchen_logs_to_data_path] action run
+
+                    ================================================================================
+                    Error executing action `run` on resource 'ruby_block[copy_kitchen_logs_to_data_path]'
+                    ================================================================================
+
+                    NameError
+                    ---------
+                    uninitialized constant KitchenAcceptance::Kitchen::FileUitls
+
+                    Cookbook Trace:
+                    ---------------
+                    /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                    Resource Declaration:
+                    ---------------------
+                    # In /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+                     49:       ruby_block "copy_kitchen_logs_to_data_path" do
+                     50:         block do
+                     51:           suite = kitchen_dir.split("/").last
+                     52:           FileUitls.mkdir_p("#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     53:           FileUtils.cp_r("#{kitchen_dir}/.kitchen/logs/", "#{kitchen_dir}/../.acceptance_data/logs/#{suite}")
+                     54:         end
+                     55:       end
+                     56:     end
+
+                    Compiled Resource:
+                    ------------------
+                    # Declared in /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:49:in `block in <class:Kitchen>'
+
+                    ruby_block("copy_kitchen_logs_to_data_path") do
+                      action [:run]
+                      retries 0
+                      retry_delay 2
+                      default_guard_interpreter :default
+                      block_name "copy_kitchen_logs_to_data_path"
+                      declared_type :ruby_block
+                      cookbook_name "acceptance-cookbook"
+                      block #<Proc:0x00000003f37868@/home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:50>
+                    end
+
+              DATA-COLLECTOR::DESTROY::PRAJAKTA::[2016-06-29 20:48:37 +0000]
+              DATA-COLLECTOR::DESTROY::PRAJAKTA::[2016-06-29 20:48:37 +0000]
+            20829: |2
+                  Cookbook Trace:
+                  ---------------
+                  /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/destroy/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:52:in `block (3 levels) in <class:Kitchen>'
+
+                  Resource Declaration:
+            20864: |2
+
+              Running handlers:
+              [2016-06-29T20:48:38+00:00] ERROR: Running exception handlers
+              Running handlers complete
+              [2016-06-29T20:48:38+00:00] ERROR: Exception handlers complete
+              Chef Client failed. 2 resources updated in 08 seconds
+              [2016-06-29T20:48:38+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chef-test/architecture/x86_64/platform/acceptance/project/chef/role/tester/chef-acceptance-data/chef/data-collector/destroy/cache/chef-stacktrace.out
+              [2016-06-29T20:48:38+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-06-29T20:48:38+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+              DATA-COLLECTOR::DESTROY::PRAJAKTA::[2016-06-29 20:48:39 +0000] [2016-06-29T20:48:39+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:48:39 +0000]
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:48:39 +0000] chef-acceptance run failed
+            20898: |
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:48:39 +0000] | data-collector  | Total         | 00:01:34 | Y     |
+              CHEF-ACCEPTANCE::PRAJAKTA::[2016-06-29 20:48:39 +0000] | Run             | Total         | 00:07:45 | Y     |
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+        steps:
+          total: 9m18s
+          before (setup time): 1m33s
+          CHEF-ACCEPTANCE:
+            total: 7m45s
+            CHEF-ACCEPTANCE::PRAJAKTA: 7m45s
+            OMNITRUCK::PROVISION::PRAJAKTA: 21s
+            TRIVIAL::PROVISION::PRAJAKTA: 5m36s
+            TOP-COOKBOOKS::PROVISION::PRAJAKTA: 2m2s
+            OMNITRUCK::VERIFY::PRAJAKTA: 19s
+            WINDOWS-SERVICE::PROVISION::PRAJAKTA: 4m56s
+            TOP-COOKBOOKS::DESTROY::PRAJAKTA: 15s
+            FIPS::PROVISION::PRAJAKTA: 5m
+            TRIVIAL::DESTROY::PRAJAKTA: 15s
+            WINDOWS-SERVICE::DESTROY::PRAJAKTA: 23s
+            BASICS::PROVISION::PRAJAKTA: 1m16s
+            DATA-COLLECTOR::PROVISION::PRAJAKTA: 1m20s
+            BASICS::DESTROY::PRAJAKTA: 18s
+            FIPS::DESTROY::PRAJAKTA: 18s
+            DATA-COLLECTOR::DESTROY::PRAJAKTA: 14s
+      ubuntu-12.04:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ubuntu-12.04,project=chef,role=tester/50/
+        duration: 13m32s
+        logs:
+          consoleText:
+            667: |2
+                /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.7/spec/support/shared/integration/integration_helper.rb:111
+              The new definition will overwrite the original one.
+              /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require': cannot load such file -- win32/daemon (LoadError)
+                from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+              Run options:
+            9513: |
+              rspec ./spec/functional/resource/package_spec.rb:374 # Chef::Resource::Package with a remote package source and an older version of the package is installed and the resource specifies the new version upgrades the package for action :install
+
+              Build step 'Invoke XShell command' marked build as failure
+              Archiving artifacts
+              Recording fingerprints
+      debian-6-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=debian-6,project=chef,role=tester/50/
+        duration: 10m12s
+      debian-7-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=debian-7,project=chef,role=tester/50/
+        duration: 10m34s
+      el-5-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=el-5,project=chef,role=tester/50/
+        duration: 22m36s
+      el-6-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=el-6,project=chef,role=tester/50/
+        duration: 30m5s
+      freebsd-10-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=freebsd-10,project=chef,role=tester/50/
+        duration: 8m44s
+      freebsd-9-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=freebsd-9,project=chef,role=tester/50/
+        duration: 9m19s
+      ubuntu-12.04-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=ubuntu-12.04,project=chef,role=tester/50/
+        duration: 10m17s
+      ubuntu-14.04-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=ubuntu-14.04,project=chef,role=tester/50/
+        duration: 10m20s
+      windows-2008r2-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=windows-2008r2,project=chef,role=tester/50/
+        duration: 15m45s
+      solaris-10-i86pc:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i86pc,platform=solaris-10,project=chef,role=tester/50/
+        duration: 7m6s
+      solaris-11-i86pc:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=i86pc,platform=solaris-11,project=chef,role=tester/50/
+        duration: 7m36s
+      aix-6.1-powerpc:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=powerpc,platform=aix-6.1,project=chef,role=tester/50/
+        duration: 21m53s
+      aix-7.1-powerpc:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=powerpc,platform=aix-7.1,project=chef,role=tester/50/
+        duration: 20m47s
+      el-7-ppc64:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=ppc64,platform=el-7,project=chef,role=tester/50/
+        duration: 8m56s
+      el-7-ppc64le:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=ppc64le,platform=el-7,project=chef,role=tester/50/
+        duration: 9m10s
+      ubuntu-14.04-ppc64le:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=ppc64le,platform=ubuntu-14.04,project=chef,role=tester/50/
+        duration: 6m52s
+      solaris-10-sun4v:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-10,project=chef,role=tester/50/
+        duration: 1h14m54s
+      solaris-11-sun4v:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-11,project=chef,role=tester/50/
+        duration: 1h17m13s
+      debian-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=debian-6,project=chef,role=tester/50/
+        duration: 19m29s
+      debian-7:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=debian-7,project=chef,role=tester/50/
+        duration: 13m46s
+      debian-8:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=debian-8,project=chef,role=tester/50/
+        duration: 14m21s
+      el-5:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-5,project=chef,role=tester/50/
+        duration: 32m49s
+      el-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-6,project=chef,role=tester/50/
+        duration: 49m47s
+      el-7:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-7,project=chef,role=tester/50/
+        duration: 13m37s
+      freebsd-10:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=freebsd-10,project=chef,role=tester/50/
+        duration: 14m59s
+      freebsd-9:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=freebsd-9,project=chef,role=tester/50/
+        duration: 15m46s
+      ios_xr-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ios_xr-6,project=chef,role=tester/50/
+        duration: 8m17s
+      mac_os_x-10.10:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=mac_os_x-10.10,project=chef,role=tester/50/
+        duration: 10m8s
+      mac_os_x-10.11:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=mac_os_x-10.11,project=chef,role=tester/50/
+        duration: 7m33s
+      mac_os_x-10.9:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=mac_os_x-10.9,project=chef,role=tester/50/
+        duration: 9m44s
+      nexus-7:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=nexus-7,project=chef,role=tester/50/
+        duration: 9m57s
+      ubuntu-14.04:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ubuntu-14.04,project=chef,role=tester/50/
+        duration: 13m29s
+      windows-2008r2:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=windows-2008r2,project=chef,role=tester/50/
+        duration: 17m14s
+      windows-2012:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=windows-2012,project=chef,role=tester/50/
+        duration: 15m55s
+      windows-2012r2:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=windows-2012r2,project=chef,role=tester/50/
+        duration: 18m1s
+  chef-build:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chef-build/102/
+    duration: 32m44s
+    queue_delay: 10s
+    runs:
+      debian-6-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=debian-6,project=chef,role=builder/102/
+        duration: 5m58s
+      el-5-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=el-5,project=chef,role=builder/102/
+        duration: 6m25s
+      el-6-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=el-6,project=chef,role=builder/102/
+        duration: 7m1s
+      freebsd-10-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-10,project=chef,role=builder/102/
+        duration: 6m3s
+      freebsd-9-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-9,project=chef,role=builder/102/
+        duration: 6m13s
+      ubuntu-12.04-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=ubuntu-12.04,project=chef,role=builder/102/
+        duration: 6m11s
+      windows-2008r2-i386:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=windows-2008r2,project=chef,role=builder/102/
+        duration: 8m8s
+      solaris-10-i86pc:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=i86pc,platform=solaris-10,project=chef,role=builder/102/
+        duration: 6m54s
+      aix-6.1-powerpc:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=powerpc,platform=aix-6.1,project=chef,role=builder/102/
+        duration: 16m19s
+      el-7-ppc64:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=ppc64,platform=el-7,project=chef,role=builder/102/
+        duration: 8m3s
+      el-7-ppc64le:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=ppc64le,platform=el-7,project=chef,role=builder/102/
+        duration: 8m
+      ubuntu-14.04-ppc64le:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=ppc64le,platform=ubuntu-14.04,project=chef,role=builder/102/
+        duration: 3m18s
+      solaris-10-sun4v:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=sun4v,platform=solaris-10,project=chef,role=builder/102/
+        duration: 32m11s
+      debian-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=debian-6,project=chef,role=builder/102/
+        duration: 7m59s
+      el-5:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-5,project=chef,role=builder/102/
+        duration: 8m43s
+      el-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-6,project=chef,role=builder/102/
+        duration: 9m17s
+      el-7:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-7,project=chef,role=builder/102/
+        duration: 6m50s
+      freebsd-10:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=freebsd-10,project=chef,role=builder/102/
+        duration: 8m23s
+      freebsd-9:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=freebsd-9,project=chef,role=builder/102/
+        duration: 9m33s
+      ios_xr-6:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=ios_xr-6,project=chef,role=builder/102/
+        duration: 5m
+      mac_os_x-10.9:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=mac_os_x-10.9,project=chef,role=builder/102/
+        duration: 3m49s
+      nexus-7:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=nexus-7,project=chef,role=builder/102/
+        duration: 6m25s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=ubuntu-12.04,project=chef,role=builder/102/
+        duration: 7m24s
+      windows-2008r2:
+        result: SUCCESS
+        url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/102/
+        duration: 11m24s
+  chef-trigger-ad_hoc:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chef-trigger-ad_hoc/59/
+    duration: 28s
+successful_logs_analyzed: false
