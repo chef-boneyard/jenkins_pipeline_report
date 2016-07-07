@@ -44,7 +44,7 @@ module JenkinsPipelineReport
 
       # Tell whether we've been invalidated and will cause a fetch.
       def invalidated?
-        cache.cache_version == cache_version
+        cache.cache_version != cache_version
       end
 
       # Load the data (or fetch the data remotely if we don't have it or it is
