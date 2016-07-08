@@ -27,18 +27,38 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/delivery-test/architecture=x86_64,platform=el-6,project=delivery,role=tester/469/
         duration: 7m42s
+        steps:
+          total: 7m42s
+          before (setup time): 8m18s
+          chef-client delivery: 2m24s
+          after (cleanup time): "-2m59s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/delivery-test/architecture=x86_64,platform=el-7,project=delivery,role=tester/469/
         duration: 5m39s
+        steps:
+          total: 5m39s
+          before (setup time): 2m27s
+          chef-client delivery: 1m5s
+          after (cleanup time): 2m6s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/delivery-test/architecture=x86_64,platform=ubuntu-12.04,project=delivery,role=tester/469/
         duration: 5m21s
+        steps:
+          total: 5m21s
+          before (setup time): 2m11s
+          chef-client delivery: 1m3s
+          after (cleanup time): 2m7s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/delivery-test/architecture=x86_64,platform=ubuntu-14.04,project=delivery,role=tester/469/
         duration: 6m20s
+        steps:
+          total: 6m20s
+          before (setup time): 2m30s
+          chef-client delivery: 1m41s
+          after (cleanup time): 2m8s
   delivery-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/delivery-build/564/
@@ -48,16 +68,135 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=el-6,project=delivery,role=builder/564/
         duration: 48m44s
+        steps:
+          total: 48m44s
+          before (setup time): 7m39s
+          omnibus:
+            build:
+              total: 46m26s
+              Builder:
+                total: 32m31s
+                delivery-web: 6m23s
+                relx: 29s
+                delivery-server: 5m36s
+                elasticsearch: 17s
+                logstash: 2m53s
+                kibana: 40s
+                insights-web: 8m10s
+                strip-objects: 32s
+              Software:
+                server-jre 2: 16s
+              GitFetcher: 32m38s
+              NullFetcher:
+                total: 33s
+                remove-build-deps: 42s
+                after (cleanup time): "-42s"
+              PathFetcher:
+                insights-web: 1m18s
+              GitCache:
+                total: 31m1s
+                preparation: 31s
+                erlang: 11s
+                server-jre: 16s
+                chef-gem: 11s
+                kibana: 11s
+              NetFetcher: 4m43s
+              Project:
+                delivery: 13m49s
+              HealthCheck: 3m6s
+              Packager::RPM: 10m33s
+          after (cleanup time): "-5m22s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=el-7,project=delivery,role=builder/564/
         duration: 41m9s
+        steps:
+          total: 41m9s
+          before (setup time): 2m5s
+          omnibus:
+            build:
+              total: 38m29s
+              Builder:
+                total: 29m9s
+                delivery-web: 4m52s
+                relx: 21s
+                delivery-server: 4m46s
+                elasticsearch: 12s
+                logstash: 2m18s
+                kibana: 39s
+                insights-web: 6m51s
+                strip-objects: 45s
+              Software: 29m12s
+              NullFetcher:
+                total: 32s
+                remove-build-deps: 1m50s
+                after (cleanup time): "-1m50s"
+              GitFetcher: 29m11s
+              PathFetcher:
+                total: 2m33s
+                delivery-server: 11s
+                insights-web: 2m17s
+              GitCache:
+                total: 26m32s
+                preparation: 58s
+                postgresql: 10s
+                sqitch: 24s
+                erlang: 20s
+                ruby: 15s
+                chef-gem: 21s
+                insights-web: 10s
+                remove-libidn: 12s
+              NetFetcher:
+                total: 3m55s
+                logstash: 12s
+                kibana: 11s
+              Project:
+                delivery: 9m18s
+              HealthCheck: 1m20s
+              Packager::RPM: 7m49s
+          after (cleanup time): 33s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/delivery-build/architecture=x86_64,platform=ubuntu-12.04,project=delivery,role=builder/564/
         duration: 37m20s
+        steps:
+          total: 37m20s
+          before (setup time): 1m27s
+          omnibus:
+            build:
+              total: 35m12s
+              Builder:
+                total: 25m45s
+                delivery-web: 5m25s
+                relx: 24s
+                delivery-server: 4m30s
+                elasticsearch: 14s
+                logstash: 2m12s
+                kibana: 33s
+                insights-web: 7m15s
+                strip-objects: 24s
+              Software: 25m48s
+              GitFetcher: 25m48s
+              NullFetcher:
+                total: 28s
+                remove-build-deps: 30s
+                after (cleanup time): "-30s"
+              PathFetcher:
+                insights-web: 1m1s
+              GitCache:
+                total: 24m30s
+                preparation: 28s
+                erlang: 28s
+                kibana: 12s
+              NetFetcher:
+                logstash: 11s
+              Project:
+                delivery: 9m25s
+              Licensing: 10s
+              HealthCheck: 1m12s
+              Packager::DEB: 8m2s
+          after (cleanup time): 37s
   delivery-trigger-ad_hoc:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/delivery-trigger-ad_hoc/18/
     duration: 12s
-successful_logs_analyzed: false

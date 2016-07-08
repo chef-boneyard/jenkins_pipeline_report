@@ -24,22 +24,51 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-5,project=chef-server,role=tester/237/
         duration: 48m23s
+        steps:
+          total: 48m23s
+          before (setup time): 5m26s
+          chef-client private-chef::default: 3m37s
+          after (cleanup time): 37m13s
       el-6:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-6,project=chef-server,role=tester/237/
         duration: 47m19s
+        steps:
+          total: 47m19s
+          before (setup time): "-2m3s"
+          chef-client private-chef::default: 4m4s
+          pedant: 38m11s
+          after (cleanup time): 4m57s
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=el-7,project=chef-server,role=tester/237/
         duration: 38m19s
+        steps:
+          total: 38m19s
+          before (setup time): 3m20s
+          chef-client private-chef::default: 2m44s
+          pedant: 29m42s
+          after (cleanup time): 25s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-server,role=tester/237/
         duration: 43m19s
+        steps:
+          total: 43m19s
+          before (setup time): 3m7s
+          chef-client private-chef::default: 2m6s
+          pedant: 35m31s
+          after (cleanup time): 27s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-server,role=tester/237/
         duration: 42m49s
+        steps:
+          total: 42m49s
+          before (setup time): 2m37s
+          chef-client private-chef::default: 3m25s
+          pedant: 34m16s
+          after (cleanup time): 22s
   chef-server-12-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-server-12-build/280/
@@ -49,20 +78,171 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-5,project=chef-server,role=builder/280/
         duration: 21m57s
+        steps:
+          total: 21m57s
+          before (setup time): 1m56s
+          omnibus:
+            total: 19m16s
+            fetch:
+              total: 51s
+              Software:
+                chef: 29s
+              NullFetcher: 29s
+              GitFetcher: 30s
+              PathFetcher:
+                total: 48s
+                oc_id: 15s
+                opscode-chef-mover: 36s
+                oc_erchef: 17s
+            build:
+              total: 18m24s
+              GitCache:
+                total: 6m8s
+                preparation: 12s
+                erlang: 17s
+                server-jre: 13s
+                sqitch: 17s
+                python: 15s
+                libxml2: 10s
+                berkshelf2: 10s
+                opscode-expander: 10s
+                oc_id: 30s
+                opscode-chef-mover: 16s
+                oc_erchef: 15s
+              Software:
+                server-jre: 13s
+              GitFetcher: 1m9s
+              Builder:
+                chef: 1m2s
+              Project:
+                chef-server: 12m16s
+              Licensing: 14s
+              HealthCheck: 1m58s
+              Packager::RPM: 10m4s
+          after (cleanup time): 44s
       el-6:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-6,project=chef-server,role=builder/280/
         duration: 20m12s
+        steps:
+          total: 20m12s
+          before (setup time): 7m13s
+          omnibus:
+            total: 17m37s
+            fetch:
+              total: 54s
+              Software:
+                chef: 34s
+              NullFetcher: 34s
+              GitFetcher: 35s
+              PathFetcher:
+                total: 52s
+                oc_id: 17s
+                opscode-chef-mover: 39s
+                oc_erchef: 22s
+            build:
+              total: 16m42s
+              GitCache:
+                total: 5m1s
+                preparation: 19s
+                server-jre: 16s
+                gecode: 12s
+                oc_id: 17s
+                partybus: 13s
+              Software:
+                server-jre: 16s
+              GitFetcher: 1m21s
+              Builder:
+                chef: 1m13s
+              Project:
+                chef-server: 11m41s
+              Licensing: 13s
+              HealthCheck: 1m50s
+              Packager::RPM: 9m36s
+          after (cleanup time): "-4m37s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=el-7,project=chef-server,role=builder/280/
         duration: 19m56s
+        steps:
+          total: 19m56s
+          before (setup time): 2m6s
+          omnibus:
+            total: 17m22s
+            fetch:
+              total: 49s
+              Software:
+                chef: 31s
+              NullFetcher: 31s
+              GitFetcher: 32s
+              PathFetcher:
+                total: 47s
+                oc_id: 17s
+                opscode-chef-mover: 36s
+                oc_erchef: 21s
+            build:
+              total: 16m32s
+              GitCache:
+                total: 4m7s
+                preparation: 16s
+                erlang: 14s
+                server-jre: 11s
+                sqitch: 16s
+                gecode: 10s
+                berkshelf2: 10s
+                oc_bifrost: 10s
+                oc_id: 14s
+                oc_erchef: 11s
+              Software:
+                server-jre: 11s
+              GitFetcher: 1m4s
+              Builder:
+                chef: 57s
+              Project:
+                chef-server: 12m25s
+              Licensing: 15s
+              HealthCheck: 56s
+              Packager::RPM: 11m14s
+          after (cleanup time): 28s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=ubuntu-12.04,project=chef-server,role=builder/280/
         duration: 16m21s
+        steps:
+          total: 16m21s
+          before (setup time): 1m34s
+          omnibus:
+            total: 14m11s
+            fetch:
+              total: 46s
+              Software:
+                chef: 24s
+              NullFetcher: 24s
+              GitFetcher: 25s
+              PathFetcher:
+                total: 45s
+                oc_id: 11s
+                opscode-chef-mover: 34s
+                oc_erchef: 18s
+            build:
+              total: 13m24s
+              GitCache:
+                total: 4m24s
+                server-jre: 24s
+                gecode: 16s
+                oc_id: 39s
+              Software:
+                server-jre: 24s
+              GitFetcher: 1m28s
+              Builder:
+                chef: 1m23s
+              Project:
+                chef-server: 9m
+              Licensing: 16s
+              HealthCheck: 50s
+              Packager::DEB: 7m53s
+          after (cleanup time): 36s
   chef-server-12-trigger-git_poll:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll/116/
     duration: 13s
-successful_logs_analyzed: false

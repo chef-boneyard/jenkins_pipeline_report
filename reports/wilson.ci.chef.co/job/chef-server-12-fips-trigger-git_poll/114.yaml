@@ -25,6 +25,12 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-fips-test/architecture=x86_64,platform=el-6,project=chef-server-fips,role=tester/113/
         duration: 47m22s
+        steps:
+          total: 47m22s
+          before (setup time): 6m30s
+          chef-client private-chef::fips, private-chef::default: 4m18s
+          pedant: 37m48s
+          after (cleanup time): "-3m21s"
   chef-server-12-fips-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-server-12-fips-build/137/
@@ -35,8 +41,43 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-fips-build/architecture=x86_64,platform=el-6,project=chef-server-fips,role=builder/137/
         duration: 20m35s
+        steps:
+          total: 20m35s
+          before (setup time): 9m5s
+          omnibus:
+            total: 18m20s
+            fetch:
+              total: 41s
+              Software:
+                chef: 20s
+              NullFetcher: 20s
+              GitFetcher: 23s
+              PathFetcher:
+                total: 39s
+                opscode-chef-mover: 30s
+                oc_erchef: 17s
+            build:
+              total: 17m38s
+              GitCache:
+                total: 7m28s
+                preparation: 18s
+                server-jre: 14s
+                gecode: 11s
+                oc_id: 21s
+              Software:
+                server-jre: 14s
+              Builder:
+                total: 4m41s
+                oc_erchef: 2m52s
+                chef: 1m20s
+              GitFetcher: 1m27s
+              Project:
+                chef-server-fips: 10m10s
+              Licensing: 17s
+              HealthCheck: 2m3s
+              Packager::RPM: 7m50s
+          after (cleanup time): "-6m50s"
   chef-server-12-fips-trigger-git_poll:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-server-12-fips-trigger-git_poll/114/
     duration: 9s
-successful_logs_analyzed: false

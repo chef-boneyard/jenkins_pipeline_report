@@ -24,14 +24,44 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-6,project=chef-marketplace,role=tester/138/
         duration: 45m45s
+        steps:
+          total: 45m45s
+          before (setup time): 15m34s
+          chef-client private-chef::default: 9m30s
+          chef-client chef-marketplace::default: 29s
+          chef-client chef-marketplace::default 2: 18s
+          chef-client chef-marketplace::upgrade: 7m26s
+          chef-client private-chef::default 2: 2m6s
+          chef-client omnibus-chef-manage::default: 2m1s
+          chef-client opscode-reporting::default: 10s
+          chef-client chef-marketplace::register_node: 13s
+          after (cleanup time): "-1m19s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-7,project=chef-marketplace,role=tester/138/
         duration: 29m24s
+        steps:
+          total: 29m24s
+          before (setup time): 8m40s
+          chef-client private-chef::default: 5m36s
+          chef-client chef-marketplace::default: 13s
+          chef-client chef-marketplace::upgrade: 3m59s
+          chef-client private-chef::default 2: 1m4s
+          chef-client omnibus-chef-manage::default: 1m18s
+          after (cleanup time): 59s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=tester/138/
         duration: 33m30s
+        steps:
+          total: 33m30s
+          before (setup time): 7m37s
+          chef-client private-chef::default: 10m27s
+          chef-client chef-marketplace::default: 17s
+          chef-client chef-marketplace::upgrade: 3m41s
+          chef-client private-chef::default 2: 1m20s
+          chef-client omnibus-chef-manage::default: 1m24s
+          after (cleanup time): 1m9s
   chef-marketplace-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-marketplace-build/157/
@@ -53,4 +83,3 @@ stages:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-nightly-master/97/
     duration: 7s
-successful_logs_analyzed: false

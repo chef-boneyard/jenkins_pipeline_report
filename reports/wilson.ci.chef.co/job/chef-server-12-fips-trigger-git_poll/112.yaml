@@ -24,6 +24,12 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-fips-test/architecture=x86_64,platform=el-6,project=chef-server-fips,role=tester/111/
         duration: 46m40s
+        steps:
+          total: 46m40s
+          before (setup time): 6m22s
+          chef-client private-chef::fips, private-chef::default: 3m51s
+          pedant: 37m39s
+          after (cleanup time): "-3m20s"
   chef-server-12-fips-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-server-12-fips-build/135/
@@ -33,8 +39,73 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-server-12-fips-build/architecture=x86_64,platform=el-6,project=chef-server-fips,role=builder/135/
         duration: 1h23m29s
+        steps:
+          total: 1h23m29s
+          before (setup time): 9m9s
+          omnibus:
+            total: 1h21m4s
+            fetch:
+              total: 17s
+              Software:
+                chef: 10s
+              NullFetcher: 10s
+              GitFetcher: 12s
+              PathFetcher:
+                opscode-chef-mover: 10s
+            build:
+              total: 1h20m47s
+              GitCache:
+                preparation: 19s
+              Software: 1h10m20s
+              GitFetcher: 1h10m17s
+              Builder:
+                total: 1h10m10s
+                openssl-fips: 20s
+                openssl: 2m31s
+                libtool: 16s
+                libffi: 12s
+                libyaml: 14s
+                libiconv: 40s
+                ruby: 3m17s
+                ncurses: 2m4s
+                libedit: 17s
+                pcre: 27s
+                openresty: 1m50s
+                libossp-uuid: 13s
+                postgresql92: 3m7s
+                erlang: 4m52s
+                popt: 12s
+                perl: 4m25s
+                sqitch: 4m4s
+                python: 2m45s
+                nodejs: 5m9s
+                gecode: 10m53s
+                perl_pg_driver: 12s
+                liblzma: 44s
+                libxml2: 1m33s
+                libxslt: 29s
+                nokogiri: 17s
+                berkshelf2: 23s
+                ohai: 11s
+                runit: 17s
+                redis: 32s
+                haproxy: 35s
+                opscode-expander: 21s
+                keepalived: 12s
+                bookshelf: 1m41s
+                oc_bifrost: 1m35s
+                oc_id: 1m46s
+                opscode-chef-mover: 3m15s
+                oc_erchef: 3m2s
+                chef: 1m13s
+              NetFetcher: 1h1m43s
+              Project:
+                chef-server-fips: 10m10s
+              Licensing: 17s
+              HealthCheck: 2m9s
+              Packager::RPM: 7m42s
+          after (cleanup time): "-6m44s"
   chef-server-12-fips-trigger-git_poll:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-server-12-fips-trigger-git_poll/112/
     duration: 13s
-successful_logs_analyzed: false

@@ -150,18 +150,42 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-5,project=opscode-push-jobs-server,role=tester/184/
         duration: 49m47s
+        steps:
+          total: 49m47s
+          before (setup time): 9m
+          chef-client private-chef::default: 4m9s
+          chef-client opscode-pushy-server::default: 2m25s
+          after (cleanup time): 32m9s
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-7,project=opscode-push-jobs-server,role=tester/184/
         duration: 44m42s
+        steps:
+          total: 44m42s
+          before (setup time): 6m10s
+          chef-client private-chef::default: 2m10s
+          chef-client opscode-pushy-server::default: 10s
+          after (cleanup time): 32m4s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-12.04,project=opscode-push-jobs-server,role=tester/184/
         duration: 48m13s
+        steps:
+          total: 48m13s
+          before (setup time): 6m33s
+          chef-client private-chef::default: 5m7s
+          chef-client opscode-pushy-server::default: 15s
+          after (cleanup time): 32m12s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-14.04,project=opscode-push-jobs-server,role=tester/184/
         duration: 45m39s
+        steps:
+          total: 45m39s
+          before (setup time): 5m22s
+          chef-client private-chef::default: 3m41s
+          chef-client opscode-pushy-server::default: 20s
+          after (cleanup time): 32m11s
   opscode-push-jobs-server-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/244/
@@ -171,20 +195,115 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-5,project=opscode-push-jobs-server,role=builder/244/
         duration: 18m41s
+        steps:
+          total: 18m41s
+          before (setup time): 1m7s
+          omnibus:
+            build:
+              total: 17m8s
+              GitCache:
+                erlang: 15s
+              Software: 8m14s
+              Builder:
+                total: 7m14s
+                runit: 15s
+                opscode-pushy-server: 2m54s
+                oc-pushy-pedant: 1m7s
+                postgresql: 1m28s
+                pg-gem: 12s
+                chef-gem: 18s
+                ohai: 13s
+              NetFetcher: 4m29s
+              GitFetcher: 6m50s
+              Project:
+                opscode-push-jobs-server: 8m53s
+              HealthCheck: 2m22s
+              Packager::RPM: 6m24s
+          after (cleanup time): 18s
       el-6:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-6,project=opscode-push-jobs-server,role=builder/244/
         duration: 19m5s
+        steps:
+          total: 19m5s
+          before (setup time): 6m20s
+          omnibus:
+            build:
+              total: 17m32s
+              GitCache:
+                curl: 10s
+              Software: 9m
+              Builder:
+                total: 8m1s
+                runit: 16s
+                opscode-pushy-server: 3m7s
+                oc-pushy-pedant: 1m12s
+                postgresql: 1m46s
+                pg-gem: 14s
+                chef-gem: 19s
+                ohai: 15s
+              NetFetcher: 4m48s
+              GitFetcher: 7m36s
+              Project:
+                opscode-push-jobs-server: 8m32s
+              HealthCheck: 2m3s
+              Packager::RPM: 6m21s
+          after (cleanup time): "-4m52s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-7,project=opscode-push-jobs-server,role=builder/244/
         duration: 13m43s
+        steps:
+          total: 13m43s
+          before (setup time): 1m1s
+          omnibus:
+            build:
+              total: 12m30s
+              GitCache:
+                erlang: 11s
+              Software: 6m30s
+              Builder:
+                total: 5m44s
+                runit: 14s
+                opscode-pushy-server: 2m34s
+                oc-pushy-pedant: 57s
+                postgresql: 1m
+                chef-gem: 14s
+                ohai: 10s
+              NetFetcher: 3m52s
+              GitFetcher: 5m26s
+              Project:
+                opscode-push-jobs-server: 6m
+              HealthCheck: 49s
+              Packager::RPM: 5m4s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=ubuntu-12.04,project=opscode-push-jobs-server,role=builder/244/
         duration: 21m22s
+        steps:
+          total: 21m22s
+          before (setup time): 1m1s
+          omnibus:
+            build:
+              total: 20m10s
+              GitCache: 13m50s
+              Software: 13m49s
+              Builder:
+                total: 13m31s
+                runit: 29s
+                opscode-pushy-server: 2m31s
+                oc-pushy-pedant: 1m16s
+                postgresql: 8m1s
+                pg-gem: 14s
+                chef-gem: 17s
+                ohai: 12s
+              NetFetcher: 4m22s
+              GitFetcher: 12m53s
+              Project:
+                opscode-push-jobs-server: 6m20s
+              HealthCheck: 56s
+              Packager::DEB: 5m17s
   opscode-push-jobs-server-trigger-ad_hoc:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-trigger-ad_hoc/33/
     duration: 3s
-successful_logs_analyzed: false

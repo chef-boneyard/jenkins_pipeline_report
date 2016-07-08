@@ -27,22 +27,47 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/supermarket-test/architecture=x86_64,platform=el-5,project=supermarket,role=tester/307/
         duration: 12m40s
+        steps:
+          total: 12m40s
+          before (setup time): 5m3s
+          chef-client omnibus-supermarket::default: 5m12s
+          after (cleanup time): 2m25s
       el-6:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/supermarket-test/architecture=x86_64,platform=el-6,project=supermarket,role=tester/307/
         duration: 9m3s
+        steps:
+          total: 9m3s
+          before (setup time): 9m44s
+          chef-client omnibus-supermarket::default: 3m4s
+          after (cleanup time): "-3m44s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/supermarket-test/architecture=x86_64,platform=el-7,project=supermarket,role=tester/307/
         duration: 7m4s
+        steps:
+          total: 7m4s
+          before (setup time): 2m22s
+          chef-client omnibus-supermarket::default: 2m25s
+          after (cleanup time): 2m17s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/supermarket-test/architecture=x86_64,platform=ubuntu-12.04,project=supermarket,role=tester/307/
         duration: 8m20s
+        steps:
+          total: 8m20s
+          before (setup time): 2m36s
+          chef-client omnibus-supermarket::default: 3m24s
+          after (cleanup time): 2m20s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/supermarket-test/architecture=x86_64,platform=ubuntu-14.04,project=supermarket,role=tester/307/
         duration: 10m21s
+        steps:
+          total: 10m21s
+          before (setup time): 2m35s
+          chef-client omnibus-supermarket::default: 5m22s
+          after (cleanup time): 2m24s
   supermarket-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/supermarket-build/340/
@@ -52,20 +77,173 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/supermarket-build/architecture=x86_64,platform=el-5,project=supermarket,role=builder/340/
         duration: 1h38m10s
+        steps:
+          total: 1h38m10s
+          before (setup time): 44m50s
+          omnibus:
+            total: 1h36m9s
+            fetch:
+              total: 1m
+              Software: 16s
+              NullFetcher:
+                total: 15s
+                version-manifest: 19s
+                after (cleanup time): "-19s"
+              PathFetcher:
+                supermarket: 55s
+            build:
+              total: 1h35m7s
+              GitCache:
+                total: 1h17m58s
+                chef-gem: 12s
+                python: 16s
+                postgresql: 10s
+                supermarket: 15s
+              Software: 1h17m56s
+              Builder:
+                total: 1h16m35s
+                libarchive: 1m13s
+                liblzma: 58s
+                libxml2: 1m24s
+                libxslt: 45s
+                nokogiri: 22s
+                dep-selector-libgecode: 30m27s
+                berkshelf: 31m40s
+                supermarket: 7m19s
+                supermarket-ctl: 1m16s
+              NetFetcher: 3m47s
+              GitFetcher: 41m8s
+              Project:
+                supermarket: 17m9s
+              Licensing: 10s
+              HealthCheck: 2m8s
+              Packager::RPM: 14m51s
+          after (cleanup time): "-42m49s"
       el-6:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/supermarket-build/architecture=x86_64,platform=el-6,project=supermarket,role=builder/340/
         duration: 39m56s
+        steps:
+          total: 39m56s
+          before (setup time): 7m47s
+          omnibus:
+            total: 37m51s
+            fetch:
+              total: 1m3s
+              Software: 18s
+              NullFetcher:
+                total: 17s
+                version-manifest: 19s
+                after (cleanup time): "-19s"
+              PathFetcher:
+                supermarket: 57s
+            build:
+              total: 36m47s
+              GitCache:
+                supermarket: 14s
+              Software: 20m19s
+              Builder:
+                total: 19m16s
+                libarchive: 1m41s
+                liblzma: 1m10s
+                libxml2: 1m42s
+                libxslt: 52s
+                nokogiri: 26s
+                dep-selector-libgecode: 1m15s
+                berkshelf: 2m19s
+                supermarket: 8m7s
+                supermarket-ctl: 27s
+              NetFetcher: 4m46s
+              GitFetcher: 11m47s
+              Project:
+                supermarket: 16m26s
+              HealthCheck: 2m1s
+              Packager::RPM: 14m17s
+          after (cleanup time): "-5m42s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/supermarket-build/architecture=x86_64,platform=el-7,project=supermarket,role=builder/340/
         duration: 26m57s
+        steps:
+          total: 26m57s
+          before (setup time): 1m13s
+          omnibus:
+            total: 25m12s
+            fetch:
+              total: 1m14s
+              Software: 14s
+              NullFetcher:
+                total: 14s
+                version-manifest: 39s
+                after (cleanup time): "-39s"
+              PathFetcher:
+                supermarket: 1m9s
+            build:
+              total: 23m57s
+              GitCache:
+                total: 11m45s
+                nodejs: 19s
+                supermarket: 11s
+              Software: 11m42s
+              Builder:
+                total: 10m42s
+                libarchive: 50s
+                liblzma: 39s
+                libxml2: 49s
+                libxslt: 22s
+                nokogiri: 17s
+                dep-selector-libgecode: 39s
+                berkshelf: 1m22s
+                supermarket: 4m45s
+                supermarket-ctl: 17s
+              NetFetcher: 2m28s
+              GitFetcher: 6m54s
+              Project:
+                supermarket: 12m12s
+              HealthCheck: 44s
+              Packager::RPM: 11m23s
+          after (cleanup time): 32s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/supermarket-build/architecture=x86_64,platform=ubuntu-12.04,project=supermarket,role=builder/340/
         duration: 1h35m16s
+        steps:
+          total: 1h35m16s
+          before (setup time): 43m
+          omnibus:
+            total: 1h33m55s
+            fetch:
+              total: 1m1s
+              Software: 17s
+              NullFetcher:
+                total: 17s
+                version-manifest: 19s
+                after (cleanup time): "-19s"
+              PathFetcher:
+                supermarket: 56s
+            build:
+              total: 1h32m53s
+              GitCache: 1h21m11s
+              Software: 1h21m10s
+              Builder:
+                total: 1h20m48s
+                libarchive: 2m17s
+                liblzma: 1m15s
+                libxml2: 3m49s
+                libxslt: 58s
+                nokogiri: 29s
+                dep-selector-libgecode: 30m51s
+                berkshelf: 32m10s
+                supermarket: 8m7s
+                supermarket-ctl: 20s
+              NetFetcher: 7m27s
+              GitFetcher: 41m
+              Project:
+                supermarket: 11m42s
+              HealthCheck: 49s
+              Packager::DEB: 10m47s
+          after (cleanup time): "-41m39s"
   supermarket-trigger-ad_hoc:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/supermarket-trigger-ad_hoc/28/
     duration: 3s
-successful_logs_analyzed: false

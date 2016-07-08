@@ -24,14 +24,32 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-6,project=chef-marketplace,role=tester/233/
         duration: 56m25s
+        steps:
+          total: 56m25s
+          before (setup time): 23m10s
+          chef-client private-chef::default: 32m19s
+          chef-client chef-marketplace::default: 57s
+          after (cleanup time): "-2m27s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-7,project=chef-marketplace,role=tester/233/
         duration: 20m5s
+        steps:
+          total: 20m5s
+          before (setup time): 8m45s
+          chef-client private-chef::default: 6m37s
+          chef-client chef-marketplace::default: 14s
+          after (cleanup time): 2m19s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=tester/233/
         duration: 20m59s
+        steps:
+          total: 20m59s
+          before (setup time): 9m11s
+          chef-client private-chef::default: 6m32s
+          chef-client chef-marketplace::default: 20s
+          after (cleanup time): 2m38s
   chef-marketplace-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-marketplace-build/270/
@@ -41,16 +59,198 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-6,project=chef-marketplace,role=builder/270/
         duration: 1h33m6s
+        steps:
+          total: 1h33m6s
+          before (setup time): 8m22s
+          omnibus:
+            total: 1h26m56s
+            fetch:
+              total: 8m46s
+              Software:
+                chef: 8m11s
+              NullFetcher: 8m45s
+              NetFetcher:
+                total: 8m10s
+                openssl: 26s
+                ncurses: 18s
+                postgresql92: 1m54s
+                libtool: 19s
+                libiconv: 36s
+                ruby: 1m58s
+                libarchive: 33s
+                liblzma: 12s
+                libxml2: 43s
+                libxslt: 26s
+              GitFetcher: 8m4s
+              PathFetcher: 2m42s
+            build:
+              total: 1h18m10s
+              GitCache:
+                total: 1h2m31s
+                chef-marketplace-gem: 36s
+                dep-selector-libgecode: 19s
+                berkshelf: 31s
+                chef: 16s
+              Software: 1h2m33s
+              Builder:
+                total: 1h2m23s
+                zlib: 11s
+                xproto: 15s
+                pkg-config-lite: 17s
+                makedepend: 13s
+                openssl: 3m22s
+                ncurses: 3m38s
+                libedit: 38s
+                postgresql92: 3m57s
+                libtool: 36s
+                libffi: 27s
+                libyaml: 26s
+                libiconv: 1m14s
+                ruby: 5m25s
+                rubygems: 40s
+                pg-gem: 20s
+                chef-marketplace-gem: 6m43s
+                ohai: 14s
+                libarchive: 1m53s
+                liblzma: 1m22s
+                libxml2: 2m48s
+                libxslt: 54s
+                nokogiri: 29s
+                dep-selector-libgecode: 7m23s
+                berkshelf: 10m20s
+                runit: 22s
+                reckoner: 12s
+                biscotti: 44s
+                chef: 1m53s
+                chef-marketplace-ctl: 42s
+              NetFetcher: 57m21s
+              GitFetcher: 1h2m2s
+              Project:
+                chef-marketplace: 15m39s
+              HealthCheck: 1m25s
+              Packager::RPM: 14m4s
+          after (cleanup time): "-2m12s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-7,project=chef-marketplace,role=builder/270/
         duration: 45m40s
+        steps:
+          total: 45m40s
+          before (setup time): 4m42s
+          omnibus:
+            total: 40m34s
+            fetch:
+              total: 1m39s
+              Software:
+                chef: 1m17s
+              NullFetcher: 1m38s
+              NetFetcher:
+                ruby: 21s
+              GitFetcher: 1m13s
+              PathFetcher: 47s
+            build:
+              total: 38m55s
+              GitCache:
+                total: 25m51s
+                chef-marketplace-gem: 23s
+                berkshelf: 15s
+              Software: 25m50s
+              Builder:
+                total: 25m47s
+                openssl: 1m19s
+                ncurses: 1m11s
+                libedit: 16s
+                postgresql92: 56s
+                libtool: 15s
+                libffi: 12s
+                libyaml: 11s
+                libiconv: 33s
+                ruby: 2m23s
+                rubygems: 30s
+                pg-gem: 11s
+                chef-marketplace-gem: 5m1s
+                ohai: 17s
+                libarchive: 48s
+                liblzma: 39s
+                libxml2: 51s
+                libxslt: 21s
+                nokogiri: 19s
+                dep-selector-libgecode: 41s
+                berkshelf: 3m14s
+                runit: 16s
+                reckoner: 11s
+                biscotti: 29s
+                chef: 1m21s
+                chef-marketplace-ctl: 29s
+              NetFetcher: 22m25s
+              GitFetcher: 25m37s
+              Project:
+                chef-marketplace: 13m4s
+              HealthCheck: 36s
+              Packager::RPM: 12m19s
+          after (cleanup time): 23s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=builder/270/
         duration: 2h15m42s
+        steps:
+          total: 2h15m42s
+          before (setup time): 4m45s
+          omnibus:
+            total: 2h10m51s
+            fetch:
+              total: 1m12s
+              Software:
+                chef: 41s
+              NullFetcher: 1m11s
+              NetFetcher: 41s
+              GitFetcher: 39s
+              PathFetcher: 50s
+            build:
+              total: 2h9m39s
+              GitCache:
+                total: 1h58m29s
+                chef-marketplace-gem: 18s
+                dep-selector-libgecode: 26s
+                berkshelf: 23s
+              Software: 1h58m29s
+              Builder:
+                total: 1h58m26s
+                zlib: 17s
+                pkg-config-lite: 11s
+                openssl: 4m39s
+                ncurses: 5m4s
+                libedit: 36s
+                postgresql92: 7m23s
+                libtool: 19s
+                libffi: 18s
+                libyaml: 27s
+                libiconv: 1m2s
+                ruby: 8m26s
+                rubygems: 29s
+                pg-gem: 23s
+                chef-marketplace-gem: 5m31s
+                ohai: 13s
+                appbundler: 10s
+                libarchive: 2m14s
+                liblzma: 1m16s
+                libxml2: 3m53s
+                libxslt: 58s
+                nokogiri: 31s
+                dep-selector-libgecode: 31m9s
+                berkshelf: 36m37s
+                runit: 25s
+                reckoner: 13s
+                biscotti: 42s
+                chef: 1m34s
+                chef-marketplace-ctl: 34s
+              NetFetcher: 1h54m25s
+              GitFetcher: 1h58m3s
+              Project:
+                chef-marketplace: 11m10s
+              HealthCheck: 45s
+              Packager::DEB: 10m16s
   chef-marketplace-trigger-nightly-master:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-nightly-master/188/
     duration: 9s
-successful_logs_analyzed: false

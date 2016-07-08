@@ -24,10 +24,29 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-6,project=chef-marketplace,role=tester/32/
         duration: 41m6s
+        steps:
+          total: 41m6s
+          before (setup time): 11m45s
+          chef-client private-chef::default: 7m45s
+          chef-client chef-marketplace::default: 18s
+          chef-client chef-marketplace::default 2: 15s
+          chef-client chef-marketplace::upgrade: 7m44s
+          chef-client private-chef::default 2: 3m27s
+          chef-client omnibus-chef-manage::default: 1m12s
+          chef-client opscode-reporting::default: 13s
+          after (cleanup time): 47s
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-7,project=chef-marketplace,role=tester/32/
         duration: 30m10s
+        steps:
+          total: 30m10s
+          before (setup time): 8m59s
+          chef-client private-chef::default: 6m6s
+          chef-client chef-marketplace::upgrade: 4m46s
+          chef-client private-chef::default 2: 1m30s
+          chef-client omnibus-chef-manage::default: 44s
+          after (cleanup time): 57s
   chef-marketplace-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-marketplace-build/35/
@@ -45,4 +64,3 @@ stages:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-nightly-master/17/
     duration: 3s
-successful_logs_analyzed: false

@@ -31,6 +31,22 @@ stages:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/203/
         duration: 4m50s
+        steps:
+          total: 4m50s
+          before (setup time): 3m3s
+          CHEF-ACCEPTANCE:
+            total: 1m46s
+            TRIVIAL::PROVISION: 1m23s
+            TRIVIAL::VERIFY: 12s
+            TRIVIAL::DESTROY: 11s
+        chef_acceptance_timing:
+        - trivial:
+            provision: 1m16s
+            verify: 9s
+            destroy: 7s
+            Total: 1m46s
+          Run:
+            Total: 1m46s
       debian-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/203/
@@ -80,28 +96,164 @@ stages:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/456/
         duration: 24m24s
+        steps:
+          total: 24m24s
+          before (setup time): "-3m19s"
+          omnibus:
+            build:
+              total: 17m25s
+              GitCache:
+                total: 11m34s
+                chef-dk 2: 44s
+                ruby-windows-devkit: 15s
+              Software: 11m30s
+              Builder:
+                total: 10m18s
+                chef-dk: 4m14s
+                chef-dk-appbundle: 3m43s
+                ruby-windows-devkit: 10s
+              GitFetcher: 28s
+              Project:
+                chefdk: 5m51s
+              Licensing: 19s
+              Packager::MSI: 5m30s
+          after (cleanup time): 10m9s
       debian-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/456/
         duration: 21m50s
+        steps:
+          total: 21m50s
+          before (setup time): 1m14s
+          omnibus:
+            total: 20m28s
+            fetch:
+              PathFetcher:
+                chef-dk: 14s
+            build:
+              total: 20m6s
+              GitCache:
+                total: 12m55s
+                chef-dk 2: 10s
+                gem-permissions: 11s
+              Software: 12m54s
+              Builder:
+                total: 12m1s
+                chef-dk: 3m24s
+                chef-dk-appbundle: 7m43s
+              GitFetcher: 15s
+              Project:
+                chefdk: 7m11s
+              Licensing: 18s
+              HealthCheck: 48s
+              Packager::DEB: 6m5s
       el-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/456/
         duration: 26m13s
+        steps:
+          total: 26m13s
+          before (setup time): 2m52s
+          omnibus:
+            total: 24m36s
+            fetch:
+              PathFetcher:
+                chef-dk: 14s
+            build:
+              total: 24m13s
+              GitCache:
+                total: 14m55s
+                chef-dk 2: 14s
+                gem-permissions: 14s
+              Software: 14m55s
+              Builder:
+                total: 13m38s
+                chef-dk: 3m52s
+                chef-dk-appbundle: 8m33s
+              GitFetcher: 21s
+              Project:
+                chefdk: 9m18s
+              Licensing: 16s
+              HealthCheck: 56s
+              Packager::RPM: 8m5s
+          after (cleanup time): "-1m14s"
       el-7:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/456/
         duration: 17m49s
+        steps:
+          total: 17m49s
+          before (setup time): 1m6s
+          omnibus:
+            total: 16m36s
+            fetch:
+              PathFetcher:
+                chef-dk: 11s
+            build:
+              total: 16m19s
+              GitCache: 9m30s
+              Software: 9m31s
+              Builder:
+                total: 8m55s
+                chef-dk: 2m34s
+                chef-dk-appbundle: 5m52s
+              Project:
+                chefdk: 6m49s
+              Licensing: 17s
+              HealthCheck: 21s
+              Packager::RPM: 6m10s
       mac_os_x-10.9:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/456/
         duration: 10m13s
+        steps:
+          total: 10m13s
+          before (setup time): 53s
+          omnibus:
+            build:
+              total: 8m40s
+              GitCache:
+                total: 6m44s
+                chef-dk 2: 15s
+                gem-permissions: 16s
+              Software: 6m43s
+              Builder:
+                total: 6m10s
+                chef-dk: 2m
+                chef-dk-appbundle: 3m13s
+              GitFetcher: 13s
+              Project:
+                chefdk: 1m56s
+              Licensing: 16s
+              Packager::PKG: 1m6s
+              Compressor::DMG: 33s
+          after (cleanup time): 29s
       ubuntu-12.04:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/456/
         duration: 20m43s
+        steps:
+          total: 20m43s
+          before (setup time): 1m8s
+          omnibus:
+            total: 19m31s
+            fetch:
+              PathFetcher:
+                chef-dk: 15s
+            build:
+              total: 19m8s
+              GitCache: 12m3s
+              Software: 12m4s
+              Builder:
+                total: 11m18s
+                chef-dk: 3m15s
+                chef-dk-appbundle: 7m29s
+              Project:
+                chefdk: 7m5s
+              Licensing: 17s
+              HealthCheck: 25s
+              Packager::DEB: 6m22s
   chefdk-trigger-release:
     result: SUCCESS
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/74/
     duration: 3s
-successful_logs_analyzed: false

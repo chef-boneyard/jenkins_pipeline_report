@@ -24,22 +24,52 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=el-5,project=chef-manage,role=tester/257/
         duration: 35m48s
+        steps:
+          total: 35m48s
+          before (setup time): 19m25s
+          chef-client private-chef::default: 9m20s
+          chef-client omnibus-chef-manage::default: 2m50s
+          after (cleanup time): 2m3s
       el-6:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=el-6,project=chef-manage,role=tester/257/
         duration: 27m37s
+        steps:
+          total: 27m37s
+          before (setup time): 16m3s
+          chef-client private-chef::default: 8m47s
+          chef-client omnibus-chef-manage::default: 3m41s
+          after (cleanup time): "-3m6s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=el-7,project=chef-manage,role=tester/257/
         duration: 26m51s
+        steps:
+          total: 26m51s
+          before (setup time): 10m16s
+          chef-client private-chef::default: 10m17s
+          chef-client omnibus-chef-manage::default: 2m1s
+          after (cleanup time): 2m3s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-manage,role=tester/257/
         duration: 19m17s
+        steps:
+          total: 19m17s
+          before (setup time): 8m10s
+          chef-client private-chef::default: 4m37s
+          chef-client omnibus-chef-manage::default: 2m18s
+          after (cleanup time): 2m4s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-manage,role=tester/257/
         duration: 19m40s
+        steps:
+          total: 19m40s
+          before (setup time): 7m37s
+          chef-client private-chef::default: 5m8s
+          chef-client omnibus-chef-manage::default: 2m42s
+          after (cleanup time): 2m4s
   chef-manage-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-manage-build/285/
@@ -49,20 +79,124 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-build/architecture=x86_64,platform=el-5,project=chef-manage,role=builder/285/
         duration: 42m11s
+        steps:
+          total: 42m11s
+          before (setup time): 2m1s
+          omnibus:
+            total: 39m35s
+            fetch:
+              PathFetcher:
+                chef-manage: 19s
+            build:
+              total: 39m10s
+              GitCache:
+                total: 21m59s
+                ruby: 10s
+                python: 21s
+                dep-selector-libgecode: 16s
+                berkshelf: 1m18s
+                chef-gem: 16s
+                chef-manage 2: 17s
+              Software:
+                berkshelf: 1m18s
+              Builder:
+                total: 18m54s
+                chef-manage: 17m52s
+                chef-manage-cookbooks: 12s
+                runit: 19s
+              Project:
+                chef-manage: 17m11s
+              HealthCheck: 2m25s
+              Packager::RPM: 14m40s
+          after (cleanup time): 35s
       el-6:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-build/architecture=x86_64,platform=el-6,project=chef-manage,role=builder/285/
         duration: 41m57s
+        steps:
+          total: 41m57s
+          before (setup time): 8m
+          omnibus:
+            total: 39m35s
+            fetch:
+              PathFetcher:
+                chef-manage: 22s
+            build:
+              total: 39m7s
+              GitCache:
+                total: 21m55s
+                dep-selector-libgecode: 12s
+                berkshelf: 35s
+                chef-manage 2: 17s
+              Software:
+                berkshelf: 35s
+              Builder:
+                total: 20m24s
+                chef-manage: 19m19s
+                chef-manage-cookbooks: 16s
+                runit: 18s
+              Project:
+                chef-manage: 17m12s
+              HealthCheck: 2m7s
+              Packager::RPM: 14m58s
+          after (cleanup time): "-5m38s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-build/architecture=x86_64,platform=el-7,project=chef-manage,role=builder/285/
         duration: 31m7s
+        steps:
+          total: 31m7s
+          before (setup time): 1m50s
+          omnibus:
+            total: 29m7s
+            fetch:
+              PathFetcher:
+                chef-manage: 20s
+            build:
+              total: 28m42s
+              GitCache:
+                total: 15m34s
+                dep-selector-libgecode: 14s
+                berkshelf: 30s
+              Software:
+                berkshelf: 30s
+              Builder:
+                total: 14m11s
+                chef-manage: 13m32s
+                chef-manage-cookbooks: 11s
+                runit: 15s
+              Project:
+                chef-manage: 13m8s
+              HealthCheck: 48s
+              Packager::RPM: 12m15s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-build/architecture=x86_64,platform=ubuntu-12.04,project=chef-manage,role=builder/285/
         duration: 34m28s
+        steps:
+          total: 34m28s
+          before (setup time): 1m33s
+          omnibus:
+            total: 32m51s
+            fetch:
+              PathFetcher:
+                chef-manage: 21s
+            build:
+              total: 32m26s
+              GitCache:
+                berkshelf: 34s
+              Software:
+                berkshelf: 34s
+              Builder:
+                total: 18m40s
+                chef-manage: 17m55s
+                chef-manage-cookbooks: 10s
+                runit: 22s
+              Project:
+                chef-manage: 12m38s
+              HealthCheck: 58s
+              Packager::DEB: 11m34s
   chef-manage-trigger-git_poll:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-manage-trigger-git_poll/46/
     duration: 17s
-successful_logs_analyzed: false

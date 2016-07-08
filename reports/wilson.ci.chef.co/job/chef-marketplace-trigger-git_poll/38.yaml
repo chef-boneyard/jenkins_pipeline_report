@@ -24,14 +24,32 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-6,project=chef-marketplace,role=tester/216/
         duration: 48m16s
+        steps:
+          total: 48m16s
+          before (setup time): 43m22s
+          chef-client private-chef::default: 25m58s
+          chef-client chef-marketplace::default: 51s
+          after (cleanup time): "-24m20s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=el-7,project=chef-marketplace,role=tester/216/
         duration: 16m38s
+        steps:
+          total: 16m38s
+          before (setup time): 8m23s
+          chef-client private-chef::default: 3m34s
+          chef-client chef-marketplace::default: 13s
+          after (cleanup time): 2m19s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=tester/216/
         duration: 21m30s
+        steps:
+          total: 21m30s
+          before (setup time): 11m7s
+          chef-client private-chef::default: 6m54s
+          chef-client chef-marketplace::default: 19s
+          after (cleanup time): 55s
   chef-marketplace-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-marketplace-build/252/
@@ -41,16 +59,86 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-6,project=chef-marketplace,role=builder/252/
         duration: 24m55s
+        steps:
+          total: 24m55s
+          before (setup time): 36m35s
+          omnibus:
+            total: 19m10s
+            fetch:
+              total: 13s
+              Software: 12s
+              NullFetcher: 11s
+              GitFetcher: 11s
+            build:
+              total: 18m57s
+              GitCache:
+                total: 3m25s
+                chef-marketplace-gem: 53s
+                berkshelf: 26s
+                biscotti: 10s
+                chef: 14s
+              Software:
+                total: 3m28s
+                berkshelf: 26s
+                chef: 14s
+              Project:
+                chef-marketplace: 15m26s
+              HealthCheck: 1m24s
+              Packager::RPM: 13m54s
+          after (cleanup time): "-30m50s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=el-7,project=chef-marketplace,role=builder/252/
         duration: 19m51s
+        steps:
+          total: 19m51s
+          before (setup time): 26m28s
+          omnibus:
+            total: 15m34s
+            fetch:
+              Software: 10s
+            build:
+              total: 15m24s
+              GitCache:
+                total: 3m5s
+                chef-marketplace-gem: 1m13s
+                berkshelf: 24s
+                chef: 12s
+              Software:
+                total: 3m5s
+                berkshelf: 24s
+                chef: 12s
+              Project:
+                chef-marketplace: 12m17s
+              HealthCheck: 34s
+              Packager::RPM: 11m34s
+          after (cleanup time): "-22m11s"
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-marketplace-build/architecture=x86_64,platform=ubuntu-14.04,project=chef-marketplace,role=builder/252/
         duration: 17m16s
+        steps:
+          total: 17m16s
+          before (setup time): 25m46s
+          omnibus:
+            total: 12m25s
+            fetch:
+              Software: 10s
+              NullFetcher: 10s
+            build:
+              total: 12m15s
+              GitCache:
+                total: 1m44s
+                chef-marketplace-gem: 16s
+                chef: 12s
+              Software:
+                chef: 13s
+              Project:
+                chef-marketplace: 10m29s
+              HealthCheck: 44s
+              Packager::DEB: 9m37s
+          after (cleanup time): "-20m55s"
   chef-marketplace-trigger-git_poll:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-marketplace-trigger-git_poll/38/
     duration: 3s
-successful_logs_analyzed: false

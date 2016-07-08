@@ -3,7 +3,7 @@ result: SUCCESS
 url: http://wilson.ci.chef.co/job/chef-analytics-trigger-nightly-master/145/
 timestamp: 2016-05-01 09:09:00 UTC
 duration: 2h9m58s
-active_duration: 2h30m28s
+active_duration: 2h9m30s
 parameters: {}
 change:
   git_remote: git@github.com:chef/chef-analytics.git
@@ -11,10 +11,6 @@ change:
   project: opscode-analytics
   version: 1.4.0+20160501090935
 stages:
-  chef-analytics-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-analytics,role=tester:
-    result: SUCCESS
-    url: http://wilson.ci.chef.co/job/chef-analytics-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-analytics,role=tester/217/
-    duration: 20m58s
   chef-analytics-promote:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-analytics-promote/135/
@@ -28,26 +24,62 @@ stages:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-analytics-test/architecture=x86_64,platform=el-5,project=opscode-analytics,role=tester/217/
         duration: 20m28s
+        steps:
+          total: 20m28s
+          before (setup time): 10m39s
+          chef-client private-chef::default: 3m22s
+          chef-client opscode-analytics::default: 2m16s
+          after (cleanup time): 2m7s
       el-6:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-analytics-test/architecture=x86_64,platform=el-6,project=opscode-analytics,role=tester/217/
         duration: 18m47s
+        steps:
+          total: 18m47s
+          before (setup time): 10m56s
+          chef-client private-chef::default: 4m38s
+          chef-client opscode-analytics::default: 4m9s
+          after (cleanup time): "-2m58s"
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-analytics-test/architecture=x86_64,platform=el-7,project=opscode-analytics,role=tester/217/
         duration: 22m35s
+        steps:
+          total: 22m35s
+          before (setup time): 9m30s
+          chef-client private-chef::default: 4m28s
+          chef-client opscode-analytics::default: 4m9s
+          after (cleanup time): 2m20s
       ubuntu-10.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-analytics-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-analytics,role=tester/217/
         duration: 20m58s
+        steps:
+          total: 20m58s
+          before (setup time): 8m9s
+          chef-client private-chef::default: 5m29s
+          chef-client opscode-analytics::default: 2m42s
+          after (cleanup time): 2m27s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-analytics-test/architecture=x86_64,platform=ubuntu-12.04,project=opscode-analytics,role=tester/217/
         duration: 18m
+        steps:
+          total: 18m
+          before (setup time): 7m22s
+          chef-client private-chef::default: 5m15s
+          chef-client opscode-analytics::default: 1m14s
+          after (cleanup time): 2m6s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-analytics-test/architecture=x86_64,platform=ubuntu-14.04,project=opscode-analytics,role=tester/217/
         duration: 26m25s
+        steps:
+          total: 26m25s
+          before (setup time): 8m34s
+          chef-client private-chef::default: 5m25s
+          chef-client opscode-analytics::default: 7m51s
+          after (cleanup time): 2m27s
   chef-analytics-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-analytics-build/284/
@@ -77,4 +109,3 @@ stages:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-analytics-trigger-nightly-master/145/
     duration: 25s
-successful_logs_analyzed: false
