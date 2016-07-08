@@ -72,6 +72,7 @@ module JenkinsPipelineReport
         logger.debug("Writing #{path} ...")
         FileUtils.mkdir_p(File.dirname(path))
         IO.write(path, Psych.dump(value))
+        value
       end
 
       def report_path(url, type: :yaml)

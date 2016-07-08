@@ -126,9 +126,14 @@ module JenkinsPipelineReport
         end
       end
 
-      def generate_duration
+      def generate_end_time
         stage_end_times = stage_reports.map { |stage| stage.build.end_timestamp }.compact
-        stage_end_times.max - trigger.timestamp
+        stage_end_times.max
+      end
+
+      def generate_duration
+        end_time = generate_end_time
+        end_time - trigger.timestamp if end_time
       end
 
       def generate_triggered_by

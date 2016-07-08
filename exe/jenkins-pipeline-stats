@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+
+require "jenkins_pipeline_report"
+
+module JenkinsPipelineReport
+  module App
+    Cli.parse_options do |opts|
+      opts.banner = <<-EOM
+        USAGE: ruby #{File.basename(__FILE__)} JOB_URL ...
+
+        Download and cache Jenkins data.
+
+        ruby #{File.basename(__FILE__)} https://manhattan.ci.chef.co/job/chef-trigger-release https://wilson.ci.chef.co/job/chef-server-12-trigger-release
+
+        You must upload your public SSH key to your Jenkins server from ~/.ssh/id_rsa.
+      EOM
+    end
+
+    def self.parse_datetime(datetime)
+      datetime ? DateTime.parse(datetime) : nil
+    end
+
+    def self.parse_duration(duration)
+      if duration && duration =~ /^(?:(\d+)d)?(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/
+        result = 0.0
+        result += $1.to_f if $1
+        result *= 24 # days to hours
+        result += $2.to_f if $2
+        result *= 60 # hours to minutes
+        result += $3.to_f if $3
+        result *= 60 # minutes to seconds
+        result += $4.to_f if $4
+        result.to_f
+      end
+    end
+
+    puts "# Month,Job,JobUrl,RedTime,AverageBuildTime\n"
+
+    builds = Cli.builds(*ARGV)
+    builds.map! do |build|
+      build.refresh
+      duration = parse_duration(build.report["duration"])
+      end_time = parse_datetime(build.report["timestamp"]) + Rational(duration, 24*60*60) if duration
+      [ build, end_time ]
+    end
+    builds.select! { |build, end_time| end_time }
+    builds.group_by { |build, end_time| build.trigger.job }.each do |job, job_builds|
+      job_builds.sort_by! { |build, end_time| end_time }
+      job_builds[0] << parse_datetime(job_builds[0][0].report["timestamp"])
+      job_builds.each_with_index { |(build, end_time, prev_end_time), index| job_builds[index+1] << end_time if job_builds[index+1] }
+      job_builds.group_by { |build, end_time, prev_end_time| end_time.strftime("%Y-%m") }.each do |month, month_builds|
+        red_time = month_builds.map { |build, end_time, prev_end_time| build.report["result"] == "SUCCESS" ? 0 : (end_time - prev_end_time).to_f }.inject(:+)
+        build_times = month_builds.map do |build, end_time, prev_end_time|
+          if build.report["result"] == "SUCCESS"
+            build_time = parse_duration(build.report["duration"])
+            retry_delays = parse_duration(build.report["retry_delays"])
+            build_time -= retry_delays if retry_delays
+            build_time.to_f
+          end
+        end.compact
+        if build_times.any?
+          average_build_time = sprintf("%.2f", build_times.inject(:+) / build_times.size)
+        end
+        puts "#{month},#{job.name},#{job.url},#{sprintf("%.2f", red_time)},#{average_build_time}\n"
+      end
+    end
+  end
+end
