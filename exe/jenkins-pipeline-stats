@@ -34,7 +34,49 @@ module JenkinsPipelineReport
       end
     end
 
-    puts "# Month,Job,JobUrl,RedTime,AverageBuildTime\n"
+    def self.calculate_red_ranges(builds, report_end_time)
+      red_start = nil
+      red_ranges = []
+      builds.each do |build, end_time|
+        if build.report["result"] == "SUCCESS"
+          if red_start
+            red_ranges << Range.new(red_start, end_time)
+            red_start = nil
+          end
+        else
+          red_start ||= end_time
+        end
+      end
+      red_ranges << [ red_start, report_end_time ] if red_start
+      red_ranges
+    end
+
+    def self.months(start_time, end_time)
+      result = []
+      start_time = DateTime.new(start_time.year, start_time.month)
+      while start_time <= end_time
+        result << Range.new(start_time, start_time >> 1, true)
+        start_time = start_time >> 1
+      end
+      result
+    end
+
+    def self.intersection_size(ranges, master_range)
+      result = 0.0
+      ranges = ranges.map do |range|
+        min = range.min
+        min = master_range.min if master_range.min > min
+        max = range.max
+        max = master_range.max if master_range.max < max
+        result += max - min if max > min
+      end
+      result
+    end
+
+    report_end_time = DateTime.now
+    report_end_month = DateTime.new(report_end_time.year, report_end_time.month)
+
+    puts "# Job,Month,RedTimeDays,AverageBuildTimeSeconds,JobUrl\n"
 
     builds = Cli.builds(*ARGV)
     builds.map! do |build|
@@ -45,22 +87,26 @@ module JenkinsPipelineReport
     end
     builds.select! { |build, end_time| end_time }
     builds.group_by { |build, end_time| build.trigger.job }.each do |job, job_builds|
-      job_builds.sort_by! { |build, end_time| end_time }
-      job_builds.each_with_index { |(build, end_time), index| job_builds[index-1] << end_time if index > 0 }
-      job_builds.group_by { |build, end_time, next_end_time| end_time.strftime("%Y-%m") }.each do |month, month_builds|
-        red_time = month_builds.map { |build, end_time, next_end_time| (!next_end_time || build.report["result"] == "SUCCESS") ? 0 : (next_end_time - end_time).to_f }.inject(:+)
-        build_times = month_builds.map do |build, end_time, next_end_time|
-          if build.report["result"] == "SUCCESS"
-            build_time = parse_duration(build.report["duration"])
-            retry_delays = parse_duration(build.report["retry_delays"])
-            build_time -= retry_delays if retry_delays
-            build_time.to_f
+      if job_builds.any?
+        job_builds.sort_by! { |build, end_time| end_time }
+        red_ranges = calculate_red_ranges(job_builds, report_end_time)
+        job_start_time = job_builds.first[1]
+        months(job_start_time, report_end_time).each do |month|
+          month_builds = job_builds.select { |build, end_time| build.report["result"] == "SUCCESS" && month.cover?(end_time) }
+          red_time = intersection_size(red_ranges, month)
+          if month_builds.any?
+            durations = month_builds.map do |build, end_time|
+              duration = parse_duration(build.report["duration"])
+              retry_delays = parse_duration(build.report["retry_delays"])
+              duration -= retry_delays if retry_delays
+              duration
+            end
+            average_duration = durations.reduce(:+) / durations.size.to_f
+          else
+            average_duration = 0.0
           end
-        end.compact
-        if build_times.any?
-          average_build_time = sprintf("%.2f", build_times.inject(:+) / build_times.size)
+          puts "#{job.name},#{month.min.strftime("%Y-%m")},#{sprintf("%.2f", red_time)},#{average_duration},#{job.url}\n"
         end
-        puts "#{month},#{job.name},#{job.url},#{sprintf("%.2f", red_time)},#{average_build_time}\n"
       end
     end
   end

@@ -232,7 +232,7 @@ module JenkinsPipelineReport
       def default_should_cache
         proc do |jenkins_object|
           case jenkins_object
-          when Server, Job
+          when Server, Job, Build
             true
           else
             false

@@ -1,111 +1,602 @@
 ---
-result: SUCCESS
+result: ABORTED
 url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-trigger-git_poll/2/
-timestamp: 2016-04-21 20:28:06 UTC
-duration: 2h16m12s
-active_duration: 1h4m34s
-retry_delays: 1h11m18s
+failure_category: aborted
+failure_cause: 'unknown: el-5, el-7, ubuntu-16.04; aborted: el-6, ubuntu-12.04, ubuntu-14.04:
+  opscode-push-jobs-server-test'
+timestamp: 2016-07-19 16:24:06 UTC
+duration: 40m28s
+active_duration: 40m16s
 parameters: {}
 change:
-  git_remote: git@github.com:opscode/omnibus-pushy.git
-  git_commit: 6c47caf6c6bf9a6109363b4d680a5c57d754bebd
+  git_remote: git@github.com:chef/opscode-pushy-server.git
+  git_commit: 73c0e8801a4b0908a23caba0495f58011d4ea2aa
   project: opscode-push-jobs-server
-  version: 2.0.0-alpha.4+20160421202816.git.2.6c47caf
+  version: 2.0.1+20160719162421.git.637.73c0e88
 stages:
-  opscode-push-jobs-server-promote:
-    result: SUCCESS
-    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-promote/43/
-    duration: 8s
   opscode-push-jobs-server-test:
-    result: SUCCESS
-    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/109/
-    duration: 2h2m50s
-    active_duration: 51m32s
-    retries: 1
-    retry_delay: 1h11m18s
+    result: ABORTED
+    failure_category: aborted
+    failure_cause: 'unknown: el-5, el-7, ubuntu-16.04; aborted: el-6, ubuntu-12.04,
+      ubuntu-14.04'
+    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/11/
+    duration: 8m51s
     runs:
       el-5:
-        result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-5,project=opscode-push-jobs-server,role=tester/109/
-        duration: 51m31s
-        steps:
-          total: 51m31s
-          before (setup time): 8m45s
-          chef-client private-chef::default: 5m14s
-          chef-client opscode-pushy-server::default: 22s
-          after (cleanup time): 33m1s
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-5,project=opscode-push-jobs-server,role=tester/11/
+        duration: 8s
+        logs:
+          consoleText:
+            320: |
+              ================================================================
+
+              /home/jenkins/workspace/opscode-push-jobs-server-test/architecture/x86_64/platform/el-5/project/opscode-push-jobs-server/role/tester/opscode-ci/scripts/artifactory/fetch.rb:136:in `block in <main>': Could not locate artifact chef-server#12.8.0+20160719150033 in omnibus-current-local for el-5 on x86_64 (RuntimeError)
+                from /home/jenkins/workspace/opscode-push-jobs-server-test/architecture/x86_64/platform/el-5/project/opscode-push-jobs-server/role/tester/opscode-ci/scripts/artifactory/fetch.rb:85:in `chdir'
+                from /home/jenkins/workspace/opscode-push-jobs-server-test/architecture/x86_64/platform/el-5/project/opscode-push-jobs-server/role/tester/opscode-ci/scripts/artifactory/fetch.rb:85:in `<main>'
+              Finding the latest version of chef-server since neither 'OMNIBUS_BUILD_VERSION' nor 'DELIVERY_CHANGE' is set!
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            347: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to push-jobs-server-rhel-5-tester-efdc36(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              [BFA] Scanning build for known causes...
+              [BFA] No failure causes found
       el-6:
-        result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-6,project=opscode-push-jobs-server,role=tester/109/
-        duration: 48m45s
+        result: ABORTED
+        failure_category: aborted
+        failure_cause: aborted
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-6,project=opscode-push-jobs-server,role=tester/11/
+        duration: 8m52s
+        logs:
+          consoleText:
+            531: |
+              [2016-07-19T13:10:32-04:00] INFO: GET /organizations/chef/nodes/ip-10-194-14-2.us-west-2.compute.internal
+              [2016-07-19T13:10:32-04:00] INFO: #<ChefZero::RestErrorResponse: 404: Object not found: chefzero://localhost:8889/nodes/ip-10-194-14-2.us-west-2.compute.internal>
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_base.rb:91:in `rescue in get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_base.rb:83:in `get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/endpoints/rest_object_endpoint.rb:18:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_base.rb:62:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_router.rb:24:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/server.rb:664:in `block in app'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/server.rb:336:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/socketless_server_map.rb:87:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/socketless_server_map.rb:33:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:305:in `block in send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:336:in `block in retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:334:in `loop'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:334:in `retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:299:in `send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:144:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:111:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/node.rb:585:in `load'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/node.rb:569:in `find_or_create'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/client.rb:467:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/client.rb:269:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:268:in `run_with_graceful_exit_option'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:244:in `block in run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:227:in `run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application/client.rb:419:in `run_application'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:59:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/bin/chef-client:26:in `<top (required)>'
+              /opt/opscode/embedded/bin/chef-client:23:in `load'
+              /opt/opscode/embedded/bin/chef-client:23:in `<main>'
+              [2016-07-19T13:10:32-04:00] INFO: HTTP Request Returned 404 Not Found: Object not found: chefzero://localhost:8889/nodes/ip-10-194-14-2.us-west-2.compute.internal
+              [2016-07-19T13:10:32-04:00] INFO: POST /organizations/chef/nodes
+            1902: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to push-jobs-server-rhel-6-tester-6c8e60(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              [BFA] Scanning build for known causes...
+              [BFA] No failure causes found
         steps:
-          total: 48m45s
-          before (setup time): 10m12s
-          chef-client private-chef::default: 5m45s
-          chef-client opscode-pushy-server::default: 25s
-          after (cleanup time): 28m14s
+          total: 8m52s
+          before (setup time): 14m41s
+          after (cleanup time): "-5m56s"
       el-7:
-        result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-7,project=opscode-push-jobs-server,role=tester/109/
-        duration: 44m37s
-        steps:
-          total: 44m37s
-          before (setup time): 5m52s
-          chef-client private-chef::default: 2m59s
-          chef-client opscode-pushy-server::default: 14s
-          after (cleanup time): 31m25s
-      ubuntu-10.04:
-        result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-push-jobs-server,role=tester/109/
-        duration: 45m52s
-        steps:
-          total: 45m52s
-          before (setup time): 5m54s
-          chef-client private-chef::default: 2m38s
-          chef-client opscode-pushy-server::default: 14s
-          after (cleanup time): 32m56s
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-7,project=opscode-push-jobs-server,role=tester/11/
+        duration: 15s
+        logs:
+          consoleText:
+            318: |
+              ================================================================
+
+              /home/jenkins/workspace/opscode-push-jobs-server-test/architecture/x86_64/platform/el-7/project/opscode-push-jobs-server/role/tester/opscode-ci/scripts/artifactory/fetch.rb:136:in `block in <main>': Could not locate artifact chef-server#12.8.0+20160719150033 in omnibus-current-local for el-7 on x86_64 (RuntimeError)
+                from /home/jenkins/workspace/opscode-push-jobs-server-test/architecture/x86_64/platform/el-7/project/opscode-push-jobs-server/role/tester/opscode-ci/scripts/artifactory/fetch.rb:85:in `chdir'
+                from /home/jenkins/workspace/opscode-push-jobs-server-test/architecture/x86_64/platform/el-7/project/opscode-push-jobs-server/role/tester/opscode-ci/scripts/artifactory/fetch.rb:85:in `<main>'
+              Finding the latest version of chef-server since neither 'OMNIBUS_BUILD_VERSION' nor 'DELIVERY_CHANGE' is set!
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            345: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to push-jobs-server-rhel-7-tester-fd228c(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              [BFA] Scanning build for known causes...
+              [BFA] No failure causes found
       ubuntu-12.04:
-        result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-12.04,project=opscode-push-jobs-server,role=tester/109/
-        duration: 45m21s
+        result: ABORTED
+        failure_category: aborted
+        failure_cause: aborted
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-12.04,project=opscode-push-jobs-server,role=tester/11/
+        duration: 8m52s
+        logs:
+          consoleText:
+            577: |
+              [2016-07-19T17:03:17+00:00] INFO: GET /organizations/chef/nodes/ip-10-194-15-212.us-west-2.compute.internal
+              [2016-07-19T17:03:17+00:00] INFO: #<ChefZero::RestErrorResponse: 404: Object not found: chefzero://localhost:8889/nodes/ip-10-194-15-212.us-west-2.compute.internal>
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_base.rb:91:in `rescue in get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_base.rb:83:in `get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/endpoints/rest_object_endpoint.rb:18:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_base.rb:62:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_router.rb:24:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/server.rb:664:in `block in app'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/server.rb:336:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/socketless_server_map.rb:87:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/socketless_server_map.rb:33:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:305:in `block in send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:336:in `block in retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:334:in `loop'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:334:in `retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:299:in `send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:144:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:111:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/node.rb:585:in `load'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/node.rb:569:in `find_or_create'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/client.rb:467:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/client.rb:269:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:268:in `run_with_graceful_exit_option'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:244:in `block in run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:227:in `run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application/client.rb:419:in `run_application'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:59:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/bin/chef-client:26:in `<top (required)>'
+              /opt/opscode/embedded/bin/chef-client:23:in `load'
+              /opt/opscode/embedded/bin/chef-client:23:in `<main>'
+              [2016-07-19T17:03:17+00:00] INFO: HTTP Request Returned 404 Not Found: Object not found: chefzero://localhost:8889/nodes/ip-10-194-15-212.us-west-2.compute.internal
+              [2016-07-19T17:03:17+00:00] INFO: POST /organizations/chef/nodes
+            1967: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to push-jobs-server-ubuntu-12.04-tester-36b2f8(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              [BFA] Scanning build for known causes...
+              [BFA] No failure causes found
         steps:
-          total: 45m21s
-          before (setup time): 6m8s
-          chef-client private-chef::default: 2m38s
-          chef-client opscode-pushy-server::default: 16s
-          after (cleanup time): 32m13s
+          total: 8m52s
+          before (setup time): 7m30s
+          after (cleanup time): 1m18s
       ubuntu-14.04:
-        result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-14.04,project=opscode-push-jobs-server,role=tester/109/
-        duration: 46m6s
+        result: ABORTED
+        failure_category: aborted
+        failure_cause: aborted
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-14.04,project=opscode-push-jobs-server,role=tester/11/
+        duration: 8m52s
+        logs:
+          consoleText:
+            635: |
+              [2016-07-19T17:01:52+00:00] INFO: GET /organizations/chef/nodes/ip-10-194-14-130.us-west-2.compute.internal
+              [2016-07-19T17:01:52+00:00] INFO: #<ChefZero::RestErrorResponse: 404: Object not found: chefzero://localhost:8889/nodes/ip-10-194-14-130.us-west-2.compute.internal>
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_base.rb:91:in `rescue in get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_base.rb:83:in `get_data'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/endpoints/rest_object_endpoint.rb:18:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_base.rb:62:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/rest_router.rb:24:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/server.rb:664:in `block in app'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/server.rb:336:in `call'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/socketless_server_map.rb:87:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.7.0/lib/chef_zero/socketless_server_map.rb:33:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:305:in `block in send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:336:in `block in retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:334:in `loop'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:334:in `retrying_http_errors'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:299:in `send_http_request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:144:in `request'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/http.rb:111:in `get'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/node.rb:585:in `load'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/node.rb:569:in `find_or_create'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/client.rb:467:in `load_node'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/client.rb:269:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:268:in `run_with_graceful_exit_option'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:244:in `block in run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:227:in `run_chef_client'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application/client.rb:419:in `run_application'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/lib/chef/application.rb:59:in `run'
+              /opt/opscode/embedded/lib/ruby/gems/2.1.0/gems/chef-12.12.23/bin/chef-client:26:in `<top (required)>'
+              /opt/opscode/embedded/bin/chef-client:23:in `load'
+              /opt/opscode/embedded/bin/chef-client:23:in `<main>'
+              [2016-07-19T17:01:52+00:00] INFO: HTTP Request Returned 404 Not Found: Object not found: chefzero://localhost:8889/nodes/ip-10-194-14-130.us-west-2.compute.internal
+              [2016-07-19T17:01:52+00:00] INFO: POST /organizations/chef/nodes
+            2480: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to push-jobs-server-ubuntu-14.04-tester-1e66a4(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              [BFA] Scanning build for known causes...
+              [BFA] No failure causes found
         steps:
-          total: 46m6s
-          before (setup time): 5m22s
-          chef-client private-chef::default: 3m22s
-          chef-client opscode-pushy-server::default: 21s
-          after (cleanup time): 32m53s
+          total: 8m52s
+          before (setup time): 6m3s
+          after (cleanup time): 2m43s
+      ubuntu-16.04:
+        result: FAILURE
+        failure_category: unknown
+        failure_cause: unknown
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-16.04,project=opscode-push-jobs-server,role=tester/11/
+        duration: 4s
+        logs:
+          consoleText:
+            314: |
+              ================================================================
+
+              /home/jenkins/workspace/opscode-push-jobs-server-test/architecture/x86_64/platform/ubuntu-16.04/project/opscode-push-jobs-server/role/tester/opscode-ci/scripts/artifactory/fetch.rb:136:in `block in <main>': Could not locate artifact chef-server#12.8.0+20160711131028 in omnibus-current-local for ubuntu-16.04 on x86_64 (RuntimeError)
+                from /home/jenkins/workspace/opscode-push-jobs-server-test/architecture/x86_64/platform/ubuntu-16.04/project/opscode-push-jobs-server/role/tester/opscode-ci/scripts/artifactory/fetch.rb:85:in `chdir'
+                from /home/jenkins/workspace/opscode-push-jobs-server-test/architecture/x86_64/platform/ubuntu-16.04/project/opscode-push-jobs-server/role/tester/opscode-ci/scripts/artifactory/fetch.rb:85:in `<main>'
+              Finding the latest version of chef-server since neither 'OMNIBUS_BUILD_VERSION' nor 'DELIVERY_CHANGE' is set!
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            347: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to push-jobs-server-ubuntu-16.04-tester-8e075c(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              [BFA] Scanning build for known causes...
+              [BFA] No failure causes found
   opscode-push-jobs-server-build:
     result: SUCCESS
-    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/159/
-    duration: 12m49s
+    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/13/
+    duration: 31m15s
     runs:
       el-5:
         result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-5,project=opscode-push-jobs-server,role=builder/159/
-        duration: 12m24s
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-5,project=opscode-push-jobs-server,role=builder/13/
+        duration: 29m59s
+        steps:
+          total: 29m59s
+          before (setup time): 1m20s
+          omnibus:
+            total: 28m14s
+            fetch:
+              total: 49s
+              Software:
+                chef: 10s
+              NullFetcher: 10s
+              GitFetcher: 11s
+              PathFetcher:
+                opscode-pushy-server: 43s
+            build:
+              total: 27m19s
+              GitCache:
+                total: 14m
+                dep-selector-libgecode: 12s
+                berkshelf: 22s
+                erlang: 14s
+              Software:
+                berkshelf: 22s
+              Builder:
+                total: 12m11s
+                opscode-pushy-server: 3m12s
+                oc-pushy-pedant: 1m6s
+                postgresql: 1m42s
+                pg-gem: 12s
+                chef: 5m22s
+              GitFetcher: 9m3s
+              Project:
+                opscode-push-jobs-server: 13m19s
+              HealthCheck: 2m52s
+              Packager::RPM: 10m20s
+          after (cleanup time): 24s
       el-6:
         result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-6,project=opscode-push-jobs-server,role=builder/159/
-        duration: 12m44s
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-6,project=opscode-push-jobs-server,role=builder/13/
+        duration: 31m8s
+        steps:
+          total: 31m8s
+          before (setup time): 7m9s
+          omnibus:
+            total: 28m54s
+            fetch:
+              total: 1m
+              Software:
+                chef: 15s
+              GitFetcher: 16s
+              NullFetcher: 15s
+              PathFetcher:
+                opscode-pushy-server: 51s
+            build:
+              total: 27m47s
+              GitCache:
+                berkshelf: 19s
+              Software:
+                berkshelf: 19s
+              Builder:
+                total: 12m20s
+                opscode-pushy-server: 6m
+                oc-pushy-pedant: 1m14s
+                postgresql: 2m
+                pg-gem: 17s
+                chef: 2m9s
+              GitFetcher: 6m25s
+              Project:
+                opscode-push-jobs-server: 13m43s
+              HealthCheck: 2m42s
+              Packager::RPM: 10m52s
+          after (cleanup time): "-4m55s"
       el-7:
         result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-7,project=opscode-push-jobs-server,role=builder/159/
-        duration: 9m14s
-      ubuntu-10.04:
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-7,project=opscode-push-jobs-server,role=builder/13/
+        duration: 19m22s
+        steps:
+          total: 19m22s
+          before (setup time): 1m13s
+          omnibus:
+            total: 17m56s
+            fetch:
+              total: 48s
+              Software: 10s
+              GitFetcher: 10s
+              PathFetcher:
+                opscode-pushy-server: 42s
+            build:
+              total: 17m3s
+              GitCache:
+                berkshelf: 23s
+              Software:
+                berkshelf: 23s
+              Builder:
+                total: 6m28s
+                opscode-pushy-server: 2m44s
+                oc-pushy-pedant: 51s
+                postgresql: 1m2s
+                chef: 1m21s
+              GitFetcher: 3m45s
+              Project:
+                opscode-push-jobs-server: 9m22s
+              HealthCheck: 57s
+              Packager::RPM: 8m17s
+          after (cleanup time): 13s
+      ubuntu-12.04:
         result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-push-jobs-server,role=builder/159/
-        duration: 10m37s
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=ubuntu-12.04,project=opscode-push-jobs-server,role=builder/13/
+        duration: 27m4s
+        steps:
+          total: 27m4s
+          before (setup time): 1m10s
+          omnibus:
+            total: 25m38s
+            fetch:
+              total: 49s
+              Software: 10s
+              GitFetcher: 10s
+              PathFetcher:
+                opscode-pushy-server: 44s
+            build:
+              total: 24m42s
+              GitCache: 15m14s
+              Software: 15m13s
+              Builder:
+                total: 14m28s
+                opscode-pushy-server: 2m53s
+                oc-pushy-pedant: 1m15s
+                postgresql: 8m3s
+                pg-gem: 14s
+                chef: 1m43s
+              GitFetcher: 11m38s
+              Project:
+                opscode-push-jobs-server: 9m28s
+              HealthCheck: 1m5s
+              Packager::DEB: 8m15s
+          after (cleanup time): 16s
   opscode-push-jobs-server-trigger-git_poll:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-trigger-git_poll/2/
-    duration: 4s
+    duration: 9s

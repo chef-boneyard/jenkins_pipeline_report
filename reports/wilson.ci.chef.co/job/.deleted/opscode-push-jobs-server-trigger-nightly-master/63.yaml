@@ -1,0 +1,243 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-trigger-nightly-master/63/
+failure_category: code
+failure_cause: 'chef-client: el-5; pedant: el-7: opscode-push-jobs-server-test'
+timestamp: 2016-02-10 08:08:00 UTC
+duration: 1h33m40s
+active_duration: 2h25m18s
+parameters: {}
+change:
+  git_remote: git@github.com:opscode/omnibus-pushy.git
+  git_commit: b65a1e0ae6e17917a0f140d06f1118ac0114b004
+  project: opscode-push-jobs-server
+  version: 2.0.0-alpha.3+20160210080810.git.18.b65a1e0
+stages:
+  opscode-push-jobs-server-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-push-jobs-server,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-push-jobs-server,role=builder/64/
+    duration: 51m50s
+  opscode-push-jobs-server-test:
+    result: FAILURE
+    failure_category: code
+    failure_cause: 'chef-client: el-5; pedant: el-7'
+    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/31/
+    duration: 28m24s
+    runs:
+      el-5:
+        result: FAILURE
+        failure_category: code
+        failure_cause: chef-client
+        failed_in:
+          step: chef-client
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-5,project=opscode-push-jobs-server,role=tester/31/
+        duration: 13m2s
+        logs:
+          consoleText:
+            2526: |
+              [2016-02-10T04:26:14-05:00] INFO: Processing execute[restart_nginx_log_service] action run (private-chef::nginx line 19)
+              [2016-02-10T04:26:14-05:00] INFO: execute[restart_nginx_log_service] ran successfully
+              [2016-02-10T04:26:14-05:00] ERROR: Running exception handlers
+              [2016-02-10T04:26:14-05:00] ERROR: Exception handlers complete
+              [2016-02-10T04:26:14-05:00] FATAL: Stacktrace dumped to /opt/opscode/embedded/cookbooks/cache/chef-stacktrace.out
+              [2016-02-10T04:26:14-05:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+              [2016-02-10T04:26:14-05:00] FATAL: Mixlib::ShellOut::ShellCommandFailed: execute[restart_postgresql_log_service] (private-chef::postgresql line 19) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '1'
+              ---- Begin output of /opt/opscode/embedded/bin/sv restart /opt/opscode/sv/postgresql/log ----
+              STDOUT: timeout: run: /opt/opscode/sv/postgresql/log: (pid 2532) 234s, got TERM
+              STDERR:
+              ---- End output of /opt/opscode/embedded/bin/sv restart /opt/opscode/sv/postgresql/log ----
+              Ran /opt/opscode/embedded/bin/sv restart /opt/opscode/sv/postgresql/log returned 1
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+            2561: |
+              Recording fingerprints
+              Recording test results
+              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+              hudson.AbortException: No test report files were found. Configuration error?
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
+                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
+                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
+                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
+                at hudson.remoting.Request$2.run(Request.java:325)
+                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
+                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                at java.lang.Thread.run(Thread.java:745)
+                at ......remote call to push-jobs-server-rhel-5-tester-efdc36(Native Method)
+                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
+                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
+                at hudson.remoting.Channel.call(Channel.java:753)
+                at hudson.FilePath.act(FilePath.java:978)
+                at hudson.FilePath.act(FilePath.java:967)
+                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
+                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
+                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
+                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
+                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
+                at hudson.model.Build$BuildExecution.post2(Build.java:183)
+                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
+                at hudson.model.Run.execute(Run.java:1766)
+                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+                at hudson.model.ResourceController.execute(ResourceController.java:98)
+                at hudson.model.Executor.run(Executor.java:374)
+              [BFA] Scanning build for known causes...
+              [BFA] No failure causes found
+        steps:
+          total: 13m2s
+          before (setup time): 8m1s
+          after (cleanup time): 4m57s
+      el-7:
+        result: FAILURE
+        failure_category: code
+        failure_cause: pedant
+        failed_in:
+          step: pedant
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-7,project=opscode-push-jobs-server,role=tester/31/
+        duration: 24m25s
+        logs:
+          consoleText:
+            29568: |
+              warning: file /opt/opscode-push-jobs-server/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/int1-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode-push-jobs-server/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode-push-jobs-server/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode-push-jobs-server/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode-push-jobs-server/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri: remove failed: No such file or directory
+            93341: |
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/int1-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri: remove failed: No such file or directory
+            102389: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Fatal: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception/.packlist: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/auto/Test/Exception: remove failed: No such file or directory
+            103335: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-File-1.44: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014/MYMETA.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Fatal-0.014: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/install.json: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/x86_64-linux-thread-multi/.meta/Test-Exception-0.43/MYMETA.json: remove failed: No such file or directory
+            103715: |
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Exception.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/site_perl/5.18.1/Test/Dir/Base.pm: remove failed: No such file or directory
+            107528: |
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File/Basename.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/File: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/Fatal.pm: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/xsubpp: remove failed: No such file or directory
+              warning: file /opt/opscode/embedded/lib/perl5/5.18.1/ExtUtils/typemap: remove failed: No such file or directory
+            119206: |
+              "{\"uri\":\"https://ip-10-194-14-133.us-west-2.compute.internal/organizations/pedant_testorg_ip-10-194-14-133_13990/clients/DONKEY\",\"public_key\":\"-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvME6//Mw+wOW8z5RZgLf\\nlezG+p8Ao0Ah6IYDB/Cas+G9BB3ZtEvL35qTYFuuFvauYvtxLmWn/pig7+kBCWwd\\nDQJFp6WRYNr7K6OvhpNAtxl2aIvZd11FQg+vTQbvFrp48FcLiWcSCaoMLlupKFqe\\nkUsNq5n8DAx3ezqECQxhuEHh/N/m8uIJsk1OBnJZi6l31pwWDKCP+rAoWaWSKIlm\\nlQkt4LHAKFeL/NecB+FfJndScU/V5R8VcfTS4Qh1BrC1NZzafGjtJQ6eOXLXNWOv\\n2w7bkTyFoCUBHgZds3omRa+R1S6PKjoHK4I9Put+pF7RGxSdpi/f0YP027qEq44O\\nUwIDAQAB\\n-----END PUBLIC KEY-----\\n\\n\",\"private_key\":\"-----BEGIN RSA PRIVATE KEY-----\\nMIIEogIBAAKCAQEAvME6//Mw+wOW8z5RZgLflezG+p8Ao0Ah6IYDB/Cas+G9BB3Z\\ntEvL35qTYFuuFvauYvtxLmWn/pig7+kBCWwdDQJFp6WRYNr7K6OvhpNAtxl2aIvZ\\nd11FQg+vTQbvFrp48FcLiWcSCaoMLlupKFqekUsNq5n8DAx3ezqECQxhuEHh/N/m\\n8uIJsk1OBnJZi6l31pwWDKCP+rAoWaWSKIlmlQkt4LHAKFeL/NecB+FfJndScU/V\\n5R8VcfTS4Qh1BrC1NZzafGjtJQ6eOXLXNWOv2w7bkTyFoCUBHgZds3omRa+R1S6P\\nKjoHK4I9Put+pF7RGxSdpi/f0YP027qEq44OUwIDAQABAoIBAA3XhcIbTW469yjj\\nWwjGEStnb7gVTPCr1VC98x7z8ARc+4V/wuVL4amGJmSclImukV9E3Snv3n/3JWYy\\nihbszLyVfBItPBoENQMgP9D4n3hN77b++nWca2XKzKozZfket5u4ZmovGs2GoNoN\\ncrw42QQCowAAjNE9YM2yntgjBk+CtM014OG1PbcTyj6mNPPhCMuWgvQ5my4CipfF\\nFt6yV/pUOdkbenQcwxTYD8yC8JCJFRS793tg0BTq4PSqd5yRIErIhTZgf1EgXxe9\\nnBqB0NIUegx5jHg/pAcUTfEG1U2ycqm8WlF7fpQxmrO4KRFhlLcorVLFwrVAWau1\\noR089lECgYEA+4i2xSFMmY96nmVGN5rZC0t/oSF7Zrfl4e8q5V8KAmA0q+ml1rRY\\nmx6BYCw8+KJhslrVjwVE9sYgWTxy3al2Ycc2kh4n1SS1mvKC1eZzuJ5EKjxOjQL2\\nKsSz+jwCbmkbqgEi+pM6llBcVc1WuzXWPEaXL8V4Go4Q3k+uLNot5jUCgYEAwBsr\\nQgOKmjMmI00zL1v80AM2GjgjmEoMnQLWytdIRxY+f8Np5dpPT2J76ZVls5FQPTwH\\nNYta8pSpOrSznnJjgjRLpkhuLHnP/8Fp40J6LO+XqAM9ZRNt4/JkjSgqW3gF+9jI\\n/n4ve/O/XwKiQFA+UobcAVl4F1jOcdfUsE0Ok2cCgYASCPRp4ABZBlOZZdOKCx1C\\n1Q/6oqbxb4AZGgfuWEkkcHd2WBNe+KFdxesq1SEuBp6Qpjinv435T61kGJR31j25\\ntwnvoh/jBXXL/VVqNtLXSunCSX6sV6kE2gO5jnHyLrEgGGLEqqfJvUtRj56HX83T\\nlpAiibsZ1FPbTMVFTAN8fQKBgA9o3oJwGEkgOznvsmBlJ5Vj/I4D3M8VeYeKt8IT\\nnMefACpteWwno98BTmFBS6Qozt/qlcV0xTnaNOzxm8rk8Bh8q2jOPJAywT2JvT2u\\nknBSU771a5JVCaaURf6Qrz0hFpHKJO1NH+/4cGxloLA5/5XNHY66J4jv5bd6EaSG\\nudmXAoGABoyPmbfxdW6BWUUYIAwU5kwlUIZJEKBLmdNPB9zRn4TVSP0AyX03CLXs\\ntH1vNkve/9RkubNjgFlaM9v99xk3icKzT+jkDgcrD58xPY+NGNhXXjLrQly2eIKn\\n8F8hhhg6mp6IyYCM3ZpfkD5t1QNbk36mc1sgshcRg/eY8Lp/gXI=\\n-----END RSA PRIVATE KEY-----\"}"
+              names: ["DONKEY"]
+              [2016-02-10T04:30:21-05:00] ERROR: [DONKEY] Received commit ad4792a421fbf57278593ff5bd46a848, but command 'echo nevereverever' is not in the whitelist!
+                    trying to run a command that is not on the whitelist fails
+              Got a 201 response to a POST to /clients for client DONKEY: (try 1)
+            119224: |
+              "{\"uri\":\"https://ip-10-194-14-133.us-west-2.compute.internal/organizations/pedant_testorg_ip-10-194-14-133_13990/clients/DONKEY\",\"public_key\":\"-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwXM5PRVlGY+DV/+CDTKP\\ncrkMgzHl1fY6q6znDZTzUWAxUzeApKCkVJQrSeLfogLa06Oo+oew3/NcVpIAlvAi\\nVq2T2A6TJCLzrA5KHpsz6R6D2fx8KwjtgItfa3V5SKwI0AoNSxuRijx4ycr526gn\\nKJ5PT7jvqwffDYj2PcuRVxoJRBwD6pRdr7QoMEifJ1YWaPelS9dTULteAKGQg+zA\\nujW/A+zD9pnvbShwQzRWw0hLaFPOMJw6S55Rv9pS/r/DQaMrhFF4W5NCCCd6ExtB\\nxsQUabuWtjdse251fwPrL3WBHM3WFAWjaPHV39DLlVDjXNRj0RQiKgdm4K6jszO4\\nPQIDAQAB\\n-----END PUBLIC KEY-----\\n\\n\",\"private_key\":\"-----BEGIN RSA PRIVATE KEY-----\\nMIIEpQIBAAKCAQEAwXM5PRVlGY+DV/+CDTKPcrkMgzHl1fY6q6znDZTzUWAxUzeA\\npKCkVJQrSeLfogLa06Oo+oew3/NcVpIAlvAiVq2T2A6TJCLzrA5KHpsz6R6D2fx8\\nKwjtgItfa3V5SKwI0AoNSxuRijx4ycr526gnKJ5PT7jvqwffDYj2PcuRVxoJRBwD\\n6pRdr7QoMEifJ1YWaPelS9dTULteAKGQg+zAujW/A+zD9pnvbShwQzRWw0hLaFPO\\nMJw6S55Rv9pS/r/DQaMrhFF4W5NCCCd6ExtBxsQUabuWtjdse251fwPrL3WBHM3W\\nFAWjaPHV39DLlVDjXNRj0RQiKgdm4K6jszO4PQIDAQABAoIBACCU5YkSN2rsrvR9\\nRkwuvdZWsHLQTqOQyyTrBCdXdPu5tdUMPhB8NfFA22GgYoYI8Q5APE+l1vaBKIY0\\nJQFHBKGQrpvvKH0nnd7WsUkiXsXeq9plGgytfkLuNm4E5R6GSx2u87o4tHSR5s4l\\n75s9YQsITtdgkI0/0COZc8/In3wJzX7RadwqnU53dWpZwBngM4NOARzsn586ITFD\\nNck4Qu1MomUghnObU8ka01KKrKA/cBx4CvVvquo74NidyV7LAiI+NMsCM7KpjBK+\\nRya2upIzaaYssHtz38d+o0k9+8QNjTB3zZ9pwMVvw79TLk9RddeT/vXOegcQXp9j\\nkcr57kECgYEA6v6GFCYI8Z4jA91I27WaXRkyEUg32DZ9xa72hUt4ACYhggJUX3JA\\nnwEu+H7v65vKqSu+4+jidhUzKAB0zt3t3P+X5mldEHAqf+5NhwzJyQ6C5CeGRR3w\\nVNja2KyuLUAPWHUQJgEsz4bOKpsDIK98tLGeHnYtKmDEoMe9d/vFlXkCgYEA0r4G\\n6k3VdxVOcVP+FUbGCRsLAdUyjkNX+nv2TX66gyDSbL39nW230J7YSuFlsjHtCu4k\\nBt2U7a7os+rwBc7NVQsR1SZLx3/cAib4YWYDg7zkvwq5RPmKC0PNTDT3gpuM6HUo\\nduYZh+B1AFBgz1hQGMA6bt/a9T7icGIWTEQrW+UCgYEAnYlaG2HQNyJ7eNi9QkWB\\noY4FiZ5viawmLwN3Uq7gWME3T2/+Xio69h2V/pMihkHf3/9qrmFuiBj4PYXoyNHw\\n52oVzCqwcBex9ieso6/ICtiGmSuCEQ3cExV5yS4iakV6xCNeWwwInWtTBS78LspW\\ngNBeHy+8YZ+T0fF1rF0F/YkCgYEApjMRNxV9JPYbsAqillsDcUjvjFl8DnAT4UqD\\n+6fXJfTrnrDTY6WU0qWDRMKvtjHjlLwsk3GKs0w+3y2Ib7wheVFKlgQmvUYb12Ku\\nffm7CdkduYCWjkwST0IAlXosPMe5/9XtvJ9JQTyGaWH6h2tJd8uaCbjncIRQhnsE\\nxM76NvUCgYEA6Cg85xdiDrAlH0dhMGpgCasAoQfnPYRvKJJ3Addpz8aAL2RqJmDP\\nE3mNRf/fy9nERxLYAp2uWmbrngwzSGQp4D4w5/oPCgBDrlCxngyyTFuYgR5h0QiL\\nDA5zrjy2kOV3YZbcwkjhXgbvdadyt6lewYD8/zDtQY20UAtWSIZuJVM=\\n-----END RSA PRIVATE KEY-----\"}"
+              names: ["DONKEY"]
+              [2016-02-10T04:30:30-05:00] ERROR: [DONKEY] Received commit ad4792a421fb763363acd94ea6c5cb57, but user 'nonexistentuser' does not exist!
+                    passing in a bad user, fails in the commit
+              Got a 201 response to a POST to /clients for client DONKEY: (try 1)
+              "{\"uri\":\"https://ip-10-194-14-133.us-west-2.compute.internal/organizations/pedant_testorg_ip-10-194-14-133_13990/clients/DONKEY\",\"public_key\":\"-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4ymfgIIeN5XU5LTPnmQf\\n7NpM34qoR+XcgeIamVZg9U/yVzcL5EBHpzpOUJaCci8jBRJ4ZvsjF/gcw6JsZt7l\\nO8Tx7MuRw0381d9kbDgS4b3C7CZGEhFlqmgoNjFGPpSAsQUHsWv4PAM7bq0xZ8rx\\n0qizzV90T4rVYIUrrlq7Z/PEUEZLjh0MxCKF8zq6Tf8gBvH3oN/1V1tDdl/t8LFr\\n9Fqpq7v6C9v/4s2sV8JzRfTo+DRlZcUyvouVohr4h6Nh5FY+88IvtxRuKN0Fte0m\\n5yISMVOb5JmFDtnQypeApIulNQ+d0rGcooRR6j/rk4pEgQC4c5zkobl4HatPjnau\\nZwIDAQAB\\n-----END PUBLIC KEY-----\\n\\n\",\"private_key\":\"-----BEGIN RSA PRIVATE KEY-----\\nMIIEpQIBAAKCAQEA4ymfgIIeN5XU5LTPnmQf7NpM34qoR+XcgeIamVZg9U/yVzcL\\n5EBHpzpOUJaCci8jBRJ4ZvsjF/gcw6JsZt7lO8Tx7MuRw0381d9kbDgS4b3C7CZG\\nEhFlqmgoNjFGPpSAsQUHsWv4PAM7bq0xZ8rx0qizzV90T4rVYIUrrlq7Z/PEUEZL\\njh0MxCKF8zq6Tf8gBvH3oN/1V1tDdl/t8LFr9Fqpq7v6C9v/4s2sV8JzRfTo+DRl\\nZcUyvouVohr4h6Nh5FY+88IvtxRuKN0Fte0m5yISMVOb5JmFDtnQypeApIulNQ+d\\n0rGcooRR6j/rk4pEgQC4c5zkobl4HatPjnauZwIDAQABAoIBADFINGxizj9s6BT+\\nDRTlz+9IpOjSYhPHEIG1FeQyUzKlN4QoUxIfx+vFwHvHS2GOTGCrUye0UDbBAyyG\\nLlJbBQxke7/Noj/myXV004qO17nVu1YUL5t33sCLfD3VjtHA0fKVjse1DtOmN9yZ\\nAmDsLG5xXyCtFsSy7/vSqFlZIdM5LJ2ztyOSEBwGuSuvP5qTyh8huldwwj/DzlJ8\\nqrs1Vrd2kR70K1B+FrwJPQ23tON04dyn/Scu9nINiGlRRuQpIfq0gPbwdgt89QAm\\nHB3ECrLAuy/2y0K0RMITjncvCqDvL4wKhZnnq0RX2302dTdY/Xrzs/gFDi1U+4Bj\\ngcmWU2ECgYEA/FtI0bAGvdMpJVYXlHCkScVmigh4lG1ItaMaPt39j21gNDeALWid\\n7bRT9z9m6V4vJR1iDZX4lD5vPTWGJ2g5cG3ICeHH/FADUz3467onCnKtctZuh7ZE\\nJJICpdKxxSpUZwl68nTYoQulgIGdLw3APdjPf72vAuF/nG2llz1OrckCgYEA5nE4\\nlyg2JceL/csLGwdRdim1UWn3WtrpNlBkPCpJz7FpbuiiB2UruDBGxMdR4H15HE4q\\npQiWCJsMD2pIQSBHFRSiPDXatbCwzcNCX2oSX5m8pRqwKDZDq1kBExR2dnICOfiN\\nZtSfvZ1eOhKSMyU0bDVL/zTibUkLtqTXQ1Wn0q8CgYEA0v9QJ2LSgCzqHjmZhZeZ\\nBcVzMr5ac1/ch2JUM3RQ6Xc+FOrC1TS/t1wrSHNOjJkfOh0TOuDF8s0xHTB/druC\\nKyrfMsQA/km4PgV290GyGt4/f+EikX4oA5vBcvxzfrMh1vTqQ4bHCgA+5O96iTkq\\nH4wEEn56siHxHM3gwk+UVWECgYEAkvI58vHabYbstx8F6utkv+Pi0pKvAAm+Uzs6\\nX79bqAxqviWsROj30xE933d2t59rXmhd+zUZb01niGDuyFDL4x5wQdLZr6iHZf6Q\\nUYWzR7EiQWpeUJYh2p77923CCM+0qcDccmk9n8086+0xu1mLL0FhP9E6XhQJWyOM\\nfUyeotMCgYEAnIa5XTkvlwxSS4mdeLMREe9g5u9xoiWqaac9iB38su0O9hweV7O9\\n6avIWYantPw439H4XrdQvGk/wmJSFeVnU8XnoDjB/8B+WAGdJHueRgM//DV+CoTo\\nCJckmMvHXz+IUwSVYQ05OjUsoq+DCnARJDxErVj+7dDEHMz4IiRHXMw=\\n-----END RSA PRIVATE KEY-----\"}"
+              names: ["DONKEY"]
+              [2016-02-10T04:30:32-05:00] ERROR: [DONKEY] Received commit ad4792a421fb0a2f73fbd9ca61d7f1f3, but dir '/nonexistentdir' does not exist!
+                    passing in a bad directory, fails in the commit
+              Got a 201 response to a POST to /clients for client DONKEY: (try 1)
+            120061: |
+              "{\"uri\":\"https://ip-10-194-14-133.us-west-2.compute.internal/organizations/pedant_testorg_ip-10-194-14-133_13990/clients/DONKEY\",\"public_key\":\"-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwrrHdzrDUMBgLLjyZVWo\\n2hM8yM2yPm8/u8QkthkE2QJu9BfzrgtquQpem0qgZDDRu5j1OhlZO3ULWR87SGm6\\npdAmjekU9hQkybGTwPnuVtrVV48RcJQ5dfrMyjECAnTfPFSLUGMgB85zKmL+qFxN\\neTJ6OHL4rpVLDNNqTSwasm5joDPMM8vLj6HIhroDZjxhAxTxOlbv5FI/GY1yNZaY\\n0woERgrYvGG4BZKcLA+vJ0JJQONzmsiIKJfRfazvCEvpdYazR48Yi7wgqrWSFQNO\\n44yJwAQ9oLkHRMOfuK4Y4VZmjZC0KMRS+gG68iqIOoSg09klhgDXmuQSRFQfl56u\\n3QIDAQAB\\n-----END PUBLIC KEY-----\\n\\n\",\"private_key\":\"-----BEGIN RSA PRIVATE KEY-----\\nMIIEowIBAAKCAQEAwrrHdzrDUMBgLLjyZVWo2hM8yM2yPm8/u8QkthkE2QJu9Bfz\\nrgtquQpem0qgZDDRu5j1OhlZO3ULWR87SGm6pdAmjekU9hQkybGTwPnuVtrVV48R\\ncJQ5dfrMyjECAnTfPFSLUGMgB85zKmL+qFxNeTJ6OHL4rpVLDNNqTSwasm5joDPM\\nM8vLj6HIhroDZjxhAxTxOlbv5FI/GY1yNZaY0woERgrYvGG4BZKcLA+vJ0JJQONz\\nmsiIKJfRfazvCEvpdYazR48Yi7wgqrWSFQNO44yJwAQ9oLkHRMOfuK4Y4VZmjZC0\\nKMRS+gG68iqIOoSg09klhgDXmuQSRFQfl56u3QIDAQABAoIBAQCFWsYY18xEM8pp\\nNisBzJy642vAFGXZrfQWkWeWsSGJv8neLbz6VuU6XWiWro+SrYAkGcbuh8d9GVWx\\nLds6ZvWkchzFGHb7YqYi3hJSmJZpMqnhsZ9+2nNTYXL3kIJQzlrGhRt27LtVvUNP\\nJsZA5B1GP5RFri6x2Jmx6eKlgOuzfwUuoES5gmqweIRWT2vu8812LFDbmP9JYzja\\ngu9J6V0kQMjwTLoeORgvOth/UgWfBSoDkEoTrusqmrHadLN43BxB8roGomUJXUAP\\nzjyXsfwDWPsCMOqKAnY/7zdlxmhjFRASQsEzFobg+g/upQ/5D0cgVrLR4UQ9mka8\\n6ATiqg09AoGBAO0CmuaTk+nY1Jn78E+4LQQqMxGcZdInQ95dZnVfKyaGRzg/XfqR\\n4yQ/omaJJHdxKDjjrDd28eiPEcWSmN8VpiCvLwhdCZ9vLYZqtlBTUwfVC7bj3VMM\\n1tH9yd/aPnM6mCQWPC3jfm1bWkbx/GEqu2a1Gm2+2PKV7EyNXtrd2i7TAoGBANJU\\n8XRxdNDsFjpcnCMcUEhuzRUUrqphELcSYtuRMsKV3/dLwgtXfHVwB9ZA7WQjq6+n\\noj5WD9dBjshNcifK/vcYrexbEGajRCEI1/uUvOzIn7bgE6fRnKzaYurdkISlNkO/\\naBSuvbWG1DZ03dHsaJhP3lzUnGud5lsswgZwqP2PAoGAV6MT9dhx5BEaI8oFxOR8\\nOMMF2Sg0ei2sqcdtgE7tXLRgF0tPC7zv+VJSUYm6YzQDRG3jGysvLefhEWYwgqS1\\npfZA9N26Fir88Wv599+nnwjG6Rx+lRv1PvaRs+U2HFN5ODbEj89Dy1nxGrSVtrQf\\nUU379MKR47lOA8xuW42XBKMCgYBA0CITcr6/fnCfDVijzR7EIziZDWWBZSXEdCr4\\nY/bTVWHNj4+89PmKKrqPgDRmzkMifrKVKOn6t93qxUqvDnOg6v71PV6BckAVOeds\\nQ/ovsObecJA9/26bKTSgESRua4acO8gzz2DwJhsQqNSN0p6siLgJvQ5ybxbD87fa\\nSi8Y6wKBgADV8CC1z9N7878eICC1DhM7yoDG4zwKLMXGrRmppSu6nQewtcmSl1Wt\\nSAOBaBvpTl54z7aXHAZTczqxTSOuyflhhtQyOORgxMQC3aH8lNUA6AgCNT1P+w6D\\ngOQr4ZDfJ4eRDNMBpRYip/be+PvvkIohtGZ/fm1kXguPUbjieUsq\\n-----END RSA PRIVATE KEY-----\"}"
+              names: ["DONKEY"]
+              [2016-02-10T04:34:45-05:00] ERROR: [DONKEY] Received commit ad4792a421fb1e5976a73488d6d88b86, but command 'bad command' is not in the whitelist!
+              {:job_id=>"ad4792a421fb1e5976a73488d6d88b86"}
+                    the events should be: start,quorum_vote(failure),job_complete(quorum_failed)
+            120407: |
+              Randomized with seed 12339
+
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 24m25s
+          before (setup time): 6m16s
+          chef-client private-chef::default: 3m38s
+          chef-client opscode-pushy-server::default: 15s
+          after (cleanup time): 10m10s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=el-6,project=opscode-push-jobs-server,role=tester/31/
+        duration: 24m7s
+        steps:
+          total: 24m7s
+          before (setup time): 7m35s
+          chef-client private-chef::default: 3m56s
+          chef-client opscode-pushy-server::default: 21s
+          after (cleanup time): 8m7s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-push-jobs-server,role=tester/31/
+        duration: 22m44s
+        steps:
+          total: 22m44s
+          before (setup time): 5m29s
+          chef-client private-chef::default: 2m48s
+          chef-client opscode-pushy-server::default: 14s
+          after (cleanup time): 10m3s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-12.04,project=opscode-push-jobs-server,role=tester/31/
+        duration: 24m24s
+        steps:
+          total: 24m24s
+          before (setup time): 6m29s
+          chef-client private-chef::default: 3m22s
+          chef-client opscode-pushy-server::default: 17s
+          after (cleanup time): 10m9s
+      ubuntu-14.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-test/architecture=x86_64,platform=ubuntu-14.04,project=opscode-push-jobs-server,role=tester/31/
+        duration: 28m23s
+        steps:
+          total: 28m23s
+          before (setup time): 5m15s
+          chef-client private-chef::default: 8m43s
+          chef-client opscode-pushy-server::default: 16s
+          after (cleanup time): 10m2s
+  opscode-push-jobs-server-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/64/
+    duration: 1h4m59s
+    runs:
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-5,project=opscode-push-jobs-server,role=builder/64/
+        duration: 1h18s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-6,project=opscode-push-jobs-server,role=builder/64/
+        duration: 1h4m56s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=el-7,project=opscode-push-jobs-server,role=builder/64/
+        duration: 37m26s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-push-jobs-server,role=builder/64/
+        duration: 51m50s
+  opscode-push-jobs-server-trigger-nightly-master:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-push-jobs-server-trigger-nightly-master/63/
+    duration: 4s
+successful_logs_analyzed: false

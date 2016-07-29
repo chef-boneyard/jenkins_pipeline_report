@@ -8,7 +8,7 @@ require_relative "report/report_cache"
 module JenkinsPipelineReport
   module Cli
     def self.options
-      @options ||= { identity_file: "~/.ssh/id_rsa" }
+      @options ||= { identity_file: "~/.ssh/id_rsa", analyze_successful_logs: true }
     end
 
     def self.logger
@@ -87,7 +87,7 @@ module JenkinsPipelineReport
             options[:where] = Cli::Query.parse(v)
           end
         end
-        opts.on("--[no-]analyze-successful-logs", "Whether to analyze the logs of successful runs (default: false).") do |v|
+        opts.on("--[no-]analyze-successful-logs", "Whether to analyze the logs of successful runs (default: true).") do |v|
           options[:analyze_successful_logs] = v
         end
         opts.on("--cache-directory=PATH", "The cache directory for Jenkins data. Defaults to ./.jenkins_cache.") do |v|
