@@ -76,7 +76,7 @@ module JenkinsPipelineReport
     report_end_time = DateTime.now
     report_end_month = DateTime.new(report_end_time.year, report_end_time.month)
 
-    puts "# Job,Month,RedTimeDays,AverageBuildTimeSeconds,JobUrl\n"
+    puts "# Job,Month,RedTimeDays,AverageBuildTimeMinutes,JobUrl\n"
 
     builds = Cli.builds(*ARGV)
     builds.map! do |build|
@@ -105,7 +105,7 @@ module JenkinsPipelineReport
           else
             average_duration = 0.0
           end
-          puts "#{job.name},#{month.min.strftime("%Y-%m")},#{sprintf("%.2f", red_time)},#{average_duration},#{job.url}\n"
+          puts "#{job.name},#{month.min.strftime("%Y-%m")},#{sprintf("%.2f", red_time)},#{sprintf("%.2f", average_duration / 60.0)},#{job.url}\n"
         end
       end
     end
