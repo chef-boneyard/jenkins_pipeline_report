@@ -11,7 +11,7 @@ parameters:
   GIT_REF: v0.15.17
   EXPIRE_CACHE: false
 change:
-  git_remote: git://github.com/chef/chef-dk.git
+  git_remote: https://github.com/chef/chef-dk.git
   git_commit: 73db521cbde9f641cfd3ae0af5b4bfbc52138be9
   project: chefdk
   version: 0.15.17
@@ -29,36 +29,10 @@ stages:
         failure_cause: unknown
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/228/
         duration: 10m7s
-        logs:
-          consoleText:
-            479: |
-              Running verification for component 'chef-sugar'
-              Running verification for component 'knife-supermarket'
-              ............................................................................C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6-universal-mingw32/lib/mixlib/shellout/windows/core_ext.rb:347:in `create': The directory name is invalid. - CreateProcessW (SystemCallError)
-                from C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6-universal-mingw32/lib/mixlib/shellout/windows.rb:80:in `run_command'
-                from C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.6-universal-mingw32/lib/mixlib/shellout.rb:259:in `run_command'
-            492: |2
-                from C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.15.17/lib/chef-dk/component_test.rb:99:in `run_smoke_test'
-                from C:/opscode/chefdk/embedded/lib/ruby/gems/2.1.0/gems/chef-dk-0.15.17/lib/chef-dk/command/verify.rb:580:in `block (2 levels) in invoke_tests'
-              Build step 'Invoke XShell command' marked build as failure
-              Archiving artifacts
-              Recording fingerprints
       acceptance:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/228/
         duration: 1h1m24s
-        steps:
-          total: 1h1m24s
-          before (setup time): 20m48s
-          CHEF-ACCEPTANCE:
-            total: 59m28s
-            TOP-COOKBOOKS::PROVISION: 49m31s
-            TOP-COOKBOOKS::VERIFY: 40s
-            TOP-COOKBOOKS::DESTROY: 45s
-            TRIVIAL::PROVISION: 6m58s
-            TRIVIAL::VERIFY: 13s
-            TRIVIAL::DESTROY: 10s
-          after (cleanup time): "-18m52s"
         chef_acceptance_timing:
         - top-cookbooks:
             provision: 46m31s
@@ -123,174 +97,26 @@ stages:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/539/
         duration: 22m59s
-        steps:
-          total: 22m59s
-          before (setup time): "-4m45s"
-          omnibus:
-            total: 17m42s
-            fetch: 17s
-            build:
-              total: 17m23s
-              GitCache:
-                total: 11m44s
-                rust: 18s
-                git-windows: 32s
-                chef-dk 2: 55s
-                ruby-windows-devkit: 16s
-              Software: 11m41s
-              Builder:
-                total: 9m51s
-                chef-dk: 3m29s
-                chef-dk-appbundle: 3m47s
-                ruby-windows-devkit: 10s
-              GitFetcher: 29s
-              Project:
-                chefdk: 5m38s
-              Licensing: 19s
-              Packager::MSI: 5m19s
-          after (cleanup time): 10m3s
       debian-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/539/
         duration: 22m47s
-        steps:
-          total: 22m47s
-          before (setup time): 1m13s
-          omnibus:
-            total: 21m25s
-            fetch:
-              PathFetcher:
-                chef-dk: 15s
-            build:
-              total: 21m1s
-              GitCache:
-                total: 13m48s
-                rust: 10s
-                chef-dk 2: 11s
-                gem-permissions: 11s
-              Software: 13m47s
-              Builder:
-                total: 12m54s
-                chef-dk: 3m19s
-                chef-dk-appbundle: 8m41s
-              GitFetcher: 15s
-              Project:
-                chefdk: 7m13s
-              Licensing: 16s
-              HealthCheck: 49s
-              Packager::DEB: 6m8s
       el-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/539/
         duration: 27m51s
-        steps:
-          total: 27m51s
-          before (setup time): 3m9s
-          omnibus:
-            total: 26m7s
-            fetch:
-              PathFetcher:
-                chef-dk: 16s
-            build:
-              total: 25m41s
-              GitCache:
-                total: 16m12s
-                rust: 30s
-                chef-dk 2: 15s
-                gem-permissions: 15s
-              Software: 16m11s
-              Builder:
-                total: 14m31s
-                chef-dk: 3m43s
-                chef-dk-appbundle: 9m34s
-              GitFetcher: 21s
-              Project:
-                chefdk: 9m29s
-              Licensing: 17s
-              HealthCheck: 57s
-              Packager::RPM: 8m14s
-          after (cleanup time): "-1m25s"
       el-7:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/539/
         duration: 20m7s
-        steps:
-          total: 20m7s
-          before (setup time): 1m14s
-          omnibus:
-            total: 18m40s
-            fetch:
-              PathFetcher:
-                chef-dk: 13s
-            build:
-              total: 18m20s
-              GitCache:
-                total: 11m23s
-                rust: 34s
-                chef-dk-gem-dep-selector-libgecode: 13s
-              Software: 11m19s
-              Builder:
-                total: 9m44s
-                chef-dk: 2m28s
-                chef-dk-appbundle: 6m45s
-              Project:
-                chefdk: 6m57s
-              Licensing: 19s
-              HealthCheck: 22s
-              Packager::RPM: 6m15s
-          after (cleanup time): 13s
       mac_os_x-10.9:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/539/
         duration: 11m10s
-        steps:
-          total: 11m10s
-          before (setup time): 1m16s
-          omnibus:
-            build:
-              total: 9m15s
-              GitCache:
-                total: 7m17s
-                chef-dk 2: 21s
-                gem-permissions: 17s
-              Software: 7m17s
-              Builder:
-                total: 6m44s
-                chef-dk: 1m53s
-                chef-dk-appbundle: 3m48s
-              GitFetcher: 12s
-              Project:
-                chefdk: 1m58s
-              Licensing: 15s
-              Packager::PKG: 1m11s
-              Compressor::DMG: 31s
-          after (cleanup time): 30s
       ubuntu-12.04:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/539/
         duration: 21m23s
-        steps:
-          total: 21m23s
-          before (setup time): 1m8s
-          omnibus:
-            total: 20m9s
-            fetch:
-              PathFetcher:
-                chef-dk: 16s
-            build:
-              total: 19m44s
-              GitCache:
-                chef-dk-gem-ffi: 12s
-              Software: 12m35s
-              Builder:
-                total: 11m47s
-                chef-dk: 3m
-                chef-dk-appbundle: 8m14s
-              Project:
-                chefdk: 7m8s
-              Licensing: 17s
-              HealthCheck: 25s
-              Packager::DEB: 6m26s
   chefdk-trigger-release:
     result: SUCCESS
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/92/

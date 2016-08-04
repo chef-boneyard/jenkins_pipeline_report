@@ -1,0 +1,2197 @@
+---
+result: FAILURE
+failure_category: code
+failure_cause: chef_acceptance[top-cookbooks::provision]
+failed_in:
+  chef_acceptance:
+  - top-cookbooks::provision
+  step: CHEF-ACCEPTANCE
+url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/257/
+duration: 32m40s
+logs:
+  consoleText:
+    8750: |2
+
+                               Running handlers:
+                               [2016-07-07T22:44:50+00:00] ERROR: Running exception handlers
+                               Running handlers complete
+                               [2016-07-07T22:44:50+00:00] ERROR: Exception handlers complete
+                               Chef Client failed. 0 resources updated in 43 seconds
+                               [2016-07-07T22:44:50+00:00] FATAL: Stacktrace dumped to C:/Users/ADMINI~1/AppData/Local/Temp/kitchen/cache/chef-stacktrace.out
+                               [2016-07-07T22:44:50+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                               [2016-07-07T22:44:50+00:00] FATAL: Chef::Exceptions::RunFailedWrappingError: Found 1 errors, they are stored in the backtrace
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:51 +0000]                   D      Cleaning up local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:51 +0000]                   >>>>>> Converge failed on instance <iis-windows-2012r2>.
+    8837: |
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:51 +0000]                   D      [WinRM] remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA closed
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:51 +0000]
+              ================================================================================
+              Error executing action `run` on resource 'execute[bundle exec kitchen converge  -c -l debug]'
+              ================================================================================
+
+              Mixlib::ShellOut::ShellCommandFailed
+              ------------------------------------
+              Expected process to exit with [0], but received '10'
+              ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+              STDOUT: -----> Starting Kitchen (v1.9.2)
+              D      winrm requested, loading winrm gem (["~> 1.6"])
+              D      winrm is loaded.
+              D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+              D      winrm-fs is loaded.
+              -----> Converging <iis-windows-2012r2>...
+                     Preparing files for transfer
+              D      Creating local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+                     Preparing dna.json
+              D      Creating dna.json from {:chef_acceptance=>"true", :use_system_chef=>"true", :run_list=>["recipe[iis::default]"]}
+                     Berksfile, Cheffile, cookbooks/, or metadata.rb not found so Chef will run with effectively no cookbooks. Is this intended?
+                     Removing non-cookbook files before transfer
+                     Preparing validation.pem
+              D      Using a dummy validation.pem
+                     Preparing client.rb
+              D      Creating client.rb from {:node_name=>"iis-windows-2012r2", :checksum_path=>"\#{ENV['TEMP']}\\kitchen\\checksums", :file_cache_path=>"\#{ENV['TEMP']}\\kitchen\\cache", :file_backup_path=>"\#{ENV['TEMP']}\\kitchen\\backup", :cookbook_path=>["\#{ENV['TEMP']}\\kitchen\\cookbooks", "\#{ENV['TEMP']}\\kitchen\\site-cookbooks"], :data_bag_path=>"\#{ENV['TEMP']}\\kitchen\\data_bags", :environment_path=>"\#{ENV['TEMP']}\\kitchen\\environments", :node_path=>"\#{ENV['TEMP']}\\kitchen\\nodes", :role_path=>"\#{ENV['TEMP']}\\kitchen\\roles", :client_path=>"\#{ENV['TEMP']}\\kitchen\\clients", :user_path=>"\#{ENV['TEMP']}\\kitchen\\users", :validation_key=>"\#{ENV['TEMP']}\\kitchen\\validation.pem", :client_key=>"\#{ENV['TEMP']}\\kitchen\\client.pem", :chef_server_url=>"http://127.0.0.1:8889", :encrypted_data_bag_secret=>"\#{ENV['TEMP']}\\kitchen\\encrypted_data_bag_secret", :audit_mode=>":enabled", :named_run_list=>{}}
+              D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> (new-module -name Omnitruck -scriptblock {
+              function Get-PlatformVersion {
+                switch -regex ((get-wmiobject win32_operatingsystem).version) {
+                  '10\.0\.\d+' {$platform_version = '2012r2'}
+                  '6\.3\.\d+'  {$platform_version = '2012r2'}
+                  '6\.2\.\d+'  {$platform_version = '2012'}
+                  '6\.1\.\d+'  {$platform_version = '2008r2'}
+                  '6\.0\.\d+'  {$platform_version = '2008'}
+                }
+                return $platform_version
+              }
+
+              function Get-PlatformArchitecture {
+                if ((get-wmiobject win32_operatingsystem).osarchitecture -like '64-bit') {
+                  $architecture = 'x86_64'
+                } else {
+                  $architecture = 'i386'
+                }
+                return $architecture
+              }
+
+              function New-Uri {
+                param ($baseuri, $newuri)
+
+                try {
+                new-object System.Uri $baseuri, $newuri
+                }
+                catch [System.Management.Automation.MethodInvocationException]{
+                  Write-Error "$($_.exception.message)"
+                  throw $_.exception
+                }
+              }
+
+              function Get-WebContent {
+                param ($uri, $filepath)
+                $proxy = New-Object -TypeName System.Net.WebProxy
+                $wc = new-object System.Net.WebClient
+                $proxy.Address = $env:http_proxy
+                $wc.Proxy = $proxy
+
+                try {
+                  if ([string]::IsNullOrEmpty($filepath)) {
+
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:51 +0000]           $wc.downloadstring($uri)
+    9383: |2
+
+                     Running handlers:
+                     [2016-07-07T22:44:50+00:00] ERROR:
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:51 +0000] Running exception handlers
+                     Running handlers complete
+                     [2016-07-07T22:44:50+00:00] ERROR: Exception handlers complete
+                     Chef Client failed. 0 resources updated in 43 seconds
+                     [2016-07-07T22:44:50+00:00] FATAL: Stacktrace dumped to C:/Users/ADMINI~1/AppData/Local/Temp/kitchen/cache/chef-stacktrace.out
+                     [2016-07-07T22:44:50+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                     [2016-07-07T22:44:50+00:00] FATAL: Chef::Exceptions::RunFailedWrappingError: Found 1 errors, they are stored in the backtrace
+              D      Cleaning up local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+              D      Converge failed on instance <iis-windows-2012r2>.
+    10067: |2
+
+                   Running handlers:
+                   [2016-07-07T22:44:50+00:00] ERROR: Running exception handlers
+                   Running handlers complete
+                   [2016-07-07T22:44:50+00:00] ERROR: Exception handlers complete
+                   Chef Client failed. 0 resources updated in 43 seconds
+                   [2016-07-07T22:44:50+00:00] FATAL: Stacktrace dumped to C:/Users/ADMINI~1/AppData/Local/Temp/kitchen/cache/chef-stacktrace.out
+                   [2016-07-07T22:44:50+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                   [2016-07-07T22:44:50+00:00] FATAL: Chef::Exceptions::RunFailedWrappingError: Found 1 errors, they are stored in the backtrace
+            D      Cleaning up local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+            D      Converge failed on instance <iis-windows-2012r2>.
+    10176: |2
+
+
+          ================================================================================
+          Error executing action `run` on resource 'top_cookbooks[converge]'
+          ================================================================================
+
+          Mixlib::ShellOut::ShellCommandFailed
+          ------------------------------------
+          cookbook_kitchen[converge iis] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb line 26) had an error: Mixlib::ShellOut::ShellCommandFailed: execute[bundle exec kitchen converge  -c -l debug] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '10'
+          ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+          STDOUT: -----> Starting Kitchen (v1.9.2)
+          D      winrm requested, loading winrm gem (["~> 1.6"])
+          D      winrm is loaded.
+          D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+          D      winrm-fs is loaded.
+          -----> Converging <iis-windows-2012r2>...
+                 Preparing files for transfer
+          D      Creating local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+                 Preparing dna.json
+          D      Creating dna.json from {:chef_acceptance=>"true", :use_system_chef=>"true", :run_list=>["recipe[iis::default]"]}
+                 Berksfile, Cheffile, cookbooks/, or metadata.rb not found so Chef will run with effectively no cookbooks. Is this intended?
+                 Removing non-cookbook files before transfer
+                 Preparing validation.pem
+          D      Using a dummy validation.pem
+                 Preparing client.rb
+          D      Creating client.rb from {:node_name=>"iis-windows-2012r2", :checksum_path=>"\#{ENV['TEMP']}\\kitchen\\checksums", :file_cache_path=>"\#{ENV['TEMP']}\\kitchen\\cache", :file_backup_path=>"\#{ENV['TEMP']}\\kitchen\\backup", :cookbook_path=>["\#{ENV['TEMP']}\\kitchen\\cookbooks", "\#{ENV['TEMP']}\\kitchen\\site-cookbooks"], :data_bag_path=>"\#{ENV['TEMP']}\\kitchen\\data_bags", :environment_path=>"\#{ENV['TEMP']}\\kitchen\\environments", :node_path=>"\#{ENV['TEMP']}\\kitchen\\nodes", :role_path=>"\#{ENV['TEMP']}\\kitchen\\roles", :client_path=>"\#{ENV['TEMP']}\\kitchen\\clients", :user_path=>"\#{ENV['TEMP']}\\kitchen\\users", :validation_key=>"\#{ENV['TEMP']}\\kitchen\\validation.pem", :client_key=>"\#{ENV['TEMP']}\\kitchen\\client.pem", :chef_server_url=>"http://127.0.0.1:8889", :encrypted_data_bag_secret=>"\#{ENV['TEMP']}\\kitchen\\encrypted_data_bag_secret", :audit_mode=>":enabled", :named_run_list=>{}}
+          D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> (new-module -name Omnitruck -scriptblock {
+          function Get-PlatformVersion {
+            switch -regex ((get-wmiobject win32_operatingsystem).version) {
+              '10\.0\.\d+' {$platform_version = '2012r2'}
+              '6\.3\.\d+'  {$platform_version = '2012r2'}
+              '6\.2\.\d+'  {$platform_version = '2012'}
+              '6\.1\.\d+'  {$platform_version = '2008r2'}
+              '6\.0\.\d+'  {$platform_version = '2008'}
+            }
+            return $platform_version
+          }
+
+          function Get-PlatformArchitecture {
+            if ((get-wmiobject win32_operatingsystem).osarchitecture -like '64-bit') {
+              $architecture =
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:51 +0000]  'x86_64'
+            } else {
+    10723: |2
+
+                 Running handlers:
+                 [2016-07-07T22:44:50+00:00] ERROR: Running exception handlers
+                 Running handlers complete
+                 [2016-07-07T22:44:50+00:00] ERROR: Exception handlers complete
+                 Chef Client failed. 0 resources updated in 43 seconds
+                 [2016-07-07T22:44:50+00:00] FATAL: Stacktrace dumped to C:/Users/ADMINI~1/AppData/Local/Temp/kitchen/cache/chef-stacktrace.out
+                 [2016-07-07T22:44:50+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                 [2016-07-07T22:44:50+00:00] FATAL: Chef::Exceptions::RunFailedWrappingError: Found 1 errors, they are stored in the backtrace
+          D      Cleaning u
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:51 +0000] p local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+    10834: |
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000] Running handlers:
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000]
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000] [2016-07-07T22:44:52+00:00] ERROR: Running exception handlers
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000] Running handlers complete
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000] [2016-07-07T22:44:52+00:00] ERROR: Exception handlers complete
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000] Chef Client failed. 16 resources updated in 29 minutes 55 seconds
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000]
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000] [2016-07-07T22:44:52+00:00] ERROR: Failed to post audit report to server. Saving report to /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/failed-audit-data.json
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000] [2016-07-07T22:44:52+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/chef-stacktrace.out
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000] [2016-07-07T22:44:52+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:52 +0000] [2016-07-07T22:44:52+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+      TOP-COOKBOOKS::PROVISION::[2016-07-07 22:44:53 +0000] [2016-07-07T22:44:53+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+      CHEF-ACCEPTANCE::[2016-07-07 22:44:53 +0000] Encountered an error running the recipe provision: Expected process to exit with [0], but received '1'
+      ---- Begin output of chef-client -z -c /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+    18667: |2
+
+                               Running handlers:
+                               [2016-07-07T22:44:50+00:00] ERROR: Running exception handlers
+                               Running handlers complete
+                               [2016-07-07T22:44:50+00:00] ERROR: Exception handlers complete
+                               Chef Client failed. 0 resources updated in 43 seconds
+                               [2016-07-07T22:44:50+00:00] FATAL: Stacktrace dumped to C:/Users/ADMINI~1/AppData/Local/Temp/kitchen/cache/chef-stacktrace.out
+                               [2016-07-07T22:44:50+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                               [2016-07-07T22:44:50+00:00] FATAL: Chef::Exceptions::RunFailedWrappingError: Found 1 errors, they are stored in the backtrace
+                        D      Cleaning up local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+                        >>>>>> Converge failed on instance <iis-windows-2012r2>.
+    18737: |2
+                        D      [WinRM] remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA closed
+
+              ================================================================================
+              Error executing action `run` on resource 'execute[bundle exec kitchen converge  -c -l debug]'
+              ================================================================================
+
+              Mixlib::ShellOut::ShellCommandFailed
+              ------------------------------------
+              Expected process to exit with [0], but received '10'
+              ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+              STDOUT: -----> Starting Kitchen (v1.9.2)
+              D      winrm requested, loading winrm gem (["~> 1.6"])
+              D      winrm is loaded.
+              D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+              D      winrm-fs is loaded.
+              -----> Converging <iis-windows-2012r2>...
+                     Preparing files for transfer
+              D      Creating local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+                     Preparing dna.json
+              D      Creating dna.json from {:chef_acceptance=>"true", :use_system_chef=>"true", :run_list=>["recipe[iis::default]"]}
+                     Berksfile, Cheffile, cookbooks/, or metadata.rb not found so Chef will run with effectively no cookbooks. Is this intended?
+                     Removing non-cookbook files before transfer
+                     Preparing validation.pem
+              D      Using a dummy validation.pem
+                     Preparing client.rb
+              D      Creating client.rb from {:node_name=>"iis-windows-2012r2", :checksum_path=>"\#{ENV['TEMP']}\\kitchen\\checksums", :file_cache_path=>"\#{ENV['TEMP']}\\kitchen\\cache", :file_backup_path=>"\#{ENV['TEMP']}\\kitchen\\backup", :cookbook_path=>["\#{ENV['TEMP']}\\kitchen\\cookbooks", "\#{ENV['TEMP']}\\kitchen\\site-cookbooks"], :data_bag_path=>"\#{ENV['TEMP']}\\kitchen\\data_bags", :environment_path=>"\#{ENV['TEMP']}\\kitchen\\environments", :node_path=>"\#{ENV['TEMP']}\\kitchen\\nodes", :role_path=>"\#{ENV['TEMP']}\\kitchen\\roles", :client_path=>"\#{ENV['TEMP']}\\kitchen\\clients", :user_path=>"\#{ENV['TEMP']}\\kitchen\\users", :validation_key=>"\#{ENV['TEMP']}\\kitchen\\validation.pem", :client_key=>"\#{ENV['TEMP']}\\kitchen\\client.pem", :chef_server_url=>"http://127.0.0.1:8889", :encrypted_data_bag_secret=>"\#{ENV['TEMP']}\\kitchen\\encrypted_data_bag_secret", :audit_mode=>":enabled", :named_run_list=>{}}
+              D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> (new-module -name Omnitruck -scriptblock {
+              function Get-PlatformVersion {
+                switch -regex ((get-wmiobject win32_operatingsystem).version) {
+                  '10\.0\.\d+' {$platform_version = '2012r2'}
+                  '6\.3\.\d+'  {$platform_version = '2012r2'}
+                  '6\.2\.\d+'  {$platform_version = '2012'}
+                  '6\.1\.\d+'  {$platform_version = '2008r2'}
+                  '6\.0\.\d+'  {$platform_version = '2008'}
+                }
+                return $platform_version
+              }
+
+              function Get-PlatformArchitecture {
+                if ((get-wmiobject win32_operatingsystem).osarchitecture -like '64-bit') {
+                  $architecture = 'x86_64'
+                } else {
+                  $architecture = 'i386'
+                }
+                return $architecture
+              }
+
+              function New-Uri {
+                param ($baseuri, $newuri)
+
+                try {
+                new-object System.Uri $baseuri, $newuri
+                }
+                catch [System.Management.Automation.MethodInvocationException]{
+                  Write-Error "$($_.exception.message)"
+                  throw $_.exception
+                }
+              }
+
+              function Get-WebContent {
+                param ($uri, $filepath)
+                $proxy = New-Object -TypeName System.Net.WebProxy
+                $wc = new-object System.Net.WebClient
+                $proxy.Address = $env:http_proxy
+                $wc.Proxy = $proxy
+
+                try {
+                  if ([string]::IsNullOrEmpty($filepath)) {
+                    $wc.downloadstring($uri)
+                  }
+                  else {
+                    $wc.downloadfile($uri, $filepath)
+                  }
+                }
+                catch {
+                  $exception = $_.Exception
+                  Write-Host "There was an error: "
+                  do {
+                    Write-Host "`t$($exception.message)"
+                    $exception = $exception.innerexception
+                  } while ($exception)
+                  throw "Failed to download from $uri."
+                }
+              }
+
+              function Test-ProjectPackage {
+                [cmdletbinding()]
+                param ($Path, $Algorithm = 'SHA256', $Hash)
+
+                if (-not (get-command get-filehash))   {
+                  function disposable($o){($o -is [IDisposable]) -and (($o | get-member | foreach-object {$_.name}) -contains 'Dispose')}
+                  function use($obj, [scriptblock]$sb){try {& $sb} catch [exception]{throw $_} finally {if (disposable $obj) {$obj.Dispose()}} }
+                  function Get-FileHash ($Path, $Algorithm) {
+                    $Path = (resolve-path $path).providerpath
+                    $hash = @{Algorithm = $Algorithm; Path = $Path}
+                    use ($c = New-Object -TypeName Security.Cryptography.SHA256Managed) {
+                      use ($in = (gi $path).OpenRead()) {
+                        $hash.Hash = ([BitConverter]::ToString($c.ComputeHash($in))).Replace("-", "").ToUpper()
+                      }
+                    }
+                    new-object PSObject -Property $hash
+                  }
+                }
+                Write-Verbose "Testing the $Algorithm hash for $path."
+                $ActualHash = (Get-FileHash -Algorithm $Algorithm -Path $Path).Hash.ToLower()
+                Write-Verbose "`tDesired Hash - '$hash'"
+                Write-Verbose "`tActual Hash  - '$ActualHash'"
+                $Valid = $ActualHash -eq $Hash
+                if (-not $Valid) {
+                  Write-Error "Failed to validate the downloaded installer.  The expected $Algorithm hash was '$Hash' and the actual hash was '$ActualHash' for $path"
+                }
+                return $Valid
+              }
+
+              function Get-ProjectMetadata {
+                <#
+                  .SYNOPSIS
+                  Get metadata for a Chef Software, Inc. project
+                  .DESCRIPTION
+                  Get metadata for project
+                  .EXAMPLE
+                  iex (new-object net.webclient).downloadstring('https://omnitruck.chef.io/install.ps1'); Get-ProjectMetadata -project chef -channel stable
+
+                  Gets the download url and SHA256 checksum for the latest stable release of Chef.
+                  .EXAMPLE
+                  iex (irm 'https://omnitruck.chef.io/install.ps1'); Get-ProjectMetadata -project chefdk -channel stable -version 0.8.0
+
+                  Gets the download url, and SHA256 checksum for ChefDK 0.8.0.
+                #>
+                [cmdletbinding()]
+                param (
+                  # Base url to retrieve metadata from.
+                  [uri]$base_server_uri = 'https://omnitruck.chef.io/',
+                  [string]
+                  # Project to install
+                  [string]
+                  $project = 'chef',
+                  # Version of the application to install
+                  # This parameter is optional, if not supplied it will provide the latest version,
+                  # and if an iteration number is not specified, it will grab the latest available iteration.
+                  # Partial version numbers are also acceptable (using v=11
+                  # will grab the latest 11.x client which matches the other flags).
+                  [string]
+                  $version,
+                  # Release channel to install from
+                  $channel = 'unstable',
+                  # The following legacy switches are just aliases for the current channel
+                  [switch]
+                  $prerelease,
+                  [switch]
+                  $nightlies,
+                  [validateset('auto', 'i386', 'x86_64')]
+                  [string]
+                  $architecture = 'auto'
+                )
+
+                # PowerShell is only on Windows ATM
+                $platform = 'windows'
+                Write-Verbose "Platform: $platform"
+
+                $platform_version = Get-PlatformVersion
+                Write-Verbose "Platform Version: $platform_version"
+
+                if ($architecture -eq 'auto') {
+                  $architecture = Get-PlatformArchitecture
+                }
+
+                Write-Verbose "Architecture: $architecture"
+                Write-Verbose "Project: $project"
+
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/mac_os_x/10.9/x86_64"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/mac_os_x/10.9/chefdk-0.16.24-1.dmg" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 2b6490b2a3008da864d1a06cc59114a6ccb5bb984d7016e505dab6767ca708e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/mac_os_x/10.10/x86_64"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/mac_os_x/10.10/chefdk-0.16.24-1.dmg" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 2b6490b2a3008da864d1a06cc59114a6ccb5bb984d7016e505dab6767ca708e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/mac_os_x/10.11/x86_64"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/mac_os_x/10.11/chefdk-0.16.24-1.dmg" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 2b6490b2a3008da864d1a06cc59114a6ccb5bb984d7016e505dab6767ca708e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/el/7/x86_64"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/el/7/chefdk-0.16.24-1.el7.x86_64.rpm" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 516ed56486bd846c1d3224ba507a42f61d768723e911a13311ba6f0ccde615aa" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/windows/2008r2/i386"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/windows/2008r2/chefdk-0.16.24-1-x86.msi" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 2900841a08baa265342c3f8c4c5dbce50b0eb3db6084e1e296931c7f7cc851ed" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/ubuntu/12.04/x86_64"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/ubuntu/12.04/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 8a7cfd9259f9a2c126f50f945964264801e673912607f65e35be43a31b6026e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/ubuntu/14.04/x86_64"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/ubuntu/14.04/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 8a7cfd9259f9a2c126f50f945964264801e673912607f65e35be43a31b6026e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/windows/2012/i386"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/windows/2012/chefdk-0.16.24-1-x86.msi" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 2900841a08baa265342c3f8c4c5dbce50b0eb3db6084e1e296931c7f7cc851ed" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/debian/6/x86_64"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/debian/6/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 1a51ba8afb4df2892b79e91d8d4642432f77e98476736580545a730096393253" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/debian/7/x86_64"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/debian/7/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 1a51ba8afb4df2892b79e91d8d4642432f77e98476736580545a730096393253" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/debian/8/x86_64"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/debian/8/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 1a51ba8afb4df2892b79e91d8d4642432f77e98476736580545a730096393253" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/windows/2012r2/i386"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/windows/2012r2/chefdk-0.16.24-1-x86.msi" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 2900841a08baa265342c3f8c4c5dbce50b0eb3db6084e1e296931c7f7cc851ed" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                  $artifact_info_dir = "$($env:temp)/artifact_info/el/6/x86_64"
+                  New-Item -ItemType directory -Path $artifact_info_dir -force
+                  New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                  "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/el/6/chefdk-0.16.24-1.el6.x86_64.rpm" | out-file "$artifact_info_dir/artifact_info"
+                  "sha256 359e50d5a622aabe4d5a5185df95794e63f5831fa5572d8dac68afc0ad74ec4f" | out-file "$artifact_info_dir/artifact_info" -Append
+
+
+                $artifact_info_for_platform = Get-Content "$($env:temp)/artifact_info/$($platform)/$($platform_version)/$($architecture)/artifact_info"
+
+                $package_metadata = ($artifact_info_for_platform).trim() -split '\n' |
+                  foreach { $hash = @{} } {$key, $value = $_ -split '\s+'; $hash.Add($key, $value)} {$hash}
+
+                Write-Verbose "Project details: "
+                foreach ($key in $package_metadata.keys) {
+                  Write-Verbose "`t$key = $($package_metadata[$key])"
+                }
+                $package_metadata
+              }
+
+              function Install-Project {
+                <#
+                  .SYNOPSIS
+                  Install a Chef Software, Inc. product
+                  .DESCRIPTION
+                  Install a Chef Software, Inc. product
+                  .EXAMPLE
+                  iex (new-object net.webclient).downloadstring('https://omnitruck.chef.io/install.ps1'); Install-Project -project chef -channel stable
+
+                  Installs the latest stable version of Chef.
+                  .EXAMPLE
+                  iex (irm 'https://omnitruck.chef.io/install.ps1'); Install-Project -project chefdk -channel current
+
+                  Installs the latest integration build of the Chef Development Kit
+                #>
+                [cmdletbinding(SupportsShouldProcess=$true)]
+                param (
+                  # Project to install
+                  [string]
+                  $project = 'chef',
+                  # Release channel to install from
+                  [validateset('current', 'stable', 'unstable')]
+                  [string]
+                  $channel = 'stable',
+                  # Version of the application to install
+                  # This parameter is optional, if not supplied it will provide the latest version,
+                  # and if an iteration number is not specified, it will grab the latest available iteration.
+                  # Partial version numbers are also acceptable (using v=11
+                  # will grab the latest 11.x client which matches the other flags).
+                  [string]
+                  $version,
+                  # Full path for the downloaded installer.
+                  [string]
+                  $filename,
+                  # Full path to the location to download the installer
+                  [string]
+                  $download_directory = $env:temp,
+                  # The following legacy switches are just aliases for the current channel
+                  [switch]
+                  $prerelease,
+                  [switch]
+                  $nightlies,
+                  [validateset('auto', 'i386', 'x86_64')]
+                  [string]
+                  $architecture = 'auto'
+                )
+
+                $package_metadata = Get-ProjectMetadata -project $project -channel $channel -version $version -prerelease:$prerelease -nightlies:$nightlies -architecture $architecture
+
+                if (-not [string]::IsNullOrEmpty($filename)) {
+                  $download_directory = split-path $filename
+                  $filename = split-path $filename -leaf
+                  if ([string]::IsNullOrEmpty($download_directory)) {
+                    $download_directory = $pwd
+                  }
+                }
+                else {
+                  $filename = ($package_metadata.url -split '/')[-1]
+                }
+                Write-Verbose "Download directory: $download_directory"
+                Write-Verbose "Filename: $filename"
+
+                if (-not (test-path $download_directory)) {
+                  mkdir $download_directory
+                }
+                $download_directory = (resolve-path $download_directory).providerpath
+                $download_destination = join-path $download_directory $filename
+
+                if ((test-path $download_destination) -and
+                  (Test-ProjectPackage -Path $download_destination -Algorithm 'SHA256' -Hash $package_metadata.sha256 -ea SilentlyContinue)){
+                  Write-Verbose "Found existing valid installer at $download_destination."
+                }
+                else {
+                  if ($pscmdlet.ShouldProcess("$($package_metadata.url)", "Download $project")) {
+                    Write-Verbose "Downloading $project from $($package_metadata.url) to $download_destination."
+                    Get-WebContent $package_metadata.url -filepath $download_destination
+                  }
+                }
+
+                if ($pscmdlet.ShouldProcess("$download_destination", "Installing")){
+                  if (Test-ProjectPackage -Path $download_destination -Algorithm 'SHA256' -Hash $package_metadata.sha256) {
+                    Write-Host "Installing $project from $download_destination"
+                    $installingProject = $True
+                    $installAttempts = 0
+                    while ($installingProject) {
+                      $p = Start-Process -FilePath "msiexec" -ArgumentList "/qn /i $download_destination" -Passthru -Wait
+                      $p.WaitForExit()
+                      if ($p.ExitCode -eq 1618) {
+                        Write-Host "Another msi install is in progress (exit code 1618), retrying ($($installAttempts))..."
+                        continue
+                      } elseif ($p.ExitCode -ne 0) {
+                        throw "msiexec was not successful. Received exit code $($p.ExitCode)"
+                      }
+                      $installingProject = $False
+                    }
+                  }
+                  else {
+                    throw "Failed to validate the downloaded installer for $project."
+                  }
+                }
+              }
+              set-alias install -value Install-Project
+              export-modulemember -function 'Install-Project','Get-ProjectMetadata' -alias 'install'
+
+              }
+
+              install -project chefdk -version 0.16.24 -channel unstable -architecture i386
+              )
+              D      [WinRM] opening remote shell on http://10.194.12.113:5985/wsman
+              D      [WinRM] remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA is open on http://10.194.12.113:5985/wsman
+              D      creating hash for file $env:TEMP/iis-windows-2012r2-long_script.ps1
+              D      Running check_files.ps1
+              D      @{
+              D        "4228dff1a452a761e226cd1003a0b6fe" = @{
+              D          "target" = "$env:TEMP/iis-windows-2012r2-long_script.ps1";
+              D          "src_basename" = "iis-windows-2012r2-long_script.ps1";
+              D          "dst" = "$env:TEMP/iis-windows-2012r2-long_script.ps1"
+              D        }
+              D      }
+              D      Parsing CSV Response
+              D      "chk_exists","src_md5","dst_md5","chk_dirty","verifies","target_is_folder"
+              "False","4228dff1a452a761e226cd1003a0b6fe",,"True","False","False"
+
+              D      Uploading /tmp/cheftest/kitchen-long-script20160707-22803-pqhkfp/iis-windows-2012r2-long_script.ps1 to encoded tmpfile $env:TEMP\b64-4228dff1a452a761e226cd1003a0b6fe.txt
+              D      Finished uploading /tmp/cheftest/kitchen-long-script20160707-22803-pqhkfp/iis-windows-2012r2-long_script.ps1 to encoded tmpfile $env:TEMP\b64-4228dff1a452a761e226cd1003a0b6fe.txt (21.06 KB over 3 chunks) in (0m0.31s)
+              D      Running decode_files.ps1
+              D      @{
+              D        "$env:TEMP\b64-4228dff1a452a761e226cd1003a0b6fe.txt" = @{
+              D          "dst" = "$env:TEMP/iis-windows-2012r2-long_script.ps1"
+              D        }
+              D      }
+              D      Parsing CSV Response
+              D      "src_md5","tmpzip","verifies","tmpfile","dst_md5","dst"
+              "4228dff1a452a761e226cd1003a0b6fe",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-4228dff1a452a761e226cd1003a0b6fe.txt","4228dff1a452a761e226cd1003a0b6fe","C:\Users\ADMINI~1\AppData\Local\Temp/iis-windows-2012r2-long_script.ps1"
+
+              D      Uploaded 1 items dirty_check: (0m0.68s) stream_files: (0m0.31s) decode: (0m0.75s)
+
+                     ModuleType Version    Name                                ExportedCommands
+                     ---------- -------    ----                                ----------------
+                     Script     0.0        Omnitruck                           {Get-ProjectMetada...
+                     Installing chefdk from C:\Users\ADMINI~1\AppData\Local\Temp\chefdk-0.16.24-1-x86.msi
+              D      [WinRM] retrying receive request after timeout
+
+
+              D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> ($dirs = @("$env:TEMP\kitchen\clients", "$env:TEMP\kitchen\cookbooks", "$env:TEMP\kitchen\data", "$env:TEMP\kitchen\data_bags", "$env:TEMP\kitchen\encrypted_data_bag_secret", "$env:TEMP\kitchen\environments", "$env:TEMP\kitchen\roles")
+              $root_path = "$env:TEMP\kitchen"
+
+              Function Delete-AllDirs($dirs) {
+                $dirs | ForEach-Object {
+                  if (Test-Path ($path = Unresolve-Path $_)) { Remove-Item $path -Recurse -Force }
+                }
+              }
+
+              Function Unresolve-Path($p) {
+                if ($p -eq $null) { return $null }
+                else { return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($p) }
+              }
+
+              Function Make-RootPath($p) {
+                $p = Unresolve-Path $p
+                if (-Not (Test-Path $p)) { New-Item $p -ItemType directory | Out-Null }
+              }
+
+              Delete-AllDirs $dirs
+              Make-RootPath $root_path
+              )
+                     Transferring files to <iis-windows-2012r2>
+              D      creating hash for file $env:TEMP\kitchen
+              D      creating hash for file $env:TEMP\kitchen
+              D      creating hash for directory $env:TEMP\kitchen
+              D      Populating files
+              D      === All files added.
+              D      creating hash for file $env:TEMP\kitchen
+              D      creating hash for directory $env:TEMP\kitchen
+              D      Populating files
+              D      +++ Adding iis/metadata.rb
+              D      === All files added.
+              D      Running check_files.ps1
+              D      @{
+              D        "b6e4a27879309c94e2c309449ea4e7dc" = @{
+              D          "target" = "$env:TEMP\kitchen";
+              D          "src_basename" = "dna.json";
+              D          "dst" = "$env:TEMP\kitchen"
+              D        };
+              D        "bc1f72858bb12abc039055aba3bc3c48" = @{
+              D          "target" = "$env:TEMP\kitchen";
+              D          "src_basename" = "client.rb";
+              D          "dst" = "$env:TEMP\kitchen"
+              D        };
+              D        "76cdb2bad9582d23c1f6f4d868218d6c" = @{
+              D          "target" = "$env:TEMP\winrm-upload\tmpzip-76cdb2bad9582d23c1f6f4d868218d6c.zip";
+              D          "src_basename" = "cache";
+              D          "dst" = "$env:TEMP\kitchen\cache"
+              D        };
+              D        "49abb94825cb80b9a9cd59e5f76daf4a" = @{
+              D          "target" = "$env:TEMP\kitchen";
+              D          "src_basename" = "validation.pem";
+              D          "dst" = "$env:TEMP\kitchen"
+              D        };
+              D        "2e50ce04e446b8193074c1994cba943a" = @{
+              D          "target" = "$env:TEMP\winrm-upload\tmpzip-2e50ce04e446b8193074c1994cba943a.zip";
+              D          "src_basename" = "cookbooks";
+              D          "dst" = "$env:TEMP\kitchen\cookbooks"
+              D        }
+              D      }
+              D      Parsing CSV Response
+              D      "chk_exists","src_md5","dst_md5","chk_dirty","verifies","target_is_folder"
+              "False","2e50ce04e446b8193074c1994cba943a",,"True","False","False"
+              "False","76cdb2bad9582d23c1f6f4d868218d6c",,"True","False","False"
+              "False","b6e4a27879309c94e2c309449ea4e7dc",,"True","False","True"
+              "False","49abb94825cb80b9a9cd59e5f76daf4a",,"True","False","True"
+              "False","bc1f72858bb12abc039055aba3bc3c48",,"True","False","True"
+
+              D      Uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/dna.json to encoded tmpfile $env:TEMP\b64-b6e4a27879309c94e2c309449ea4e7dc.txt
+              D      Finished uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/dna.json to encoded tmpfile $env:TEMP\b64-b6e4a27879309c94e2c309449ea4e7dc.txt (0.116 KB over 1 chunks) in (0m0.07s)
+              D      Uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/client.rb to encoded tmpfile $env:TEMP\b64-bc1f72858bb12abc039055aba3bc3c48.txt
+              D      Finished uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/client.rb to encoded tmpfile $env:TEMP\b64-bc1f72858bb12abc039055aba3bc3c48.txt (1.096 KB over 1 chunks) in (0m0.07s)
+              D      Uploading /tmp/cheftest/tmpzip-20160707-22803-gkskk1.zip to encoded tmpfile $env:TEMP\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt
+              D      Finished uploading /tmp/cheftest/tmpzip-20160707-22803-gkskk1.zip to encoded tmpfile $env:TEMP\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt (0.028 KB over 1 chunks) in (0m0.06s)
+              D      Uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/validation.pem to encoded tmpfile $env:TEMP\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt
+              D      Finished uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/validation.pem to encoded tmpfile $env:TEMP\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt (2.236 KB over 1 chunks) in (0m0.13s)
+              D      Uploading /tmp/cheftest/tmpzip-20160707-22803-u9b0x0.zip to encoded tmpfile $env:TEMP\b64-2e50ce04e446b8193074c1994cba943a.txt
+              D      Finished uploading /tmp/cheftest/tmpzip-20160707-22803-u9b0x0.zip to encoded tmpfile $env:TEMP\b64-2e50ce04e446b8193074c1994cba943a.txt (0.188 KB over 1 chunks) in (0m0.10s)
+              D      Running decode_files.ps1
+              D      @{
+              D        "$env:TEMP\b64-b6e4a27879309c94e2c309449ea4e7dc.txt" = @{
+              D          "dst" = "$env:TEMP\kitchen/dna.json"
+              D        };
+              D        "$env:TEMP\b64-bc1f72858bb12abc039055aba3bc3c48.txt" = @{
+              D          "dst" = "$env:TEMP\kitchen/client.rb"
+              D        };
+              D        "$env:TEMP\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt" = @{
+              D          "dst" = "$env:TEMP\kitchen\cache";
+              D          "tmpzip" = "$env:TEMP\winrm-upload\tmpzip-76cdb2bad9582d23c1f6f4d868218d6c.zip"
+              D        };
+              D        "$env:TEMP\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt" = @{
+              D          "dst" = "$env:TEMP\kitchen/validation.pem"
+              D        };
+              D        "$env:TEMP\b64-2e50ce04e446b8193074c1994cba943a.txt" = @{
+              D          "dst" = "$env:TEMP\kitchen\cookbooks";
+              D          "tmpzip" = "$env:TEMP\winrm-upload\tmpzip-2e50ce04e446b8193074c1994cba943a.zip"
+              D        }
+              D      }
+              D      Parsing CSV Response
+              D      "src_md5","tmpzip","verifies","tmpfile","dst_md5","dst"
+              "76cdb2bad9582d23c1f6f4d868218d6c","C:\Users\ADMINI~1\AppData\Local\Temp\winrm-upload\tmpzip-76cdb2bad9582d23c1f6f4d868218d6c.zip","True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt","76cdb2bad9582d23c1f6f4d868218d6c","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen\cache"
+              "2e50ce04e446b8193074c1994cba943a","C:\Users\ADMINI~1\AppData\Local\Temp\winrm-upload\tmpzip-2e50ce04e446b8193074c1994cba943a.zip","True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-2e50ce04e446b8193074c1994cba943a.txt","2e50ce04e446b8193074c1994cba943a","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen\cookbooks"
+              "49abb94825cb80b9a9cd59e5f76daf4a",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt","49abb94825cb80b9a9cd59e5f76daf4a","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen/validation.pem"
+              "b6e4a27879309c94e2c309449ea4e7dc",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-b6e4a27879309c94e2c309449ea4e7dc.txt","b6e4a27879309c94e2c309449ea4e7dc","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen/dna.json"
+              "bc1f72858bb12abc039055aba3bc3c48",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-bc1f72858bb12abc039055aba3bc3c48.txt","bc1f72858bb12abc039055aba3bc3c48","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen/client.rb"
+
+              D      Cleaned up src_zip /tmp/cheftest/tmpzip-20160707-22803-gkskk1.zip
+              D      Cleaned up src_zip /tmp/cheftest/tmpzip-20160707-22803-u9b0x0.zip
+              D      Uploaded 5 items dirty_check: (0m0.73s) stream_files: (0m0.43s) decode: (0m1.47s)
+              D      Transfer complete
+              D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> ($env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine")
+
+              & $env:systemdrive\opscode\chefdk\bin\chef-client.bat --local-mode --config $env:TEMP\kitchen\client.rb --log_level auto --force-formatter --no-color --json-attributes $env:TEMP\kitchen\dna.json --chef-zero-port 8889)
+                     Starting Chef Client, version 12.12.13
+                     Creating a new client identity for iis-windows-2012r2 using the validator key.
+                     resolving cookbooks for run list: ["iis::default"]
+                     Synchronizing Cookbooks:
+                       - iis (0.0.0)
+                     Installing Cookbook Gems:
+                     Compiling Cookbooks...
+
+                     ================================================================================
+                     Recipe Compile Error
+                     ================================================================================
+
+                     Chef::Exceptions::RecipeNotFound
+                     --------------------------------
+                     could not find recipe default for cookbook iis
+
+                     Platform:
+                     ---------
+                     i386-mingw32
+
+
+                     Running handlers:
+                     [2016-07-07T22:44:50+00:00] ERROR: Running exception handlers
+                     Running handlers complete
+                     [2016-07-07T22:44:50+00:00] ERROR: Exception handlers complete
+                     Chef Client failed. 0 resources updated in 43 seconds
+                     [2016-07-07T22:44:50+00:00] FATAL: Stacktrace dumped to C:/Users/ADMINI~1/AppData/Local/Temp/kitchen/cache/chef-stacktrace.out
+                     [2016-07-07T22:44:50+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                     [2016-07-07T22:44:50+00:00] FATAL: Chef::Exceptions::RunFailedWrappingError: Found 1 errors, they are stored in the backtrace
+              D      Cleaning up local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+              D      Converge failed on instance <iis-windows-2012r2>.
+              D      ------Exception-------
+              D      Class: Kitchen::InstanceFailure
+              D      Message: Converge failed on instance <iis-windows-2012r2>.  Please see .kitchen/logs/iis-windows-2012r2.log for more details
+              D      ----------------------
+              D      ------Backtrace-------
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:76:in `rescue in call'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:79:in `call'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:373:in `block in converge_action'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `call'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:478:in `block in action'
+              D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:477:in `action'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:369:in `converge_action'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:348:in `block in transition_to'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `each'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `transition_to'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:138:in `converge'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `public_send'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `run_action_in_thread'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+              D      ----End Backtrace-----
+              D      ---Nested Exception---
+              D      Class: Kitchen::ActionFailed
+              D      Message: WinRM exited (1) for command: [$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine")
+
+              & $env:systemdrive\opscode\chefdk\bin\chef-client.bat --local-mode --config $env:TEMP\kitchen\client.rb --log_level auto --force-formatter --no-color --json-attributes $env:TEMP\kitchen\dna.json --chef-zero-port 8889]
+              D      ----------------------
+              D      ------Backtrace-------
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:76:in `rescue in call'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:79:in `call'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:373:in `block in converge_action'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `call'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:478:in `block in action'
+              D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:477:in `action'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:369:in `converge_action'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:348:in `block in transition_to'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `each'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `transition_to'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:138:in `converge'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `public_send'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `run_action_in_thread'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+              D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+              D      ----End Backtrace-----
+              D      [WinRM] closing remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA on http://10.194.12.113:5985/wsman
+              D      [WinRM] remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA closed
+              STDERR: >>>>>> Converge failed on instance <iis-windows-2012r2>.
+              >>>>>> Please see .kitchen/logs/iis-windows-2012r2.log for more details
+              >>>>>> ------Exception-------
+              >>>>>> Class: Kitchen::ActionFailed
+              >>>>>> Message: WinRM exited (1) for command: [$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine")
+
+              & $env:systemdrive\opscode\chefdk\bin\chef-client.bat --local-mode --config $env:TEMP\kitchen\client.rb --log_level auto --force-formatter --no-color --json-attributes $env:TEMP\kitchen\dna.json --chef-zero-port 8889]
+              >>>>>> ----------------------
+              ---- End output of bundle exec kitchen converge  -c -l debug ----
+              Ran bundle exec kitchen converge  -c -l debug returned 10
+
+              Resource Declaration:
+              ---------------------
+              # In /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb
+
+               36:       execute "bundle exec kitchen #{command}#{instances ? " #{instances}" : ""}#{kitchen_options ? " #{kitchen_options}" : ""}" do
+               37:         cwd kitchen_dir
+               38:         env({
+               39:           "KITCHEN_DRIVER" => driver,
+               40:           "KITCHEN_INSTANCES" => instances,
+               41:           "KITCHEN_LOCAL_YAML" => ::File.expand_path("../../.kitchen.#{driver}.yml", __FILE__),
+               42:           "KITCHEN_CHEF_PRODUCT" => chef_product,
+               43:           "KITCHEN_CHEF_CHANNEL" => chef_channel,
+               44:           "KITCHEN_CHEF_VERSION" => chef_version,
+               45:           "ARTIFACTORY_USERNAME" => artifactory_username,
+               46:           "ARTIFACTORY_PASSWORD" => artifactory_password
+               47:         }.merge(new_resource.env))
+               48:       end
+               49:     end
+
+              Compiled Resource:
+              ------------------
+              # Declared in /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb:36:in `block in <class:Kitchen>'
+
+              execute("bundle exec kitchen converge  -c -l debug") do
+                action [:run]
+                retries 0
+                retry_delay 2
+                default_guard_interpreter :execute
+                command "bundle exec kitchen converge  -c -l debug"
+                backup 5
+                cwd "/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/iis/"
+                environment {"KITCHEN_DRIVER"=>"ec2", "KITCHEN_INSTANCES"=>"", "KITCHEN_LOCAL_YAML"=>"/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/.kitchen.ec2.yml", "KITCHEN_CHEF_PRODUCT"=>"chefdk", "KITCHEN_CHEF_CHANNEL"=>"unstable", "KITCHEN_CHEF_VERSION"=>"0.16.24", "ARTIFACTORY_USERNAME"=>"chef-web-downloads", "ARTIFACTORY_PASSWORD"=>"fWPxYSB69EiuSpl8*3Dr^kGwf#hxUE6cmjeZRB%H!Cruit7qiKp%toH3nXKStQUg", "BUNDLE_GEMFILE"=>"/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/Gemfile", "KITCHEN_YAML"=>"/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/.kitchen.iis.yml"}
+                returns 0
+                declared_type :execute
+                cookbook_name "acceptance-cookbook"
+              end
+
+              Platform:
+              ---------
+              x86_64-linux
+
+
+            ================================================================================
+            Error executing action `run` on resource 'cookbook_kitchen[converge iis]'
+            ================================================================================
+
+            Mixlib::ShellOut::ShellCommandFailed
+            ------------------------------------
+            execute[bundle exec kitchen converge  -c -l debug] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '10'
+            ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+            STDOUT: -----> Starting Kitchen (v1.9.2)
+            D      winrm requested, loading winrm gem (["~> 1.6"])
+            D      winrm is loaded.
+            D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+            D      winrm-fs is loaded.
+            -----> Converging <iis-windows-2012r2>...
+                   Preparing files for transfer
+            D      Creating local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+                   Preparing dna.json
+            D      Creating dna.json from {:chef_acceptance=>"true", :use_system_chef=>"true", :run_list=>["recipe[iis::default]"]}
+                   Berksfile, Cheffile, cookbooks/, or metadata.rb not found so Chef will run with effectively no cookbooks. Is this intended?
+                   Removing non-cookbook files before transfer
+                   Preparing validation.pem
+            D      Using a dummy validation.pem
+                   Preparing client.rb
+            D      Creating client.rb from {:node_name=>"iis-windows-2012r2", :checksum_path=>"\#{ENV['TEMP']}\\kitchen\\checksums", :file_cache_path=>"\#{ENV['TEMP']}\\kitchen\\cache", :file_backup_path=>"\#{ENV['TEMP']}\\kitchen\\backup", :cookbook_path=>["\#{ENV['TEMP']}\\kitchen\\cookbooks", "\#{ENV['TEMP']}\\kitchen\\site-cookbooks"], :data_bag_path=>"\#{ENV['TEMP']}\\kitchen\\data_bags", :environment_path=>"\#{ENV['TEMP']}\\kitchen\\environments", :node_path=>"\#{ENV['TEMP']}\\kitchen\\nodes", :role_path=>"\#{ENV['TEMP']}\\kitchen\\roles", :client_path=>"\#{ENV['TEMP']}\\kitchen\\clients", :user_path=>"\#{ENV['TEMP']}\\kitchen\\users", :validation_key=>"\#{ENV['TEMP']}\\kitchen\\validation.pem", :client_key=>"\#{ENV['TEMP']}\\kitchen\\client.pem", :chef_server_url=>"http://127.0.0.1:8889", :encrypted_data_bag_secret=>"\#{ENV['TEMP']}\\kitchen\\encrypted_data_bag_secret", :audit_mode=>":enabled", :named_run_list=>{}}
+            D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> (new-module -name Omnitruck -scriptblock {
+            function Get-PlatformVersion {
+              switch -regex ((get-wmiobject win32_operatingsystem).version) {
+                '10\.0\.\d+' {$platform_version = '2012r2'}
+                '6\.3\.\d+'  {$platform_version = '2012r2'}
+                '6\.2\.\d+'  {$platform_version = '2012'}
+                '6\.1\.\d+'  {$platform_version = '2008r2'}
+                '6\.0\.\d+'  {$platform_version = '2008'}
+              }
+              return $platform_version
+            }
+
+            function Get-PlatformArchitecture {
+              if ((get-wmiobject win32_operatingsystem).osarchitecture -like '64-bit') {
+                $architecture = 'x86_64'
+              } else {
+                $architecture = 'i386'
+              }
+              return $architecture
+            }
+
+            function New-Uri {
+              param ($baseuri, $newuri)
+
+              try {
+              new-object System.Uri $baseuri, $newuri
+              }
+              catch [System.Management.Automation.MethodInvocationException]{
+                Write-Error "$($_.exception.message)"
+                throw $_.exception
+              }
+            }
+
+            function Get-WebContent {
+              param ($uri, $filepath)
+              $proxy = New-Object -TypeName System.Net.WebProxy
+              $wc = new-object System.Net.WebClient
+              $proxy.Address = $env:http_proxy
+              $wc.Proxy = $proxy
+
+              try {
+                if ([string]::IsNullOrEmpty($filepath)) {
+                  $wc.downloadstring($uri)
+                }
+                else {
+                  $wc.downloadfile($uri, $filepath)
+                }
+              }
+              catch {
+                $exception = $_.Exception
+                Write-Host "There was an error: "
+                do {
+                  Write-Host "`t$($exception.message)"
+                  $exception = $exception.innerexception
+                } while ($exception)
+                throw "Failed to download from $uri."
+              }
+            }
+
+            function Test-ProjectPackage {
+              [cmdletbinding()]
+              param ($Path, $Algorithm = 'SHA256', $Hash)
+
+              if (-not (get-command get-filehash))   {
+                function disposable($o){($o -is [IDisposable]) -and (($o | get-member | foreach-object {$_.name}) -contains 'Dispose')}
+                function use($obj, [scriptblock]$sb){try {& $sb} catch [exception]{throw $_} finally {if (disposable $obj) {$obj.Dispose()}} }
+                function Get-FileHash ($Path, $Algorithm) {
+                  $Path = (resolve-path $path).providerpath
+                  $hash = @{Algorithm = $Algorithm; Path = $Path}
+                  use ($c = New-Object -TypeName Security.Cryptography.SHA256Managed) {
+                    use ($in = (gi $path).OpenRead()) {
+                      $hash.Hash = ([BitConverter]::ToString($c.ComputeHash($in))).Replace("-", "").ToUpper()
+                    }
+                  }
+                  new-object PSObject -Property $hash
+                }
+              }
+              Write-Verbose "Testing the $Algorithm hash for $path."
+              $ActualHash = (Get-FileHash -Algorithm $Algorithm -Path $Path).Hash.ToLower()
+              Write-Verbose "`tDesired Hash - '$hash'"
+              Write-Verbose "`tActual Hash  - '$ActualHash'"
+              $Valid = $ActualHash -eq $Hash
+              if (-not $Valid) {
+                Write-Error "Failed to validate the downloaded installer.  The expected $Algorithm hash was '$Hash' and the actual hash was '$ActualHash' for $path"
+              }
+              return $Valid
+            }
+
+            function Get-ProjectMetadata {
+              <#
+                .SYNOPSIS
+                Get metadata for a Chef Software, Inc. project
+                .DESCRIPTION
+                Get metadata for project
+                .EXAMPLE
+                iex (new-object net.webclient).downloadstring('https://omnitruck.chef.io/install.ps1'); Get-ProjectMetadata -project chef -channel stable
+
+                Gets the download url and SHA256 checksum for the latest stable release of Chef.
+                .EXAMPLE
+                iex (irm 'https://omnitruck.chef.io/install.ps1'); Get-ProjectMetadata -project chefdk -channel stable -version 0.8.0
+
+                Gets the download url, and SHA256 checksum for ChefDK 0.8.0.
+              #>
+              [cmdletbinding()]
+              param (
+                # Base url to retrieve metadata from.
+                [uri]$base_server_uri = 'https://omnitruck.chef.io/',
+                [string]
+                # Project to install
+                [string]
+                $project = 'chef',
+                # Version of the application to install
+                # This parameter is optional, if not supplied it will provide the latest version,
+                # and if an iteration number is not specified, it will grab the latest available iteration.
+                # Partial version numbers are also acceptable (using v=11
+                # will grab the latest 11.x client which matches the other flags).
+                [string]
+                $version,
+                # Release channel to install from
+                $channel = 'unstable',
+                # The following legacy switches are just aliases for the current channel
+                [switch]
+                $prerelease,
+                [switch]
+                $nightlies,
+                [validateset('auto', 'i386', 'x86_64')]
+                [string]
+                $architecture = 'auto'
+              )
+
+              # PowerShell is only on Windows ATM
+              $platform = 'windows'
+              Write-Verbose "Platform: $platform"
+
+              $platform_version = Get-PlatformVersion
+              Write-Verbose "Platform Version: $platform_version"
+
+              if ($architecture -eq 'auto') {
+                $architecture = Get-PlatformArchitecture
+              }
+
+              Write-Verbose "Architecture: $architecture"
+              Write-Verbose "Project: $project"
+
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/mac_os_x/10.9/x86_64"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/mac_os_x/10.9/chefdk-0.16.24-1.dmg" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 2b6490b2a3008da864d1a06cc59114a6ccb5bb984d7016e505dab6767ca708e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/mac_os_x/10.10/x86_64"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/mac_os_x/10.10/chefdk-0.16.24-1.dmg" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 2b6490b2a3008da864d1a06cc59114a6ccb5bb984d7016e505dab6767ca708e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/mac_os_x/10.11/x86_64"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/mac_os_x/10.11/chefdk-0.16.24-1.dmg" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 2b6490b2a3008da864d1a06cc59114a6ccb5bb984d7016e505dab6767ca708e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/el/7/x86_64"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/el/7/chefdk-0.16.24-1.el7.x86_64.rpm" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 516ed56486bd846c1d3224ba507a42f61d768723e911a13311ba6f0ccde615aa" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/windows/2008r2/i386"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/windows/2008r2/chefdk-0.16.24-1-x86.msi" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 2900841a08baa265342c3f8c4c5dbce50b0eb3db6084e1e296931c7f7cc851ed" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/ubuntu/12.04/x86_64"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/ubuntu/12.04/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 8a7cfd9259f9a2c126f50f945964264801e673912607f65e35be43a31b6026e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/ubuntu/14.04/x86_64"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/ubuntu/14.04/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 8a7cfd9259f9a2c126f50f945964264801e673912607f65e35be43a31b6026e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/windows/2012/i386"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/windows/2012/chefdk-0.16.24-1-x86.msi" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 2900841a08baa265342c3f8c4c5dbce50b0eb3db6084e1e296931c7f7cc851ed" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/debian/6/x86_64"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/debian/6/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 1a51ba8afb4df2892b79e91d8d4642432f77e98476736580545a730096393253" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/debian/7/x86_64"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/debian/7/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 1a51ba8afb4df2892b79e91d8d4642432f77e98476736580545a730096393253" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/debian/8/x86_64"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/debian/8/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 1a51ba8afb4df2892b79e91d8d4642432f77e98476736580545a730096393253" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/windows/2012r2/i386"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/windows/2012r2/chefdk-0.16.24-1-x86.msi" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 2900841a08baa265342c3f8c4c5dbce50b0eb3db6084e1e296931c7f7cc851ed" | out-file "$artifact_info_dir/artifact_info" -Append
+
+                $artifact_info_dir = "$($env:temp)/artifact_info/el/6/x86_64"
+                New-Item -ItemType directory -Path $artifact_info_dir -force
+                New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+                "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/el/6/chefdk-0.16.24-1.el6.x86_64.rpm" | out-file "$artifact_info_dir/artifact_info"
+                "sha256 359e50d5a622aabe4d5a5185df95794e63f5831fa5572d8dac68afc0ad74ec4f" | out-file "$artifact_info_dir/artifact_info" -Append
+
+
+              $artifact_info_for_platform = Get-Content "$($env:temp)/artifact_info/$($platform)/$($platform_version)/$($architecture)/artifact_info"
+
+              $package_metadata = ($artifact_info_for_platform).trim() -split '\n' |
+                foreach { $hash = @{} } {$key, $value = $_ -split '\s+'; $hash.Add($key, $value)} {$hash}
+
+              Write-Verbose "Project details: "
+              foreach ($key in $package_metadata.keys) {
+                Write-Verbose "`t$key = $($package_metadata[$key])"
+              }
+              $package_metadata
+            }
+
+            function Install-Project {
+              <#
+                .SYNOPSIS
+                Install a Chef Software, Inc. product
+                .DESCRIPTION
+                Install a Chef Software, Inc. product
+                .EXAMPLE
+                iex (new-object net.webclient).downloadstring('https://omnitruck.chef.io/install.ps1'); Install-Project -project chef -channel stable
+
+                Installs the latest stable version of Chef.
+                .EXAMPLE
+                iex (irm 'https://omnitruck.chef.io/install.ps1'); Install-Project -project chefdk -channel current
+
+                Installs the latest integration build of the Chef Development Kit
+              #>
+              [cmdletbinding(SupportsShouldProcess=$true)]
+              param (
+                # Project to install
+                [string]
+                $project = 'chef',
+                # Release channel to install from
+                [validateset('current', 'stable', 'unstable')]
+                [string]
+                $channel = 'stable',
+                # Version of the application to install
+                # This parameter is optional, if not supplied it will provide the latest version,
+                # and if an iteration number is not specified, it will grab the latest available iteration.
+                # Partial version numbers are also acceptable (using v=11
+                # will grab the latest 11.x client which matches the other flags).
+                [string]
+                $version,
+                # Full path for the downloaded installer.
+                [string]
+                $filename,
+                # Full path to the location to download the installer
+                [string]
+                $download_directory = $env:temp,
+                # The following legacy switches are just aliases for the current channel
+                [switch]
+                $prerelease,
+                [switch]
+                $nightlies,
+                [validateset('auto', 'i386', 'x86_64')]
+                [string]
+                $architecture = 'auto'
+              )
+
+              $package_metadata = Get-ProjectMetadata -project $project -channel $channel -version $version -prerelease:$prerelease -nightlies:$nightlies -architecture $architecture
+
+              if (-not [string]::IsNullOrEmpty($filename)) {
+                $download_directory = split-path $filename
+                $filename = split-path $filename -leaf
+                if ([string]::IsNullOrEmpty($download_directory)) {
+                  $download_directory = $pwd
+                }
+              }
+              else {
+                $filename = ($package_metadata.url -split '/')[-1]
+              }
+              Write-Verbose "Download directory: $download_directory"
+              Write-Verbose "Filename: $filename"
+
+              if (-not (test-path $download_directory)) {
+                mkdir $download_directory
+              }
+              $download_directory = (resolve-path $download_directory).providerpath
+              $download_destination = join-path $download_directory $filename
+
+              if ((test-path $download_destination) -and
+                (Test-ProjectPackage -Path $download_destination -Algorithm 'SHA256' -Hash $package_metadata.sha256 -ea SilentlyContinue)){
+                Write-Verbose "Found existing valid installer at $download_destination."
+              }
+              else {
+                if ($pscmdlet.ShouldProcess("$($package_metadata.url)", "Download $project")) {
+                  Write-Verbose "Downloading $project from $($package_metadata.url) to $download_destination."
+                  Get-WebContent $package_metadata.url -filepath $download_destination
+                }
+              }
+
+              if ($pscmdlet.ShouldProcess("$download_destination", "Installing")){
+                if (Test-ProjectPackage -Path $download_destination -Algorithm 'SHA256' -Hash $package_metadata.sha256) {
+                  Write-Host "Installing $project from $download_destination"
+                  $installingProject = $True
+                  $installAttempts = 0
+                  while ($installingProject) {
+                    $p = Start-Process -FilePath "msiexec" -ArgumentList "/qn /i $download_destination" -Passthru -Wait
+                    $p.WaitForExit()
+                    if ($p.ExitCode -eq 1618) {
+                      Write-Host "Another msi install is in progress (exit code 1618), retrying ($($installAttempts))..."
+                      continue
+                    } elseif ($p.ExitCode -ne 0) {
+                      throw "msiexec was not successful. Received exit code $($p.ExitCode)"
+                    }
+                    $installingProject = $False
+                  }
+                }
+                else {
+                  throw "Failed to validate the downloaded installer for $project."
+                }
+              }
+            }
+            set-alias install -value Install-Project
+            export-modulemember -function 'Install-Project','Get-ProjectMetadata' -alias 'install'
+
+            }
+
+            install -project chefdk -version 0.16.24 -channel unstable -architecture i386
+            )
+            D      [WinRM] opening remote shell on http://10.194.12.113:5985/wsman
+            D      [WinRM] remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA is open on http://10.194.12.113:5985/wsman
+            D      creating hash for file $env:TEMP/iis-windows-2012r2-long_script.ps1
+            D      Running check_files.ps1
+            D      @{
+            D        "4228dff1a452a761e226cd1003a0b6fe" = @{
+            D          "target" = "$env:TEMP/iis-windows-2012r2-long_script.ps1";
+            D          "src_basename" = "iis-windows-2012r2-long_script.ps1";
+            D          "dst" = "$env:TEMP/iis-windows-2012r2-long_script.ps1"
+            D        }
+            D      }
+            D      Parsing CSV Response
+            D      "chk_exists","src_md5","dst_md5","chk_dirty","verifies","target_is_folder"
+            "False","4228dff1a452a761e226cd1003a0b6fe",,"True","False","False"
+
+            D      Uploading /tmp/cheftest/kitchen-long-script20160707-22803-pqhkfp/iis-windows-2012r2-long_script.ps1 to encoded tmpfile $env:TEMP\b64-4228dff1a452a761e226cd1003a0b6fe.txt
+            D      Finished uploading /tmp/cheftest/kitchen-long-script20160707-22803-pqhkfp/iis-windows-2012r2-long_script.ps1 to encoded tmpfile $env:TEMP\b64-4228dff1a452a761e226cd1003a0b6fe.txt (21.06 KB over 3 chunks) in (0m0.31s)
+            D      Running decode_files.ps1
+            D      @{
+            D        "$env:TEMP\b64-4228dff1a452a761e226cd1003a0b6fe.txt" = @{
+            D          "dst" = "$env:TEMP/iis-windows-2012r2-long_script.ps1"
+            D        }
+            D      }
+            D      Parsing CSV Response
+            D      "src_md5","tmpzip","verifies","tmpfile","dst_md5","dst"
+            "4228dff1a452a761e226cd1003a0b6fe",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-4228dff1a452a761e226cd1003a0b6fe.txt","4228dff1a452a761e226cd1003a0b6fe","C:\Users\ADMINI~1\AppData\Local\Temp/iis-windows-2012r2-long_script.ps1"
+
+            D      Uploaded 1 items dirty_check: (0m0.68s) stream_files: (0m0.31s) decode: (0m0.75s)
+
+                   ModuleType Version    Name                                ExportedCommands
+                   ---------- -------    ----                                ----------------
+                   Script     0.0        Omnitruck                           {Get-ProjectMetada...
+                   Installing chefdk from C:\Users\ADMINI~1\AppData\Local\Temp\chefdk-0.16.24-1-x86.msi
+            D      [WinRM] retrying receive request after timeout
+
+
+            D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> ($dirs = @("$env:TEMP\kitchen\clients", "$env:TEMP\kitchen\cookbooks", "$env:TEMP\kitchen\data", "$env:TEMP\kitchen\data_bags", "$env:TEMP\kitchen\encrypted_data_bag_secret", "$env:TEMP\kitchen\environments", "$env:TEMP\kitchen\roles")
+            $root_path = "$env:TEMP\kitchen"
+
+            Function Delete-AllDirs($dirs) {
+              $dirs | ForEach-Object {
+                if (Test-Path ($path = Unresolve-Path $_)) { Remove-Item $path -Recurse -Force }
+              }
+            }
+
+            Function Unresolve-Path($p) {
+              if ($p -eq $null) { return $null }
+              else { return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($p) }
+            }
+
+            Function Make-RootPath($p) {
+              $p = Unresolve-Path $p
+              if (-Not (Test-Path $p)) { New-Item $p -ItemType directory | Out-Null }
+            }
+
+            Delete-AllDirs $dirs
+            Make-RootPath $root_path
+            )
+                   Transferring files to <iis-windows-2012r2>
+            D      creating hash for file $env:TEMP\kitchen
+            D      creating hash for file $env:TEMP\kitchen
+            D      creating hash for directory $env:TEMP\kitchen
+            D      Populating files
+            D      === All files added.
+            D      creating hash for file $env:TEMP\kitchen
+            D      creating hash for directory $env:TEMP\kitchen
+            D      Populating files
+            D      +++ Adding iis/metadata.rb
+            D      === All files added.
+            D      Running check_files.ps1
+            D      @{
+            D        "b6e4a27879309c94e2c309449ea4e7dc" = @{
+            D          "target" = "$env:TEMP\kitchen";
+            D          "src_basename" = "dna.json";
+            D          "dst" = "$env:TEMP\kitchen"
+            D        };
+            D        "bc1f72858bb12abc039055aba3bc3c48" = @{
+            D          "target" = "$env:TEMP\kitchen";
+            D          "src_basename" = "client.rb";
+            D          "dst" = "$env:TEMP\kitchen"
+            D        };
+            D        "76cdb2bad9582d23c1f6f4d868218d6c" = @{
+            D          "target" = "$env:TEMP\winrm-upload\tmpzip-76cdb2bad9582d23c1f6f4d868218d6c.zip";
+            D          "src_basename" = "cache";
+            D          "dst" = "$env:TEMP\kitchen\cache"
+            D        };
+            D        "49abb94825cb80b9a9cd59e5f76daf4a" = @{
+            D          "target" = "$env:TEMP\kitchen";
+            D          "src_basename" = "validation.pem";
+            D          "dst" = "$env:TEMP\kitchen"
+            D        };
+            D        "2e50ce04e446b8193074c1994cba943a" = @{
+            D          "target" = "$env:TEMP\winrm-upload\tmpzip-2e50ce04e446b8193074c1994cba943a.zip";
+            D          "src_basename" = "cookbooks";
+            D          "dst" = "$env:TEMP\kitchen\cookbooks"
+            D        }
+            D      }
+            D      Parsing CSV Response
+            D      "chk_exists","src_md5","dst_md5","chk_dirty","verifies","target_is_folder"
+            "False","2e50ce04e446b8193074c1994cba943a",,"True","False","False"
+            "False","76cdb2bad9582d23c1f6f4d868218d6c",,"True","False","False"
+            "False","b6e4a27879309c94e2c309449ea4e7dc",,"True","False","True"
+            "False","49abb94825cb80b9a9cd59e5f76daf4a",,"True","False","True"
+            "False","bc1f72858bb12abc039055aba3bc3c48",,"True","False","True"
+
+            D      Uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/dna.json to encoded tmpfile $env:TEMP\b64-b6e4a27879309c94e2c309449ea4e7dc.txt
+            D      Finished uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/dna.json to encoded tmpfile $env:TEMP\b64-b6e4a27879309c94e2c309449ea4e7dc.txt (0.116 KB over 1 chunks) in (0m0.07s)
+            D      Uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/client.rb to encoded tmpfile $env:TEMP\b64-bc1f72858bb12abc039055aba3bc3c48.txt
+            D      Finished uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/client.rb to encoded tmpfile $env:TEMP\b64-bc1f72858bb12abc039055aba3bc3c48.txt (1.096 KB over 1 chunks) in (0m0.07s)
+            D      Uploading /tmp/cheftest/tmpzip-20160707-22803-gkskk1.zip to encoded tmpfile $env:TEMP\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt
+            D      Finished uploading /tmp/cheftest/tmpzip-20160707-22803-gkskk1.zip to encoded tmpfile $env:TEMP\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt (0.028 KB over 1 chunks) in (0m0.06s)
+            D      Uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/validation.pem to encoded tmpfile $env:TEMP\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt
+            D      Finished uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/validation.pem to encoded tmpfile $env:TEMP\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt (2.236 KB over 1 chunks) in (0m0.13s)
+            D      Uploading /tmp/cheftest/tmpzip-20160707-22803-u9b0x0.zip to encoded tmpfile $env:TEMP\b64-2e50ce04e446b8193074c1994cba943a.txt
+            D      Finished uploading /tmp/cheftest/tmpzip-20160707-22803-u9b0x0.zip to encoded tmpfile $env:TEMP\b64-2e50ce04e446b8193074c1994cba943a.txt (0.188 KB over 1 chunks) in (0m0.10s)
+            D      Running decode_files.ps1
+            D      @{
+            D        "$env:TEMP\b64-b6e4a27879309c94e2c309449ea4e7dc.txt" = @{
+            D          "dst" = "$env:TEMP\kitchen/dna.json"
+            D        };
+            D        "$env:TEMP\b64-bc1f72858bb12abc039055aba3bc3c48.txt" = @{
+            D          "dst" = "$env:TEMP\kitchen/client.rb"
+            D        };
+            D        "$env:TEMP\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt" = @{
+            D          "dst" = "$env:TEMP\kitchen\cache";
+            D          "tmpzip" = "$env:TEMP\winrm-upload\tmpzip-76cdb2bad9582d23c1f6f4d868218d6c.zip"
+            D        };
+            D        "$env:TEMP\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt" = @{
+            D          "dst" = "$env:TEMP\kitchen/validation.pem"
+            D        };
+            D        "$env:TEMP\b64-2e50ce04e446b8193074c1994cba943a.txt" = @{
+            D          "dst" = "$env:TEMP\kitchen\cookbooks";
+            D          "tmpzip" = "$env:TEMP\winrm-upload\tmpzip-2e50ce04e446b8193074c1994cba943a.zip"
+            D        }
+            D      }
+            D      Parsing CSV Response
+            D      "src_md5","tmpzip","verifies","tmpfile","dst_md5","dst"
+            "76cdb2bad9582d23c1f6f4d868218d6c","C:\Users\ADMINI~1\AppData\Local\Temp\winrm-upload\tmpzip-76cdb2bad9582d23c1f6f4d868218d6c.zip","True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt","76cdb2bad9582d23c1f6f4d868218d6c","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen\cache"
+            "2e50ce04e446b8193074c1994cba943a","C:\Users\ADMINI~1\AppData\Local\Temp\winrm-upload\tmpzip-2e50ce04e446b8193074c1994cba943a.zip","True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-2e50ce04e446b8193074c1994cba943a.txt","2e50ce04e446b8193074c1994cba943a","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen\cookbooks"
+            "49abb94825cb80b9a9cd59e5f76daf4a",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt","49abb94825cb80b9a9cd59e5f76daf4a","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen/validation.pem"
+            "b6e4a27879309c94e2c309449ea4e7dc",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-b6e4a27879309c94e2c309449ea4e7dc.txt","b6e4a27879309c94e2c309449ea4e7dc","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen/dna.json"
+            "bc1f72858bb12abc039055aba3bc3c48",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-bc1f72858bb12abc039055aba3bc3c48.txt","bc1f72858bb12abc039055aba3bc3c48","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen/client.rb"
+
+            D      Cleaned up src_zip /tmp/cheftest/tmpzip-20160707-22803-gkskk1.zip
+            D      Cleaned up src_zip /tmp/cheftest/tmpzip-20160707-22803-u9b0x0.zip
+            D      Uploaded 5 items dirty_check: (0m0.73s) stream_files: (0m0.43s) decode: (0m1.47s)
+            D      Transfer complete
+            D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> ($env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine")
+
+            & $env:systemdrive\opscode\chefdk\bin\chef-client.bat --local-mode --config $env:TEMP\kitchen\client.rb --log_level auto --force-formatter --no-color --json-attributes $env:TEMP\kitchen\dna.json --chef-zero-port 8889)
+                   Starting Chef Client, version 12.12.13
+                   Creating a new client identity for iis-windows-2012r2 using the validator key.
+                   resolving cookbooks for run list: ["iis::default"]
+                   Synchronizing Cookbooks:
+                     - iis (0.0.0)
+                   Installing Cookbook Gems:
+                   Compiling Cookbooks...
+
+                   ================================================================================
+                   Recipe Compile Error
+                   ================================================================================
+
+                   Chef::Exceptions::RecipeNotFound
+                   --------------------------------
+                   could not find recipe default for cookbook iis
+
+                   Platform:
+                   ---------
+                   i386-mingw32
+
+
+                   Running handlers:
+                   [2016-07-07T22:44:50+00:00] ERROR: Running exception handlers
+                   Running handlers complete
+                   [2016-07-07T22:44:50+00:00] ERROR: Exception handlers complete
+                   Chef Client failed. 0 resources updated in 43 seconds
+                   [2016-07-07T22:44:50+00:00] FATAL: Stacktrace dumped to C:/Users/ADMINI~1/AppData/Local/Temp/kitchen/cache/chef-stacktrace.out
+                   [2016-07-07T22:44:50+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                   [2016-07-07T22:44:50+00:00] FATAL: Chef::Exceptions::RunFailedWrappingError: Found 1 errors, they are stored in the backtrace
+            D      Cleaning up local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+            D      Converge failed on instance <iis-windows-2012r2>.
+            D      ------Exception-------
+            D      Class: Kitchen::InstanceFailure
+            D      Message: Converge failed on instance <iis-windows-2012r2>.  Please see .kitchen/logs/iis-windows-2012r2.log for more details
+            D      ----------------------
+            D      ------Backtrace-------
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:76:in `rescue in call'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:79:in `call'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:373:in `block in converge_action'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `call'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:478:in `block in action'
+            D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:477:in `action'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:369:in `converge_action'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:348:in `block in transition_to'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `each'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `transition_to'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:138:in `converge'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `public_send'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `run_action_in_thread'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+            D      ----End Backtrace-----
+            D      ---Nested Exception---
+            D      Class: Kitchen::ActionFailed
+            D      Message: WinRM exited (1) for command: [$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine")
+
+            & $env:systemdrive\opscode\chefdk\bin\chef-client.bat --local-mode --config $env:TEMP\kitchen\client.rb --log_level auto --force-formatter --no-color --json-attributes $env:TEMP\kitchen\dna.json --chef-zero-port 8889]
+            D      ----------------------
+            D      ------Backtrace-------
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:76:in `rescue in call'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:79:in `call'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:373:in `block in converge_action'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `call'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:478:in `block in action'
+            D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:477:in `action'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:369:in `converge_action'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:348:in `block in transition_to'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `each'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `transition_to'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:138:in `converge'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `public_send'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `run_action_in_thread'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+            D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+            D      ----End Backtrace-----
+            D      [WinRM] closing remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA on http://10.194.12.113:5985/wsman
+            D      [WinRM] remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA closed
+            STDERR: >>>>>> Converge failed on instance <iis-windows-2012r2>.
+            >>>>>> Please see .kitchen/logs/iis-windows-2012r2.log for more details
+            >>>>>> ------Exception-------
+            >>>>>> Class: Kitchen::ActionFailed
+            >>>>>> Message: WinRM exited (1) for command: [$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine")
+
+            & $env:systemdrive\opscode\chefdk\bin\chef-client.bat --local-mode --config $env:TEMP\kitchen\client.rb --log_level auto --force-formatter --no-color --json-attributes $env:TEMP\kitchen\dna.json --chef-zero-port 8889]
+            >>>>>> ----------------------
+            ---- End output of bundle exec kitchen converge  -c -l debug ----
+            Ran bundle exec kitchen converge  -c -l debug returned 10
+
+            Resource Declaration:
+            ---------------------
+            # In /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb
+
+             26:     cookbook_kitchen "#{command} iis" do
+             27:     end
+             28:
+
+            Compiled Resource:
+            ------------------
+            # Declared in /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb:26:in `block in <class:TopCookbooks>'
+
+            cookbook_kitchen("converge iis") do
+              action [:run]
+              retries 0
+              retry_delay 2
+              default_guard_interpreter :default
+              declared_type :cookbook_kitchen
+              cookbook_name "acceptance-cookbook"
+              repository "https://github.com/chef-cookbooks/iis.git"
+              test_cookbook "iis"
+              repository_root "/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/iis"
+              branch "master"
+              command "converge"
+              kitchen_options "-c -l debug"
+              kitchen_dir "/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/test_run/iis/"
+              env {"BUNDLE_GEMFILE"=>"/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/Gemfile", "KITCHEN_YAML"=>"/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/top-cookbooks/.kitchen.iis.yml"}
+            end
+
+            Platform:
+            ---------
+            x86_64-linux
+
+
+          ================================================================================
+          Error executing action `run` on resource 'top_cookbooks[converge]'
+          ================================================================================
+
+          Mixlib::ShellOut::ShellCommandFailed
+          ------------------------------------
+          cookbook_kitchen[converge iis] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/libraries/top_cookbooks.rb line 26) had an error: Mixlib::ShellOut::ShellCommandFailed: execute[bundle exec kitchen converge  -c -l debug] (/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb line 36) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '10'
+          ---- Begin output of bundle exec kitchen converge  -c -l debug ----
+          STDOUT: -----> Starting Kitchen (v1.9.2)
+          D      winrm requested, loading winrm gem (["~> 1.6"])
+          D      winrm is loaded.
+          D      winrm-fs requested, loading winrm-fs gem (["~> 0.4.1"])
+          D      winrm-fs is loaded.
+          -----> Converging <iis-windows-2012r2>...
+                 Preparing files for transfer
+          D      Creating local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+                 Preparing dna.json
+          D      Creating dna.json from {:chef_acceptance=>"true", :use_system_chef=>"true", :run_list=>["recipe[iis::default]"]}
+                 Berksfile, Cheffile, cookbooks/, or metadata.rb not found so Chef will run with effectively no cookbooks. Is this intended?
+                 Removing non-cookbook files before transfer
+                 Preparing validation.pem
+          D      Using a dummy validation.pem
+                 Preparing client.rb
+          D      Creating client.rb from {:node_name=>"iis-windows-2012r2", :checksum_path=>"\#{ENV['TEMP']}\\kitchen\\checksums", :file_cache_path=>"\#{ENV['TEMP']}\\kitchen\\cache", :file_backup_path=>"\#{ENV['TEMP']}\\kitchen\\backup", :cookbook_path=>["\#{ENV['TEMP']}\\kitchen\\cookbooks", "\#{ENV['TEMP']}\\kitchen\\site-cookbooks"], :data_bag_path=>"\#{ENV['TEMP']}\\kitchen\\data_bags", :environment_path=>"\#{ENV['TEMP']}\\kitchen\\environments", :node_path=>"\#{ENV['TEMP']}\\kitchen\\nodes", :role_path=>"\#{ENV['TEMP']}\\kitchen\\roles", :client_path=>"\#{ENV['TEMP']}\\kitchen\\clients", :user_path=>"\#{ENV['TEMP']}\\kitchen\\users", :validation_key=>"\#{ENV['TEMP']}\\kitchen\\validation.pem", :client_key=>"\#{ENV['TEMP']}\\kitchen\\client.pem", :chef_server_url=>"http://127.0.0.1:8889", :encrypted_data_bag_secret=>"\#{ENV['TEMP']}\\kitchen\\encrypted_data_bag_secret", :audit_mode=>":enabled", :named_run_list=>{}}
+          D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> (new-module -name Omnitruck -scriptblock {
+          function Get-PlatformVersion {
+            switch -regex ((get-wmiobject win32_operatingsystem).version) {
+              '10\.0\.\d+' {$platform_version = '2012r2'}
+              '6\.3\.\d+'  {$platform_version = '2012r2'}
+              '6\.2\.\d+'  {$platform_version = '2012'}
+              '6\.1\.\d+'  {$platform_version = '2008r2'}
+              '6\.0\.\d+'  {$platform_version = '2008'}
+            }
+            return $platform_version
+          }
+
+          function Get-PlatformArchitecture {
+            if ((get-wmiobject win32_operatingsystem).osarchitecture -like '64-bit') {
+              $architecture = 'x86_64'
+            } else {
+              $architecture = 'i386'
+            }
+            return $architecture
+          }
+
+          function New-Uri {
+            param ($baseuri, $newuri)
+
+            try {
+            new-object System.Uri $baseuri, $newuri
+            }
+            catch [System.Management.Automation.MethodInvocationException]{
+              Write-Error "$($_.exception.message)"
+              throw $_.exception
+            }
+          }
+
+          function Get-WebContent {
+            param ($uri, $filepath)
+            $proxy = New-Object -TypeName System.Net.WebProxy
+            $wc = new-object System.Net.WebClient
+            $proxy.Address = $env:http_proxy
+            $wc.Proxy = $proxy
+
+            try {
+              if ([string]::IsNullOrEmpty($filepath)) {
+                $wc.downloadstring($uri)
+              }
+              else {
+                $wc.downloadfile($uri, $filepath)
+              }
+            }
+            catch {
+              $exception = $_.Exception
+              Write-Host "There was an error: "
+              do {
+                Write-Host "`t$($exception.message)"
+                $exception = $exception.innerexception
+              } while ($exception)
+              throw "Failed to download from $uri."
+            }
+          }
+
+          function Test-ProjectPackage {
+            [cmdletbinding()]
+            param ($Path, $Algorithm = 'SHA256', $Hash)
+
+            if (-not (get-command get-filehash))   {
+              function disposable($o){($o -is [IDisposable]) -and (($o | get-member | foreach-object {$_.name}) -contains 'Dispose')}
+              function use($obj, [scriptblock]$sb){try {& $sb} catch [exception]{throw $_} finally {if (disposable $obj) {$obj.Dispose()}} }
+              function Get-FileHash ($Path, $Algorithm) {
+                $Path = (resolve-path $path).providerpath
+                $hash = @{Algorithm = $Algorithm; Path = $Path}
+                use ($c = New-Object -TypeName Security.Cryptography.SHA256Managed) {
+                  use ($in = (gi $path).OpenRead()) {
+                    $hash.Hash = ([BitConverter]::ToString($c.ComputeHash($in))).Replace("-", "").ToUpper()
+                  }
+                }
+                new-object PSObject -Property $hash
+              }
+            }
+            Write-Verbose "Testing the $Algorithm hash for $path."
+            $ActualHash = (Get-FileHash -Algorithm $Algorithm -Path $Path).Hash.ToLower()
+            Write-Verbose "`tDesired Hash - '$hash'"
+            Write-Verbose "`tActual Hash  - '$ActualHash'"
+            $Valid = $ActualHash -eq $Hash
+            if (-not $Valid) {
+              Write-Error "Failed to validate the downloaded installer.  The expected $Algorithm hash was '$Hash' and the actual hash was '$ActualHash' for $path"
+            }
+            return $Valid
+          }
+
+          function Get-ProjectMetadata {
+            <#
+              .SYNOPSIS
+              Get metadata for a Chef Software, Inc. project
+              .DESCRIPTION
+              Get metadata for project
+              .EXAMPLE
+              iex (new-object net.webclient).downloadstring('https://omnitruck.chef.io/install.ps1'); Get-ProjectMetadata -project chef -channel stable
+
+              Gets the download url and SHA256 checksum for the latest stable release of Chef.
+              .EXAMPLE
+              iex (irm 'https://omnitruck.chef.io/install.ps1'); Get-ProjectMetadata -project chefdk -channel stable -version 0.8.0
+
+              Gets the download url, and SHA256 checksum for ChefDK 0.8.0.
+            #>
+            [cmdletbinding()]
+            param (
+              # Base url to retrieve metadata from.
+              [uri]$base_server_uri = 'https://omnitruck.chef.io/',
+              [string]
+              # Project to install
+              [string]
+              $project = 'chef',
+              # Version of the application to install
+              # This parameter is optional, if not supplied it will provide the latest version,
+              # and if an iteration number is not specified, it will grab the latest available iteration.
+              # Partial version numbers are also acceptable (using v=11
+              # will grab the latest 11.x client which matches the other flags).
+              [string]
+              $version,
+              # Release channel to install from
+              $channel = 'unstable',
+              # The following legacy switches are just aliases for the current channel
+              [switch]
+              $prerelease,
+              [switch]
+              $nightlies,
+              [validateset('auto', 'i386', 'x86_64')]
+              [string]
+              $architecture = 'auto'
+            )
+
+            # PowerShell is only on Windows ATM
+            $platform = 'windows'
+            Write-Verbose "Platform: $platform"
+
+            $platform_version = Get-PlatformVersion
+            Write-Verbose "Platform Version: $platform_version"
+
+            if ($architecture -eq 'auto') {
+              $architecture = Get-PlatformArchitecture
+            }
+
+            Write-Verbose "Architecture: $architecture"
+            Write-Verbose "Project: $project"
+
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/mac_os_x/10.9/x86_64"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/mac_os_x/10.9/chefdk-0.16.24-1.dmg" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 2b6490b2a3008da864d1a06cc59114a6ccb5bb984d7016e505dab6767ca708e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/mac_os_x/10.10/x86_64"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/mac_os_x/10.10/chefdk-0.16.24-1.dmg" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 2b6490b2a3008da864d1a06cc59114a6ccb5bb984d7016e505dab6767ca708e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/mac_os_x/10.11/x86_64"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/mac_os_x/10.11/chefdk-0.16.24-1.dmg" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 2b6490b2a3008da864d1a06cc59114a6ccb5bb984d7016e505dab6767ca708e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/el/7/x86_64"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/el/7/chefdk-0.16.24-1.el7.x86_64.rpm" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 516ed56486bd846c1d3224ba507a42f61d768723e911a13311ba6f0ccde615aa" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/windows/2008r2/i386"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/windows/2008r2/chefdk-0.16.24-1-x86.msi" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 2900841a08baa265342c3f8c4c5dbce50b0eb3db6084e1e296931c7f7cc851ed" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/ubuntu/12.04/x86_64"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/ubuntu/12.04/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 8a7cfd9259f9a2c126f50f945964264801e673912607f65e35be43a31b6026e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/ubuntu/14.04/x86_64"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/ubuntu/14.04/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 8a7cfd9259f9a2c126f50f945964264801e673912607f65e35be43a31b6026e3" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/windows/2012/i386"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/windows/2012/chefdk-0.16.24-1-x86.msi" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 2900841a08baa265342c3f8c4c5dbce50b0eb3db6084e1e296931c7f7cc851ed" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/debian/6/x86_64"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/debian/6/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 1a51ba8afb4df2892b79e91d8d4642432f77e98476736580545a730096393253" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/debian/7/x86_64"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/debian/7/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 1a51ba8afb4df2892b79e91d8d4642432f77e98476736580545a730096393253" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/debian/8/x86_64"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/debian/8/chefdk_0.16.24-1_amd64.deb" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 1a51ba8afb4df2892b79e91d8d4642432f77e98476736580545a730096393253" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/windows/2012r2/i386"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/windows/2012r2/chefdk-0.16.24-1-x86.msi" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 2900841a08baa265342c3f8c4c5dbce50b0eb3db6084e1e296931c7f7cc851ed" | out-file "$artifact_info_dir/artifact_info" -Append
+
+              $artifact_info_dir = "$($env:temp)/artifact_info/el/6/x86_64"
+              New-Item -ItemType directory -Path $artifact_info_dir -force
+              New-Item -ItemType file "$($artifact_info_dir)/artifact_info" -force
+              "url http://artifactory.chef.co/omnibus-unstable-local/com/getchef/chefdk/0.16.24/el/6/chefdk-0.16.24-1.el6.x86_64.rpm" | out-file "$artifact_info_dir/artifact_info"
+              "sha256 359e50d5a622aabe4d5a5185df95794e63f5831fa5572d8dac68afc0ad74ec4f" | out-file "$artifact_info_dir/artifact_info" -Append
+
+
+            $artifact_info_for_platform = Get-Content "$($env:temp)/artifact_info/$($platform)/$($platform_version)/$($architecture)/artifact_info"
+
+            $package_metadata = ($artifact_info_for_platform).trim() -split '\n' |
+              foreach { $hash = @{} } {$key, $value = $_ -split '\s+'; $hash.Add($key, $value)} {$hash}
+
+            Write-Verbose "Project details: "
+            foreach ($key in $package_metadata.keys) {
+              Write-Verbose "`t$key = $($package_metadata[$key])"
+            }
+            $package_metadata
+          }
+
+          function Install-Project {
+            <#
+              .SYNOPSIS
+              Install a Chef Software, Inc. product
+              .DESCRIPTION
+              Install a Chef Software, Inc. product
+              .EXAMPLE
+              iex (new-object net.webclient).downloadstring('https://omnitruck.chef.io/install.ps1'); Install-Project -project chef -channel stable
+
+              Installs the latest stable version of Chef.
+              .EXAMPLE
+              iex (irm 'https://omnitruck.chef.io/install.ps1'); Install-Project -project chefdk -channel current
+
+              Installs the latest integration build of the Chef Development Kit
+            #>
+            [cmdletbinding(SupportsShouldProcess=$true)]
+            param (
+              # Project to install
+              [string]
+              $project = 'chef',
+              # Release channel to install from
+              [validateset('current', 'stable', 'unstable')]
+              [string]
+              $channel = 'stable',
+              # Version of the application to install
+              # This parameter is optional, if not supplied it will provide the latest version,
+              # and if an iteration number is not specified, it will grab the latest available iteration.
+              # Partial version numbers are also acceptable (using v=11
+              # will grab the latest 11.x client which matches the other flags).
+              [string]
+              $version,
+              # Full path for the downloaded installer.
+              [string]
+              $filename,
+              # Full path to the location to download the installer
+              [string]
+              $download_directory = $env:temp,
+              # The following legacy switches are just aliases for the current channel
+              [switch]
+              $prerelease,
+              [switch]
+              $nightlies,
+              [validateset('auto', 'i386', 'x86_64')]
+              [string]
+              $architecture = 'auto'
+            )
+
+            $package_metadata = Get-ProjectMetadata -project $project -channel $channel -version $version -prerelease:$prerelease -nightlies:$nightlies -architecture $architecture
+
+            if (-not [string]::IsNullOrEmpty($filename)) {
+              $download_directory = split-path $filename
+              $filename = split-path $filename -leaf
+              if ([string]::IsNullOrEmpty($download_directory)) {
+                $download_directory = $pwd
+              }
+            }
+            else {
+              $filename = ($package_metadata.url -split '/')[-1]
+            }
+            Write-Verbose "Download directory: $download_directory"
+            Write-Verbose "Filename: $filename"
+
+            if (-not (test-path $download_directory)) {
+              mkdir $download_directory
+            }
+            $download_directory = (resolve-path $download_directory).providerpath
+            $download_destination = join-path $download_directory $filename
+
+            if ((test-path $download_destination) -and
+              (Test-ProjectPackage -Path $download_destination -Algorithm 'SHA256' -Hash $package_metadata.sha256 -ea SilentlyContinue)){
+              Write-Verbose "Found existing valid installer at $download_destination."
+            }
+            else {
+              if ($pscmdlet.ShouldProcess("$($package_metadata.url)", "Download $project")) {
+                Write-Verbose "Downloading $project from $($package_metadata.url) to $download_destination."
+                Get-WebContent $package_metadata.url -filepath $download_destination
+              }
+            }
+
+            if ($pscmdlet.ShouldProcess("$download_destination", "Installing")){
+              if (Test-ProjectPackage -Path $download_destination -Algorithm 'SHA256' -Hash $package_metadata.sha256) {
+                Write-Host "Installing $project from $download_destination"
+                $installingProject = $True
+                $installAttempts = 0
+                while ($installingProject) {
+                  $p = Start-Process -FilePath "msiexec" -ArgumentList "/qn /i $download_destination" -Passthru -Wait
+                  $p.WaitForExit()
+                  if ($p.ExitCode -eq 1618) {
+                    Write-Host "Another msi install is in progress (exit code 1618), retrying ($($installAttempts))..."
+                    continue
+                  } elseif ($p.ExitCode -ne 0) {
+                    throw "msiexec was not successful. Received exit code $($p.ExitCode)"
+                  }
+                  $installingProject = $False
+                }
+              }
+              else {
+                throw "Failed to validate the downloaded installer for $project."
+              }
+            }
+          }
+          set-alias install -value Install-Project
+          export-modulemember -function 'Install-Project','Get-ProjectMetadata' -alias 'install'
+
+          }
+
+          install -project chefdk -version 0.16.24 -channel unstable -architecture i386
+          )
+          D      [WinRM] opening remote shell on http://10.194.12.113:5985/wsman
+          D      [WinRM] remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA is open on http://10.194.12.113:5985/wsman
+          D      creating hash for file $env:TEMP/iis-windows-2012r2-long_script.ps1
+          D      Running check_files.ps1
+          D      @{
+          D        "4228dff1a452a761e226cd1003a0b6fe" = @{
+          D          "target" = "$env:TEMP/iis-windows-2012r2-long_script.ps1";
+          D          "src_basename" = "iis-windows-2012r2-long_script.ps1";
+          D          "dst" = "$env:TEMP/iis-windows-2012r2-long_script.ps1"
+          D        }
+          D      }
+          D      Parsing CSV Response
+          D      "chk_exists","src_md5","dst_md5","chk_dirty","verifies","target_is_folder"
+          "False","4228dff1a452a761e226cd1003a0b6fe",,"True","False","False"
+
+          D      Uploading /tmp/cheftest/kitchen-long-script20160707-22803-pqhkfp/iis-windows-2012r2-long_script.ps1 to encoded tmpfile $env:TEMP\b64-4228dff1a452a761e226cd1003a0b6fe.txt
+          D      Finished uploading /tmp/cheftest/kitchen-long-script20160707-22803-pqhkfp/iis-windows-2012r2-long_script.ps1 to encoded tmpfile $env:TEMP\b64-4228dff1a452a761e226cd1003a0b6fe.txt (21.06 KB over 3 chunks) in (0m0.31s)
+          D      Running decode_files.ps1
+          D      @{
+          D        "$env:TEMP\b64-4228dff1a452a761e226cd1003a0b6fe.txt" = @{
+          D          "dst" = "$env:TEMP/iis-windows-2012r2-long_script.ps1"
+          D        }
+          D      }
+          D      Parsing CSV Response
+          D      "src_md5","tmpzip","verifies","tmpfile","dst_md5","dst"
+          "4228dff1a452a761e226cd1003a0b6fe",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-4228dff1a452a761e226cd1003a0b6fe.txt","4228dff1a452a761e226cd1003a0b6fe","C:\Users\ADMINI~1\AppData\Local\Temp/iis-windows-2012r2-long_script.ps1"
+
+          D      Uploaded 1 items dirty_check: (0m0.68s) stream_files: (0m0.31s) decode: (0m0.75s)
+
+                 ModuleType Version    Name                                ExportedCommands
+                 ---------- -------    ----                                ----------------
+                 Script     0.0        Omnitruck                           {Get-ProjectMetada...
+                 Installing chefdk from C:\Users\ADMINI~1\AppData\Local\Temp\chefdk-0.16.24-1-x86.msi
+          D      [WinRM] retrying receive request after timeout
+
+
+          D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> ($dirs = @("$env:TEMP\kitchen\clients", "$env:TEMP\kitchen\cookbooks", "$env:TEMP\kitchen\data", "$env:TEMP\kitchen\data_bags", "$env:TEMP\kitchen\encrypted_data_bag_secret", "$env:TEMP\kitchen\environments", "$env:TEMP\kitchen\roles")
+          $root_path = "$env:TEMP\kitchen"
+
+          Function Delete-AllDirs($dirs) {
+            $dirs | ForEach-Object {
+              if (Test-Path ($path = Unresolve-Path $_)) { Remove-Item $path -Recurse -Force }
+            }
+          }
+
+          Function Unresolve-Path($p) {
+            if ($p -eq $null) { return $null }
+            else { return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($p) }
+          }
+
+          Function Make-RootPath($p) {
+            $p = Unresolve-Path $p
+            if (-Not (Test-Path $p)) { New-Item $p -ItemType directory | Out-Null }
+          }
+
+          Delete-AllDirs $dirs
+          Make-RootPath $root_path
+          )
+                 Transferring files to <iis-windows-2012r2>
+          D      creating hash for file $env:TEMP\kitchen
+          D      creating hash for file $env:TEMP\kitchen
+          D      creating hash for directory $env:TEMP\kitchen
+          D      Populating files
+          D      === All files added.
+          D      creating hash for file $env:TEMP\kitchen
+          D      creating hash for directory $env:TEMP\kitchen
+          D      Populating files
+          D      +++ Adding iis/metadata.rb
+          D      === All files added.
+          D      Running check_files.ps1
+          D      @{
+          D        "b6e4a27879309c94e2c309449ea4e7dc" = @{
+          D          "target" = "$env:TEMP\kitchen";
+          D          "src_basename" = "dna.json";
+          D          "dst" = "$env:TEMP\kitchen"
+          D        };
+          D        "bc1f72858bb12abc039055aba3bc3c48" = @{
+          D          "target" = "$env:TEMP\kitchen";
+          D          "src_basename" = "client.rb";
+          D          "dst" = "$env:TEMP\kitchen"
+          D        };
+          D        "76cdb2bad9582d23c1f6f4d868218d6c" = @{
+          D          "target" = "$env:TEMP\winrm-upload\tmpzip-76cdb2bad9582d23c1f6f4d868218d6c.zip";
+          D          "src_basename" = "cache";
+          D          "dst" = "$env:TEMP\kitchen\cache"
+          D        };
+          D        "49abb94825cb80b9a9cd59e5f76daf4a" = @{
+          D          "target" = "$env:TEMP\kitchen";
+          D          "src_basename" = "validation.pem";
+          D          "dst" = "$env:TEMP\kitchen"
+          D        };
+          D        "2e50ce04e446b8193074c1994cba943a" = @{
+          D          "target" = "$env:TEMP\winrm-upload\tmpzip-2e50ce04e446b8193074c1994cba943a.zip";
+          D          "src_basename" = "cookbooks";
+          D          "dst" = "$env:TEMP\kitchen\cookbooks"
+          D        }
+          D      }
+          D      Parsing CSV Response
+          D      "chk_exists","src_md5","dst_md5","chk_dirty","verifies","target_is_folder"
+          "False","2e50ce04e446b8193074c1994cba943a",,"True","False","False"
+          "False","76cdb2bad9582d23c1f6f4d868218d6c",,"True","False","False"
+          "False","b6e4a27879309c94e2c309449ea4e7dc",,"True","False","True"
+          "False","49abb94825cb80b9a9cd59e5f76daf4a",,"True","False","True"
+          "False","bc1f72858bb12abc039055aba3bc3c48",,"True","False","True"
+
+          D      Uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/dna.json to encoded tmpfile $env:TEMP\b64-b6e4a27879309c94e2c309449ea4e7dc.txt
+          D      Finished uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/dna.json to encoded tmpfile $env:TEMP\b64-b6e4a27879309c94e2c309449ea4e7dc.txt (0.116 KB over 1 chunks) in (0m0.07s)
+          D      Uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/client.rb to encoded tmpfile $env:TEMP\b64-bc1f72858bb12abc039055aba3bc3c48.txt
+          D      Finished uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/client.rb to encoded tmpfile $env:TEMP\b64-bc1f72858bb12abc039055aba3bc3c48.txt (1.096 KB over 1 chunks) in (0m0.07s)
+          D      Uploading /tmp/cheftest/tmpzip-20160707-22803-gkskk1.zip to encoded tmpfile $env:TEMP\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt
+          D      Finished uploading /tmp/cheftest/tmpzip-20160707-22803-gkskk1.zip to encoded tmpfile $env:TEMP\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt (0.028 KB over 1 chunks) in (0m0.06s)
+          D      Uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/validation.pem to encoded tmpfile $env:TEMP\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt
+          D      Finished uploading /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf/validation.pem to encoded tmpfile $env:TEMP\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt (2.236 KB over 1 chunks) in (0m0.13s)
+          D      Uploading /tmp/cheftest/tmpzip-20160707-22803-u9b0x0.zip to encoded tmpfile $env:TEMP\b64-2e50ce04e446b8193074c1994cba943a.txt
+          D      Finished uploading /tmp/cheftest/tmpzip-20160707-22803-u9b0x0.zip to encoded tmpfile $env:TEMP\b64-2e50ce04e446b8193074c1994cba943a.txt (0.188 KB over 1 chunks) in (0m0.10s)
+          D      Running decode_files.ps1
+          D      @{
+          D        "$env:TEMP\b64-b6e4a27879309c94e2c309449ea4e7dc.txt" = @{
+          D          "dst" = "$env:TEMP\kitchen/dna.json"
+          D        };
+          D        "$env:TEMP\b64-bc1f72858bb12abc039055aba3bc3c48.txt" = @{
+          D          "dst" = "$env:TEMP\kitchen/client.rb"
+          D        };
+          D        "$env:TEMP\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt" = @{
+          D          "dst" = "$env:TEMP\kitchen\cache";
+          D          "tmpzip" = "$env:TEMP\winrm-upload\tmpzip-76cdb2bad9582d23c1f6f4d868218d6c.zip"
+          D        };
+          D        "$env:TEMP\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt" = @{
+          D          "dst" = "$env:TEMP\kitchen/validation.pem"
+          D        };
+          D        "$env:TEMP\b64-2e50ce04e446b8193074c1994cba943a.txt" = @{
+          D          "dst" = "$env:TEMP\kitchen\cookbooks";
+          D          "tmpzip" = "$env:TEMP\winrm-upload\tmpzip-2e50ce04e446b8193074c1994cba943a.zip"
+          D        }
+          D      }
+          D      Parsing CSV Response
+          D      "src_md5","tmpzip","verifies","tmpfile","dst_md5","dst"
+          "76cdb2bad9582d23c1f6f4d868218d6c","C:\Users\ADMINI~1\AppData\Local\Temp\winrm-upload\tmpzip-76cdb2bad9582d23c1f6f4d868218d6c.zip","True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-76cdb2bad9582d23c1f6f4d868218d6c.txt","76cdb2bad9582d23c1f6f4d868218d6c","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen\cache"
+          "2e50ce04e446b8193074c1994cba943a","C:\Users\ADMINI~1\AppData\Local\Temp\winrm-upload\tmpzip-2e50ce04e446b8193074c1994cba943a.zip","True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-2e50ce04e446b8193074c1994cba943a.txt","2e50ce04e446b8193074c1994cba943a","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen\cookbooks"
+          "49abb94825cb80b9a9cd59e5f76daf4a",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-49abb94825cb80b9a9cd59e5f76daf4a.txt","49abb94825cb80b9a9cd59e5f76daf4a","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen/validation.pem"
+          "b6e4a27879309c94e2c309449ea4e7dc",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-b6e4a27879309c94e2c309449ea4e7dc.txt","b6e4a27879309c94e2c309449ea4e7dc","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen/dna.json"
+          "bc1f72858bb12abc039055aba3bc3c48",,"True","C:\Users\ADMINI~1\AppData\Local\Temp\b64-bc1f72858bb12abc039055aba3bc3c48.txt","bc1f72858bb12abc039055aba3bc3c48","C:\Users\ADMINI~1\AppData\Local\Temp\kitchen/client.rb"
+
+          D      Cleaned up src_zip /tmp/cheftest/tmpzip-20160707-22803-gkskk1.zip
+          D      Cleaned up src_zip /tmp/cheftest/tmpzip-20160707-22803-u9b0x0.zip
+          D      Uploaded 5 items dirty_check: (0m0.73s) stream_files: (0m0.43s) decode: (0m1.47s)
+          D      Transfer complete
+          D      [WinRM] negotiate::http://10.194.12.113:5985/wsman<{:user=>"administrator", :pass=>"QmgkPzNn.c", :elevated_username=>"administrator", :elevated_password=>"QmgkPzNn.c", :no_ssl_peer_verification=>true, :disable_sspi=>false, :basic_auth_only=>false}> ($env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine")
+
+          & $env:systemdrive\opscode\chefdk\bin\chef-client.bat --local-mode --config $env:TEMP\kitchen\client.rb --log_level auto --force-formatter --no-color --json-attributes $env:TEMP\kitchen\dna.json --chef-zero-port 8889)
+                 Starting Chef Client, version 12.12.13
+                 Creating a new client identity for iis-windows-2012r2 using the validator key.
+                 resolving cookbooks for run list: ["iis::default"]
+                 Synchronizing Cookbooks:
+                   - iis (0.0.0)
+                 Installing Cookbook Gems:
+                 Compiling Cookbooks...
+
+                 ================================================================================
+                 Recipe Compile Error
+                 ================================================================================
+
+                 Chef::Exceptions::RecipeNotFound
+                 --------------------------------
+                 could not find recipe default for cookbook iis
+
+                 Platform:
+                 ---------
+                 i386-mingw32
+
+
+                 Running handlers:
+                 [2016-07-07T22:44:50+00:00] ERROR: Running exception handlers
+                 Running handlers complete
+                 [2016-07-07T22:44:50+00:00] ERROR: Exception handlers complete
+                 Chef Client failed. 0 resources updated in 43 seconds
+                 [2016-07-07T22:44:50+00:00] FATAL: Stacktrace dumped to C:/Users/ADMINI~1/AppData/Local/Temp/kitchen/cache/chef-stacktrace.out
+                 [2016-07-07T22:44:50+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+                 [2016-07-07T22:44:50+00:00] FATAL: Chef::Exceptions::RunFailedWrappingError: Found 1 errors, they are stored in the backtrace
+          D      Cleaning up local sandbox in /tmp/cheftest/iis-windows-2012r2-sandbox-20160707-22803-1z0zptf
+          D      Converge failed on instance <iis-windows-2012r2>.
+          D      ------Exception-------
+          D      Class: Kitchen::InstanceFailure
+          D      Message: Converge failed on instance <iis-windows-2012r2>.  Please see .kitchen/logs/iis-windows-2012r2.log for more details
+          D      ----------------------
+          D      ------Backtrace-------
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:76:in `rescue in call'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:79:in `call'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:373:in `block in converge_action'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `call'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:478:in `block in action'
+          D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:477:in `action'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:369:in `converge_action'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:348:in `block in transition_to'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `each'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `transition_to'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:138:in `converge'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `public_send'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `run_action_in_thread'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+          D      ----End Backtrace-----
+          D      ---Nested Exception---
+          D      Class: Kitchen::ActionFailed
+          D      Message: WinRM exited (1) for command: [$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine")
+
+          & $env:systemdrive\opscode\chefdk\bin\chef-client.bat --local-mode --config $env:TEMP\kitchen\client.rb --log_level auto --force-formatter --no-color --json-attributes $env:TEMP\kitchen\dna.json --chef-zero-port 8889]
+          D      ----------------------
+          D      ------Backtrace-------
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:76:in `rescue in call'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/provisioner/base.rb:79:in `call'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:373:in `block in converge_action'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `call'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:513:in `synchronize_or_call'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:478:in `block in action'
+          D      /opt/chefdk/embedded/lib/ruby/2.1.0/benchmark.rb:279:in `measure'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:477:in `action'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:369:in `converge_action'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:348:in `block in transition_to'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `each'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:347:in `transition_to'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/instance.rb:138:in `converge'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `public_send'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:194:in `run_action_in_thread'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/test-kitchen-1.9.2/lib/kitchen/command.rb:173:in `block (2 levels) in run_action'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `call'
+          D      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/logging-2.1.0/lib/logging/diagnostic_context.rb:450:in `block in create_with_logging_context'
+          D      ----End Backtrace-----
+          D      [WinRM] closing remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA on http://10.194.12.113:5985/wsman
+          D      [WinRM] remote shell 8CA51C80-642A-4FF5-B8EE-B175F8FE9EFA closed
+          STDERR: >>>>>> Converge failed on instance <iis-windows-2012r2>.
+          >>>>>> Please see .kitchen/logs/iis-windows-2012r2.log for more details
+          >>>>>> ------Exception-------
+          >>>>>> Class: Kitchen::ActionFailed
+          >>>>>> Message: WinRM exited (1) for command: [$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine")
+
+          & $env:systemdrive\opscode\chefdk\bin\chef-client.bat --local-mode --config $env:TEMP\kitchen\client.rb --log_level auto --force-formatter --no-color --json-attributes $env:TEMP\kitchen\dna.json --chef-zero-port 8889]
+          >>>>>> ----------------------
+          ---- End output of bundle exec kitchen converge  -c -l debug ----
+          Ran bundle exec kitchen converge  -c -l debug returned 10
+
+          Resource Declaration:
+          ---------------------
+          # In /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb
+
+            1: top_cookbooks "converge"
+
+          Compiled Resource:
+          ------------------
+          # Declared in /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/cookbooks/acceptance-cookbook/recipes/provision.rb:1:in `from_file'
+
+          top_cookbooks("converge") do
+            action [:run]
+            updated true
+            updated_by_last_action true
+            retries 0
+            retry_delay 2
+            default_guard_interpreter :default
+            declared_type :top_cookbooks
+            cookbook_name "acceptance-cookbook"
+            recipe_name "provision"
+            command "converge"
+          end
+
+          Platform:
+          ---------
+          x86_64-linux
+
+      Starting audit phase
+    20683: |2
+
+      Running handlers:
+      [2016-07-07T22:44:52+00:00] ERROR: Running exception handlers
+      Running handlers complete
+      [2016-07-07T22:44:52+00:00] ERROR: Exception handlers complete
+      Chef Client failed. 16 resources updated in 29 minutes 55 seconds
+      [2016-07-07T22:44:52+00:00] ERROR: Failed to post audit report to server. Saving report to /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/failed-audit-data.json
+      [2016-07-07T22:44:52+00:00] FATAL: Stacktrace dumped to /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/cache/chef-stacktrace.out
+      [2016-07-07T22:44:52+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+      [2016-07-07T22:44:52+00:00] ERROR: Found 1 errors, they are stored in the backtrace
+      [2016-07-07T22:44:53+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+      STDERR:
+      ---- End output of chef-client -z -c /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/dna.json -o acceptance-cookbook::provision --no-color ----
+      Ran chef-client -z -c /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/.chef/config.rb --force-formatter -j /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/provision/dna.json -o acceptance-cookbook::provision --no-color returned 1
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:289:in `invalid!'
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/gems/mixlib-shellout-2.2.6/lib/mixlib/shellout.rb:276:in `error!'
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/chef_runner.rb:53:in `block in run!'
+      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler.rb:237:in `block in with_clean_env'
+      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler.rb:447:in `with_env'
+      /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.12.5/lib/bundler.rb:237:in `with_clean_env'
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/chef_runner.rb:42:in `run!'
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:149:in `run_command'
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:116:in `block in run_suite'
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:114:in `each'
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:114:in `run_suite'
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:76:in `block (2 levels) in start_worker'
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:74:in `loop'
+      /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/acceptance-chef/vendor/bundle/ruby/2.1.0/bundler/gems/chef-acceptance-e92ddae46d21/lib/chef-acceptance/application.rb:74:in `block in start_worker'
+      CHEF-ACCEPTANCE::[2016-07-07 22:44:53 +0000] --force-destroy specified so attempting to run the destroy recipe
+      TOP-COOKBOOKS::DESTROY::[2016-07-07 22:44:53 +0000] Initialized [/home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/logs/top-cookbooks/destroy.log] logger...
+    20954: |
+      CHEF-ACCEPTANCE::[2016-07-07 22:45:42 +0000] | top-cookbooks | Total         | 00:30:47 | Y     |
+      CHEF-ACCEPTANCE::[2016-07-07 22:45:42 +0000] | Run           | Total         | 00:30:47 | Y     |
+      Build step 'Invoke XShell command' marked build as failure
+      Archiving artifacts
+      Recording fingerprints
+steps:
+  total: 32m40s
+  before (setup time): 1m52s
+  CHEF-ACCEPTANCE:
+    total: 30m48s
+    TOP-COOKBOOKS::PROVISION: 29m59s
+    TOP-COOKBOOKS::DESTROY: 49s
+chef_acceptance_timing:
+- top-cookbooks:
+    provision: 28m3s
+    force-destroy: 34s
+    Total: 30m47s
+  Run:
+    Total: 30m47s
