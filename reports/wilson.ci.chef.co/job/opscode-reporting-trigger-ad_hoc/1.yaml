@@ -1,364 +1,233 @@
 ---
-result: FAILURE
+result: SUCCESS
 url: http://wilson.ci.chef.co/job/opscode-reporting-trigger-ad_hoc/1/
-failure_category: unknown
-failure_cause: 'unknown: all: opscode-reporting-test'
-timestamp: 2015-12-09 16:11:13 UTC
-duration: 3h33m
-triggered_by: elliott-davis
-active_duration: 39m7s
-retry_delays: 2h53m39s
+timestamp: 2016-08-03 21:25:19 UTC
+duration: 53m57s
+triggered_by: tduffield
+active_duration: 53m32s
+queue_delays: 10s
 parameters:
-  GIT_REF: elliott/rabbit-fix
+  GIT_REF: td/fix-attr-typo
   EXPIRE_CACHE: false
 change:
-  git_remote: git@github.com:opscode/omnibus-reporting.git
-  git_commit: e088a79c7cb35ae236c42aceec111ead080cdaf5
+  git_remote: git@github.com:chef/oc_reporting.git
+  git_commit: fb872ac8258b994a6867278ccf06c2dc18a0b340
   project: opscode-reporting
-  version: 1.5.5+20151209190504.git.3.c3da439
+  version: 1.6.2+git.1.fb872ac
 stages:
+  opscode-reporting-promote:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-promote/2/
+    duration: 0s
   opscode-reporting-test:
-    result: FAILURE
-    failure_category: unknown
-    failure_cause: 'unknown: all'
-    url: http://wilson.ci.chef.co/job/opscode-reporting-test/1/
-    duration: 7s
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-test/3/
+    duration: 26m2s
     runs:
       el-5:
-        result: FAILURE
-        failure_category: unknown
-        failure_cause: unknown
-        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-5,project=opscode-reporting,role=tester/1/
-        duration: 3s
-        logs:
-          consoleText:
-            53: |
-              [copy-to-slave] Copying 'opscode-ci/**/*', excluding nothing, from 'file:/srv/jenkins/userContent/' on the master to 'file:/home/jenkins/workspace/opscode-reporting-test/architecture/x86_64/platform/el-5/project/opscode-reporting/role/tester/' on 'reporting-rhel-5-tester-d01e6a'.
-              Copied 1 artifact from "opscode-reporting-build \302\273 x86_64,el-5,opscode-reporting,builder" build number 2
-              ERROR: Unable to find a build for artifact copy from: chef-server-12-build
-              Performing Post build task...
-              Match found for : : True
-            76: |
-              Recording fingerprints
-              Recording test results
-              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
-              hudson.AbortException: No test report files were found. Configuration error?
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
-                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
-                at hudson.remoting.Request$2.run(Request.java:325)
-                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
-                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-                at java.lang.Thread.run(Thread.java:745)
-                at ......remote call to reporting-rhel-5-tester-d01e6a(Native Method)
-                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
-                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
-                at hudson.remoting.Channel.call(Channel.java:753)
-                at hudson.FilePath.act(FilePath.java:978)
-                at hudson.FilePath.act(FilePath.java:967)
-                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
-                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
-                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              [BFA] Scanning build for known causes...
-              [BFA] No failure causes found
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-5,project=opscode-reporting,role=tester/3/
+        duration: 18m13s
+        steps:
+          total: 18m13s
+          before (setup time): 8m21s
+          chef-client private-chef::default: 3m5s
+          chef-client opscode-reporting::default: 34s
+          pedant: 2m4s
       el-6:
-        result: FAILURE
-        failure_category: unknown
-        failure_cause: unknown
-        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-6,project=opscode-reporting,role=tester/1/
-        duration: 2s
-        logs:
-          consoleText:
-            53: |
-              [copy-to-slave] Copying 'opscode-ci/**/*', excluding nothing, from 'file:/srv/jenkins/userContent/' on the master to 'file:/home/jenkins/workspace/opscode-reporting-test/architecture/x86_64/platform/el-6/project/opscode-reporting/role/tester/' on 'reporting-rhel-6-tester-26be37'.
-              Copied 1 artifact from "opscode-reporting-build ? x86_64,el-6,opscode-reporting,builder" build number 2
-              ERROR: Unable to find a build for artifact copy from: chef-server-12-build
-              Performing Post build task...
-              Match found for : : True
-            76: |
-              Recording fingerprints
-              Recording test results
-              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
-              hudson.AbortException: No test report files were found. Configuration error?
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
-                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
-                at hudson.remoting.Request$2.run(Request.java:325)
-                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
-                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-                at java.lang.Thread.run(Thread.java:745)
-                at ......remote call to reporting-rhel-6-tester-26be37(Native Method)
-                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
-                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
-                at hudson.remoting.Channel.call(Channel.java:753)
-                at hudson.FilePath.act(FilePath.java:978)
-                at hudson.FilePath.act(FilePath.java:967)
-                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
-                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
-                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              [BFA] Scanning build for known causes...
-              [BFA] No failure causes found
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-6,project=opscode-reporting,role=tester/3/
+        duration: 16m6s
+        steps:
+          total: 16m6s
+          before (setup time): 13m18s
+          chef-client private-chef::default: 3m35s
+          chef-client opscode-reporting::default: 37s
+          pedant: 2m4s
+          after (cleanup time): "-7m36s"
       el-7:
-        result: FAILURE
-        failure_category: unknown
-        failure_cause: unknown
-        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-7,project=opscode-reporting,role=tester/1/
-        duration: 4s
-        logs:
-          consoleText:
-            53: |
-              [copy-to-slave] Copying 'opscode-ci/**/*', excluding nothing, from 'file:/srv/jenkins/userContent/' on the master to 'file:/home/jenkins/workspace/opscode-reporting-test/architecture/x86_64/platform/el-7/project/opscode-reporting/role/tester/' on 'reporting-rhel-7-tester-385eb7'.
-              Copied 1 artifact from "opscode-reporting-build ? x86_64,el-7,opscode-reporting,builder" build number 2
-              ERROR: Unable to find a build for artifact copy from: chef-server-12-build
-              Performing Post build task...
-              Match found for : : True
-            76: |
-              Recording fingerprints
-              Recording test results
-              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
-              hudson.AbortException: No test report files were found. Configuration error?
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
-                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
-                at hudson.remoting.Request$2.run(Request.java:325)
-                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
-                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-                at java.lang.Thread.run(Thread.java:745)
-                at ......remote call to reporting-rhel-7-tester-385eb7(Native Method)
-                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
-                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
-                at hudson.remoting.Channel.call(Channel.java:753)
-                at hudson.FilePath.act(FilePath.java:978)
-                at hudson.FilePath.act(FilePath.java:967)
-                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
-                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
-                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              [BFA] Scanning build for known causes...
-              [BFA] No failure causes found
-      ubuntu-10.04:
-        result: FAILURE
-        failure_category: unknown
-        failure_cause: unknown
-        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester/1/
-        duration: 5s
-        logs:
-          consoleText:
-            53: |
-              [copy-to-slave] Copying 'opscode-ci/**/*', excluding nothing, from 'file:/srv/jenkins/userContent/' on the master to 'file:/home/jenkins/workspace/opscode-reporting-test/architecture/x86_64/platform/ubuntu-10.04/project/opscode-reporting/role/tester/' on 'reporting-ubuntu-10.04-tester-9bffca'.
-              Copied 1 artifact from "opscode-reporting-build \302\273 x86_64,ubuntu-10.04,opscode-reporting,builder" build number 2
-              ERROR: Unable to find a build for artifact copy from: chef-server-12-build
-              Performing Post build task...
-              Match found for : : True
-            76: |
-              Recording fingerprints
-              Recording test results
-              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
-              hudson.AbortException: No test report files were found. Configuration error?
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
-                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
-                at hudson.remoting.Request$2.run(Request.java:325)
-                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
-                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-                at java.lang.Thread.run(Thread.java:745)
-                at ......remote call to reporting-ubuntu-10.04-tester-9bffca(Native Method)
-                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
-                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
-                at hudson.remoting.Channel.call(Channel.java:753)
-                at hudson.FilePath.act(FilePath.java:978)
-                at hudson.FilePath.act(FilePath.java:967)
-                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
-                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
-                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              [BFA] Scanning build for known causes...
-              [BFA] No failure causes found
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-7,project=opscode-reporting,role=tester/3/
+        duration: 19m33s
+        steps:
+          total: 19m33s
+          before (setup time): 7m50s
+          chef-client private-chef::default: 4m14s
+          chef-client opscode-reporting::default: 37s
+          pedant: 2m34s
       ubuntu-12.04:
-        result: FAILURE
-        failure_category: unknown
-        failure_cause: unknown
-        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-12.04,project=opscode-reporting,role=tester/1/
-        duration: 6s
-        logs:
-          consoleText:
-            53: |
-              [copy-to-slave] Copying 'opscode-ci/**/*', excluding nothing, from 'file:/srv/jenkins/userContent/' on the master to 'file:/home/jenkins/workspace/opscode-reporting-test/architecture/x86_64/platform/ubuntu-12.04/project/opscode-reporting/role/tester/' on 'reporting-ubuntu-12.04-tester-9ce617'.
-              Copied 1 artifact from "opscode-reporting-build \302\273 x86_64,ubuntu-12.04,opscode-reporting,builder" build number 2
-              ERROR: Unable to find a build for artifact copy from: chef-server-12-build
-              Performing Post build task...
-              Match found for : : True
-            76: |
-              Recording fingerprints
-              Recording test results
-              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
-              hudson.AbortException: No test report files were found. Configuration error?
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
-                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
-                at hudson.remoting.Request$2.run(Request.java:325)
-                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
-                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-                at java.lang.Thread.run(Thread.java:745)
-                at ......remote call to reporting-ubuntu-12.04-tester-9ce617(Native Method)
-                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
-                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
-                at hudson.remoting.Channel.call(Channel.java:753)
-                at hudson.FilePath.act(FilePath.java:978)
-                at hudson.FilePath.act(FilePath.java:967)
-                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
-                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
-                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              [BFA] Scanning build for known causes...
-              [BFA] No failure causes found
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-12.04,project=opscode-reporting,role=tester/3/
+        duration: 26m1s
+        steps:
+          total: 26m1s
+          before (setup time): 7m54s
+          chef-client private-chef::default: 10m22s
+          chef-client opscode-reporting::default: 41s
+          pedant: 2m43s
       ubuntu-14.04:
-        result: FAILURE
-        failure_category: unknown
-        failure_cause: unknown
-        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-14.04,project=opscode-reporting,role=tester/1/
-        duration: 6s
-        logs:
-          consoleText:
-            53: |
-              [copy-to-slave] Copying 'opscode-ci/**/*', excluding nothing, from 'file:/srv/jenkins/userContent/' on the master to 'file:/home/jenkins/workspace/opscode-reporting-test/architecture/x86_64/platform/ubuntu-14.04/project/opscode-reporting/role/tester/' on 'reporting-ubuntu-14.04-tester-8adbf4'.
-              Copied 1 artifact from "opscode-reporting-build \302\273 x86_64,ubuntu-12.04,opscode-reporting,builder" build number 2
-              ERROR: Unable to find a build for artifact copy from: chef-server-12-build
-              Performing Post build task...
-              Match found for : : True
-            76: |
-              Recording fingerprints
-              Recording test results
-              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
-              hudson.AbortException: No test report files were found. Configuration error?
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
-                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
-                at hudson.remoting.Request$2.run(Request.java:325)
-                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
-                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-                at java.lang.Thread.run(Thread.java:745)
-                at ......remote call to reporting-ubuntu-14.04-tester-8adbf4(Native Method)
-                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
-                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
-                at hudson.remoting.Channel.call(Channel.java:753)
-                at hudson.FilePath.act(FilePath.java:978)
-                at hudson.FilePath.act(FilePath.java:967)
-                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
-                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
-                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              [BFA] Scanning build for known causes...
-              [BFA] No failure causes found
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-14.04,project=opscode-reporting,role=tester/3/
+        duration: 22m41s
+        steps:
+          total: 22m41s
+          before (setup time): 7m43s
+          chef-client private-chef::default: 6m55s
+          chef-client opscode-reporting::default: 55s
+          pedant: 2m46s
   opscode-reporting-build:
     result: SUCCESS
-    url: http://wilson.ci.chef.co/job/opscode-reporting-build/2/
-    duration: 3h32m34s
-    active_duration: 38m55s
-    retries: 1
-    retry_delay: 2h53m39s
+    url: http://wilson.ci.chef.co/job/opscode-reporting-build/4/
+    duration: 27m25s
+    queue_delay: 10s
     runs:
       el-5:
         result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-5,project=opscode-reporting,role=builder/2/
-        duration: 38m6s
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-5,project=opscode-reporting,role=builder/4/
+        duration: 27m20s
+        steps:
+          total: 27m20s
+          before (setup time): 1m10s
+          omnibus:
+            total: 25m36s
+            fetch:
+              total: 59s
+              Software: 12s
+              NullFetcher:
+                version-manifest: 14s
+                after (cleanup time): "-14s"
+              PathFetcher:
+                opscode-reporting: 52s
+            build:
+              total: 24m30s
+              GitCache:
+                total: 8m55s
+                dep-selector-libgecode: 20s
+                berkshelf: 51s
+                erlang: 23s
+                chef: 16s
+                postgresql: 16s
+              Software:
+                total: 8m53s
+                berkshelf: 51s
+                erlang: 23s
+              Builder:
+                total: 5m54s
+                opscode-reporting-cookbooks: 20s
+                opscode-reporting: 4m28s
+                oc-reporting-pedant: 42s
+              Project:
+                opscode-reporting: 15m35s
+              HealthCheck: 2m59s
+              Packager::RPM: 12m28s
+          after (cleanup time): 33s
       el-6:
         result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-6,project=opscode-reporting,role=builder/2/
-        duration: 38m31s
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-6,project=opscode-reporting,role=builder/4/
+        duration: 26m29s
+        steps:
+          total: 26m29s
+          before (setup time): 6m15s
+          omnibus:
+            total: 24m45s
+            fetch:
+              total: 1m3s
+              Software: 12s
+              NullFetcher:
+                total: 11s
+                version-manifest: 15s
+                after (cleanup time): "-15s"
+              PathFetcher:
+                opscode-reporting: 56s
+            build:
+              total: 23m34s
+              GitCache:
+                berkshelf: 39s
+              Software:
+                berkshelf: 39s
+              Builder:
+                total: 5m55s
+                opscode-reporting-cookbooks: 21s
+                opscode-reporting: 4m38s
+                oc-reporting-pedant: 32s
+              Project:
+                opscode-reporting: 15m49s
+              HealthCheck: 2m39s
+              Packager::RPM: 13m2s
+          after (cleanup time): "-4m31s"
       el-7:
         result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-7,project=opscode-reporting,role=builder/2/
-        duration: 24m12s
-      ubuntu-10.04:
-        result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=builder/2/
-        duration: 30m4s
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-7,project=opscode-reporting,role=builder/4/
+        duration: 18m55s
+        steps:
+          total: 18m55s
+          before (setup time): 58s
+          omnibus:
+            total: 17m28s
+            fetch:
+              total: 46s
+              NullFetcher:
+                version-manifest: 13s
+                after (cleanup time): "-13s"
+              PathFetcher:
+                opscode-reporting: 41s
+            build:
+              total: 16m37s
+              GitCache:
+                total: 6m4s
+                berkshelf: 31s
+                postgresql: 14s
+              Software:
+                berkshelf: 31s
+              Builder:
+                total: 4m34s
+                opscode-reporting-cookbooks: 13s
+                opscode-reporting: 3m52s
+                oc-reporting-pedant: 19s
+              Project:
+                opscode-reporting: 10m33s
+              HealthCheck: 59s
+              Packager::RPM: 9m25s
+          after (cleanup time): 28s
       ubuntu-12.04:
         result: SUCCESS
-        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-12.04,project=opscode-reporting,role=builder/2/
-        duration: 25m26s
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-12.04,project=opscode-reporting,role=builder/4/
+        duration: 19m11s
+        steps:
+          total: 19m11s
+          before (setup time): 43s
+          omnibus:
+            total: 18m16s
+            fetch:
+              total: 59s
+              Software: 11s
+              NullFetcher:
+                version-manifest: 15s
+                after (cleanup time): "-15s"
+              PathFetcher:
+                opscode-reporting: 53s
+            build:
+              total: 17m10s
+              GitCache:
+                total: 6m28s
+                berkshelf: 33s
+                erlang: 13s
+                chef: 24s
+              Software:
+                total: 6m27s
+                berkshelf: 33s
+                erlang: 13s
+              Builder:
+                total: 4m46s
+                opscode-reporting-cookbooks: 14s
+                opscode-reporting: 3m58s
+                oc-reporting-pedant: 22s
+              Project:
+                opscode-reporting: 10m42s
+              HealthCheck: 1m7s
+              Packager::DEB: 9m28s
+          after (cleanup time): 11s
   opscode-reporting-trigger-ad_hoc:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/opscode-reporting-trigger-ad_hoc/1/
-    duration: 5s
+    duration: 4s

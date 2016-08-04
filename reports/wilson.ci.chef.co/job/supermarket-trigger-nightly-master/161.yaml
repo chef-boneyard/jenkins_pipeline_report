@@ -3,7 +3,7 @@ result: SUCCESS
 url: http://wilson.ci.chef.co/job/supermarket-trigger-nightly-master/161/
 timestamp: 2016-05-17 09:12:00 UTC
 duration: 2h22m23s
-active_duration: 2h22m1s
+active_duration: 3h17m9s
 parameters: {}
 change:
   git_remote: git@github.com:chef/supermarket.git
@@ -11,6 +11,19 @@ change:
   project: supermarket
   version: 2.6.0+20160517091217
 stages:
+  supermarket-build/architecture=x86_64,platform=ubuntu-10.04,project=supermarket,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/supermarket-build/architecture=x86_64,platform=ubuntu-10.04,project=supermarket,role=builder/250/
+    duration: 48m30s
+  supermarket-test/architecture=x86_64,platform=ubuntu-10.04,project=supermarket,role=tester:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/supermarket-test/architecture=x86_64,platform=ubuntu-10.04,project=supermarket,role=tester/222/
+    duration: 6m37s
+    steps:
+      total: 6m37s
+      before (setup time): 2m20s
+      chef-client omnibus-supermarket::default: 2m8s
+      after (cleanup time): 2m9s
   supermarket-promote:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/supermarket-promote/218/

@@ -4,7 +4,7 @@ url: http://wilson.ci.chef.co/job/chef-backend-trigger-ad_hoc/20/
 timestamp: 2016-02-23 04:16:43 UTC
 duration: 49m28s
 triggered_by: marcparadise
-active_duration: 49m
+active_duration: 1h23m36s
 parameters:
   GIT_REF: mp/dev-vm-leaderl
   EXPIRE_CACHE: false
@@ -14,6 +14,20 @@ change:
   project: chef-backend
   version: 0.1.0+20160223041656.git.37.a1039df
 stages:
+  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/86/
+    duration: 17m50s
+  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/84/
+    duration: 16m45s
+    steps:
+      total: 16m45s
+      before (setup time): 8m3s
+      chef-client chef-backend::default: 34s
+      chef-client private-chef::default: 1m49s
+      after (cleanup time): 1m54s
   chef-backend-promote:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-backend-promote/72/

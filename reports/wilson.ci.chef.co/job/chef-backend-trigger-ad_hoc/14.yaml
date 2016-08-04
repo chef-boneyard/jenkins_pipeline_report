@@ -2,11 +2,12 @@
 result: FAILURE
 url: http://wilson.ci.chef.co/job/chef-backend-trigger-ad_hoc/14/
 failure_category: code
-failure_cause: 'chef-client: all: chef-backend-test'
+failure_cause: 'chef-client: chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester;
+  chef-client: all: chef-backend-test'
 timestamp: 2016-02-16 17:50:59 UTC
 duration: 1h28m55s
 triggered_by: marcparadise
-active_duration: 1h28m42s
+active_duration: 2h42m26s
 parameters:
   GIT_REF: mp/service-status
   EXPIRE_CACHE: false
@@ -16,6 +17,44 @@ change:
   project: chef-backend
   version: 0.0.0+20160216175110
 stages:
+  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/56/
+    duration: 1h3m52s
+  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
+    result: FAILURE
+    failure_category: code
+    failure_cause: chef-client
+    failed_in:
+      step: chef-client
+    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/56/
+    duration: 9m51s
+    logs:
+      consoleText:
+        751: |
+          \33[0mCookbook Trace:\33[0m
+          ---------------\33[0m
+            /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/_save_current_run.rb:15:in `block in from_file'
+          \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/_save_current_run.rb:7:in `from_file'
+          \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/default.rb:37:in `from_file'\33[0m
+        774: |
+          \33[0m 21:  \33[0m
+
+          \33[0m[2016-02-16T19:16:03+00:00] ERROR: Running exception handlers
+          [2016-02-16T19:16:03+00:00] ERROR: Exception handlers complete
+          [2016-02-16T19:16:03+00:00] FATAL: Stacktrace dumped to /opt/chef-backend/embedded/cookbooks/cache/chef-stacktrace.out
+          [2016-02-16T19:16:03+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+          [2016-02-16T19:16:03+00:00] FATAL: NoMethodError: undefined method `[]' for nil:NilClass
+        789: |
+          ============================================================
+
+          Build step 'Invoke XShell command' marked build as failure
+          Performing Post build task...
+          Match found for : : True
+    steps:
+      total: 9m51s
+      before (setup time): 7m42s
+      after (cleanup time): 2m6s
   chef-backend-test:
     result: FAILURE
     failure_category: code

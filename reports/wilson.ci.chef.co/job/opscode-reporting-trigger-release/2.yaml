@@ -1,139 +1,166 @@
 ---
-result: ABORTED
+result: FAILURE
 url: http://wilson.ci.chef.co/job/opscode-reporting-trigger-release/2/
-failure_category: aborted
-failure_cause: 'aborted: el-5, el-7, ubuntu; network reset rubygems.org: el-6: opscode-reporting-build'
-timestamp: 2015-12-14 17:06:08 UTC
-duration: 5m5s
-triggered_by: stevendanna
-active_duration: 4m57s
+failure_category: unknown
+failure_cause: 'unknown: opscode-reporting-build'
+timestamp: 2016-08-04 14:09:52 UTC
+duration: 49m32s
+triggered_by: tduffield
+active_duration: 49m23s
 parameters:
-  GIT_REF: 1.5.6
+  GIT_REF: 1.6.3
   EXPIRE_CACHE: false
 change:
-  git_remote: git@github.com:opscode/omnibus-reporting.git
-  git_commit: f402cad15c8d7d74f8dd5119d2a0c93735cb0983
+  git_remote: git@github.com:chef/oc_reporting.git
+  git_commit: '084b883423d57c96507c85fd1205931491a9baaa'
   project: opscode-reporting
 stages:
   opscode-reporting-build:
-    result: ABORTED
-    failure_category: aborted
-    failure_cause: 'aborted: el-5, el-7, ubuntu; network reset rubygems.org: el-6'
-    url: http://wilson.ci.chef.co/job/opscode-reporting-build/12/
-    duration: 4m56s
+    result: FAILURE
+    failure_category: unknown
+    failure_cause: unknown
+    url: http://wilson.ci.chef.co/job/opscode-reporting-build/8/
+    duration: 49m19s
     runs:
       el-5:
-        result: ABORTED
-        failure_category: aborted
-        failure_cause: aborted
-        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-5,project=opscode-reporting,role=builder/12/
-        duration: 4m54s
-        logs:
-          consoleText:
-            230: |2
-                                       [Software] I | Loading software `net-ssh-gem' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/el-5/project/opscode-reporting/role/builder/config/software/net-ssh-gem.rb'.
-                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/el-5/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/berkshelf2.rb'.
-                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
-                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/el-5/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/nokogiri.rb'.
-                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/el-5/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/libxml2.rb'.
-            2923: |2
-                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/warning%3f-i.ri'
-                                                  I |   not a dynamic executable
-                                                  I | /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
-                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri'
-                                                  I |   not a dynamic executable
-                                                  I | /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/str3-i.ri:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-5,project=opscode-reporting,role=builder/8/
+        duration: 27m11s
+        steps:
+          total: 27m11s
+          before (setup time): 23m11s
+          omnibus:
+            total: 25m25s
+            fetch:
+              total: 58s
+              Software: 11s
+              NullFetcher:
+                version-manifest: 13s
+                after (cleanup time): "-13s"
+              PathFetcher:
+                opscode-reporting: 52s
+            build:
+              total: 24m20s
+              GitCache:
+                total: 8m41s
+                dep-selector-libgecode: 11s
+                berkshelf: 1m1s
+                erlang: 29s
+                chef: 15s
+              Software:
+                total: 8m41s
+                berkshelf: 1m1s
+                erlang: 29s
+              Builder:
+                total: 5m44s
+                opscode-reporting: 4m49s
+                oc-reporting-pedant: 42s
+              Project:
+                opscode-reporting: 15m39s
+              Licensing: 12s
+              HealthCheck: 2m54s
+              Packager::RPM: 12m32s
+          after (cleanup time): "-21m25s"
       el-6:
-        result: FAILURE
-        failure_category: network
-        failure_cause: network reset rubygems.org
-        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-6,project=opscode-reporting,role=builder/12/
-        duration: 1m2s
-        logs:
-          consoleText:
-            184: |
-              Installing thor 0.19.1
-
-              Gem::RemoteFetcher::FetchError: Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://rubygems.org/gems/uber-s3-0.2.4.gem)
-              An error occurred while installing uber-s3 (0.2.4), and Bundler cannot continue.
-              Make sure that `gem install uber-s3 -v '0.2.4'` succeeds before bundling.
-              Build step 'Invoke XShell command' marked build as failure
-              Archiving artifacts
-              Recording fingerprints
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-6,project=opscode-reporting,role=builder/8/
+        duration: 25m49s
+        steps:
+          total: 25m49s
+          before (setup time): 26m
+          omnibus:
+            total: 24m1s
+            fetch:
+              total: 1m7s
+              Software: 13s
+              NullFetcher:
+                total: 12s
+                version-manifest: 19s
+                after (cleanup time): "-19s"
+              PathFetcher:
+                opscode-reporting: 1m1s
+            build:
+              total: 22m46s
+              GitCache:
+                berkshelf: 40s
+              Software:
+                berkshelf: 40s
+              Builder:
+                total: 5m23s
+                opscode-reporting: 4m35s
+                oc-reporting-pedant: 36s
+              Project:
+                opscode-reporting: 15m22s
+              Licensing: 14s
+              HealthCheck: 2m39s
+              Packager::RPM: 12m28s
+          after (cleanup time): "-24m12s"
       el-7:
-        result: ABORTED
-        failure_category: aborted
-        failure_cause: aborted
-        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-7,project=opscode-reporting,role=builder/12/
-        duration: 4m54s
-        logs:
-          consoleText:
-            229: |2
-                                       [Software] I | Loading software `net-ssh-gem' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/el-7/project/opscode-reporting/role/builder/config/software/net-ssh-gem.rb'.
-                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/el-7/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/berkshelf2.rb'.
-                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
-                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/el-7/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/nokogiri.rb'.
-                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/el-7/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/libxml2.rb'.
-            40099: |2
-                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri'
-                                                  I |   not a dynamic executable
-                                                  I | /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
-                                                  I | ldd: warning: you do not have execution permission for `/opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri'
-                                                  I |   not a dynamic executable
-                                                  I | /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri:
-            110399: |2
-                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/domain-i.ri
-                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri
-                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
-                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/file-i.ri
-                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/int1-i.ri
-      ubuntu-10.04:
-        result: ABORTED
-        failure_category: aborted
-        failure_cause: aborted
-        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=builder/12/
-        duration: 4m54s
-        logs:
-          consoleText:
-            227: |2
-                                       [Software] I | Loading software `net-ssh-gem' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/ubuntu-10.04/project/opscode-reporting/role/builder/config/software/net-ssh-gem.rb'.
-                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/ubuntu-10.04/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/berkshelf2.rb'.
-                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
-                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/ubuntu-10.04/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/nokogiri.rb'.
-                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/ubuntu-10.04/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/libxml2.rb'.
-            55825: |2
-                                                  I | /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/level-i.ri:
-                                                  I |   not a dynamic executable
-                                                  I | /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
-                                                  I |   not a dynamic executable
-                                                  I | /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/line-i.ri:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-7,project=opscode-reporting,role=builder/8/
+        duration: 18m14s
+        steps:
+          total: 18m14s
+          before (setup time): 11m18s
+          omnibus:
+            total: 17m6s
+            fetch:
+              total: 54s
+              NullFetcher:
+                version-manifest: 21s
+                after (cleanup time): "-21s"
+              PathFetcher:
+                opscode-reporting: 49s
+            build:
+              total: 16m6s
+              GitCache:
+                total: 5m34s
+                berkshelf: 23s
+                erlang: 17s
+              Software:
+                total: 5m33s
+                berkshelf: 23s
+                erlang: 17s
+              Builder:
+                total: 4m8s
+                opscode-reporting: 3m44s
+                oc-reporting-pedant: 20s
+              Project:
+                opscode-reporting: 10m32s
+              HealthCheck: 59s
+              Packager::RPM: 9m26s
+          after (cleanup time): "-10m10s"
       ubuntu-12.04:
-        result: ABORTED
-        failure_category: aborted
-        failure_cause: aborted
-        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-12.04,project=opscode-reporting,role=builder/12/
-        duration: 4m54s
-        logs:
-          consoleText:
-            226: |2
-                                       [Software] I | Loading software `net-ssh-gem' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/ubuntu-12.04/project/opscode-reporting/role/builder/config/software/net-ssh-gem.rb'.
-                                       [Software] I | Loading software `berkshelf2' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/ubuntu-12.04/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/berkshelf2.rb'.
-                                     [berkshelf2] W | DEPRECATED: Please upgrade to Berkshelf 3. Continued use of Berkshelf 2 will not be supported in the future.
-                                       [Software] I | Loading software `nokogiri' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/ubuntu-12.04/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/nokogiri.rb'.
-                                       [Software] I | Loading software `libxml2' from `/home/jenkins/workspace/opscode-reporting-build/architecture/x86_64/platform/ubuntu-12.04/project/opscode-reporting/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-16adc9308749/config/software/libxml2.rb'.
-            27026: |2
-                                                  I | /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/DTD/cdesc-DTD.ri:
-                                                  I |   not a dynamic executable
-                                                  I | /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri:
-                                                  I |   not a dynamic executable
-                                                  I | /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri:
-            79573: |2
-                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/DTD/external_id-i.ri
-                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/DTD/cdesc-DTD.ri
-                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/fatal%3f-i.ri
-                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/error%3f-i.ri
-                                    [HealthCheck] D | Analyzing dependencies for /opt/opscode-reporting/embedded/lib/ruby/gems/2.1.0/doc/nokogiri-1.6.3.1/ri/Nokogiri/XML/SyntaxError/line-i.ri
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-12.04,project=opscode-reporting,role=builder/8/
+        duration: 17m55s
+        steps:
+          total: 17m55s
+          before (setup time): 11m2s
+          omnibus:
+            total: 16m57s
+            fetch:
+              total: 53s
+              NullFetcher:
+                version-manifest: 12s
+                after (cleanup time): "-12s"
+              PathFetcher:
+                opscode-reporting: 49s
+            build:
+              total: 15m57s
+              GitCache: 5m10s
+              Software: 5m9s
+              Builder:
+                total: 4m24s
+                opscode-reporting: 3m51s
+                oc-reporting-pedant: 28s
+              Project:
+                opscode-reporting: 10m47s
+              Licensing: 19s
+              HealthCheck: 1m7s
+              Packager::DEB: 9m21s
+          after (cleanup time): "-10m4s"
   opscode-reporting-trigger-release:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/opscode-reporting-trigger-release/2/
-    duration: 0s
+    duration: 3s

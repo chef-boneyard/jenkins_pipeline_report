@@ -2,11 +2,12 @@
 result: FAILURE
 url: http://wilson.ci.chef.co/job/chef-backend-trigger-ad_hoc/3/
 failure_category: unknown
-failure_cause: 'chef-client: el-7; unknown: ubuntu-10.04, ubuntu-12.04: chef-backend-test'
+failure_cause: 'unknown: chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester;
+  chef-client: el-7; unknown: ubuntu-10.04, ubuntu-12.04: chef-backend-test'
 timestamp: 2016-01-28 16:10:00 UTC
 duration: 4h8m59s
 triggered_by: stevendanna
-active_duration: 1h16m54s
+active_duration: 1h47m24s
 retry_delays: 2h51m48s
 parameters:
   GIT_REF: master
@@ -17,6 +18,36 @@ change:
   project: chef-backend
   version: 0.0.0+20160128161014
 stages:
+  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/20/
+    duration: 13m1s
+  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
+    result: FAILURE
+    failure_category: unknown
+    failure_cause: unknown
+    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/20/
+    duration: 17m28s
+    logs:
+      consoleText:
+        2662: |
+          No entry for terminal type "unknown";
+          using dumb terminal settings.
+          /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/platform.rb:340:in `create_org': Failed attempting to contact https://ip-10-194-11-40.us-west-2.compute.internal 5 times (RuntimeError)
+            from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/platform.rb:123:in `org_from_config'
+            from /opt/opscode/embedded/service/oc-chef-pedant/lib/pedant/platform.rb:42:in `initialize'
+        2678: |
+          Failed attempting to contact https://ip-10-194-11-40.us-west-2.compute.internal (3/5)
+          Failed attempting to contact https://ip-10-194-11-40.us-west-2.compute.internal (4/5)
+          Build step 'Invoke XShell command' marked build as failure
+          Performing Post build task...
+          Match found for : : True
+    steps:
+      total: 17m28s
+      before (setup time): 8m26s
+      chef-client chef-backend::default: 29s
+      chef-client private-chef::default: 4m
+      after (cleanup time): 2m20s
   chef-backend-test:
     result: FAILURE
     failure_category: unknown

@@ -3,7 +3,7 @@ result: SUCCESS
 url: http://wilson.ci.chef.co/job/chef-backend-trigger-git_poll/35/
 timestamp: 2016-02-09 23:50:09 UTC
 duration: 1h36m33s
-active_duration: 1h36m12s
+active_duration: 2h53m37s
 parameters: {}
 change:
   git_remote: git@github.com:chef/chef-backend.git
@@ -11,6 +11,20 @@ change:
   project: chef-backend
   version: 0.0.0+20160209235019
 stages:
+  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/47/
+    duration: 1h57s
+  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/47/
+    duration: 16m28s
+    steps:
+      total: 16m28s
+      before (setup time): 7m34s
+      chef-client chef-backend::default: 20s
+      chef-client private-chef::default: 2m25s
+      after (cleanup time): 1m55s
   chef-backend-promote:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-backend-promote/38/

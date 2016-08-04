@@ -2,10 +2,11 @@
 result: FAILURE
 url: http://wilson.ci.chef.co/job/chef-backend-trigger-git_poll/126/
 failure_category: unknown
-failure_cause: 'unknown: all: chef-backend-test'
+failure_cause: 'unknown: chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester;
+  unknown: all: chef-backend-test'
 timestamp: 2016-03-16 17:00:06 UTC
 duration: 40m1s
-active_duration: 39m41s
+active_duration: 1h8m19s
 queue_delays: 10s
 parameters: {}
 change:
@@ -14,6 +15,30 @@ change:
   project: chef-backend
   version: 0.2.0+20160316170022.git.148.3b3afb6
 stages:
+  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/154/
+    duration: 18m46s
+  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
+    result: FAILURE
+    failure_category: unknown
+    failure_cause: unknown
+    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/147/
+    duration: 9m51s
+    logs:
+      consoleText:
+        543: |2
+
+          vip "127.0.0.1"reconfigure
+          /opt/chef-backend/embedded/service/omnibus-ctl/bootstrap.rb:52:in `block in load_file': uninitialized constant Omnibus::Ctl::TaskListRenderer (NameError)
+            from /opt/chef-backend/embedded/lib/ruby/gems/2.1.0/gems/omnibus-ctl-0.4.3/lib/omnibus-ctl.rb:198:in `call'
+            from /opt/chef-backend/embedded/lib/ruby/gems/2.1.0/gems/omnibus-ctl-0.4.3/lib/omnibus-ctl.rb:198:in `block in add_command_under_category'
+        558: |
+          ============================================================
+
+          Build step 'Invoke XShell command' marked build as failure
+          Performing Post build task...
+          Match found for : : True
   chef-backend-test:
     result: FAILURE
     failure_category: unknown

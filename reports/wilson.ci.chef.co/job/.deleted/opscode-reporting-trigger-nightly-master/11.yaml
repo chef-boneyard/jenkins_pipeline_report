@@ -1,0 +1,143 @@
+---
+result: FAILURE
+url: http://wilson.ci.chef.co/job/opscode-reporting-trigger-nightly-master/11/
+failure_category: code
+failure_cause: 'pedant: ubuntu-12.04: opscode-reporting-test'
+timestamp: 2015-12-20 08:37:00 UTC
+duration: 42m26s
+active_duration: 1h14m27s
+parameters: {}
+change:
+  git_remote: git@github.com:opscode/omnibus-reporting.git
+  git_commit: f402cad15c8d7d74f8dd5119d2a0c93735cb0983
+  project: opscode-reporting
+  version: 1.5.6+20151220083712
+stages:
+  opscode-reporting-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=builder/21/
+    duration: 10m46s
+  opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester/17/
+    duration: 21m30s
+    steps:
+      total: 21m30s
+      before (setup time): 7m58s
+      chef-client private-chef::default: 5m35s
+      chef-client opscode-reporting::default: 43s
+      after (cleanup time): 3m
+  opscode-reporting-test:
+    result: FAILURE
+    failure_category: code
+    failure_cause: 'pedant: ubuntu-12.04'
+    url: http://wilson.ci.chef.co/job/opscode-reporting-test/17/
+    duration: 25m34s
+    runs:
+      ubuntu-12.04:
+        result: FAILURE
+        failure_category: code
+        failure_cause: pedant
+        failed_in:
+          step: pedant
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-12.04,project=opscode-reporting,role=tester/17/
+        duration: 22m2s
+        logs:
+          consoleText:
+            3342: |
+              --------------------------------------------------------------------------------
+              DEPRECATION: let declaration `direct_solr_query_sleep_time` accessed in a `before(:all)` hook at:
+                /opt/opscode-reporting/embedded/service/gem/ruby/2.1.0/bundler/gems/chef-pedant-dad401df0955/lib/pedant/rspec/search_util.rb:653:in `force_solr_commit'
+
+              `let` and `subject` declarations are not intended to be called
+            3366: |2
+
+              rspec ./spec/reporting/integration/create_node_runs_spec.rb:412 # Reporting API - Creation of Node Runs posting to complete a run results in http 200 for resource id field with any string value results in success for 'id' => ''
+              Build step 'Invoke XShell command' marked build as failure
+              Performing Post build task...
+              Match found for : : True
+        steps:
+          total: 22m2s
+          before (setup time): 8m46s
+          chef-client private-chef::default: 5m29s
+          chef-client opscode-reporting::default: 34s
+          after (cleanup time): 2m58s
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-5,project=opscode-reporting,role=tester/17/
+        duration: 19m51s
+        steps:
+          total: 19m51s
+          before (setup time): 8m20s
+          chef-client private-chef::default: 4m50s
+          chef-client opscode-reporting::default: 25s
+          after (cleanup time): 2m11s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-6,project=opscode-reporting,role=tester/17/
+        duration: 18m25s
+        steps:
+          total: 18m25s
+          before (setup time): 6m15s
+          chef-client private-chef::default: 5m45s
+          chef-client opscode-reporting::default: 26s
+          after (cleanup time): 1m53s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=el-7,project=opscode-reporting,role=tester/17/
+        duration: 18m45s
+        steps:
+          total: 18m45s
+          before (setup time): 7m33s
+          chef-client private-chef::default: 3m40s
+          chef-client opscode-reporting::default: 33s
+          after (cleanup time): 2m47s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=tester/17/
+        duration: 21m30s
+        steps:
+          total: 21m30s
+          before (setup time): 7m58s
+          chef-client private-chef::default: 5m35s
+          chef-client opscode-reporting::default: 43s
+          after (cleanup time): 3m
+      ubuntu-14.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-test/architecture=x86_64,platform=ubuntu-14.04,project=opscode-reporting,role=tester/17/
+        duration: 25m33s
+        steps:
+          total: 25m33s
+          before (setup time): 8m20s
+          chef-client private-chef::default: 8m57s
+          chef-client opscode-reporting::default: 51s
+          after (cleanup time): 3m5s
+  opscode-reporting-build:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-build/21/
+    duration: 16m32s
+    runs:
+      el-5:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-5,project=opscode-reporting,role=builder/21/
+        duration: 16m11s
+      el-6:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-6,project=opscode-reporting,role=builder/21/
+        duration: 14m43s
+      el-7:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=el-7,project=opscode-reporting,role=builder/21/
+        duration: 8m59s
+      ubuntu-10.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-10.04,project=opscode-reporting,role=builder/21/
+        duration: 10m46s
+      ubuntu-12.04:
+        result: SUCCESS
+        url: http://wilson.ci.chef.co/job/opscode-reporting-build/architecture=x86_64,platform=ubuntu-12.04,project=opscode-reporting,role=builder/21/
+        duration: 8m33s
+  opscode-reporting-trigger-nightly-master:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/opscode-reporting-trigger-nightly-master/11/
+    duration: 2s

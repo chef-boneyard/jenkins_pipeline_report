@@ -2,10 +2,11 @@
 result: FAILURE
 url: http://wilson.ci.chef.co/job/chef-backend-trigger-git_poll/136/
 failure_category: code
-failure_cause: 'chef-client: all: chef-backend-test'
+failure_cause: 'chef-client: chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester;
+  chef-client: all: chef-backend-test'
 timestamp: 2016-03-17 19:10:09 UTC
 duration: 40m39s
-active_duration: 40m24s
+active_duration: 1h8m56s
 parameters: {}
 change:
   git_remote: git@github.com:chef/chef-backend.git
@@ -13,6 +14,63 @@ change:
   project: chef-backend
   version: 0.2.0+20160317191024.git.176.ce9b0ab
 stages:
+  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/164/
+    duration: 18m38s
+  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
+    result: FAILURE
+    failure_category: code
+    failure_cause: chef-client
+    failed_in:
+      step: chef-client
+    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/157/
+    duration: 9m54s
+    logs:
+      consoleText:
+        553: |
+          \33[0mCookbook Trace:\33[0m
+          ---------------\33[0m
+            /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:57:in `block in from_file'
+          \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/service_elasticsearch.rb:52:in `from_file'
+          \33[0m  /opt/chef-backend/embedded/cookbooks/cache/cookbooks/chef-backend/recipes/_services.rb:13:in `block in from_file'
+        21779: |2
+                    cluster (2 or more nodes listed in the peers configuaration).
+
+          [2016-03-17T19:46:53+00:00] ERROR: Running exception handlers
+          [2016-03-17T19:46:53+00:00] ERROR: Exception handlers complete
+          [2016-03-17T19:46:53+00:00] FATAL: Stacktrace dumped to /opt/chef-backend/embedded/cookbooks/cache/chef-stacktrace.out
+          [2016-03-17T19:46:53+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+          [2016-03-17T19:46:53+00:00] FATAL: Errno::ECONNREFUSED: Connection refused - connect(2) for "10.194.12.189" port 2379
+          FAILED
+        21810: |
+          ============================================================
+
+          Build step 'Invoke XShell command' marked build as failure
+          Performing Post build task...
+          Match found for : : True
+    steps:
+      total: 9m54s
+      before (setup time): "-72h11m49s"
+      chef-client chef-backend::default: 31s
+      chef-client chef-backend::default 2: 35s
+      chef-client chef-backend::default 3: 34s
+      chef-client chef-backend::default 4: 34s
+      chef-client chef-backend::default 5: 34s
+      chef-client chef-backend::default 6: 34s
+      chef-client chef-backend::default 7: 34s
+      chef-client chef-backend::default 8: 34s
+      chef-client chef-backend::default 9: 34s
+      chef-client chef-backend::default 10: 34s
+      chef-client chef-backend::default 11: 34s
+      chef-client chef-backend::default 12: 35s
+      chef-client chef-backend::default 13: 34s
+      chef-client chef-backend::default 14: 34s
+      chef-client chef-backend::default 15: 34s
+      chef-client chef-backend::default 16: 30s
+      chef-client chef-backend::default 17: 34s
+      chef-client chef-backend::default 18: 35s
+      after (cleanup time): 2m7s
   chef-backend-test:
     result: FAILURE
     failure_category: code

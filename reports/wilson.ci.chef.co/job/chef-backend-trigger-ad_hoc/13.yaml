@@ -4,7 +4,7 @@ url: http://wilson.ci.chef.co/job/chef-backend-trigger-ad_hoc/13/
 timestamp: 2016-02-12 14:29:42 UTC
 duration: 2h55m7s
 triggered_by: stevendanna
-active_duration: 2h54m45s
+active_duration: 5h6m29s
 parameters:
   GIT_REF: ssd/etcd-in-build
   EXPIRE_CACHE: false
@@ -14,6 +14,20 @@ change:
   project: chef-backend
   version: 0.0.0+20160212142952
 stages:
+  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/54/
+    duration: 1h55m22s
+  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/54/
+    duration: 16m21s
+    steps:
+      total: 16m21s
+      before (setup time): 7m44s
+      chef-client chef-backend::default: 19s
+      chef-client private-chef::default: 2m11s
+      after (cleanup time): 1m53s
   chef-backend-promote:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-backend-promote/45/

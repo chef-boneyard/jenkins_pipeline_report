@@ -4,7 +4,7 @@ url: http://wilson.ci.chef.co/job/chef-backend-trigger-release/4/
 timestamp: 2016-04-25 22:25:59 UTC
 duration: 47m38s
 triggered_by: stevendanna
-active_duration: 47m15s
+active_duration: 1h19m29s
 parameters:
   GIT_REF: 0.5.0
   EXPIRE_CACHE: false
@@ -14,6 +14,19 @@ change:
   project: chef-backend
   version: 0.5.0
 stages:
+  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/217/
+    duration: 13m43s
+  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/206/
+    duration: 18m30s
+    steps:
+      total: 18m30s
+      before (setup time): 10m41s
+      chef-client private-chef::default: 3m54s
+      after (cleanup time): 1m48s
   chef-backend-promote:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-backend-promote/165/

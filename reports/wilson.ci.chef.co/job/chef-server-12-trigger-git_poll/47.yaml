@@ -3,7 +3,7 @@ result: SUCCESS
 url: http://wilson.ci.chef.co/job/chef-server-12-trigger-git_poll/47/
 timestamp: 2016-02-05 21:30:09 UTC
 duration: 1h24m55s
-active_duration: 1h24m31s
+active_duration: 2h25m55s
 parameters: {}
 change:
   git_remote: git@github.com:chef/chef-server.git
@@ -11,6 +11,19 @@ change:
   project: chef-server
   version: 12.4.2+20160205213024
 stages:
+  chef-server-12-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=builder/97/
+    duration: 16m22s
+  chef-server-12-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=tester:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-server-12-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-server,role=tester/89/
+    duration: 45m2s
+    steps:
+      total: 45m2s
+      before (setup time): 2m29s
+      chef-client private-chef::default: 5m14s
+      after (cleanup time): 35m12s
   chef-server-12-promote:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-server-12-promote/52/
