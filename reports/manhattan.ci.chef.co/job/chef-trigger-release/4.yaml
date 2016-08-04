@@ -4,7 +4,7 @@ url: http://manhattan.ci.chef.co/job/chef-trigger-release/4/
 timestamp: 2016-05-19 00:07:17 UTC
 duration: 3h15m17s
 triggered_by: chef-jenkins
-active_duration: 1h51m24s
+active_duration: 2h29m29s
 retry_delays: 1h23m28s
 parameters:
   GIT_REF: v12.11.1
@@ -15,6 +15,22 @@ change:
   project: chef
   version: 12.11.1
 stages:
+  chef-build/architecture=x86_64,platform=ubuntu-10.04,project=chef,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=ubuntu-10.04,project=chef,role=builder/15/
+    duration: 7m48s
+  chef-build/architecture=i386,platform=ubuntu-10.04,project=chef,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=ubuntu-10.04,project=chef,role=builder/15/
+    duration: 5m46s
+  chef-test/architecture=x86_64,platform=ubuntu-10.04,project=chef,role=tester:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=ubuntu-10.04,project=chef,role=tester/10/
+    duration: 15m28s
+  chef-test/architecture=i386,platform=ubuntu-10.04,project=chef,role=tester:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/chef-test/architecture=i386,platform=ubuntu-10.04,project=chef,role=tester/10/
+    duration: 9m
   chef-promote:
     result: SUCCESS
     url: http://manhattan.ci.chef.co/job/chef-promote/4/
@@ -92,28 +108,6 @@ stages:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/10/
         duration: 53m32s
-        steps:
-          total: 53m32s
-          before (setup time): 1m37s
-          CHEF-ACCEPTANCE:
-            total: 51m55s
-            OMNITRUCK::PROVISION: 19s
-            TRIVIAL::PROVISION: 5m44s
-            TOP-COOKBOOKS::PROVISION: 50m21s
-            OMNITRUCK::VERIFY: 20s
-            WINDOWS-SERVICE::PROVISION: 4m57s
-            WINDOWS-SERVICE::VERIFY: 1m47s
-            TRIVIAL::VERIFY: 24s
-            TRIVIAL::DESTROY: 11s
-            FIPS::PROVISION: 6m8s
-            WINDOWS-SERVICE::DESTROY: 13s
-            BASICS::PROVISION: 1m18s
-            BASICS::VERIFY: 35s
-            BASICS::DESTROY: 12s
-            FIPS::VERIFY: 18m38s
-            FIPS::DESTROY: 11s
-            TOP-COOKBOOKS::VERIFY: 45s
-            TOP-COOKBOOKS::DESTROY: 49s
         chef_acceptance_timing:
         - omnitruck:
             provision: 11s
@@ -235,549 +229,86 @@ stages:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=debian-6,project=chef,role=builder/15/
         duration: 5m58s
-        steps:
-          total: 5m58s
-          before (setup time): 2m24s
-          omnibus:
-            total: 3m54s
-            fetch:
-              PathFetcher:
-                chef: 34s
-            build:
-              total: 3m14s
-              GitCache: 1m48s
-              Software: 1m48s
-              Builder:
-                total: 1m35s
-                chef: 56s
-                chef-appbundle: 30s
-              Project:
-                chef: 1m26s
-              Licensing: 10s
-              HealthCheck: 12s
-              Packager::DEB: 1m4s
-          after (cleanup time): "-20s"
       el-5-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=el-5,project=chef,role=builder/15/
         duration: 6m40s
-        steps:
-          total: 6m40s
-          before (setup time): 2m20s
-          omnibus:
-            total: 4m39s
-            fetch:
-              PathFetcher:
-                chef: 33s
-            build:
-              total: 3m59s
-              GitCache: 1m56s
-              Software: 1m56s
-              Builder:
-                total: 1m43s
-                chef: 1m1s
-                chef-appbundle: 32s
-              Project:
-                chef: 2m3s
-              Licensing: 13s
-              HealthCheck: 14s
-              Packager::RPM: 1m36s
-          after (cleanup time): "-19s"
       el-6-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=el-6,project=chef,role=builder/15/
         duration: 7m11s
-        steps:
-          total: 7m11s
-          before (setup time): "-36s"
-          omnibus:
-            total: 5m1s
-            fetch:
-              PathFetcher:
-                chef: 35s
-            build:
-              total: 4m19s
-              GitCache: 2m22s
-              Software: 2m21s
-              Builder:
-                total: 2m6s
-                chef: 1m19s
-                chef-appbundle: 35s
-              Project:
-                chef: 1m57s
-              Licensing: 11s
-              HealthCheck: 21s
-              Packager::RPM: 1m25s
-          after (cleanup time): 2m46s
       freebsd-10-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-10,project=chef,role=builder/15/
         duration: 5m43s
-        steps:
-          total: 5m43s
-          before (setup time): 3m12s
-          omnibus:
-            total: 3m42s
-            fetch:
-              PathFetcher:
-                chef: 33s
-            build:
-              total: 3m3s
-              GitCache: 1m52s
-              Software: 1m52s
-              Builder:
-                total: 1m37s
-                chef: 57s
-                chef-appbundle: 28s
-              Project:
-                chef: 1m11s
-              Packager::Makeself: 1m2s
-          after (cleanup time): "-1m11s"
       freebsd-9-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-9,project=chef,role=builder/15/
         duration: 6m28s
-        steps:
-          total: 6m28s
-          before (setup time): 4m55s
-          omnibus:
-            total: 4m18s
-            fetch:
-              PathFetcher:
-                chef: 39s
-            build:
-              total: 3m32s
-              GitCache: 2m4s
-              Software: 2m4s
-              Builder:
-                total: 1m46s
-                chef: 1m2s
-                chef-appbundle: 30s
-              Project:
-                chef: 1m28s
-              Packager::Makeself: 1m19s
-          after (cleanup time): "-2m45s"
       ubuntu-10.04-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=ubuntu-10.04,project=chef,role=builder/15/
         duration: 5m46s
-        steps:
-          total: 5m46s
-          before (setup time): 2m15s
-          omnibus:
-            total: 3m51s
-            fetch:
-              PathFetcher:
-                chef: 32s
-            build:
-              total: 3m13s
-              GitCache: 1m47s
-              Software: 1m47s
-              Builder:
-                total: 1m33s
-                chef: 54s
-                chef-appbundle: 30s
-              Project:
-                chef: 1m26s
-              Licensing: 10s
-              Packager::DEB: 1m7s
-          after (cleanup time): "-20s"
       windows-2008r2-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=windows-2008r2,project=chef,role=builder/15/
         duration: 10m18s
-        steps:
-          total: 10m18s
-          before (setup time): "-2m44s"
-          omnibus:
-            total: 6m8s
-            fetch:
-              PathFetcher:
-                chef: 13s
-            build:
-              total: 5m49s
-              GitCache: 3m46s
-              Software: 3m44s
-              Builder:
-                total: 3m20s
-                chef: 2m10s
-                chef-appbundle: 39s
-              GitFetcher: 18s
-              NetFetcher: 11s
-              Project:
-                chef: 2m3s
-              Licensing: 14s
-              Packager::MSI: 1m49s
-          after (cleanup time): 6m54s
       solaris-10-i86pc:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=i86pc,platform=solaris-10,project=chef,role=builder/15/
         duration: 7m41s
-        steps:
-          total: 7m41s
-          before (setup time): 5m20s
-          omnibus:
-            total: 2m33s
-            fetch:
-              PathFetcher:
-                chef: 22s
-            build:
-              total: 2m7s
-              GitCache: 1m45s
-              Software: 1m44s
-              Builder:
-                total: 1m35s
-                chef: 49s
-                chef-appbundle: 29s
-              Project:
-                chef: 22s
-              Packager::Solaris: 13s
-          after (cleanup time): "-12s"
       aix-6.1-powerpc:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=powerpc,platform=aix-6.1,project=chef,role=builder/15/
         duration: 17m24s
-        steps:
-          total: 17m24s
-          before (setup time): 2m22s
-          omnibus:
-            total: 10m7s
-            fetch:
-              PathFetcher:
-                chef: 49s
-            build:
-              total: 9m7s
-              GitCache: 2m38s
-              Software: 2m38s
-              Builder:
-                total: 2m27s
-                chef: 1m18s
-                chef-appbundle: 54s
-              Project:
-                chef: 6m29s
-              Licensing: 10s
-              Packager::BFF: 6m18s
-          after (cleanup time): 4m54s
       solaris-10-sun4v:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=sun4v,platform=solaris-10,project=chef,role=builder/15/
         duration: 32m45s
-        steps:
-          total: 32m45s
-          before (setup time): 6m30s
-          omnibus:
-            total: 24m42s
-            fetch:
-              total: 6m21s
-              Software:
-                total: 18s
-                chef: 18s
-                config_guess: 16s
-                pkg-config-lite: 16s
-              PathFetcher:
-                total: 5m59s
-                chef: 5m58s
-                openssl-customization: 1m25s
-            build:
-              total: 17m45s
-              GitCache:
-                gem-permissions: 10s
-              Software: 15m36s
-              Builder:
-                total: 14m44s
-                chef: 7m49s
-                chef-appbundle: 5m53s
-                gem-permissions: 11s
-              GitFetcher: 24s
-              Project:
-                chef: 2m8s
-              Licensing: 13s
-              Packager::Solaris: 1m55s
-          after (cleanup time): 1m32s
       debian-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=debian-6,project=chef,role=builder/15/
         duration: 8m2s
-        steps:
-          total: 8m2s
-          before (setup time): 2m38s
-          omnibus:
-            total: 5m43s
-            fetch:
-              PathFetcher:
-                chef: 37s
-            build:
-              total: 4m57s
-              GitCache: 2m26s
-              Software: 2m25s
-              Builder:
-                total: 2m8s
-                chef: 1m13s
-                chef-appbundle: 41s
-              Project:
-                chef: 2m31s
-              HealthCheck: 17s
-              Packager::DEB: 2m5s
-          after (cleanup time): "-19s"
       el-5:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-5,project=chef,role=builder/15/
         duration: 8m52s
-        steps:
-          total: 8m52s
-          before (setup time): 2m38s
-          omnibus:
-            total: 6m31s
-            fetch:
-              PathFetcher:
-                chef: 38s
-            build:
-              total: 5m45s
-              GitCache: 2m33s
-              Software: 2m33s
-              Builder:
-                total: 2m15s
-                chef: 1m19s
-                chef-appbundle: 39s
-              Project:
-                chef: 3m12s
-              Licensing: 10s
-              HealthCheck: 21s
-              Packager::RPM: 2m41s
-          after (cleanup time): "-17s"
       el-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-6,project=chef,role=builder/15/
         duration: 9m30s
-        steps:
-          total: 9m30s
-          before (setup time): 9m21s
-          omnibus:
-            total: 7m5s
-            fetch:
-              PathFetcher:
-                chef: 40s
-            build:
-              total: 6m16s
-              GitCache: 3m2s
-              Software: 3m1s
-              Builder:
-                total: 2m32s
-                chef: 1m27s
-                chef-appbundle: 45s
-              Project:
-                chef: 3m14s
-              Licensing: 14s
-              HealthCheck: 22s
-              Packager::RPM: 2m38s
-          after (cleanup time): "-6m56s"
       el-7:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-7,project=chef,role=builder/15/
         duration: 6m58s
-        steps:
-          total: 6m58s
-          before (setup time): 2m25s
-          omnibus:
-            total: 4m52s
-            fetch:
-              PathFetcher:
-                chef: 31s
-            build:
-              total: 4m15s
-              GitCache: 1m43s
-              Software: 1m43s
-              Builder:
-                total: 1m33s
-                chef: 56s
-                chef-appbundle: 30s
-              Project:
-                chef: 2m32s
-              Licensing: 12s
-              Packager::RPM: 2m12s
-          after (cleanup time): "-19s"
       freebsd-10:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=freebsd-10,project=chef,role=builder/15/
         duration: 8m24s
-        steps:
-          total: 8m24s
-          before (setup time): 30s
-          omnibus:
-            total: 5m50s
-            fetch:
-              total: 52s
-              NullFetcher:
-                chef-complete: 10s
-                after (cleanup time): "-10s"
-              PathFetcher:
-                chef: 49s
-            build:
-              total: 4m52s
-              GitCache: 2m53s
-              Software: 2m53s
-              Builder:
-                total: 2m35s
-                chef: 1m31s
-                chef-appbundle: 44s
-              Project:
-                chef: 1m59s
-              Licensing: 10s
-              Packager::Makeself: 1m49s
-          after (cleanup time): 2m3s
       freebsd-9:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=freebsd-9,project=chef,role=builder/15/
         duration: 9m43s
-        steps:
-          total: 9m43s
-          before (setup time): 7m53s
-          omnibus:
-            total: 6m56s
-            fetch:
-              PathFetcher:
-                chef: 56s
-            build:
-              total: 5m49s
-              GitCache: 3m19s
-              Software: 3m18s
-              Builder:
-                total: 2m57s
-                chef: 1m45s
-                chef-appbundle: 50s
-              Project:
-                chef: 2m30s
-              Licensing: 10s
-              Packager::Makeself: 2m19s
-          after (cleanup time): "-5m6s"
       ios_xr-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=ios_xr-6,project=chef,role=builder/15/
         duration: 5m23s
-        steps:
-          total: 5m23s
-          before (setup time): "-7m37s"
-          omnibus:
-            total: 3m50s
-            fetch:
-              PathFetcher:
-                chef: 19s
-            build:
-              total: 3m26s
-              GitCache: 1m58s
-              Software: 1m58s
-              Builder:
-                total: 1m50s
-                chef: 59s
-                chef-appbundle: 44s
-              Project:
-                chef: 1m28s
-              Licensing: 10s
-              Packager::RPM: 1m13s
-          after (cleanup time): 9m10s
       mac_os_x-10.9:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=mac_os_x-10.9,project=chef,role=builder/15/
         duration: 4m29s
-        steps:
-          total: 4m29s
-          before (setup time): 1m57s
-          omnibus:
-            total: 2m39s
-            fetch:
-              PathFetcher:
-                chef: 16s
-            build:
-              total: 2m20s
-              GitCache: 1m21s
-              Software: 1m20s
-              Builder:
-                total: 1m9s
-                chef: 41s
-                chef-appbundle: 21s
-              Project:
-                chef: 59s
-              Licensing: 11s
-              Packager::PKG: 15s
-              Compressor::DMG: 33s
       nexus-7:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=nexus-7,project=chef,role=builder/15/
         duration: 6m33s
-        steps:
-          total: 6m33s
-          before (setup time): "-8m28s"
-          omnibus:
-            total: 4m40s
-            fetch:
-              PathFetcher:
-                chef: 22s
-            build:
-              total: 4m13s
-              GitCache: 2m27s
-              Software: 2m27s
-              Builder:
-                total: 2m18s
-                chef: 1m48s
-                chef-appbundle: 24s
-              Project:
-                chef: 1m46s
-              Packager::RPM: 1m31s
-          after (cleanup time): 10m21s
       ubuntu-10.04:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=ubuntu-10.04,project=chef,role=builder/15/
         duration: 7m48s
-        steps:
-          total: 7m48s
-          before (setup time): 2m28s
-          omnibus:
-            total: 5m38s
-            fetch:
-              PathFetcher:
-                chef: 36s
-            build:
-              total: 4m53s
-              GitCache: 2m23s
-              Software: 2m23s
-              Builder:
-                total: 2m7s
-                chef: 1m12s
-                chef-appbundle: 41s
-              Project:
-                chef: 2m30s
-              HealthCheck: 15s
-              Packager::DEB: 2m7s
-          after (cleanup time): "-18s"
       windows-2008r2:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/15/
         duration: 13m11s
-        steps:
-          total: 13m11s
-          before (setup time): "-2m38s"
-          omnibus:
-            total: 7m47s
-            fetch:
-              PathFetcher:
-                chef: 24s
-            build:
-              total: 7m17s
-              GitCache:
-                ruby-windows-devkit: 13s
-              Software: 3m57s
-              Builder:
-                total: 3m35s
-                chef: 2m10s
-                chef-appbundle: 40s
-                ruby-windows-devkit: 11s
-              GitFetcher: 32s
-              NetFetcher: 24s
-              Project:
-                chef: 3m18s
-              Licensing: 14s
-              Packager::MSI: 3m3s
-          after (cleanup time): 8m2s
   chef-trigger-release:
     result: SUCCESS
     url: http://manhattan.ci.chef.co/job/chef-trigger-release/4/

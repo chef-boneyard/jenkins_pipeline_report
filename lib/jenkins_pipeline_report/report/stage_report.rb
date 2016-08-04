@@ -26,11 +26,10 @@ module JenkinsPipelineReport
       end
 
       #
-      # The retries involved in this build stage, from oldest to newest.
+      # The build we're generating a report for.
       #
-      # @return [Array<Jenkins::Build>] The retries involved in this build stage.
-      #
-      attr_reader :retries
+      # @return [Jenkins::Build] The build we're generating a report for.
+      attr_reader :build
 
       #
       # Create a new stage report generator.
@@ -38,30 +37,18 @@ module JenkinsPipelineReport
       # @param build_report [Report::Build] The parent build report.
       # @param build [Jenkins::Build] The Jenkins build for this stage.
       #
-      def initialize(build_report, retries)
+      def initialize(build_report, build)
         @build_report = build_report
-        @retries = retries
         @build = build
       end
 
-      #
-      # The Jenkins build most recently run for this stage.
-      #
-      # @return [Jenkins::Build] The Jenkins build for this stage.
-      #
-      def build
-        retries.last
-      end
-
-      #
-      # Generate the report or use the existing report
-      #
       def refresh
+        # See if we already have the report or not.
         if needs_update?
-          generate_report
-        else
-          report?
+          @report = write_cache(generate_report)
         end
+        # `report` will generate the report if we don't have it.
+        report
       end
 
       #
@@ -109,17 +96,15 @@ module JenkinsPipelineReport
       end
 
       def run_reports
-        @run_reports ||= begin
-          run_reports = {}
-          build.runs.each do |run|
-            run_report = RunReport.new(self, run.retries)
-            run_reports[run_report.stage_path] ||= run_report
-          end
-          run_reports.values
+        @run_reports ||= {}
+        build.runs.each do |run|
+          run_report(run.url)
         end
+        @run_reports.values
       end
 
       def generate_run_reports
+        # TODO this won't refresh retries of any runs, but we don't do that right now, so we're ok
         reports = {}
         run_reports.sort_by do |run_report|
           result_score = case run_report.build.result
@@ -132,7 +117,10 @@ module JenkinsPipelineReport
           end
           [ result_score, run_report.build.url ]
         end.each do |run_report|
-          reports[run_report.stage_path] = run_report.generate_report
+          report = run_report.refresh.dup
+          report.delete("logs")
+          report.delete("steps")
+          reports[run_report.stage_path] = report
         end
         reports = nil if reports.empty?
         reports
@@ -179,6 +167,10 @@ module JenkinsPipelineReport
         result
       end
 
+      def retries
+        @retries ||= build.retries
+      end
+
       def generate_duration
         build.end_timestamp - retries.first.timestamp if build.end_timestamp
       end
@@ -208,10 +200,15 @@ module JenkinsPipelineReport
         return result unless result == 0
       end
 
-      #
-      # Get the existing report, if there is one.
-      #
+      def report
+        @report ||= read_cache || write_cache(generate_report)
+      end
+
       def report?
+        @report ||= read_cache
+      end
+
+      def from_build_report
         report = build_report.report?
         stage_report ||= report && report["stages"] && report["stages"][stage_path]
         stage_report = nil unless stage_report && stage_report["url"] == build.url
@@ -222,26 +219,22 @@ module JenkinsPipelineReport
       # Tell if this stage needs an update.
       #
       def needs_update?
-        stage_report_needs_update?(build_report.report?, report?)
-      end
-
-      private
-
-      #
-      # Tell whether a stage needs update (so we can recurse without creating
-      # RunReport objects).
-      #
-      # @api private
-      def stage_report_needs_update?(report, stage_report)
-        return true unless report && stage_report
-        return true if stage_report["result"] == "IN PROGRESS"
-        if build_report.analyze_successful_logs? && report["successful_logs_analyzed"] == false
-          return true if stage_report["result"] == "SUCCESS"
-        end
-        if stage_report["runs"]
-          return true if stage_report["runs"].any? do |configuration, run_report|
-            stage_report_needs_update?(report, run_report)
+        report = report?
+        unless report
+          report ||= from_build_report
+          if report
+            report["logs_analyzed"] = true if build_report.report["successful_logs_analyzed"] || report["result"] != "SUCCESS"
           end
+        end
+        return true unless report
+        return true if report["result"] == "IN PROGRESS"
+        unless report["logs_analyzed"]
+          return true unless report["result"] == "SUCCESS"
+          return true if build_report.analyze_successful_logs?
+        end
+        if report["runs"]
+          return true if report["runs"].any? { |name, run| run.has_key?("logs") }
+          return true if report["runs"].any? { |name, run| run_report(run["url"]).needs_update? }
         end
         # TODO we're assuming it's not possible to retry or add a run after the build has
         # completed here. If it is, we need to check the run reports (which is
@@ -249,6 +242,16 @@ module JenkinsPipelineReport
         # the build, and we don't want to load the build if we're just checking
         # whether we need to do work).
         # TODO check processes
+      end
+
+      private
+
+      def run_report(url)
+        @run_reports ||= {}
+        @run_reports[url] ||= begin
+          run = build.cache.build(url)
+          RunReport.new(self, run)
+        end
       end
 
       def generate_retries
@@ -311,6 +314,21 @@ module JenkinsPipelineReport
           end
         end
         run_types.sort.uniq
+      end
+
+      #
+      # Cache operations
+      #
+      def delete_cache
+        report_cache.delete_cache(build.url, prefix: "stages")
+      end
+
+      def read_cache
+        report_cache.read_cache(build.url, prefix: "stages")
+      end
+
+      def write_cache(value)
+        report_cache.write_cache(build.url, value, prefix: "stages")
       end
     end
   end

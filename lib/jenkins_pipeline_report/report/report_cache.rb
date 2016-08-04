@@ -51,7 +51,7 @@ module JenkinsPipelineReport
         BuildReport.new(self, build)
       end
 
-      def delete_cache(url)
+      def delete_cache(url, **path_options)
         path = report_path(url)
         if File.exist?(path)
           logger.info("Deleting #{path} ...")
@@ -59,23 +59,23 @@ module JenkinsPipelineReport
         end
       end
 
-      def read_cache(url)
-        path = report_path(url)
+      def read_cache(url, **path_options)
+        path = report_path(url, **path_options)
         if File.exist?(path)
           logger.debug("Reading #{path} ...")
           Psych.load_file(path)
         end
       end
 
-      def write_cache(url, value)
-        path = report_path(url)
+      def write_cache(url, value, **path_options)
+        path = report_path(url, **path_options)
         logger.debug("Writing #{path} ...")
         FileUtils.mkdir_p(File.dirname(path))
         IO.write(path, Psych.dump(value))
         value
       end
 
-      def report_path(url, type: :yaml)
+      def report_path(url, type: :yaml, prefix: nil)
         uri = URI(url)
         if uri.host
           filename = File.join(uri.host, uri.path)
@@ -85,6 +85,7 @@ module JenkinsPipelineReport
         filename.sub!(/\/+$/, "") # remove trailing slashes
         filename = "#{filename}.#{type}" if type
         filename.gsub!(/[^\w\.-_\/\\]/, "-") # strip bad filename characters
+        filename = File.join(prefix, filename) if prefix
         File.join(reports_directory, filename)
       end
     end

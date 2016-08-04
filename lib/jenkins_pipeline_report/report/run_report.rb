@@ -5,9 +5,13 @@ module JenkinsPipelineReport
     class RunReport < StageReport
       attr_reader :parent_report
 
-      def initialize(parent_report, retries)
-        super(parent_report.build_report, retries)
+      def initialize(parent_report, build)
+        super(parent_report.build_report, build)
         @parent_report = parent_report
+      end
+
+      def build_report
+        parent_report.build_report
       end
 
       def stage_path
@@ -29,7 +33,7 @@ module JenkinsPipelineReport
       def report?
         report = parent_report.report?
         run_report = report && report["runs"] && report["runs"][stage_path]
-        return nil if run_report["url"] != build.url
+        return nil if run_report && run_report["url"] != build.url
         run_report
       end
     end

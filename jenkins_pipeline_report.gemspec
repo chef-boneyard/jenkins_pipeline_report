@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "jenkins_api_client"
   spec.add_dependency "psych"
+  spec.add_dependency "elasticsearch"
 
   spec.add_development_dependency "github_changelog_generator"
   spec.add_development_dependency "chefstyle"

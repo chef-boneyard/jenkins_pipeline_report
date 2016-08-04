@@ -1,0 +1,113 @@
+#!/usr/bin/env ruby
+
+require "jenkins_pipeline_report"
+
+module JenkinsPipelineReport
+  module App
+    Cli.parse_options do |opts|
+      opts.banner = <<-EOM
+        USAGE: ruby #{File.basename(__FILE__)} JOB_URL ...
+
+        Update build reports and dump all yaml files to elasticsearch.
+
+        ruby #{File.basename(__FILE__)} https://manhattan.ci.chef.co/job/chef-trigger-release https://wilson.ci.chef.co/job/chef-server-12-trigger-release
+
+        You must upload your public SSH key to your Jenkins server from ~/.ssh/id_rsa.
+      EOM
+    end
+
+    def self.parse_datetime(datetime)
+      datetime ? DateTime.parse(datetime) : nil
+    end
+
+    def self.parse_duration(duration)
+      if duration && duration =~ /^(?:(\d+)d)?(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/
+        result = 0.0
+        result += $1.to_f if $1
+        result *= 24 # days to hours
+        result += $2.to_f if $2
+        result *= 60 # hours to minutes
+        result += $3.to_f if $3
+        result *= 60 # minutes to seconds
+        result += $4.to_f if $4
+        result.to_f
+      end
+    end
+
+    def self.calculate_red_ranges(builds, report_end_time)
+      red_start = nil
+      red_ranges = []
+      builds.each do |build, end_time|
+        if build.report["result"] == "SUCCESS"
+          if red_start
+            red_ranges << Range.new(red_start, end_time)
+            red_start = nil
+          end
+        else
+          red_start ||= end_time
+        end
+      end
+      red_ranges << [ red_start, report_end_time ] if red_start
+      red_ranges
+    end
+
+    def self.months(start_time, end_time)
+      result = []
+      start_time = DateTime.new(start_time.year, start_time.month)
+      while start_time <= end_time
+        result << Range.new(start_time, start_time >> 1, true)
+        start_time = start_time >> 1
+      end
+      result
+    end
+
+    def self.intersection_size(ranges, master_range)
+      result = 0.0
+      ranges = ranges.map do |range|
+        min = range.min
+        min = master_range.min if master_range.min > min
+        max = range.max
+        max = master_range.max if master_range.max < max
+        result += max - min if max > min
+      end
+      result
+    end
+
+    report_end_time = DateTime.now
+    report_end_month = DateTime.new(report_end_time.year, report_end_time.month)
+
+    puts "# Job,Month,RedTimeDays,AverageBuildTimeMinutes,JobUrl\n"
+
+    builds = Cli.builds(*ARGV)
+    builds.map! do |build|
+      build.refresh
+      duration = parse_duration(build.report["duration"])
+      end_time = parse_datetime(build.report["timestamp"]) + Rational(duration, 24*60*60) if duration
+      [ build, end_time ]
+    end
+    builds.select! { |build, end_time| end_time }
+    builds.group_by { |build, end_time| build.trigger.job }.each do |job, job_builds|
+      if job_builds.any?
+        job_builds.sort_by! { |build, end_time| end_time }
+        red_ranges = calculate_red_ranges(job_builds, report_end_time)
+        job_start_time = job_builds.first[1]
+        months(job_start_time, report_end_time).each do |month|
+          month_builds = job_builds.select { |build, end_time| build.report["result"] == "SUCCESS" && month.cover?(end_time) }
+          red_time = intersection_size(red_ranges, month)
+          if month_builds.any?
+            durations = month_builds.map do |build, end_time|
+              duration = parse_duration(build.report["duration"])
+              retry_delays = parse_duration(build.report["retry_delays"])
+              duration -= retry_delays if retry_delays
+              duration
+            end
+            average_duration = durations.reduce(:+) / durations.size.to_f
+          else
+            average_duration = 0.0
+          end
+          puts "#{job.name},#{month.min.strftime("%Y-%m")},#{sprintf("%.2f", red_time)},#{sprintf("%.2f", average_duration / 60.0)},#{job.url}\n"
+        end
+      end
+    end
+  end
+end

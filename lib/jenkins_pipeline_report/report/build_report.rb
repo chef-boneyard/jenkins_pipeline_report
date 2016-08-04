@@ -12,6 +12,27 @@ module JenkinsPipelineReport
         @trigger = trigger
       end
 
+      def timestamp
+        BuildReport.parse_timestamp(report["timestamp"])
+      end
+
+      def duration
+        report["duration"] && BuildReport.parse_duration(report["duration"])
+      end
+
+      def end_timestamp
+        duration = self.duration
+        timestamp + duration if duration
+      end
+
+      def active_duration
+        report["active_duration"] ? BuildReport.parse_duration(report["active_duration"]) : duration
+      end
+
+      def retry_delays
+        report["retry_delays"] ? BuildReport.parse_duration(report["retry_delays"]) : 0.0
+      end
+
       def analyze_successful_logs?
         report_cache.analyze_successful_logs?
       end
@@ -40,7 +61,7 @@ module JenkinsPipelineReport
         return true if analyze_successful_logs? && report["successful_logs_analyzed"] == false
         # Handle build retries
         return true unless report_has_all_stages?(report)
-        return true if stage_reports.any? { |stage| stage.needs_update? }
+        return true if all_stage_reports.any? { |build, stage| stage.needs_update? }
         nil
         # TODO if runs are retries or processes happen, regenerate
       end
@@ -105,10 +126,22 @@ module JenkinsPipelineReport
         report
       end
 
+      def all_stage_reports
+        # stage_reports initializes @all_stage_reports
+        stage_reports
+        @all_stage_reports
+      end
+
       def generate_stage_reports
+        # refresh errbody
+        all_stage_reports.each { |build, stage| stage.refresh }
+
         result = {}
         stage_reports.reverse_each do |stage|
-          result[stage.stage_path] = stage.refresh
+          report = stage.report.dup
+          report.delete("logs")
+          report.delete("steps")
+          result[stage.stage_path] = report
         end
         result
       end
@@ -238,9 +271,26 @@ module JenkinsPipelineReport
         report_cache.write_cache(trigger.url, value)
       end
 
+      def all_stage_reports
+        @all_stage_reports ||= create_stage_reports(trigger)
+      end
+
+      def create_stage_reports(build, result=Hash.new)
+        unless result[build]
+          result[build] = StageReport.new(self, build)
+          build.downstreams.each do |downstream|
+            # matrix jobs are not downstreams
+            unless build.job.active_configurations.include?(downstream.job)
+              create_stage_reports(downstream, result)
+            end
+          end
+        end
+        result
+      end
+
       def calculate_stages(build)
         retries = build.retries
-        stage = StageReport.new(self, retries)
+        stage = all_stage_reports[retries.last]
         next_stages = {}
         stage.build.downstreams.each do |downstream|
           # matrix jobs are not downstreams
