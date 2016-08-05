@@ -2,20 +2,6 @@
 
 ## Build Phase
 
-### git checkout timeout
-
-- freebsd-10-i386 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-10,project=chef,role=builder/217/
-- el-7 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-7,project=chef,role=builder/216/
-- debian-6 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=debian-6,project=chef,role=builder/214/console
-- el-5 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-5,project=chef,role=builder/212/
-- el-6 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=el-6,project=chef,role=builder/161/console
-- el-7 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-7,project=chef,role=builder/160/
-- freebsd-9 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=freebsd-9,project=chef,role=builder/159/
-- freebsd-9 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-9,project=chef,role=builder/154/
-- debian-6, freebsd - http://manhattan.ci.chef.co/job/chef-build/153/
-- el-5, freebsd-10 - http://manhattan.ci.chef.co/job/chef-build/152/
-- el-6, freebsd-10 - http://manhattan.ci.chef.co/job/chef-build/147/
-
 ### network reset rubygems.org:
 
 - freebsd-9 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-9,project=chef,role=builder/278/console
@@ -210,3 +196,17 @@ spec/unit/knife/bootstrap_spec.rb:326 "Chef::Knife::Bootstrap specifying no_prox
 - windows - http://manhattan.ci.chef.co/job/chef-build/251/
 - windows - http://manhattan.ci.chef.co/job/chef-build/250/
 - windows - http://manhattan.ci.chef.co/job/chef-build/248/
+
+### git checkout timeout
+
+- freebsd-10-i386 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-10,project=chef,role=builder/217/
+- el-7 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-7,project=chef,role=builder/216/
+- debian-6 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=debian-6,project=chef,role=builder/214/console
+- el-5 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-5,project=chef,role=builder/212/
+- el-6 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=el-6,project=chef,role=builder/161/console
+- el-7 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=el-7,project=chef,role=builder/160/
+- freebsd-9 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=freebsd-9,project=chef,role=builder/159/
+- freebsd-9 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-9,project=chef,role=builder/154/
+- debian-6, freebsd - http://manhattan.ci.chef.co/job/chef-build/153/
+- el-5, freebsd-10 - http://manhattan.ci.chef.co/job/chef-build/152/
+- el-6, freebsd-10 - http://manhattan.ci.chef.co/job/chef-build/147/
