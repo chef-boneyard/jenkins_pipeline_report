@@ -2,38 +2,6 @@
 
 ## Build Phase
 
-### msys2 changeover (`collect2.exe: error: ld returned 5 exit status`)
-
-- windows - http://manhattan.ci.chef.co/job/chef-build/265/
-- windows - http://manhattan.ci.chef.co/job/chef-build/263/
-- windows - http://manhattan.ci.chef.co/job/chef-build/255/
-- windows - http://manhattan.ci.chef.co/job/chef-build/255/
-- windows - http://manhattan.ci.chef.co/job/chef-build/250/
-- windows - http://manhattan.ci.chef.co/job/chef-build/127/
-- windows - http://manhattan.ci.chef.co/job/chef-build/123/
-- windows - http://manhattan.ci.chef.co/job/chef-build/122/
-- windows - http://manhattan.ci.chef.co/job/chef-build/121/
-- windows - http://manhattan.ci.chef.co/job/chef-build/120/
-- windows - http://manhattan.ci.chef.co/job/chef-build/119/
-- windows - http://manhattan.ci.chef.co/job/chef-build/118/
-- windows - http://manhattan.ci.chef.co/job/chef-build/117/
-- windows - http://manhattan.ci.chef.co/job/chef-build/93/
-- windows - http://manhattan.ci.chef.co/job/chef-build/92/
-- windows - http://manhattan.ci.chef.co/job/chef-build/91/
-- windows - http://manhattan.ci.chef.co/job/chef-build/88/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/612/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/608/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/607/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/606/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/592/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/582/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/581/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/580/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/579/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/578/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/577/
-- windows - http://manhattan.ci.chef.co/job/chefdk-build/575/
-
 ### git checkout timeout
 
 - freebsd-10-i386 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-10,project=chef,role=builder/217/
@@ -47,18 +15,6 @@
 - debian-6, freebsd - http://manhattan.ci.chef.co/job/chef-build/153/
 - el-5, freebsd-10 - http://manhattan.ci.chef.co/job/chef-build/152/
 - el-6, freebsd-10 - http://manhattan.ci.chef.co/job/chef-build/147/
-
-### msys2 changeover (`Invalid argument - ./ruby.exe (Errno::EINVAL)`)
-
-- windows - http://manhattan.ci.chef.co/job/chef-build/267/
-- windows - http://manhattan.ci.chef.co/job/chef-build/266/
-- windows - http://manhattan.ci.chef.co/job/chef-build/265/
-- windows - http://manhattan.ci.chef.co/job/chef-build/263/
-- windows - http://manhattan.ci.chef.co/job/chef-build/255/
-- windows - http://manhattan.ci.chef.co/job/chef-build/254/
-- windows - http://manhattan.ci.chef.co/job/chef-build/251/
-- windows - http://manhattan.ci.chef.co/job/chef-build/250/
-- windows - http://manhattan.ci.chef.co/job/chef-build/248/
 
 ### network reset rubygems.org:
 
@@ -208,3 +164,49 @@ spec/unit/knife/bootstrap_spec.rb:326 "Chef::Knife::Bootstrap specifying no_prox
 ### artifactory read timeout:
 
 - promote - http://manhattan.ci.chef.co/job/chefdk-promote/108/console
+
+## Resolved
+
+### msys2 changeover (`collect2.exe: error: ld returned 5 exit status`)
+
+- windows - http://manhattan.ci.chef.co/job/chef-build/265/
+- windows - http://manhattan.ci.chef.co/job/chef-build/263/
+- windows - http://manhattan.ci.chef.co/job/chef-build/255/
+- windows - http://manhattan.ci.chef.co/job/chef-build/255/
+- windows - http://manhattan.ci.chef.co/job/chef-build/250/
+- windows - http://manhattan.ci.chef.co/job/chef-build/127/
+- windows - http://manhattan.ci.chef.co/job/chef-build/123/
+- windows - http://manhattan.ci.chef.co/job/chef-build/122/
+- windows - http://manhattan.ci.chef.co/job/chef-build/121/
+- windows - http://manhattan.ci.chef.co/job/chef-build/120/
+- windows - http://manhattan.ci.chef.co/job/chef-build/119/
+- windows - http://manhattan.ci.chef.co/job/chef-build/118/
+- windows - http://manhattan.ci.chef.co/job/chef-build/117/
+- windows - http://manhattan.ci.chef.co/job/chef-build/93/
+- windows - http://manhattan.ci.chef.co/job/chef-build/92/
+- windows - http://manhattan.ci.chef.co/job/chef-build/91/
+- windows - http://manhattan.ci.chef.co/job/chef-build/88/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/612/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/608/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/607/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/606/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/592/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/582/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/581/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/580/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/579/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/578/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/577/
+- windows - http://manhattan.ci.chef.co/job/chefdk-build/575/
+
+### msys2 changeover (`Invalid argument - ./ruby.exe (Errno::EINVAL)`)
+
+- windows - http://manhattan.ci.chef.co/job/chef-build/267/
+- windows - http://manhattan.ci.chef.co/job/chef-build/266/
+- windows - http://manhattan.ci.chef.co/job/chef-build/265/
+- windows - http://manhattan.ci.chef.co/job/chef-build/263/
+- windows - http://manhattan.ci.chef.co/job/chef-build/255/
+- windows - http://manhattan.ci.chef.co/job/chef-build/254/
+- windows - http://manhattan.ci.chef.co/job/chef-build/251/
+- windows - http://manhattan.ci.chef.co/job/chef-build/250/
+- windows - http://manhattan.ci.chef.co/job/chef-build/248/
