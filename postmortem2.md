@@ -11,6 +11,10 @@
 - el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/590/
 - el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/581/
 
+#### Remediation Suggestions
+- Add retries to gem interactions.
+- Deploy gemstash to CI instances to provide local transparent caches of RubyGems.
+
 ### zombie jenkins:
 - windows - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/145/
 - windows - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/143/
@@ -19,6 +23,9 @@
 - windows - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/124/
 - windows - http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/614/
 
+#### Remediation Suggestions
+- Check for open file handlers at build start, identify and kill running pids before all else on Windows.
+
 ### build record already exists
 
 - http://manhattan.ci.chef.co/job/chef-build/129/console
@@ -26,6 +33,9 @@
 - http://manhattan.ci.chef.co/job/chef-build/111/console
 - http://manhattan.ci.chef.co/job/chefdk-build/600/console
 - http://manhattan.ci.chef.co/job/chefdk-build/594/console
+
+#### Remediation Suggestions
+More research required.
 
 ### license not found in source directory (git cache issue):
 
