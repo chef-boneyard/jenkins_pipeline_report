@@ -2,7 +2,7 @@
 
 ## Build Phase
 
-### network reset rubygems.org:
+### network reset rubygems.org: mitigated by https://github.com/chef-cookbooks/opscode-ci/pull/516
 
 - freebsd-9 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-9,project=chef,role=builder/278/console
 - el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/642/
@@ -12,6 +12,7 @@
 - el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/581/
 
 ### zombie jenkins:
+
 - windows - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/145/
 - windows - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/143/
 - windows - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/126/
@@ -26,13 +27,6 @@
 - http://manhattan.ci.chef.co/job/chef-build/111/console
 - http://manhattan.ci.chef.co/job/chefdk-build/600/console
 - http://manhattan.ci.chef.co/job/chefdk-build/594/console
-
-### license not found in source directory (git cache issue):
-
-- aix, linux, solaris-10-i86pc - http://manhattan.ci.chef.co/job/chef-build/265/
-- solaris-10-sun4v - http://manhattan.ci.chef.co/job/chef-build/architecture=sun4v,platform=solaris-10,project=chef,role=builder/232/
-- all - http://manhattan.ci.chef.co/job/chefdk-build/603/
-- all - http://manhattan.ci.chef.co/job/chefdk-build/602/
 
 ### http://git.savannah.gnu.org down:
 
@@ -62,29 +56,6 @@
 - windows -  http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/118/console
 
 ## Test Phase
-
-### rspec `./spec/functional/run_lock_spec.rb:279 # Chef::RunLock when locking the chef-client run test returns without waiting when the lock is acquired`
-
-- solaris-10-sun4v - http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-10,project=chef,role=tester/107/
-- solaris-10-sun4v - http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-10,project=chef,role=tester/78/
-- el-6 - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-6,project=chef,role=tester/69/
-- solaris-10-sun4v - http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-10,project=chef,role=tester/78/
-- el-6 - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-6,project=chef,role=tester/69/
-
-### aws-sdk parallel safety
-
-#### `aws-sdk-core.rb:283: Wrong number of arguments (1 for 0)`
-
-- fips-integration-windows - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/102/artifact/chef-acceptance-data/logs/fips/converge/fips-integration-windows-2012r2.log
-
-#### `aws-sdk-core/xml/parser/stack.rb:49: Message: wrong number of arguments (4 for 0):`
-
-- fips-integration-windows - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/101/artifact/chef-acceptance-data/logs/fips/converge/fips-integration-windows-2012r2.log
-- fips-unit-functional-windows - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/101/artifact/chef-acceptance-data/logs/fips/converge/fips-unit-functional-windows-2012r2.log
-
-#### `undefined method set for Aws::Query::ParamList: aws-sdk-core/query/handler.rb:39`
-- fips-unit-functional-windows - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/100/artifact/chef-acceptance-data/logs/fips/converge/fips-unit-functional-windows-2012r2.log
-- fips-integration-centos - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/100/artifact/chef-acceptance-data/logs/fips/converge/fips-integration-centos-6.log
 
 ### aws ssh connect timeout:
 
@@ -210,3 +181,34 @@ spec/unit/knife/bootstrap_spec.rb:326 "Chef::Knife::Bootstrap specifying no_prox
 - debian-6, freebsd - http://manhattan.ci.chef.co/job/chef-build/153/
 - el-5, freebsd-10 - http://manhattan.ci.chef.co/job/chef-build/152/
 - el-6, freebsd-10 - http://manhattan.ci.chef.co/job/chef-build/147/
+
+### license not found in source directory (git cache issue): https://github.com/chef/omnibus/pull/700
+
+- aix, linux, solaris-10-i86pc - http://manhattan.ci.chef.co/job/chef-build/265/
+- solaris-10-sun4v - http://manhattan.ci.chef.co/job/chef-build/architecture=sun4v,platform=solaris-10,project=chef,role=builder/232/
+- all - http://manhattan.ci.chef.co/job/chefdk-build/603/
+- all - http://manhattan.ci.chef.co/job/chefdk-build/602/
+
+### rspec `./spec/functional/run_lock_spec.rb:279 # Chef::RunLock when locking the chef-client run test returns without waiting when the lock is acquired`: https://github.com/chef/chef/pull/5174
+
+- solaris-10-sun4v - http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-10,project=chef,role=tester/107/
+- solaris-10-sun4v - http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-10,project=chef,role=tester/78/
+- el-6 - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-6,project=chef,role=tester/69/
+- solaris-10-sun4v - http://manhattan.ci.chef.co/job/chef-test/architecture=sun4v,platform=solaris-10,project=chef,role=tester/78/
+- el-6 - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=el-6,project=chef,role=tester/69/
+
+### aws-sdk parallel safety: https://github.com/test-kitchen/kitchen-ec2/pull/270
+
+#### `aws-sdk-core.rb:283: Wrong number of arguments (1 for 0)`
+
+- fips-integration-windows - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/102/artifact/chef-acceptance-data/logs/fips/converge/fips-integration-windows-2012r2.log
+
+#### `aws-sdk-core/xml/parser/stack.rb:49: Message: wrong number of arguments (4 for 0):`
+
+- fips-integration-windows - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/101/artifact/chef-acceptance-data/logs/fips/converge/fips-integration-windows-2012r2.log
+- fips-unit-functional-windows - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/101/artifact/chef-acceptance-data/logs/fips/converge/fips-unit-functional-windows-2012r2.log
+
+#### `undefined method set for Aws::Query::ParamList: aws-sdk-core/query/handler.rb:39`
+- fips-unit-functional-windows - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/100/artifact/chef-acceptance-data/logs/fips/converge/fips-unit-functional-windows-2012r2.log
+- fips-integration-centos - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/100/artifact/chef-acceptance-data/logs/fips/converge/fips-integration-centos-6.log
+
