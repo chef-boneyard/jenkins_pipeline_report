@@ -1,15 +1,6 @@
 # chef/chef-dk July release build failures
 
-## Build Phase
-
-### network reset rubygems.org: mitigated by https://github.com/chef-cookbooks/opscode-ci/pull/516
-
-- freebsd-9 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-9,project=chef,role=builder/278/console
-- el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/642/
-- el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/635/
-- el-6, ubuntu-12.04 - http://manhattan.ci.chef.co/job/chefdk-build/591/
-- el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/590/
-- el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/581/
+## Build Phase: 19 unresolved failures
 
 ### zombie jenkins:
 
@@ -42,6 +33,7 @@
 - ubuntu-12.04 - http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=ubuntu-12.04,project=chef,role=builder/278/console
 
 ### Can't find ruby library file or shared library chef-dk
+
 - all - http://manhattan.ci.chef.co/job/chefdk-build/602/
 
 ### network timeout raw.githubusercontent.com:
@@ -55,7 +47,7 @@
 
 - windows -  http://manhattan.ci.chef.co/job/chef-build/architecture=x86_64,platform=windows-2008r2,project=chef,role=builder/118/console
 
-## Test Phase
+## Test Phase: 16 unresolved failures
 
 ### aws ssh connect timeout:
 
@@ -73,6 +65,7 @@
 - windows - http://manhattan.ci.chef.co/job/chef-test/76/
 
 ### yanked gem
+
 - el-7 - codeclimate-test-reporter-0.6.0 - http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=el-7,project=chefdk,role=tester/272/
 
 ### gpgkeys: `key can't be retrieved from p80.pool.sks-keyservers.net: no valid OpenPGPdata found.`
@@ -116,13 +109,13 @@ spec/unit/knife/bootstrap_spec.rb:326 "Chef::Knife::Bootstrap specifying no_prox
 
 - acceptance - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/61/consoleFull
 
-## Promote Phase
+## Promote Phase: 1 build failed
 
 ### artifactory read timeout:
 
 - promote - http://manhattan.ci.chef.co/job/chefdk-promote/108/console
 
-## Resolved
+## Resolved: 69 builds
 
 ### msys2 changeover (`collect2.exe: error: ld returned 5 exit status`)
 
@@ -211,4 +204,13 @@ spec/unit/knife/bootstrap_spec.rb:326 "Chef::Knife::Bootstrap specifying no_prox
 #### `undefined method set for Aws::Query::ParamList: aws-sdk-core/query/handler.rb:39`
 - fips-unit-functional-windows - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/100/artifact/chef-acceptance-data/logs/fips/converge/fips-unit-functional-windows-2012r2.log
 - fips-integration-centos - http://manhattan.ci.chef.co/job/chef-test/architecture=x86_64,platform=acceptance,project=chef,role=tester/100/artifact/chef-acceptance-data/logs/fips/converge/fips-integration-centos-6.log
+
+### network reset rubygems.org: mitigated by https://github.com/chef-cookbooks/opscode-ci/pull/516
+
+- freebsd-9 - http://manhattan.ci.chef.co/job/chef-build/architecture=i386,platform=freebsd-9,project=chef,role=builder/278/console
+- el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/642/
+- el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/635/
+- el-6, ubuntu-12.04 - http://manhattan.ci.chef.co/job/chefdk-build/591/
+- el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/590/
+- el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/581/
 
