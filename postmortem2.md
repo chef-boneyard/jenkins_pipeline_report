@@ -213,4 +213,3 @@ spec/unit/knife/bootstrap_spec.rb:326 "Chef::Knife::Bootstrap specifying no_prox
 - el-6, ubuntu-12.04 - http://manhattan.ci.chef.co/job/chefdk-build/591/
 - el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/590/
 - el-7 - http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/581/
-

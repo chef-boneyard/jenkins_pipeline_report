@@ -5,7 +5,7 @@ failure_category: code
 failure_cause: 'omnibus fetch: solaris-10-sun4v: harmony-build'
 timestamp: 2016-05-13 08:36:00 UTC
 duration: 8m2s
-active_duration: 7m51s
+active_duration: 12m14s
 queue_delays: 10s
 parameters: {}
 change:
@@ -13,6 +13,14 @@ change:
   git_commit: b34b10e0ecd4cc1b84341a0975f44ef1407e56fd
   project: harmony
 stages:
+  harmony-build/architecture=i386,platform=ubuntu-10.04,project=harmony,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/harmony-build/architecture=i386,platform=ubuntu-10.04,project=harmony,role=builder/205/
+    duration: 2m3s
+  harmony-build/architecture=x86_64,platform=ubuntu-10.04,project=harmony,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=ubuntu-10.04,project=harmony,role=builder/205/
+    duration: 2m20s
   harmony-build:
     result: FAILURE
     failure_category: code
@@ -29,370 +37,90 @@ stages:
           step: omnibus fetch
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=sun4v,platform=solaris-10,project=harmony,role=builder/205/
         duration: 7m44s
-        logs:
-          consoleText:
-            279: |2
-                             [Software] I | 2016-05-13T08:39:19+00:00 | Loading software `popt' from `/export/home/jenkins/workspace/harmony-build/architecture/sun4v/platform/solaris-10/project/harmony/role/builder/config/software/popt.rb' using overrides from harmony.
-                             [Software] I | 2016-05-13T08:39:19+00:00 | Loading software `config_guess' from `/export/home/jenkins/workspace/harmony-build/architecture/sun4v/platform/solaris-10/project/harmony/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-91797cdae99c/config/software/config_guess.rb' using overrides from harmony.
-               [Software: config_guess] W | 2016-05-13T08:39:19+00:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
-                             [Software] I | 2016-05-13T08:39:19+00:00 | Loading software `version-manifest' from `/export/home/jenkins/workspace/harmony-build/architecture/sun4v/platform/solaris-10/project/harmony/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-software-91797cdae99c/config/software/version-manifest.rb' using overrides from harmony.
-              Building harmony 0.1.0+20160513083614.git.32.b34b10e...
-               [Software: config_guess] I | 2016-05-13T08:39:19+00:00 | Resolving manifest entry for config_guess
-               [Software: config_guess] W | 2016-05-13T08:39:19+00:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
-                       [Software: popt] I | 2016-05-13T08:39:19+00:00 | Resolving manifest entry for popt
-               [Software: config_guess] W | 2016-05-13T08:39:20+00:00 | Version master for software config_guess was not parseable. Comparison methods such as #satisfies? will not be available for this version.
-                     [NetFetcher: popt] I | 2016-05-13T08:39:20+00:00 | Downloading from `http://rpm5.org/files/popt/popt-1.16.tar.gz'
-            312: |
-              [GitFetcher: config_guess] I | 2016-05-13T08:39:20+00:00 | $ git -c core.autocrlf=false clone http://git.savannah.gnu.org/r/config.git .
-                                        I | 2016-05-13T08:39:20+00:00 | Cloning into '.'...
-              /opt/omnibus-toolchain/embedded/lib/ruby/2.1.0/net/http.rb:879:in `initialize': Connection timed out - connect(2) for "rpm5.org" port 80 (Errno::ETIMEDOUT)
-                from /opt/omnibus-toolchain/embedded/lib/ruby/2.1.0/net/http.rb:879:in `open'
-                from /opt/omnibus-toolchain/embedded/lib/ruby/2.1.0/net/http.rb:879:in `block in connect'
-            339: |2
-                from /export/home/jenkins/workspace/harmony-build/architecture/sun4v/platform/solaris-10/project/harmony/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/thread_pool.rb:61:in `catch'
-                from /export/home/jenkins/workspace/harmony-build/architecture/sun4v/platform/solaris-10/project/harmony/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-b62510242ece/lib/omnibus/thread_pool.rb:61:in `block (2 levels) in initialize'
-              Build step 'Invoke XShell command' marked build as failure
-              Archiving artifacts
-              Recording fingerprints
-        steps:
-          total: 7m44s
-          before (setup time): 2m58s
-          after (cleanup time): 4m38s
       debian-6-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=i386,platform=debian-6,project=harmony,role=builder/205/
         duration: 1m52s
-        steps:
-          total: 1m52s
-          before (setup time): 1m12s
-          omnibus:
-            build:
-              total: 36s
-              Builder:
-                total: 35s
-                popt: 11s
-                rsync: 21s
-              Software: 35s
-              NetFetcher: 13s
-              GitFetcher: 34s
       el-5-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=i386,platform=el-5,project=harmony,role=builder/205/
         duration: 2m10s
-        steps:
-          total: 2m10s
-          before (setup time): 1m18s
-          omnibus:
-            build:
-              total: 46s
-              Builder:
-                total: 44s
-                popt: 12s
-                rsync: 24s
-              Software: 44s
-              NetFetcher: 20s
-              GitFetcher: 36s
       el-6-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=i386,platform=el-6,project=harmony,role=builder/205/
         duration: 2m26s
-        steps:
-          total: 2m26s
-          before (setup time): "-3m11s"
-          omnibus:
-            build:
-              total: 52s
-              Builder:
-                total: 50s
-                popt: 15s
-                rsync: 26s
-              Software: 51s
-              NetFetcher: 23s
-              GitFetcher: 42s
-          after (cleanup time): 4m40s
       freebsd-10-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=i386,platform=freebsd-10,project=harmony,role=builder/205/
         duration: 1m50s
-        steps:
-          total: 1m50s
-          before (setup time): 4m43s
-          omnibus:
-            build:
-              total: 36s
-              Builder:
-                rsync: 25s
-              Software: 36s
-              NetFetcher: 11s
-              GitFetcher: 33s
-          after (cleanup time): "-3m37s"
       freebsd-9-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=i386,platform=freebsd-9,project=harmony,role=builder/205/
         duration: 2m27s
-        steps:
-          total: 2m27s
-          before (setup time): "-20s"
-          omnibus:
-            build:
-              total: 1m4s
-              Builder:
-                total: 1m3s
-                popt: 12s
-                rsync: 42s
-              Software: 1m3s
-              NetFetcher: 21s
-              GitFetcher: 56s
-          after (cleanup time): 1m37s
       ubuntu-10.04-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=i386,platform=ubuntu-10.04,project=harmony,role=builder/205/
         duration: 2m3s
-        steps:
-          total: 2m3s
-          before (setup time): 1m16s
-          omnibus:
-            build:
-              total: 42s
-              Builder:
-                total: 41s
-                popt: 11s
-                rsync: 24s
-              Software: 41s
-              NetFetcher: 17s
-              GitFetcher: 36s
       windows-2008r2-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=i386,platform=windows-2008r2,project=harmony,role=builder/205/
         duration: 2m7s
-        steps:
-          total: 2m7s
-          before (setup time): "-3m29s"
-          after (cleanup time): 5m30s
       solaris-10-i86pc:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=i86pc,platform=solaris-10,project=harmony,role=builder/205/
         duration: 2m21s
-        steps:
-          total: 2m21s
-          before (setup time): 1m54s
-          omnibus:
-            build:
-              total: 22s
-              Builder:
-                rsync: 13s
-              Software: 22s
-              GitFetcher: 22s
       aix-6.1-powerpc:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=powerpc,platform=aix-6.1,project=harmony,role=builder/205/
         duration: 2m9s
-        steps:
-          total: 2m9s
-          before (setup time): 1m28s
-          omnibus:
-            build:
-              total: 37s
-              Builder:
-                total: 36s
-                popt: 12s
-                rsync: 21s
-              Software: 36s
-              NetFetcher: 15s
-              GitFetcher: 33s
       el-7-ppc64:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=ppc64,platform=el-7,project=harmony,role=builder/205/
         duration: 2m49s
-        steps:
-          total: 2m49s
-          before (setup time): 2m3s
-          omnibus:
-            build:
-              total: 39s
-              Builder:
-                rsync: 23s
-              Software: 38s
-              NetFetcher: 15s
-              GitFetcher: 31s
       el-7-ppc64le:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=ppc64le,platform=el-7,project=harmony,role=builder/205/
         duration: 2m58s
-        steps:
-          total: 2m58s
-          before (setup time): 2m15s
-          omnibus:
-            build:
-              total: 36s
-              Builder:
-                rsync: 21s
-              Software: 35s
-              NetFetcher: 14s
-              GitFetcher: 29s
       ubuntu-14.04-ppc64le:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=ppc64le,platform=ubuntu-14.04,project=harmony,role=builder/205/
         duration: 1m37s
-        steps:
-          total: 1m37s
-          before (setup time): 50s
-          omnibus:
-            build:
-              total: 44s
-              Builder:
-                rsync: 27s
-              Software: 43s
-              NetFetcher: 16s
-              GitFetcher: 36s
       debian-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=debian-6,project=harmony,role=builder/205/
         duration: 2m32s
-        steps:
-          total: 2m32s
-          before (setup time): 1m25s
-          omnibus:
-            build:
-              total: 1m
-              Builder:
-                total: 58s
-                popt: 20s
-                rsync: 35s
-              Software: 58s
-              NetFetcher: 23s
-              GitFetcher: 55s
       el-5:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=el-5,project=harmony,role=builder/205/
         duration: 2m29s
-        steps:
-          total: 2m29s
-          before (setup time): 1m23s
-          omnibus:
-            build:
-              total: 58s
-              Builder:
-                total: 55s
-                popt: 19s
-                rsync: 33s
-              Software: 55s
-              NetFetcher: 22s
-              GitFetcher: 52s
       el-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=el-6,project=harmony,role=builder/205/
         duration: 2m50s
-        steps:
-          total: 2m50s
-          before (setup time): 6m28s
-          omnibus:
-            build:
-              total: 1m10s
-              Builder:
-                total: 1m7s
-                popt: 22s
-                rsync: 40s
-              Software: 1m7s
-              NetFetcher: 26s
-              GitFetcher: 1m3s
-          after (cleanup time): "-4m56s"
       el-7:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=el-7,project=harmony,role=builder/205/
         duration: 1m55s
-        steps:
-          total: 1m55s
-          before (setup time): 1m14s
-          omnibus:
-            build:
-              total: 36s
-              Builder:
-                rsync: 22s
-              Software: 34s
-              NetFetcher: 12s
-              GitFetcher: 32s
       freebsd-10:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=freebsd-10,project=harmony,role=builder/205/
         duration: 2m47s
-        steps:
-          total: 2m47s
-          before (setup time): 5m25s
-          omnibus:
-            build:
-              total: 1m7s
-              Builder:
-                total: 1m6s
-                zlib: 10s
-                popt: 12s
-                rsync: 43s
-              Software: 1m6s
-              NetFetcher: 23s
-              GitFetcher: 56s
-          after (cleanup time): "-3m52s"
       freebsd-9:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=freebsd-9,project=harmony,role=builder/205/
         duration: 3m26s
-        steps:
-          total: 3m26s
-          before (setup time): 3m45s
-          omnibus:
-            build:
-              total: 1m54s
-              Builder:
-                total: 1m52s
-                zlib: 17s
-                popt: 20s
-                rsync: 1m13s
-              Software: 1m52s
-              NetFetcher: 38s
-              GitFetcher: 1m35s
-          after (cleanup time): "-2m21s"
       mac_os_x-10.9:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=mac_os_x-10.9,project=harmony,role=builder/205/
         duration: 1m49s
-        steps:
-          total: 1m49s
-          before (setup time): 42s
-          omnibus:
-            build:
-              total: 53s
-              Builder:
-                rsync: 14s
-              Software: 24s
-              NetFetcher: 10s
-              GitFetcher: 22s
-              Project:
-                harmony: 29s
-              Compressor::DMG: 28s
       ubuntu-10.04:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=ubuntu-10.04,project=harmony,role=builder/205/
         duration: 2m20s
-        steps:
-          total: 2m20s
-          before (setup time): 1m21s
-          omnibus:
-            build:
-              total: 52s
-              Builder:
-                total: 50s
-                popt: 16s
-                rsync: 31s
-              Software: 50s
-              NetFetcher: 19s
-              GitFetcher: 47s
       windows-2008r2:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=windows-2008r2,project=harmony,role=builder/205/
         duration: 2m6s
-        steps:
-          total: 2m6s
-          before (setup time): "-3m30s"
-          after (cleanup time): 5m31s
   harmony-trigger-nightly-master:
     result: SUCCESS
     url: http://manhattan.ci.chef.co/job/harmony-trigger-nightly-master/157/

@@ -11,7 +11,7 @@ parameters:
   GIT_REF: rspec_rollback
   EXPIRE_CACHE: false
 change:
-  git_remote: git://github.com/chef/chef-dk.git
+  git_remote: https://github.com/chef/chef-dk.git
   git_commit: d11e56352b4fefdd052c0808942e104d8d8bdd4f
   project: chefdk
   version: 0.16.23+20160707204507
@@ -31,62 +31,12 @@ stages:
           step: CHEF-ACCEPTANCE TOP-COOKBOOKS::PROVISION
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/256/
         duration: 32m35s
-        steps:
-          total: 32m35s
-          before (setup time): 1m47s
-          CHEF-ACCEPTANCE:
-            TOP-COOKBOOKS::PROVISION: 27m1s
-          after (cleanup time): 3m47s
       mac_os_x-10.11:
         result: FAILURE
         failure_category: network
         failure_cause: worker disconnected
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=mac_os_x-10.11,project=chefdk,role=tester/256/
         duration: 1m35s
-        logs:
-          consoleText:
-            410: |2
-                GPT Header (Backup GPT Header : 7): verified   CRC32 $CA95819D
-              verified   CRC32 $5E3FF72B
-              Slave went offline during the build
-              ERROR: Connection was broken: java.io.IOException: Unexpected termination of the channel
-                at hudson.remoting.SynchronousCommandTransport$ReaderThread.run(SynchronousCommandTransport.java:50)
-              Caused by: java.io.EOFException
-                at java.io.ObjectInputStream$PeekInputStream.readFully(ObjectInputStream.java:2325)
-                at java.io.ObjectInputStream$BlockDataInputStream.readShort(ObjectInputStream.java:2794)
-                at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:801)
-                at java.io.ObjectInputStream.<init>(ObjectInputStream.java:299)
-                at hudson.remoting.ObjectInputStreamEx.<init>(ObjectInputStreamEx.java:40)
-                at hudson.remoting.AbstractSynchronousByteArrayCommandTransport.read(AbstractSynchronousByteArrayCommandTransport.java:34)
-                at hudson.remoting.SynchronousCommandTransport$ReaderThread.run(SynchronousCommandTransport.java:48)
-
-              Build step 'Invoke XShell command' marked build as failure
-              ERROR: Publisher hudson.tasks.ArtifactArchiver aborted due to exception
-              hudson.AbortException: no workspace for chefdk-test/architecture=x86_64,platform=mac_os_x-10.11,project=chefdk,role=tester #256
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              ERROR: Publisher hudson.tasks.Fingerprinter aborted due to exception
-              hudson.AbortException: no workspace for chefdk-test/architecture=x86_64,platform=mac_os_x-10.11,project=chefdk,role=tester #256
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              Regular expression run condition: Expression=[^(?!true)$], Label=[true]
-              Run condition [Regular expression match] preventing perform for step [[Editable Email Notification]]
       windows-2008r2-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/256/
@@ -136,171 +86,26 @@ stages:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/616/
         duration: 24m26s
-        steps:
-          total: 24m26s
-          before (setup time): "-5m1s"
-          omnibus:
-            total: 18m16s
-            fetch:
-              PathFetcher:
-                chef-dk: 11s
-            build:
-              total: 17m53s
-              GitCache:
-                total: 11m45s
-                rust: 29s
-                git-windows: 35s
-                chef-dk 2: 58s
-                ruby-windows-devkit: 17s
-              Software: 11m41s
-              Builder:
-                total: 9m31s
-                chef-dk: 3m11s
-                chef-dk-appbundle: 3m38s
-                ruby-windows-devkit: 12s
-              GitFetcher: 28s
-              Project:
-                chefdk: 6m8s
-              Licensing: 22s
-              Packager::MSI: 5m46s
-          after (cleanup time): 11m12s
       debian-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/616/
         duration: 22m13s
-        steps:
-          total: 22m13s
-          before (setup time): 1m8s
-          omnibus:
-            total: 20m56s
-            fetch:
-              PathFetcher:
-                chef-dk: 16s
-            build:
-              total: 20m31s
-              GitCache:
-                total: 13m12s
-                chef-dk 2: 11s
-                gem-permissions: 11s
-              Software: 13m11s
-              Builder:
-                total: 12m25s
-                chef-dk: 3m18s
-                chef-dk-appbundle: 8m12s
-              GitFetcher: 15s
-              Project:
-                chefdk: 7m19s
-              Licensing: 17s
-              HealthCheck: 50s
-              Packager::DEB: 6m12s
       el-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/616/
         duration: 26m56s
-        steps:
-          total: 26m56s
-          before (setup time): 3m7s
-          omnibus:
-            total: 25m24s
-            fetch:
-              PathFetcher:
-                chef-dk: 16s
-            build:
-              total: 25m
-              GitCache:
-                total: 15m22s
-                rust: 14s
-                chef-dk 2: 14s
-                gem-permissions: 17s
-              Software: 15m21s
-              Builder:
-                total: 14m3s
-                chef-dk: 3m45s
-                chef-dk-appbundle: 9m2s
-              GitFetcher: 22s
-              Project:
-                chefdk: 9m38s
-              Licensing: 19s
-              HealthCheck: 58s
-              Packager::RPM: 8m21s
-          after (cleanup time): "-1m34s"
       el-7:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/616/
         duration: 17m48s
-        steps:
-          total: 17m48s
-          before (setup time): 59s
-          omnibus:
-            total: 16m40s
-            fetch:
-              PathFetcher:
-                chef-dk: 12s
-            build:
-              total: 16m21s
-              GitCache:
-                rust: 12s
-              Software: 9m40s
-              Builder:
-                total: 8m53s
-                chef-dk: 2m19s
-                chef-dk-appbundle: 6m2s
-              Project:
-                chefdk: 6m40s
-              Licensing: 18s
-              HealthCheck: 21s
-              Packager::RPM: 6m1s
       mac_os_x-10.9:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/616/
         duration: 9m46s
-        steps:
-          total: 9m46s
-          before (setup time): 41s
-          omnibus:
-            build:
-              total: 8m27s
-              GitCache:
-                total: 6m24s
-                chef-dk 2: 15s
-                gem-permissions: 16s
-              Software: 6m23s
-              Builder:
-                total: 5m50s
-                chef-dk: 1m44s
-                chef-dk-appbundle: 3m8s
-              GitFetcher: 13s
-              Project:
-                chefdk: 2m3s
-              Licensing: 16s
-              Packager::PKG: 1m9s
-              Compressor::DMG: 36s
-          after (cleanup time): 28s
       ubuntu-12.04:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/616/
         duration: 20m42s
-        steps:
-          total: 20m42s
-          before (setup time): 1m1s
-          omnibus:
-            total: 19m36s
-            fetch:
-              PathFetcher:
-                chef-dk: 17s
-            build:
-              total: 19m10s
-              GitCache: 11m58s
-              Software: 11m58s
-              Builder:
-                total: 11m22s
-                chef-dk: 3m3s
-                chef-dk-appbundle: 7m45s
-              Project:
-                chefdk: 7m12s
-              Licensing: 18s
-              HealthCheck: 25s
-              Packager::DEB: 6m29s
   chefdk-trigger-ad_hoc:
     result: SUCCESS
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-ad_hoc/407/

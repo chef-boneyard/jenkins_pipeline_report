@@ -1,0 +1,160 @@
+---
+result: FAILURE
+failure_category: unknown
+failure_cause: unknown
+timestamp: 2016-02-26 23:04:21 UTC
+url: http://manhattan.ci.chef.co/job/omnibus-toolchain-build/architecture=x86_64,platform=mac_os_x-10.9,project=omnibus-toolchain,role=builder/31/
+trigger_url: http://manhattan.ci.chef.co/job/omnibus-toolchain-trigger-ad_hoc/9/
+duration: 9m5s
+logs:
+  consoleText:
+    16594: |2
+                       [Builder: libedit] I | Execute: `make -j 3': 3.2756s
+                       [Builder: libedit] I | Build libedit: 14.8264s
+      The following shell command exited with status 2:
+
+          $ CFLAGS=-I/opt/omnibus-toolchain/embedded/include -O2 CPPFLAGS=-I/opt/omnibus-toolchain/embedded/include -O2 CXXFLAGS=-I/opt/omnibus-toolchain/embedded/include -O2 LDFLAGS=-L/opt/omnibus-toolchain/embedded/lib LD_RUN_PATH=/opt/omnibus-toolchain/embedded/lib PATH=/opt/omnibus-toolchain/bin:/opt/omnibus-toolchain/embedded/bin:/Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bin:/opt/languages/ruby/2.1.5/bin:/usr/local/bin::/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin PKG_CONFIG_PATH=/opt/omnibus-toolchain/embedded/lib/pkgconfig make -j 3
+
+      Output:
+
+          make  all-recursive
+      make[1]: Entering directory '/private/var/cache/omnibus/src/libedit/libedit-20120601-3.0'
+      Making all in src
+      make[2]: Entering directory '/private/var/cache/omnibus/src/libedit/libedit-20120601-3.0/src'
+      AWK=awk sh ./makelist -h ./vi.c > vi.h
+      AWK=awk sh ./makelist -h ./emacs.c > emacs.h
+      AWK=awk sh ./makelist -h ./common.c > common.h
+      AWK=awk sh ./makelist -bh ./vi.c ./emacs.c ./common.c > help.h
+      AWK=awk sh ./makelist -bc ./vi.c ./emacs.c ./common.c > help.c
+      AWK=awk sh ./makelist -fh vi.h emacs.h common.h  > fcns.h
+      AWK=awk sh ./makelist -fc vi.h emacs.h common.h  > fcns.c
+      make  all-am
+      make[3]: Entering directory '/private/var/cache/omnibus/src/libedit/libedit-20120601-3.0/src'
+        CC       chared.lo
+        CC       common.lo
+        CC       el.lo
+        CC       emacs.lo
+        CC       hist.lo
+        CC       keymacro.lo
+        CC       map.lo
+        CC       chartype.lo
+        CC       parse.lo
+        CC       prompt.lo
+        CC       read.lo
+        CC       refresh.lo
+        CC       search.lo
+        CC       sig.lo
+        CC       terminal.lo
+        CC       tty.lo
+        CC       vi.lo
+        CC       fgetln.lo
+        CC       strlcat.lo
+      Makefile:424: recipe for target 'strlcat.lo' failed
+      make[3]: Leaving directory '/private/var/cache/omnibus/src/libedit/libedit-20120601-3.0/src'
+      Makefile:299: recipe for target 'all' failed
+      make[2]: Leaving directory '/private/var/cache/omnibus/src/libedit/libedit-20120601-3.0/src'
+      Makefile:389: recipe for target 'all-recursive' failed
+      make[1]: Leaving directory '/private/var/cache/omnibus/src/libedit/libedit-20120601-3.0'
+      Makefile:297: recipe for target 'all' failed
+
+      Error:
+
+          strlcat.c:45:1: error: expected parameter declarator
+      strlcat(char *dst, const char *src, size_t siz)
+      ^
+      /usr/include/secure/_string.h:111:44: note: expanded from macro 'strlcat'
+        __builtin___strlcat_chk (dest, src, len, __darwin_obsz (dest))
+                                                 ^
+      /usr/include/secure/_common.h:39:62: note: expanded from macro '__darwin_obsz'
+      #define __darwin_obsz(object) __builtin_object_size (object, _USE_FORTIFY_LEVEL > 1 ? 1 : 0)
+                                                                   ^
+      /usr/include/secure/_common.h:30:32: note: expanded from macro '_USE_FORTIFY_LEVEL'
+      #    define _USE_FORTIFY_LEVEL 2
+                                     ^
+      strlcat.c:45:1: error: expected ')'
+      /usr/include/secure/_string.h:111:44: note: expanded from macro 'strlcat'
+        __builtin___strlcat_chk (dest, src, len, __darwin_obsz (dest))
+                                                 ^
+      /usr/include/secure/_common.h:39:62: note: expanded from macro '__darwin_obsz'
+      #define __darwin_obsz(object) __builtin_object_size (object, _USE_FORTIFY_LEVEL > 1 ? 1 : 0)
+                                                                   ^
+      /usr/include/secure/_common.h:30:32: note: expanded from macro '_USE_FORTIFY_LEVEL'
+      #    define _USE_FORTIFY_LEVEL 2
+                                     ^
+      strlcat.c:45:1: note: to match this '('
+      /usr/include/secure/_string.h:111:44: note: expanded from macro 'strlcat'
+        __builtin___strlcat_chk (dest, src, len, __darwin_obsz (dest))
+                                                 ^
+      /usr/include/secure/_common.h:39:53: note: expanded from macro '__darwin_obsz'
+      #define __darwin_obsz(object) __builtin_object_size (object, _USE_FORTIFY_LEVEL > 1 ? 1 : 0)
+                                                          ^
+      strlcat.c:45:1: warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+      strlcat(char *dst, const char *src, size_t siz)
+      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      /usr/include/secure/_string.h:111:44: note: expanded from macro 'strlcat'
+        __builtin___strlcat_chk (dest, src, len, __darwin_obsz (dest))
+                                                 ^~~~~~~~~~~~~~~~~~~~
+      /usr/include/secure/_common.h:39:31: note: expanded from macro '__darwin_obsz'
+      #define __darwin_obsz(object) __builtin_object_size (object, _USE_FORTIFY_LEVEL > 1 ? 1 : 0)
+                                    ^~~~~~~~~~~~~~~~~~~~~
+      strlcat.c:45:1: error: conflicting types for '__builtin___strlcat_chk'
+      /usr/include/secure/_string.h:111:3: note: expanded from macro 'strlcat'
+        __builtin___strlcat_chk (dest, src, len, __darwin_obsz (dest))
+        ^
+      strlcat.c:45:1: note: '__builtin___strlcat_chk' is a builtin with type 'unsigned long (char *, const char *, unsigned long, unsigned long)'
+      /usr/include/secure/_string.h:111:3: note: expanded from macro 'strlcat'
+        __builtin___strlcat_chk (dest, src, len, __darwin_obsz (dest))
+        ^
+      strlcat.c:45:1: error: definition of builtin function '__builtin___strlcat_chk'
+      strlcat(char *dst, const char *src, size_t siz)
+      ^
+      /usr/include/secure/_string.h:111:3: note: expanded from macro 'strlcat'
+        __builtin___strlcat_chk (dest, src, len, __darwin_obsz (dest))
+        ^
+      1 warning and 4 errors generated.
+      make[3]: *** [strlcat.lo] Error 1
+      make[3]: *** Waiting for unfinished jobs....
+      make[2]: *** [all] Error 2
+      make[1]: *** [all-recursive] Error 1
+      make: *** [all] Error 2
+
+      /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/util.rb:101:in `rescue in shellout!'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/util.rb:97:in `shellout!'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:793:in `shellout!'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:84:in `block in command'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:980:in `instance_eval'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:980:in `run'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:811:in `block (3 levels) in execute'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:833:in `call'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:833:in `with_retries'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:810:in `block (2 levels) in execute'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/instrumentation.rb:23:in `call'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/instrumentation.rb:23:in `measure'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:809:in `block in execute'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:883:in `call'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:883:in `with_clean_env'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:808:in `execute'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:675:in `block (2 levels) in build'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:674:in `each'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:674:in `block in build'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/instrumentation.rb:23:in `call'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/instrumentation.rb:23:in `measure'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/builder.rb:673:in `build'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/software.rb:1038:in `execute_build'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/software.rb:913:in `build_me'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/project.rb:1006:in `block in build'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/project.rb:1005:in `each'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/project.rb:1005:in `build'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/cli.rb:83:in `build'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/cli/base.rb:33:in `dispatch'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/lib/omnibus/cli.rb:41:in `execute!'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-4bd86220b9aa/bin/omnibus:16:in `<top (required)>'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
+        /Users/jenkins/workspace/omnibus-toolchain-build/architecture/x86_64/platform/mac_os_x-10.9/project/omnibus-toolchain/role/builder/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
+      Build step 'Invoke XShell command' marked build as failure
+      Archiving artifacts
+      Recording fingerprints

@@ -6,16 +6,24 @@ failure_cause: 'zombie jenkins: windows; unknown: mac_os_x: angrychef-build'
 timestamp: 2015-12-10 03:22:03 UTC
 duration: 4h50m9s
 triggered_by: curiositycasualty
-active_duration: 59m9s
+active_duration: 1h29m9s
 retry_delays: 3h50m53s
 parameters:
   GIT_REF: if/aix
   EXPIRE_CACHE: true
 change:
-  git_remote: git://github.com/chef/chef.git
+  git_remote: https://github.com/chef/chef.git
   git_commit: 05e8996535019a86831f06da13d1c4d3eac5508f
   project: angrychef
 stages:
+  angrychef-build/architecture=x86_64,platform=ubuntu-10.04,project=angrychef,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/angrychef-build/architecture=x86_64,platform=ubuntu-10.04,project=angrychef,role=builder/18/
+    duration: 17m33s
+  angrychef-build/architecture=i386,platform=ubuntu-10.04,project=angrychef,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/angrychef-build/architecture=i386,platform=ubuntu-10.04,project=angrychef,role=builder/18/
+    duration: 12m26s
   angrychef-build:
     result: FAILURE
     failure_category: machine
@@ -32,88 +40,18 @@ stages:
         failure_cause: zombie jenkins
         url: http://manhattan.ci.chef.co/job/angrychef-build/architecture=i386,platform=windows-2008r2,project=angrychef,role=builder/18/
         duration: 26s
-        logs:
-          consoleText:
-            23: |
-              Deleting project workspace... Cannot delete workspace: remote file operation failed: C:\jenkins\workspace\angrychef-build\architecture\i386\platform\windows-2008r2\project\angrychef\role\builder at hudson.remoting.Channel@1dbc236c:angrychef-windows-2008r2-i386-builder-8fc5db: java.nio.file.FileSystemException: C:\jenkins\workspace\angrychef-build\architecture\i386\platform\windows-2008r2\project\angrychef\role\builder: The process cannot access the file because it is being used by another process.
-
-              ERROR: Cannot delete workspace: remote file operation failed: C:\jenkins\workspace\angrychef-build\architecture\i386\platform\windows-2008r2\project\angrychef\role\builder at hudson.remoting.Channel@1dbc236c:angrychef-windows-2008r2-i386-builder-8fc5db: java.nio.file.FileSystemException: C:\jenkins\workspace\angrychef-build\architecture\i386\platform\windows-2008r2\project\angrychef\role\builder: The process cannot access the file because it is being used by another process.
-
-              Archiving artifacts
       mac_os_x-10.9:
         result: FAILURE
         failure_category: unknown
         failure_cause: unknown
         url: http://manhattan.ci.chef.co/job/angrychef-build/architecture=x86_64,platform=mac_os_x-10.9,project=angrychef,role=builder/18/
         duration: 8m16s
-        logs:
-          consoleText:
-            26920: |2
-                                                  D | compiling ./enc/trans/emoji_iso2022_kddi.c
-                                                  D | configuring -test-/exception
-                                                  D | configuring -test-/fatal
-                                                  D | configuring -test-/file
-                                                  D | configuring -test-/funcall
-            27131: |2
-                                                  D | compiling break.c
-                                                  D | linking shared-object -test-/bug-5832/bug.bundle
-                                                  D | linking shared-object -test-/fatal/rb_fatal.bundle
-                                                  D | installing default class libraries
-                                                  D | compiling dot.dot.c
-            32565: |2
-                                                  I | _RegisterApplication(), FAILED TO establish the default connection to the WindowServer, _CGSDefaultConnection() is NULL.
-                                                  I | /var/folders/p8/ddfqyhl17lggd0cd4d080t4800007h/T/angrychef20151209-33938-1pqs5ge/create_dmg.osascript:62:66: execution error: An error of type -10810 has occurred. (-10810)
-              The following shell command exited with status 1:
-
-                  $ osascript "/var/folders/p8/ddfqyhl17lggd0cd4d080t4800007h/T/angrychef20151209-33938-1pqs5ge/create_dmg.osascript"
-
-
-              Output:
-
-                  (nothing)
-
-              Error:
-
-                  _RegisterApplication(), FAILED TO establish the default connection to the WindowServer, _CGSDefaultConnection() is NULL.
-              /var/folders/p8/ddfqyhl17lggd0cd4d080t4800007h/T/angrychef20151209-33938-1pqs5ge/create_dmg.osascript:62:66: execution error: An error of type -10810 has occurred. (-10810)
-
-              /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/util.rb:101:in `rescue in shellout!'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/util.rb:97:in `shellout!'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/compressors/dmg.rb:227:in `block in prettify_dmg'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/compressors/dmg.rb:226:in `chdir'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/compressors/dmg.rb:226:in `prettify_dmg'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/compressors/dmg.rb:42:in `block in <class:DMG>'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/packagers/base.rb:145:in `instance_eval'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/packagers/base.rb:145:in `run!'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/project.rb:1087:in `compress_me'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/project.rb:1013:in `build'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/cli.rb:83:in `build'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/cli/base.rb:33:in `dispatch'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/lib/omnibus/cli.rb:41:in `execute!'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bundler/gems/omnibus-39e6ff8fa327/bin/omnibus:16:in `<top (required)>'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `load'
-                /Users/jenkins/workspace/angrychef-build/architecture/x86_64/platform/mac_os_x-10.9/project/angrychef/role/builder/vendor/bundle/ruby/2.1.0/bin/omnibus:23:in `<main>'
-              Build step 'Invoke XShell command' marked build as failure
-              Archiving artifacts
-              Recording fingerprints
       windows-2008r2:
         result: FAILURE
         failure_category: machine
         failure_cause: zombie jenkins
         url: http://manhattan.ci.chef.co/job/angrychef-build/architecture=x86_64,platform=windows-2008r2,project=angrychef,role=builder/18/
         duration: 11s
-        logs:
-          consoleText:
-            23: |
-              Deleting project workspace... Cannot delete workspace: remote file operation failed: C:\jenkins\workspace\angrychef-build\architecture\x86_64\platform\windows-2008r2\project\angrychef\role\builder at hudson.remoting.Channel@d4f413d:angrychef-windows-2008r2-builder-fc7ed6: java.nio.file.FileSystemException: C:\jenkins\workspace\angrychef-build\architecture\x86_64\platform\windows-2008r2\project\angrychef\role\builder: The process cannot access the file because it is being used by another process.
-
-              ERROR: Cannot delete workspace: remote file operation failed: C:\jenkins\workspace\angrychef-build\architecture\x86_64\platform\windows-2008r2\project\angrychef\role\builder at hudson.remoting.Channel@d4f413d:angrychef-windows-2008r2-builder-fc7ed6: java.nio.file.FileSystemException: C:\jenkins\workspace\angrychef-build\architecture\x86_64\platform\windows-2008r2\project\angrychef\role\builder: The process cannot access the file because it is being used by another process.
-
-              Archiving artifacts
       debian-6-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/angrychef-build/architecture=i386,platform=debian-6,project=angrychef,role=builder/18/

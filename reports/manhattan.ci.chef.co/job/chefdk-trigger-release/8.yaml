@@ -12,7 +12,7 @@ parameters:
   GIT_REF: master
   EXPIRE_CACHE: true
 change:
-  git_remote: git://github.com/chef/chef-dk.git
+  git_remote: https://github.com/chef/chef-dk.git
   git_commit: 9d926d87e73be3d81c992c4a9a692d22dbe3b708
   project: chefdk
   version: 0.12.0
@@ -33,70 +33,6 @@ stages:
         failure_cause: network timeout jenkins
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/43/
         duration: 6m46s
-        logs:
-          consoleText:
-            7: |2
-                 Started by user Matt Wrock
-              [EnvInject] - Loading node environment variables.
-              ERROR: SEVERE ERROR occurs
-              org.jenkinsci.lib.envinject.EnvInjectException: java.io.IOException: Connection timed out
-                at org.jenkinsci.plugins.envinject.service.EnvironmentVariablesNodeLoader.gatherEnvironmentVariablesNode(EnvironmentVariablesNodeLoader.java:75)
-                at org.jenkinsci.plugins.envinject.EnvInjectListener.loadEnvironmentVariablesNode(EnvInjectListener.java:81)
-                at org.jenkinsci.plugins.envinject.EnvInjectListener.setUpEnvironment(EnvInjectListener.java:39)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.createLauncher(AbstractBuild.java:574)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:494)
-                at hudson.model.Run.execute(Run.java:1741)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              Caused by: java.io.IOException: Connection timed out
-                at sun.nio.ch.FileDispatcherImpl.write0(Native Method)
-                at sun.nio.ch.SocketDispatcher.write(SocketDispatcher.java:47)
-                at sun.nio.ch.IOUtil.writeFromNativeBuffer(IOUtil.java:93)
-                at sun.nio.ch.IOUtil.write(IOUtil.java:65)
-                at sun.nio.ch.SocketChannelImpl.write(SocketChannelImpl.java:487)
-                at hudson.remoting.SocketChannelStream$2.write(SocketChannelStream.java:70)
-                at java.nio.channels.Channels.writeFullyImpl(Channels.java:78)
-                at java.nio.channels.Channels.writeFully(Channels.java:101)
-                at java.nio.channels.Channels.access$000(Channels.java:61)
-                at java.nio.channels.Channels$1.write(Channels.java:174)
-                at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
-                at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
-                at hudson.remoting.ChunkedOutputStream.sendBreak(ChunkedOutputStream.java:67)
-                at hudson.remoting.ChunkedCommandTransport.writeBlock(ChunkedCommandTransport.java:46)
-                at hudson.remoting.AbstractSynchronousByteArrayCommandTransport.write(AbstractSynchronousByteArrayCommandTransport.java:45)
-                at hudson.remoting.Channel.send(Channel.java:554)
-                at hudson.remoting.Request.call(Request.java:129)
-                at hudson.remoting.Channel.call(Channel.java:752)
-                at hudson.FilePath.act(FilePath.java:1073)
-                at org.jenkinsci.plugins.envinject.service.EnvironmentVariablesNodeLoader.gatherEnvironmentVariablesNode(EnvironmentVariablesNodeLoader.java:44)
-                ... 8 more
-              ERROR: Publisher hudson.tasks.ArtifactArchiver aborted due to exception
-              hudson.AbortException: no workspace for chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester #43
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              ERROR: Publisher hudson.tasks.Fingerprinter aborted due to exception
-              hudson.AbortException: no workspace for chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester #43
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              Regular expression run condition: Expression=[^(?!true)$], Label=[]
-              Run condition [Regular expression match] enabling perform for step [[Editable Email Notification]]
       debian-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=debian-6,project=chefdk,role=tester/43/

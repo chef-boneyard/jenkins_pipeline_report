@@ -12,7 +12,7 @@ parameters:
   GIT_REF: v0.14.20
   EXPIRE_CACHE: false
 change:
-  git_remote: git://github.com/chef/chef-dk.git
+  git_remote: https://github.com/chef/chef-dk.git
   git_commit: 5838b218bff5b69d64077cee55a0edbf0bab5ee5
   project: chefdk
   version: 0.14.20
@@ -32,75 +32,6 @@ stages:
           step: CHEF-ACCEPTANCE
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/169/
         duration: 1h2m10s
-        logs:
-          consoleText:
-            5142: |2
-                                     Finished verifying <chefdk-current-install-ubuntu-1404> (0m10.74s).
-                              -----> Kitchen is finished. (0m11.50s)
-              TRIVIAL::VERIFY::[2016-05-13 18:14:47 +0000]                 zlib(finalizer): the stream was freed prematurely.
-              TRIVIAL::VERIFY::[2016-05-13 18:14:47 +0000]       - execute bundle exec kitchen verify  -c
-            5223: |
-              + sudo chown -R jenkins:jenkins /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/archived_test_data
-              Archiving artifacts
-              ERROR: Failed to archive artifacts: OPSCODE_CI_PIPELINE_RUN.properties,logs/**,archived_test_data/**,chef-acceptance-data/**
-              java.io.IOException: java.util.concurrent.ExecutionException: java.io.FileNotFoundException: /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/verify/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb (Permission denied)
-                at hudson.FilePath.copyRecursiveTo(FilePath.java:2224)
-                at jenkins.model.StandardArtifactManager.archive(StandardArtifactManager.java:61)
-                at hudson.tasks.ArtifactArchiver.perform(ArtifactArchiver.java:219)
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              Caused by: java.util.concurrent.ExecutionException: java.io.FileNotFoundException: /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/verify/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb (Permission denied)
-                at hudson.remoting.Channel$3.adapt(Channel.java:785)
-                at hudson.remoting.Channel$3.adapt(Channel.java:780)
-                at hudson.remoting.FutureAdapter.get(FutureAdapter.java:55)
-                at hudson.FilePath.copyRecursiveTo(FilePath.java:2222)
-                ... 12 more
-              Caused by: java.io.FileNotFoundException: /home/jenkins/workspace/chefdk-test/architecture/x86_64/platform/acceptance/project/chefdk/role/tester/chef-acceptance-data/chef/chef/top-cookbooks/verify/cache/cookbooks/kitchen_acceptance/libraries/kitchen.rb (Permission denied)
-                at java.io.FileInputStream.open(Native Method)
-                at java.io.FileInputStream.<init>(FileInputStream.java:146)
-                at hudson.util.io.TarArchiver.visit(TarArchiver.java:110)
-                at hudson.util.DirScanner.scanSingle(DirScanner.java:49)
-                at hudson.FilePath$ExplicitlySpecifiedDirScanner.scan(FilePath.java:2775)
-                at hudson.FilePath.writeToTar(FilePath.java:2260)
-                at hudson.FilePath.access$2100(FilePath.java:191)
-                at hudson.FilePath$45.invoke(FilePath.java:2201)
-                at hudson.FilePath$45.invoke(FilePath.java:2197)
-                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
-                at hudson.remoting.Request$2.run(Request.java:325)
-                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
-                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-                at java.lang.Thread.run(Thread.java:745)
-                at ......remote call to chefdk-ubuntu-14.04-acceptance-6eb047(Native Method)
-                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
-                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
-                at hudson.remoting.Channel$3.adapt(Channel.java:783)
-                ... 15 more
-              Build step 'Archive the artifacts' changed build result to FAILURE
-              Recording fingerprints
-              Regular expression run condition: Expression=[^(?!true)$], Label=[]
-        steps:
-          total: 1h2m10s
-          before (setup time): 59s
-          CHEF-ACCEPTANCE:
-            total: 1h1m9s
-            TOP-COOKBOOKS::PROVISION: 57m28s
-            TOP-COOKBOOKS::VERIFY: 39s
-            TOP-COOKBOOKS::DESTROY: 41s
-            TRIVIAL::PROVISION: 1m33s
-            TRIVIAL::VERIFY: 21s
-            TRIVIAL::DESTROY: 11s
         chef_acceptance_timing:
         - top-cookbooks:
             provision: 54m11s
@@ -170,161 +101,26 @@ stages:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=i386,platform=windows-2008r2,project=chefdk,role=builder/397/
         duration: 25m3s
-        steps:
-          total: 25m3s
-          before (setup time): "-3m11s"
-          omnibus:
-            total: 17m46s
-            fetch: 10s
-            build:
-              total: 17m35s
-              GitCache:
-                total: 12m22s
-                git-windows: 22s
-                chef-dk 2: 44s
-                ruby-windows-devkit: 15s
-              Software: 12m18s
-              Builder:
-                total: 11m
-                chef-dk: 4m48s
-                chef-dk-appbundle: 3m52s
-                ruby-windows-devkit: 10s
-              GitFetcher: 27s
-              Project:
-                chefdk: 5m13s
-              Packager::MSI: 5m7s
-          after (cleanup time): 10m29s
       debian-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=debian-6,project=chefdk,role=builder/397/
         duration: 21m35s
-        steps:
-          total: 21m35s
-          before (setup time): 1m15s
-          omnibus:
-            total: 20m11s
-            fetch:
-              PathFetcher:
-                chef-dk: 14s
-            build:
-              total: 19m49s
-              GitCache:
-                total: 12m52s
-                chef-dk 2: 10s
-                gem-permissions: 11s
-              Software: 12m52s
-              Builder:
-                total: 12m9s
-                chef-dk: 3m28s
-                chef-dk-appbundle: 7m48s
-              GitFetcher: 15s
-              Project:
-                chefdk: 6m57s
-              HealthCheck: 47s
-              Packager::DEB: 6m7s
       el-6:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-6,project=chefdk,role=builder/397/
         duration: 26m3s
-        steps:
-          total: 26m3s
-          before (setup time): 2m50s
-          omnibus:
-            total: 24m25s
-            fetch:
-              PathFetcher:
-                chef-dk: 15s
-            build:
-              total: 24m1s
-              GitCache:
-                total: 14m53s
-                chef-dk 2: 14s
-                gem-permissions: 15s
-              Software: 14m51s
-              Builder:
-                total: 13m37s
-                chef-dk: 3m50s
-                chef-dk-appbundle: 8m35s
-              GitFetcher: 20s
-              Project:
-                chefdk: 9m8s
-              HealthCheck: 56s
-              Packager::RPM: 8m9s
-          after (cleanup time): "-1m12s"
       el-7:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=el-7,project=chefdk,role=builder/397/
         duration: 18m32s
-        steps:
-          total: 18m32s
-          before (setup time): 1m17s
-          omnibus:
-            total: 17m9s
-            fetch:
-              PathFetcher:
-                chef-dk: 13s
-            build:
-              total: 16m48s
-              GitCache:
-                preparation: 12s
-              Software: 9m58s
-              Builder:
-                total: 8m54s
-                chef-dk: 2m35s
-                chef-dk-appbundle: 5m49s
-              Project:
-                chefdk: 6m38s
-              HealthCheck: 22s
-              Packager::RPM: 6m13s
       mac_os_x-10.9:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=mac_os_x-10.9,project=chefdk,role=builder/397/
         duration: 9m54s
-        steps:
-          total: 9m54s
-          before (setup time): 53s
-          omnibus:
-            build:
-              total: 8m22s
-              GitCache:
-                total: 6m43s
-                chef-dk 2: 15s
-                gem-permissions: 16s
-              Software: 6m42s
-              Builder:
-                total: 6m13s
-                chef-dk: 2m5s
-                chef-dk-appbundle: 3m12s
-              GitFetcher: 12s
-              Project:
-                chefdk: 1m39s
-              Packager::PKG: 1m4s
-              Compressor::DMG: 32s
-          after (cleanup time): 29s
       ubuntu-12.04:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-build/architecture=x86_64,platform=ubuntu-12.04,project=chefdk,role=builder/397/
         duration: 20m30s
-        steps:
-          total: 20m30s
-          before (setup time): 1m13s
-          omnibus:
-            total: 19m12s
-            fetch:
-              PathFetcher:
-                chef-dk: 16s
-            build:
-              total: 18m47s
-              GitCache: 11m55s
-              Software: 11m54s
-              Builder:
-                total: 11m24s
-                chef-dk: 3m30s
-                chef-dk-appbundle: 7m19s
-              Project:
-                chefdk: 6m52s
-              HealthCheck: 26s
-              Packager::DEB: 6m24s
   chefdk-trigger-release:
     result: SUCCESS
     url: http://manhattan.ci.chef.co/job/chefdk-trigger-release/62/

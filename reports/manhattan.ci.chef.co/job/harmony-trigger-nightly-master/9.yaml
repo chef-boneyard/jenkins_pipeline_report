@@ -5,7 +5,7 @@ failure_category: network
 failure_cause: 'worker disconnected: el-5: harmony-build'
 timestamp: 2015-12-18 08:36:00 UTC
 duration: 5h58m58s
-active_duration: 6h1m2s
+active_duration: 6h2m58s
 parameters: {}
 change:
   git_remote: https://github.com/opscode/omnibus-harmony.git
@@ -16,6 +16,10 @@ stages:
     result: SUCCESS
     url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=mac_os_x-10.8,project=harmony,role=builder/24/
     duration: 2m11s
+  harmony-build/architecture=x86_64,platform=ubuntu-10.04,project=harmony,role=builder:
+    result: SUCCESS
+    url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=ubuntu-10.04,project=harmony,role=builder/24/
+    duration: 1m56s
   harmony-build:
     result: FAILURE
     failure_category: network
@@ -29,40 +33,6 @@ stages:
         failure_cause: worker disconnected
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=x86_64,platform=el-5,project=harmony,role=builder/24/
         duration: 9s
-        logs:
-          consoleText:
-            46: |
-              [Build Cause] check if build was triggered by [UpstreamCause]
-              Run condition [Build Cause] enabling perform for step [Copy artifacts from another project]
-              Slave went offline during the build
-              ERROR: <span class=error style='display:inline-block'>Time out for last 5 try</span>
-              Build step 'Conditional step (single)' marked build as failure
-              ERROR: Publisher hudson.tasks.ArtifactArchiver aborted due to exception
-              hudson.AbortException: no workspace for harmony-build/architecture=x86_64,platform=el-5,project=harmony,role=builder #24
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              ERROR: Publisher hudson.tasks.Fingerprinter aborted due to exception
-              hudson.AbortException: no workspace for harmony-build/architecture=x86_64,platform=el-5,project=harmony,role=builder #24
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              [BFA] Scanning build for known causes...
-              [BFA] No failure causes found
       solaris-10-i86pc:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/harmony-build/architecture=i86pc,platform=solaris-10,project=harmony,role=builder/24/

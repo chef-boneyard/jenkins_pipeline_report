@@ -12,7 +12,7 @@ parameters:
   GIT_REF: jk/update-deps
   EXPIRE_CACHE: false
 change:
-  git_remote: git://github.com/chef/chef-dk.git
+  git_remote: https://github.com/chef/chef-dk.git
   git_commit: e9eea66319a885fb907a000c6f3d2db4929aabb4
   project: chefdk
   version: 0.13.14+20160408210055
@@ -30,26 +30,6 @@ stages:
         failure_cause: yanked gem aruba-0.10.2
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=ubuntu-14.04,project=chefdk,role=tester/91/
         duration: 17m13s
-        logs:
-          consoleText:
-            426: |2
-
-
-              fatal: Not a git repository (or any of the parent directories): .git
-              /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.11.2/lib/bundler/spec_set.rb:94:in `block in materialize': Could not find aruba-0.10.2 in any of the sources (Bundler::GemNotFound)
-                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.11.2/lib/bundler/spec_set.rb:87:in `map!'
-                from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/bundler-1.11.2/lib/bundler/spec_set.rb:87:in `materialize'
-            452: |
-              Verification of component 'package installation' succeeded.
-              Verification of component 'test-kitchen' succeeded.
-              Verification of component 'berkshelf' failed.
-              Verification of component 'chefspec' succeeded.
-              Verification of component 'chef-provisioning' succeeded.
-              Verification of component 'chef-dk' succeeded.
-              Verification of component 'chef-client' succeeded.
-              Build step 'Invoke XShell command' marked build as failure
-              Archiving artifacts
-              Recording fingerprints
       windows-2008r2-i386:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=i386,platform=windows-2008r2,project=chefdk,role=tester/91/
@@ -58,17 +38,6 @@ stages:
         result: SUCCESS
         url: http://manhattan.ci.chef.co/job/chefdk-test/architecture=x86_64,platform=acceptance,project=chefdk,role=tester/91/
         duration: 59m15s
-        steps:
-          total: 59m15s
-          before (setup time): 59s
-          CHEF-ACCEPTANCE:
-            total: 58m16s
-            TOP-COOKBOOKS::PROVISION: 54m12s
-            TOP-COOKBOOKS::VERIFY: 45s
-            TOP-COOKBOOKS::DESTROY: 47s
-            TRIVIAL::PROVISION: 1m43s
-            TRIVIAL::VERIFY: 19s
-            TRIVIAL::DESTROY: 11s
         chef_acceptance_timing:
         - top-cookbooks:
             provision: 51m4s

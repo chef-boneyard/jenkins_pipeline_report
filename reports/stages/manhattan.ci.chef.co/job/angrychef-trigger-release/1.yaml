@@ -1,0 +1,35 @@
+---
+result: FAILURE
+failure_category: unknown
+failure_cause: unknown
+timestamp: 2016-01-04 21:09:55 UTC
+url: http://manhattan.ci.chef.co/job/angrychef-trigger-release/1/
+trigger_url: http://manhattan.ci.chef.co/job/angrychef-trigger-release/1/
+duration: 3s
+active_duration: 3s
+retries: 2
+logs:
+  consoleText:
+    15: |2
+       > git -c core.askpass=true fetch --tags --progress git://github.com/opscode/omnibus-chef.git +refs/heads/*:refs/remotes/origin/*
+       > git rev-parse origin/?chef-12.6.0^{commit} # timeout=10
+      FATAL: Invalid id: origin/?chef-12.6.0^{commit}
+      java.lang.IllegalArgumentException: Invalid id: origin/?chef-12.6.0^{commit}
+        at org.eclipse.jgit.lib.ObjectId.fromString(ObjectId.java:232)
+        at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.revParse(CliGitAPIImpl.java:611)
+        at hudson.plugins.git.GitAPI.revParse(GitAPI.java:316)
+        at hudson.plugins.git.util.DefaultBuildChooser.getHeadRevision(DefaultBuildChooser.java:129)
+        at hudson.plugins.git.util.DefaultBuildChooser.getCandidateRevisions(DefaultBuildChooser.java:83)
+        at hudson.plugins.git.GitSCM.determineRevisionToBuild(GitSCM.java:941)
+        at hudson.plugins.git.GitSCM.checkout(GitSCM.java:1044)
+        at hudson.scm.SCM.checkout(SCM.java:484)
+        at hudson.model.AbstractProject.checkout(AbstractProject.java:1270)
+        at hudson.model.AbstractBuild$AbstractBuildExecution.defaultCheckout(AbstractBuild.java:609)
+        at jenkins.scm.SCMCheckoutStrategy.checkout(SCMCheckoutStrategy.java:86)
+        at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:531)
+        at hudson.model.Run.execute(Run.java:1741)
+        at hudson.model.FreeStyleBuild.run(FreeStyleBuild.java:43)
+        at hudson.model.ResourceController.execute(ResourceController.java:98)
+        at hudson.model.Executor.run(Executor.java:374)
+      Archiving artifacts
+      Recording fingerprints
