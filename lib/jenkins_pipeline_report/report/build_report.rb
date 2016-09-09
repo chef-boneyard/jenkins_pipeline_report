@@ -139,6 +139,8 @@ module JenkinsPipelineReport
         result = {}
         stage_reports.reverse_each do |stage|
           report = stage.report.dup
+          report.delete("timestamp")
+          report.delete("trigger_url")
           report.delete("logs")
           report.delete("steps")
           result[stage.stage_path] = report

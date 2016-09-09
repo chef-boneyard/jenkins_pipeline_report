@@ -65,7 +65,9 @@ module JenkinsPipelineReport
           "failure_category" => nil,
           "failure_cause" => nil,
           "failed_in" => nil,
+          "timestamp" => build_report.format_datetime(build.timestamp),
           "url" => build.url,
+          "trigger_url" => build.triggers.first.url,
           "duration" => build_report.format_duration(generate_duration),
           "active_duration" => build_report.format_duration(generate_active_duration),
           "retries" => generate_retries,
@@ -118,6 +120,8 @@ module JenkinsPipelineReport
           [ result_score, run_report.build.url ]
         end.each do |run_report|
           report = run_report.refresh.dup
+          report.delete("timestamp")
+          report.delete("trigger_url")
           report.delete("logs")
           report.delete("steps")
           reports[run_report.stage_path] = report
