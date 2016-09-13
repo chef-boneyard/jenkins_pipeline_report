@@ -6,7 +6,7 @@ failure_cause: 'worker disconnected: el-6: chef-backend-test'
 timestamp: 2016-01-29 21:41:21 UTC
 duration: 37m12s
 triggered_by: stevendanna
-active_duration: 1h4m47s
+active_duration: 36m51s
 queue_delays: 10s
 parameters:
   GIT_REF: master
@@ -17,20 +17,6 @@ change:
   project: chef-backend
   version: 0.0.0+20160129214133
 stages:
-  chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder:
-    result: SUCCESS
-    url: http://wilson.ci.chef.co/job/chef-backend-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=builder/26/
-    duration: 11m5s
-  chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester:
-    result: SUCCESS
-    url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/27/
-    duration: 16m49s
-    steps:
-      total: 16m49s
-      before (setup time): 7m45s
-      chef-client chef-backend::default: 23s
-      chef-client private-chef::default: 2m24s
-      after (cleanup time): 2m3s
   chef-backend-test:
     result: FAILURE
     failure_category: network
@@ -44,106 +30,26 @@ stages:
         failure_cause: worker disconnected
         url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=el-6,project=chef-backend,role=tester/27/
         duration: 1m32s
-        logs:
-          consoleText:
-            436: |
-              usage: kill [ -s signal | -p ] [ -a ] pid ...
-                     kill -l [ signal ]
-              Slave went offline during the build
-              ERROR: Connection was broken: java.io.IOException: Unexpected termination of the channel
-                at hudson.remoting.SynchronousCommandTransport$ReaderThread.run(SynchronousCommandTransport.java:50)
-              Caused by: java.io.EOFException
-                at java.io.ObjectInputStream$PeekInputStream.readFully(ObjectInputStream.java:2325)
-                at java.io.ObjectInputStream$BlockDataInputStream.readShort(ObjectInputStream.java:2794)
-                at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:801)
-                at java.io.ObjectInputStream.<init>(ObjectInputStream.java:299)
-                at hudson.remoting.ObjectInputStreamEx.<init>(ObjectInputStreamEx.java:40)
-                at hudson.remoting.AbstractSynchronousByteArrayCommandTransport.read(AbstractSynchronousByteArrayCommandTransport.java:34)
-                at hudson.remoting.SynchronousCommandTransport$ReaderThread.run(SynchronousCommandTransport.java:48)
-
-              Build step 'Invoke XShell command' marked build as failure
-              Performing Post build task...
-              Match found for : : True
-            458: |2
-
-              Exception when executing the batch command : no workspace from node hudson.slaves.DumbSlave[chef-backend-rhel-6-tester-ec72f7] which is computer hudson.slaves.SlaveComputer@7dd12e45 and has channel null
-              Build step 'Post build task' marked build as failure
-              ERROR: Publisher hudson.tasks.ArtifactArchiver aborted due to exception
-              hudson.AbortException: no workspace for chef-backend-test/architecture=x86_64,platform=el-6,project=chef-backend,role=tester #27
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              ERROR: Publisher hudson.tasks.Fingerprinter aborted due to exception
-              hudson.AbortException: no workspace for chef-backend-test/architecture=x86_64,platform=el-6,project=chef-backend,role=tester #27
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:72)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              [BFA] Scanning build for known causes...
-              [BFA] No failure causes found
       el-5:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=el-5,project=chef-backend,role=tester/27/
         duration: 21m3s
-        steps:
-          total: 21m3s
-          before (setup time): 9m54s
-          chef-client chef-backend::default: 29s
-          chef-client private-chef::default: 4m20s
-          after (cleanup time): 2m4s
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=el-7,project=chef-backend,role=tester/27/
         duration: 17m50s
-        steps:
-          total: 17m50s
-          before (setup time): 9m37s
-          chef-client chef-backend::default: 24s
-          chef-client private-chef::default: 1m51s
-          after (cleanup time): 1m45s
       ubuntu-10.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-backend,role=tester/27/
         duration: 16m49s
-        steps:
-          total: 16m49s
-          before (setup time): 7m45s
-          chef-client chef-backend::default: 23s
-          chef-client private-chef::default: 2m24s
-          after (cleanup time): 2m3s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-backend,role=tester/27/
         duration: 18m19s
-        steps:
-          total: 18m19s
-          before (setup time): 7m58s
-          chef-client chef-backend::default: 21s
-          chef-client private-chef::default: 3m45s
-          after (cleanup time): 2m2s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-backend-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-backend,role=tester/27/
         duration: 15m17s
-        steps:
-          total: 15m17s
-          before (setup time): 7m4s
-          chef-client chef-backend::default: 16s
-          chef-client private-chef::default: 1m44s
-          after (cleanup time): 2m
   chef-backend-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-backend-build/26/

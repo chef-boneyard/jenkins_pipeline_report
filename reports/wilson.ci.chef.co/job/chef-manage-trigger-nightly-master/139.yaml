@@ -5,7 +5,7 @@ failure_category: unknown
 failure_cause: 'unknown: el-6: chef-manage-test'
 timestamp: 2016-04-26 09:35:00 UTC
 duration: 3h16s
-active_duration: 2h59m58s
+active_duration: 5h16m11s
 parameters: {}
 change:
   git_remote: git@github.com:chef/chef-manage.git
@@ -13,6 +13,18 @@ change:
   project: chef-manage
   version: 2.3.0+20160426093524
 stages:
+  "../view/Chef%20Manage/job/chef-manage-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=builder":
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/view/Chef%20Manage/job/chef-manage-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=builder/188/
+    duration: 58m3s
+  chef-manage-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=builder:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-manage-build/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=builder/188/
+    duration: 58m3s
+  chef-manage-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=tester:
+    result: SUCCESS
+    url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=tester/164/
+    duration: 20m5s
   chef-manage-test:
     result: FAILURE
     failure_category: unknown
@@ -26,108 +38,26 @@ stages:
         failure_cause: unknown
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=el-6,project=chef-manage,role=tester/164/
         duration: 1m15s
-        logs:
-          consoleText:
-            291: |
-              ================================================================
-
-              /opt/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/gems/artifactory-2.3.2/lib/artifactory/client.rb:379:in `error': The Artifactory server responded with an HTTP Error 400: `Failed to execute the following sql querySqlQuery{query='select distinct n.repo,n.node_path,n.node_name,np.prop_key,np.prop_value from nodes n left outer join node_props np on np.node_id = n.node_id left outer join node_props np100 on np100.node_id = n.node_id where n.repo = ? and( np100.prop_key = ? and  np100.prop_value = ?) and n.node_type = ?', params=[omnibus-current-local, omnibus.project, chef-server, 1]} (Artifactory::Error::HTTPError)
-              cause: ERROR: canceling statement due to user request'
-                from /opt/languages/ruby/2.1.5/lib/ruby/gems/2.1.0/gems/artifactory-2.3.2/lib/artifactory/client.rb:255:in `block in request'
-                from /opt/languages/ruby/2.1.5/lib/ruby/2.1.0/net/http.rb:853:in `start'
-            302: |2
-                from /home/jenkins/workspace/chef-manage-test/architecture/x86_64/platform/el-6/project/chef-manage/role/tester/opscode-ci/scripts/artifactory/fetch.rb:87:in `<main>'
-              Finding the latest version of chef-server since neither 'OMNIBUS_BUILD_VERSION' nor 'DELIVERY_CHANGE' is set!
-              Build step 'Invoke XShell command' marked build as failure
-              Performing Post build task...
-              Match found for : : True
-            327: |
-              Recording fingerprints
-              Recording test results
-              ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
-              hudson.AbortException: No test report files were found. Configuration error?
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:116)
-                at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:92)
-                at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2688)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:121)
-                at hudson.remoting.UserRequest.perform(UserRequest.java:49)
-                at hudson.remoting.Request$2.run(Request.java:325)
-                at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:68)
-                at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-                at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-                at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-                at java.lang.Thread.run(Thread.java:745)
-                at ......remote call to chef-manage-rhel-6-tester-fb51b7(Native Method)
-                at hudson.remoting.Channel.attachCallSiteStackTrace(Channel.java:1360)
-                at hudson.remoting.UserResponse.retrieve(UserRequest.java:221)
-                at hudson.remoting.Channel.call(Channel.java:753)
-                at hudson.FilePath.act(FilePath.java:978)
-                at hudson.FilePath.act(FilePath.java:967)
-                at hudson.tasks.junit.JUnitParser.parseResult(JUnitParser.java:89)
-                at hudson.tasks.junit.JUnitResultArchiver.parse(JUnitResultArchiver.java:121)
-                at hudson.tasks.junit.JUnitResultArchiver.perform(JUnitResultArchiver.java:138)
-                at hudson.tasks.BuildStepCompatibilityLayer.perform(BuildStepCompatibilityLayer.java:74)
-                at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:761)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:721)
-                at hudson.model.Build$BuildExecution.post2(Build.java:183)
-                at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:670)
-                at hudson.model.Run.execute(Run.java:1766)
-                at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
-                at hudson.model.ResourceController.execute(ResourceController.java:98)
-                at hudson.model.Executor.run(Executor.java:374)
-              Regular expression run condition: Expression=[^(?!true)$], Label=[]
-              Run condition [Regular expression match] enabling perform for step [[Editable Email Notification]]
       el-5:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=el-5,project=chef-manage,role=tester/164/
         duration: 35m37s
-        steps:
-          total: 35m37s
-          before (setup time): 19m55s
-          chef-client private-chef::default: 9m25s
-          chef-client omnibus-chef-manage::default: 2m6s
-          after (cleanup time): 2m4s
       el-7:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=el-7,project=chef-manage,role=tester/164/
         duration: 22m19s
-        steps:
-          total: 22m19s
-          before (setup time): 10m44s
-          chef-client private-chef::default: 6m13s
-          chef-client omnibus-chef-manage::default: 1m12s
-          after (cleanup time): 2m2s
       ubuntu-10.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=ubuntu-10.04,project=chef-manage,role=tester/164/
         duration: 20m5s
-        steps:
-          total: 20m5s
-          before (setup time): 8m49s
-          chef-client private-chef::default: 5m19s
-          chef-client omnibus-chef-manage::default: 1m44s
-          after (cleanup time): 2m4s
       ubuntu-12.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=ubuntu-12.04,project=chef-manage,role=tester/164/
         duration: 26m56s
-        steps:
-          total: 26m56s
-          before (setup time): 9m35s
-          chef-client private-chef::default: 11m39s
-          chef-client omnibus-chef-manage::default: 1m32s
-          after (cleanup time): 2m3s
       ubuntu-14.04:
         result: SUCCESS
         url: http://wilson.ci.chef.co/job/chef-manage-test/architecture=x86_64,platform=ubuntu-14.04,project=chef-manage,role=tester/164/
         duration: 21m37s
-        steps:
-          total: 21m37s
-          before (setup time): 9m13s
-          chef-client private-chef::default: 6m19s
-          chef-client omnibus-chef-manage::default: 1m52s
-          after (cleanup time): 2m4s
   chef-manage-build:
     result: SUCCESS
     url: http://wilson.ci.chef.co/job/chef-manage-build/188/
