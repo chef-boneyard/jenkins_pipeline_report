@@ -46,6 +46,10 @@ module JenkinsPipelineReport
         report
       end
 
+      def all_stage_reports
+        @all_stage_reports ||= create_stage_reports(trigger)
+      end
+
       def report
         @report ||= read_cache || write_cache(generate_report)
       end
@@ -124,12 +128,6 @@ module JenkinsPipelineReport
         generate_failure_cause(report)
         report.reject! { |key,value| value.nil? }
         report
-      end
-
-      def all_stage_reports
-        # stage_reports initializes @all_stage_reports
-        stage_reports
-        @all_stage_reports
       end
 
       def generate_stage_reports
@@ -271,10 +269,6 @@ module JenkinsPipelineReport
 
       def write_cache(value)
         report_cache.write_cache(trigger.url, value)
-      end
-
-      def all_stage_reports
-        @all_stage_reports ||= create_stage_reports(trigger)
       end
 
       def create_stage_reports(build, result=Hash.new)

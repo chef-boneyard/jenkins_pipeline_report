@@ -105,7 +105,7 @@ module JenkinsPipelineReport
       # @return [Job,nil] The parent job, or nil if there is no parent.
       #
       def parent
-        path = Pathname(path)
+        path = Pathname(self.path)
         while true
           parent = path.dirname
           return if parent == path

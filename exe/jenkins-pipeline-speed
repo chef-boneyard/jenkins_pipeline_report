@@ -1,0 +1,73 @@
+#!/usr/bin/env ruby
+
+require "jenkins_pipeline_report"
+require "csv"
+
+module JenkinsPipelineReport
+  module App
+    Cli.parse_options do |opts|
+      opts.banner = <<-EOM
+        USAGE: ruby #{File.basename(__FILE__)} JOB_URL ...
+
+        Download and cache Jenkins data.
+
+        ruby #{File.basename(__FILE__)} https://manhattan.ci.chef.co/job/chef-trigger-release https://wilson.ci.chef.co/job/chef-server-12-trigger-release
+
+        You must upload your public SSH key to your Jenkins server from ~/.ssh/id_rsa.
+      EOM
+    end
+
+    def self.report_build(csv, stage_report)
+      build = stage_report.build
+      if build.result == "SUCCESS"
+        parent = build.parents.first if build.job.parent
+        csv << [
+          stage_report.respond_to?(:parent_report) ? stage_report.parent_report.stage_path : stage_report.stage_path,
+          stage_report.respond_to?(:parent_report) ? stage_report.stage_path : nil,
+          build.number,
+          build.duration,
+          stage_report.generate_queue_delay,
+          build.timestamp,
+          omnibus_key(stage_report),
+          build.url,
+        ]
+      end
+
+      # Now report the runs as well
+      stage_report.run_reports.each do |run_report|
+        report_build(csv, run_report)
+      end
+    end
+
+    def self.omnibus_key(stage_report)
+      # Get the list of things we actually built (or spent significant time building)
+      if steps = stage_report.report["steps"]
+        if omnibus = steps["omnibus"]
+          if omnibus["build"] && omnibus["build"]["Builder"]
+            keys = omnibus["build"]["Builder"].keys.
+              reject! { |key| key == "total" || key.start_with?("after") || key.start_with?("before") }
+            return keys.hash if keys.any? # hash code
+          end
+        end
+      end
+    end
+
+    csv = CSV.new(STDOUT, headers: true)
+    csv << %w{
+      Job
+      Build
+      Configuration
+      Duration
+      QueueDelay
+      Timestamp
+      OmnibusKey
+      Url
+    }
+
+    Cli.builds(*ARGV).each do |build_report|
+      build_report.all_stage_reports.each_value do |stage_report|
+        report_build(csv, stage_report)
+      end
+    end
+  end
+end

@@ -37,6 +37,8 @@ module JenkinsPipelineReport
       # Anything we pull on now will fetch rather than load locally
       jenkins_cache.invalidate if refresh_jenkins
 
+      args = [ jenkins_cache ] if args.empty?
+
       args.flat_map do |arg|
         arg = jenkins_cache.jenkins_object(arg) if arg.is_a?(String)
 
@@ -58,6 +60,8 @@ module JenkinsPipelineReport
         else
           triggers = arg.builds.select { |build| build.upstreams.empty? }
         end
+
+        triggers = triggers.select { |trigger| options[:where] === trigger } if options[:where]
         triggers.map { |trigger| report_cache.report(trigger) }
       end
     end

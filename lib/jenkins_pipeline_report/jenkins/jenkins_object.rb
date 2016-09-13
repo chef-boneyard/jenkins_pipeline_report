@@ -50,7 +50,7 @@ module JenkinsPipelineReport
       # Load the data (or fetch the data remotely if we don't have it or it is
       # out of date).
       def load!
-        load_data unless cache.invalidated?(self)
+        load_data unless invalidated?
         @data || fetch_data
       end
 

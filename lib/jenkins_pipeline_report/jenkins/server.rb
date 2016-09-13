@@ -82,7 +82,6 @@ module JenkinsPipelineReport
       def job(path)
         path = File.expand_path(path, "/job")
         path = "#{path}/" unless path.end_with?("/")
-        raise "OMG #{path}" if path.start_with?("/job/job")
         @jobs[path] ||= Job.new(self, path)
       end
 

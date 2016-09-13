@@ -49,7 +49,7 @@ module JenkinsPipelineReport
         @logger = logger
         @client_options = client_options
         @should_cache = should_cache
-        @servers = {}
+        @servers_by_name = {}
         @cache_version = nil
         load_servers
       end
@@ -60,7 +60,17 @@ module JenkinsPipelineReport
       # @return [Hash<String,Server>] A list of the servers being referenced or
       #   cached.
       #
-      attr_reader :servers
+      attr_reader :servers_by_name
+
+      #
+      # Get a list of servers that have been cached or referenced.
+      #
+      # @return [Array<Server>] A list of the servers being referenced or
+      #   cached.
+      #
+      def servers
+        servers_by_name.values
+      end
 
       #
       # Get the Jenkins object at the given URL.
@@ -90,7 +100,9 @@ module JenkinsPipelineReport
       def server(url)
         url = URI(url)
         url.path = ""
-        servers[url.to_s] ||= Server.new(self, url.to_s, client_options)
+        url.query = nil
+        url.fragment = nil
+        servers_by_name[url.to_s] ||= Server.new(self, url.to_s, client_options)
       end
 
       #
@@ -245,11 +257,12 @@ module JenkinsPipelineReport
       # Load in the list of servers from cache
       def load_servers
         if File.directory?(cache_directory)
-          Dir.entries(cache_directory) do |server_json|
-            next if server_json.directory?
+          Dir.entries(cache_directory).each do |server_json|
+            server_json = File.join(cache_directory, server_json)
             next unless server_json.end_with?(".json")
-            url = JSON.parse(IO.read(server_json))["url"]
-            server(url)
+            next if File.directory?(server_json)
+            build_url = JSON.parse(IO.read(server_json))["jobs"].first["url"]
+            server(build_url)
           end
         end
       end

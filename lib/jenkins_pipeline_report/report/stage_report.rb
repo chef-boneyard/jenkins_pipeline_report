@@ -79,7 +79,7 @@ module JenkinsPipelineReport
           # TODO failures, failure types, aggregation
           # TODO log excerpts
         }
-        process_logs(report)
+        report["logs_analyzed"] = false unless process_logs(report)
         report["runs"] = generate_run_reports
         generate_failure_cause(report)
         report.reject! { |key,value| value.nil? }
@@ -227,12 +227,12 @@ module JenkinsPipelineReport
         unless report
           report ||= from_build_report
           if report
-            report["logs_analyzed"] = true if build_report.report["successful_logs_analyzed"] || report["result"] != "SUCCESS"
+            report["logs_analyzed"] = false if report["result"] == "SUCCESS" && !build_report.report["successful_logs_analyzed"]
           end
         end
         return true unless report
         return true if report["result"] == "IN PROGRESS"
-        unless report["logs_analyzed"]
+        if report["logs_analyzed"] == false
           return true unless report["result"] == "SUCCESS"
           return true if build_report.analyze_successful_logs?
         end
@@ -271,8 +271,11 @@ module JenkinsPipelineReport
         AcceptanceExtractor.new(self, report).extract
         TimingExtractor.new(self, report).extract
         FailureExtractor.new(self, report).extract
+
         # Toss console text out of memory (if it was grabbed at all)
         @console_text_lines = nil
+
+        true
       end
 
       # e.g. architecture=x86_64,platform=acceptance,project=chef,role=tester ->
